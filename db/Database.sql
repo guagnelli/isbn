@@ -1,47 +1,47 @@
 Create database solicitud_isbn;
 
 CREATE TABLE subsistema (
-    id integer not null auto_increment,
+    subsistema_id integer not null auto_increment,
     name varchar(100) not null,
     
     CONSTRAINT pk_subsistema
-    primary key (id)
+    primary key (subsistema_id)
 );
 
 create table entidad(
-    id integer not null auto_increment,
+    entidad_id integer not null auto_increment,
     name varchar(100) not null,
     code varchar(10) null,
     subsistema_id integer,
     
     constraint fk_entidad_subsistema
     foreign key (subsistema_id)
-    references subsistema(id),
+    references subsistema(subsistema_id),
     
     constraint pk_entidad
-    primary key(id)
+    primary key(entidad_id)
 );
 
 create table estado(
-    id integer not null,
+    estado_id integer not null,
     name varchar(50) not null,
     description varchar(100),
     
     constraint pk_estado
-    primary key(id)
+    primary key(estado_id)
 );
 
 create table libro(
-    id integer not null auto_increment,
+    libro_id integer not null auto_increment,
     title varchar(255) not null,
     isbn varchar(15),
     
     constraint pk_libro
-    primary key(id)
+    primary key(libro_id)
 );
 
 create table solicitud(
-    id integer not null auto_increment,
+    solicitud_id integer not null auto_increment,
     date_created date not null,
     folio varchar(50) not null,
     entidad_id integer not null,
@@ -49,15 +49,15 @@ create table solicitud(
     
     constraint fk_solicitud_entidad
     foreign key(entidad_id)
-    references entidad(id),
+    references entidad(entidad_id),
     
     constraint fk_solicitud_libro
     foreign key (libro_id)
-    references libro(id),
+    references libro(libro_id),
     
     constraint uq_folio
     UNIQUE(folio),
     
     constraint pk_solicitud
-    primary key(id)
+    primary key(solicitud_id)
 );

@@ -1,98 +1,36 @@
-
-<?php
-$usuario_logueado = $this->session->userdata('usuario_logeado');
-$tipo_admin = $this->session->userdata('tipo_admin'); //Tipo de usuario almacenado en sesión
-$tipo_admin_config = $this->config->item('rol_admin'); //Identificador de administrador
-//pr($tipo_admin);
-
-if (exist_and_not_null($usuario_logueado)) { ///Validar si usuario inicio sesión
-    if ($tipo_admin == $tipo_admin_config['TITULAR']['id']) { ///Administrador
-        echo '<nav class="navbar navbar-default">   <div class="container-fluid">   <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="' . site_url() . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . " " . $this->session->userdata("apaterno") . " " . $this->session->userdata("amaterno") . '</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div class="navbar-form navbar-left" role="search"><div class="form-group">
-
-
-                ';
-        ?>
-
-
-
-        <?php echo '</div></div> <ul class="nav navbar-nav navbar-right">  '; ?>
-        <li><a href="<?php echo site_url('dashboard'); ?>"  ><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-        <li><a href="<?php echo site_url('rol'); ?>" ><span class="glyphicon glyphicon-list"></span> Ver listado de roles</a></li>
-        <li><a href="<?php echo site_url('login/cerrar_session'); ?>"  ><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
-
-        <?php
-        echo '   </ul>     </div>  </div>  </nav>';
-    } elseif ($tipo_admin == $tipo_admin_config['VALIDADOR']['id']) { ///Administrador
-        echo '<nav class="navbar navbar-default">   <div class="container-fluid">   <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="' . site_url() . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . " " . $this->session->userdata("apaterno") . " " . $this->session->userdata("amaterno") . '</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div class="navbar-form navbar-left" role="search"><div class="form-group">
-
-
-                ';
-        ?>
-
-
-        <?php echo '</div></div> <ul class="nav navbar-nav navbar-right">  '; ?>
-        <li><a href="<?php echo site_url('dashboard'); ?>"  ><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-        <li><a href="<?php echo site_url('rol'); ?>" ><span class="glyphicon glyphicon-list"></span> Ver listado de Roles</a></li>
-        <li><a href="<?php echo site_url('login/cerrar_session'); ?>"  ><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
-
-        <?php
-        echo '   </ul>     </div>  </div>  </nav>';
-    } else { //Docente
-        echo '<nav class="navbar navbar-default">   <div class="container-fluid">   <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="' . site_url() . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . " " . $this->session->userdata("apaterno") . " " . $this->session->userdata("amaterno") . '</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div class="navbar-form navbar-left" role="search"><div class="form-group">
-
-
-                ';
-        ?>
-
-        <?php echo '</div></div> <ul class="nav navbar-nav navbar-right">  '; ?>
-        <li><a href="<?php echo site_url('dashboard'); ?>"  ><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-        <li><a href="<?php echo site_url('rol'); ?>" ><span class="glyphicon glyphicon-list"></span> Ver listado de roles</a></li>
-        <li><a href="<?php echo site_url('login/cerrar_session'); ?>"  ><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
-
-        <?php
-        echo '   </ul>     </div>  </div>  </nav>';
-    }
-} else { ///Usuario sin sesión
-    echo '<nav class="navbar navbar-default">   <div class="container-fluid">   <div class="navbar-header">
-       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-           <span class="sr-only">Toggle navigation</span>
-           <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-       </button>
-       <a class="navbar-brand" href="' . site_url() . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . " " .$this->session->userdata("apaterno") . " " .$this->session->userdata("amaterno") . " " .'</a>
-       </div>
-       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-       <div class="navbar-form navbar-left" role="search"><div class="form-group">
-       ';
-    ?>
-
-    <?php echo '</div></div> <ul class="nav navbar-nav navbar-right">  '; ?>
-    <li><a href="<?php echo site_url('dashboard'); ?>"  ><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-
-    <?php
-    echo '   </ul>     </div>  </div>  </nav>';
-}
-?>
+<nav id="main-menu" class="navbar" role="navigation">
+  <div class="container">
+  <!-- Nav Header Starts -->
+    <div class="navbar-header">
+      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-cat-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  <!-- Nav Header Ends -->
+  <!-- Navbar Cat collapse Starts -->
+    <div class="collapse navbar-collapse navbar-cat-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="<?php echo $this->config->item('url_site'); ?>">Inicio</a></li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>info_gral">Información general</a></li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>normas">Normas operativas</a></li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>estructura">Estructura organizacionales</a></li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>lineamientos">Lineamientos institucionales</a></li>
+        <li class="dropdown">
+          <a href="<?php echo $this->config->item('url_site'); ?>" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="10">
+            Temas de interés<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a tabindex="-1" href="<?php echo $this->config->item('url_site'); ?>">Buenas prácticas</a></li>
+            <li><a tabindex="-1" href="<?php echo $this->config->item('url_site'); ?>">Recursos de apoyo</a></li>
+            <li><a tabindex="-1" href="<?php echo $this->config->item('url_site'); ?>">Enlaces</a></li>
+            <li><a tabindex="-1" href="<?php echo $this->config->item('url_site'); ?>">Open Access</a></li>                
+          </ul>
+        </li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>colaboraciones">Colaboraciones</a></li>
+        <li><a href="<?php echo $this->config->item('url_site'); ?>info_contacto">Contacto</a></li>
+      </ul>
+    </div>
+  <!-- Navbar Cat collapse Ends -->
+  </div>
+</nav>

@@ -1,229 +1,155 @@
-<?php   defined('BASEPATH') OR exit('No direct script access allowed');   ?>
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>
-			<?php echo (!is_null($title)) ? "{$title}::" : "" ?> CENSO de profesionalización docente
-		</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html lang="es" xml:lang="es">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-		<script type="application/x-javascript">
-			addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
-		</script>
+  <title><?php echo (!is_null($title)) ? "{$title}::" : "" ?>Revistas UNAM</title>
 
-		<?php echo css("bootstrap.min.css"); ?>
-		<?php echo css("jasny-bootstrap.min.css"); ?>
-		<!-- Custom Theme files -->
-		<?php echo css("style.css"); ?>
-		<?php echo css("font-awesome.css"); ?>
-		<?php echo css("bootstrap-datetimepicker.css"); ?>
+  <!-- Bootstrap Core CSS -->
+  <link href="/front/sites/all/themes/revistas_unam/css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="/front/sites/all/themes/revistas_unam/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/front/sites/all/themes/revistas_unam/css/style.css" rel="stylesheet" type="text/css">
+  <link href="/front/sites/all/themes/revistas_unam/css/responsive.css" rel="stylesheet" type="text/css">
+  <link href="/front/sites/all/themes/revistas_unam/css/accordion.css" rel="stylesheet" type="text/css">
+  <?php 
+  //echo css("bootstrap.css"); 
+  //echo css('font-awesome/css/font-awesome.min.css'); 
+  echo css("style.css");
+  ?>
 
-		<!-- Custom and plugin javascript -->
-		<?php echo css("custom.css"); ?>
-		<?php echo css("apprise.css"); ?>
-		<?php echo css("bonos.css"); ?>
-		<?php // echo js("jquery.min.js"); ?>
-		<?php echo js("jquery-2.1.4.min.js"); ?>
-		<?php echo js("moment.js"); ?>
-		<?php echo js("transition.js"); ?>
-		<?php echo js("bootstrap-datetimepicker.js"); ?>
-		<?php echo js("collapse.js"); ?>
-		<?php echo js("file-browse.js"); ?>
-		<?php echo js("apprise.js"); ?>
+  <!-- Google Web Fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 
-		<?php echo js("bootstrap.min.js"); ?>
-		<?php echo js("jasny-bootstrap.min.js"); ?>
-		<?php echo js("general.js"); ?>
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
 
-		<script type="text/javascript">
-			var img_url_loader = "<?php echo img_url_loader(); ?>";
-			var site_url = "<?php echo site_url(); ?>";
-			<?php echo $css_script; ?>
-		</script>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-		<!--[if lt IE 9]>
-		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-	</head>
-	<body>
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/fav-144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/fav-114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/fav-72.png">
+  <link rel="apple-touch-icon-precomposed" href="images/fav-57.png">
+  <link rel="shortcut icon" href="images/fav.png">
+  
+  <?php echo js("jquery-1.11.1.min.js");?>
+  <?php echo js("bootstrap.min.js");?>
+  <?php echo js("totop.js"); ?>
 
-		<div id="wrapper">
-			<div class="gray-bg dashbard-1"> <!-- id="page-wrapper" -->
-				<div class="content-main">
-					<div class="container">
-					<header role="banner">
-						<div id="cd-logo"><a href="#0"><?php echo img("imss.png"); ?></a></div>
-						<div id="cd-logo"><a href="#0"><?php echo img("ces.png"); ?></a></div>
-						<div id="cd-logo"><a href="#0"><?php echo img("arrobas.png"); ?></a></div>
-					</header>
+  <script type="text/javascript">
+    var img_url_loader = "<?php echo img_url_loader('ajax-loader.gif'); ?>";
+    var site_url = "<?php echo site_url(); ?>";
+  </script>
+</head>
 
-					<!--navbar principal-->
-						<br>
-					<!--- -->
-					<?php
+<body>
+<!-- Header Section Starts -->
+  <header id="header-area">
+    <!-- Header Top Starts -->
+    <div class="header-top">
+      <?php 
+      if(!is_null($top_header)){
+        $top_header = null;
+      }
+      if(!is_null($redes)){
+        echo $redes;
+      } else {
+        echo $this->load->view("template/header-top.tpl.php",$top_header,true);
+      }
+      ?>
+    </div>
+    <!-- Header Top Ends -->
+  
+    <!-- Main Header LOGOS Starts -->
+    <div class="">
+      <?php 
+      if(!is_null($main_header)){
+        $main_header = null;
+      }
+      if(!is_null($encabezado)){
+        echo $encabezado;
+      } else {
+        echo $this->load->view("template/header-main.tpl.php",$main_header,true);
+      }
+      ?>
+    </div>
+    <!-- Main Header Ends -->
 
-						if(!is_null($menu)){
+    <!-- navegación -->
+    <?php 
+    if(!is_null($menu)){
+      //$menu = null;
+      echo $menu;
+    } else {
+      echo $this->load->view("template/navbar.tpl.php",$menu,true);
+    }
+    ?>
+    <!-- /.navegación -->
+  </header>
+<!-- Header Section Ends -->
 
-							$menu = null;
+<!--Main content-->
+<div class="">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    <?php 
+    if(!is_null($main_content)){
+      echo $main_content;
+    }
+    ?>
+    </div>
+  </div>
+</div><br />
 
-						}
-
-						echo $this->load->view("template/navbar.tpl.php",$menu,true);
-
-						// pr($this->session->userdata());
-						/*
-						if($this->session->has_userdata("usuario_logeado")){
-
-						?>
-
-						<h3><span class="label label-default"> <span class="glyphicon glyphicon-user"></span>
-						<?php
-								//printf("Bienvenido: %s %s %s",
-							echo $this->session->userdata("nombre");
-								//,$this->session->userdata("apaterno"),$this->session->userdata("amaterno"));
-
-						?>
-						</span>
-						</h3>
-
-						<?php
-
-
-						}else{
-
-							echo "<br>";
-
-						}
-						*/
-						?>
-
-						<!-- /.navegación -->
-
-						<?php
-
-							if(!is_null($main_title)){ ?>
-
-								<header class="mastheadI">
-									<div class="container">
-										<div class="row">
-											<div class="col-lg-12">
-												<h1 class="tituloI">
-													<?php echo $main_title?>
-												</h1>
-											</div>
-										</div>
-									</div>
-								</header>
-
-						<?php   }   ?>
-
-
-						<!--//banner-->
-						<!--grid-->
-
-						<div class="inbox-mail">
-							<?php if($this->session->flashdata('success')){?>
-
-							<div class="row">
-								<div class="col-sm-2"></div>
-								<div class="col-sm-8">
-									<div class="row">
-										<div class="alert alert-success">
-											<?php echo $this->session->flashdata('success'); ?>
-								</div>
-							</div>
-						</div>
-
-							<?php 		}elseif($this->session->flashdata('error')){ 		?>
-
-					<div class="row">
-						<div class="col-sm-2"></div>
-						<div class="col-sm-8">
-							<div class="row">
-								<div class="alert alert-danger">
-									<?php echo $this->session->flashdata('error'); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php 		}elseif($this->session->flashdata('warning')){ 		?>
-
-					<div class="row">
-						<div class="col-sm-2"></div>
-						<div class="col-sm-8">
-							<div class="row">
-								<div class="alert alert-error">
-									<?php echo $this->session->flashdata('warning'); ?>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<?php 		}
-
-					if( ! is_null($main_content) ){
-
-						echo $main_content;
-
-					} 		?>
-
-					</div>
-				</div>
-				</div>
-			</div>
-
-			</div>
-		</div>
-
-		<div class="clearfix"> </div>
-		
-		<!-- Se declara una ventana modal llamada modal_censo -->
-		<div class="modal fade" id="modal_censo" tabindex="-1" role="dialog" aria-labelledby="modal_censo_label">
-		    <div class="modal-dialog modal-lg" role="document">
-		        <div class="modal-content" id="modal_content">
-							<!-- Cuerpo de la ventana modal -->
-                             <?php echo (! is_null($cuerpo_modal)) ? "{$cuerpo_modal}" : ""; ?>
-		        </div>
-		    </div>
-		</div>
-		<!-- Termina la ventana modal llamada modal_censo -->
-
-		<div class="clearfix"> </div>
-		<footer>
-	        <div class="container">
-	            <div class="row">
-	                <div class="col-md-12">
-	                  <div class="copyright">
-	                    <p>Copyright © IMSS 2016. Este sitio se visualiza mejor a partir de resoluciones 1024 px con Explorer 11 / Firefox 33.0 / Chrome 38.0</p>
-	                  </div>
-	                </div>
-	            </div>
-	        </div>
-	    </footer>
-
-		<!-- Mainly scripts -->
-		<?php echo js("jquery.metisMenu.js"); ?>
-		<?php echo js("jquery.slimscroll.min.js"); ?>
-		<?php echo js("custom.js"); ?>
-		<?php echo js("screenfull.js"); ?>
-
-		<script>
-			$(function () {
-				$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
-
-				if (!screenfull.enabled) {
-					return false;
-				}
-
-				$('#toggle').click(function () {
-					screenfull.toggle($('#container')[0]);
-				});
-
-			});
-		</script>
-
-		<?php echo js('jquery.nicescroll.js'); ?>
-		<?php echo js('scripts.js'); ?>
-	</body>
+<!-- Footer Section Starts -->
+  <footer id="footer-area">
+  <!-- Footer Links Starts -->
+    <div class="">
+    <?php
+    if(!is_null($pie_ligas)){
+      echo $pie_ligas;
+    }
+    /*if(!is_null($footer_menu)){
+      $footer_menu = null;
+    }
+    echo $this->load->view("template/menu_footer.tpl.php",$footer_menu,true);*/
+    ?>
+    </div>
+  <!-- Footer Links Ends -->
+  <!-- Copyright Area Starts -->
+    <div class="">
+    <?php 
+    if(!is_null($footer)){
+      $footer = null;
+    }
+    if(!is_null($pie_derechos)){
+      echo $pie_derechos;
+    } else {
+      echo $this->load->view("template/footer.tpl.php",$footer,true);
+    }
+    ?>
+    </div>
+  <!-- Copyright Area Ends -->
+  </footer>
+<!-- Footer Section Ends -->
+</body>
 </html>

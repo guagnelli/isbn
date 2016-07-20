@@ -87,7 +87,7 @@ $db['default'] = array(
     
     'hostname' => 'localhost',
     'username' => 'root',
-    'password' => '',
+    'password' => 'mysql',
     'database' => 'solicitud_isbn',
     
     'dbdriver' => 'mysqli',
