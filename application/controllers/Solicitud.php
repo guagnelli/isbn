@@ -26,6 +26,8 @@ class Solicitud extends MY_Controller {
 
 			$crud->set_theme('datatables');
 			$crud->set_table('solicitud');
+            
+            $crud->set_relation('entidad_id','entidad','name');
 
 			$output = $crud->render();
 			$this->template->setMainContent($this->load->view('solicitud/index',$output,TRUE));

@@ -12,11 +12,6 @@ create table entidad(
     entidad_id integer not null auto_increment,
     name varchar(100) not null,
     code varchar(10) null,
-    subsistema_id integer,
-    
-    constraint fk_entidad_subsistema
-    foreign key (subsistema_id)
-    references subsistema(subsistema_id),
     
     constraint pk_entidad
     primary key(entidad_id)
@@ -31,13 +26,18 @@ create table estado(
     primary key(estado_id)
 );
 
-create table libro(
-    libro_id integer not null auto_increment,
+create table obra(
+    obra_id integer not null auto_increment,
     title varchar(255) not null,
     isbn varchar(15),
+    subsistema_id integer,
+    
+    constraint fk_obra_subsistema
+    foreign key (subsistema_id)
+    references subsistema(subsistema_id),
     
     constraint pk_libro
-    primary key(libro_id)
+    primary key(obra_id)
 );
 
 create table solicitud(
@@ -45,15 +45,15 @@ create table solicitud(
     date_created date not null,
     folio varchar(50) not null,
     entidad_id integer not null,
-    libro_id integer not null,
+    obra_id integer not null,
     
     constraint fk_solicitud_entidad
     foreign key(entidad_id)
     references entidad(entidad_id),
     
-    constraint fk_solicitud_libro
-    foreign key (libro_id)
-    references libro(libro_id),
+    constraint fk_solicitud_obra
+    foreign key (obra_id)
+    references obra(obra_id),
     
     constraint uq_folio
     UNIQUE(folio),
