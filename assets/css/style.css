@@ -38,7 +38,7 @@ header[role=banner]::after {
     height: 80px;
   }
   header[role=banner] #cd-logo {
-    margin: 20px 0 0 5%;
+    margin: 10px 0 0 2%;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -77,7 +77,8 @@ div#wrapper {
 }
 /*-- header --*/
 .navbar-default {
-  background-color: #6a4d93;
+  /*background-color: #6a4d93;*/
+  background-color: #999;
   border-color: #e7e7e7;
 }
 

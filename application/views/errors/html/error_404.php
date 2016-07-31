@@ -55,18 +55,10 @@ p {
 }
 </style>
 </head>
-    <body>
-            <?php if(isset($heading)){ ?>    
-            <div id="container">
-                <h1><?php echo $heading; ?></h1>
-                    <?php echo $message; ?>
-            </div>
-            <?php } ?>    
-
-            <div class="navbar-btn">
-                <ul class="nav nav-pills nav-stacked col-md-3">
-                    <h2><a data-toggle="tab" href="javascript:history.back()" >Regresar</a></h2>
-                </ul>
-            </div>
-    </body>
+<body>
+	<div id="container">
+		<h1><?php echo $heading; ?></h1>
+		<?php echo $message; ?>
+	</div>
+</body>
 </html>

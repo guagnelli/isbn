@@ -102,6 +102,14 @@ class MY_Form_validation extends CI_Form_validation {
         $exp = '/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/';
         return (!preg_match($exp, $date)) ? FALSE : TRUE;
     }
+    
+    /*public function compare_date($end, $start){
+        if($start>$end){
+            return false;
+        } else {
+            return true;
+        }
+    }*/
 
     public function radio_buttom_validation($str) {
 //        $exp = '/^[0-9]+$/';

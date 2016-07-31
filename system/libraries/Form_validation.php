@@ -1243,6 +1243,7 @@ class CI_Form_validation {
 		{
 			$str = substr($str, 0, ++$atpos).idn_to_ascii(substr($str, $atpos));
 		}
+
 		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
 	}
 

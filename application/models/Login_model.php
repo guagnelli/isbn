@@ -11,6 +11,79 @@ class Login_model extends CI_Model {
         // $this->load->database();
     }
 
+    public function validar_usuario($nick, $passwd){
+        $login_user = $this->set_login_user($nick, $passwd); ///Verificar contra base de datos
+        if ($login_user->cantidad_reg == 1) { ///Usuario existe en base de datos
+            $password_encrypt = hash('sha512', $passwd);
+            //pr($login_user);
+            if ($login_user->usu_contrasenia == $password_encrypt) {
+                //$roles = $CI->lm->get_usuario_rol_modulo_sesion($login_user->user_cve); //Módulos por rol 
+                //$modulos_extra = $CI->lm->get_usuario_modulo_extra_sesion($login_user->user_cve); //Módulos extra por usuario 
+                $datos_session = array(
+                    'usuario_logeado' => TRUE,
+                    'identificador' => $login_user->usuario_cve,
+                    'nick' => $login_user->usu_nick,
+                    'nombre' => $login_user->usu_nombre,
+                    'apaterno' => $login_user->usu_paterno,
+                    'amaterno' => $login_user->usu_materno,
+                    'mail' => $login_user->usu_correo,
+                    'rol_cve' => $login_user->rol_cve,
+                    'rol_name' => $login_user->rol_nombre,
+                );
+                $result['datos_session'] = $datos_session;
+                /*$parametros_log = $CI->config->item('parametros_log');
+                $parametros_log['INICIO_SATISFACTORIO'] = 1;
+                $parametros_log['USUARIO_CVE'] = $login_user->user_cve;
+                $CI->lm->set_log_ususario_doc($parametros_log);*/
+                $result['success'] = 1;
+            } else {
+                $result['success'] = 0;
+            }
+        } else {
+            $result['success'] = 0;
+        }
+        $result['login'] = $login_user;
+        return $result;
+    }
+
+    /**
+     * @autor 
+     * Fecha creación: 18-05-2016
+     * Fecha actualización: 26-05-2016
+     * @param String $nick Nick del docente o nombre de usuario
+     * @param String $password Password del docente o usuario
+     * @return Array con la cantidad de registros que encontro, si existe, sólo
+     * deberia arrojar 1, si no encuentra ninguna coinsidencia con los 
+     * parametros, devuelve cero 0
+     */
+    public function set_login_user($nick = null, $password = null) {
+        if (is_null($nick) && is_null($password)) {
+            return null;
+        }
+        $this->db->join('rol', 'usuario.rol_cve = rol.rol_cve');
+        $this->db->where('usuario.usu_nick', $nick);
+        $this->db->limit(1);
+        $query = $this->db->get('usuario');
+        //pr($this->db->last_query());
+        $result = $query->row();
+        
+        if (!isset($result)) {
+            $result = null;
+        } else if (empty($result)) {
+            $result = null;
+        } else {
+            $password_encrypt = hash('sha512', $password); //aplica algoritmo de seguridad
+            if ($password_encrypt != $result->usu_contrasenia) {
+                //Le decimos que si existe el usuario, pero que el passwores incorrecto
+                $result->cantidad_reg = -1;
+            } else {
+                $result->cantidad_reg = 1;
+            }
+        }
+        $query->free_result();
+        return $result;
+    }
+
     /**
      * 
      * @autor       : LEAS.
@@ -37,7 +110,7 @@ class Login_model extends CI_Model {
         if (!isset($parametros['INICIO_SATISFACTORIO'])) {
             $parametros['INICIO_SATISFACTORIO'] = 'NULL';
         }
-        $usuario_cve = $parametros['USUARIO_CVE'];
+        /*$usuario_cve = $parametros['USUARIO_CVE'];
         $log_ini_ses_ip = $parametros['LOG_INI_SES_IP'];
         $inicio_satisfactorio = $parametros['INICIO_SATISFACTORIO'];
         $resp = '@resp';
@@ -49,7 +122,7 @@ class Login_model extends CI_Model {
         $resultado = isset($procedimiento->result()[0]->res);
         $resultado = $resultado && $procedimiento->result()[0]->res;
         $procedimiento->free_result(); //Libera el resultado
-        $this->db->close();
+        $this->db->close();*/
         return $resultado;
     }
 
@@ -139,55 +212,6 @@ class Login_model extends CI_Model {
     }
 
     /**
-     * @autor LEAS
-     * Fecha creación: 18-05-2016
-     * Fecha actualización: 26-05-2016
-     * @param String $matricula Matricula del docente o nombre de usuario 
-     * @param String $password Password del docente o usuario
-     * @return Array con la cantidad de registros que encontro, si existe, sólo
-     * deberia arrojar 1, si no encuentra ninguna coinsidencia con los 
-     * parametros, devuelve cero 0
-     */
-    public function set_login_user($matricula = null, $password = null) {
-        if (is_null($matricula) && is_null($password)) {
-            return null;
-        }
-        $select = array('count(*) "cantidad_reg"', 'us.USUARIO_CVE "user_cve"',
-            'us.USU_MATRICULA "usr_matricula"', 'us.USU_NOMBRE "usr_nombre"',
-            'us.USU_PATERNO "usr_paterno"', 'us.USU_MATERNO "usr_materno"',
-            'us.USU_CONTRASENIA "usr_passwd"', 'us.CATEGORIA_CVE "usr_categoria"',
-            'us.ADSCRIPCION_CVE "usr_adscripcion"', 'us.DELEGACION_CVE "usr_delegacion"',
-            'us.USU_CORREO "usr_correo"'
-        );
-
-        $this->db->select($select);
-//        $this->db->from('usuario as us');
-        $this->db->where('us.USU_MATRICULA', $matricula);
-//        $this->db->where('us.USU_CONTRASENIA', $password_encrypt); //Aplica condición password
-        $this->db->limit(1);
-        $query = $this->db->get('usuario as us');
-        $result = $query->row();
-        if (!isset($result)) {
-            $result = null;
-        } else if (empty($result)) {
-            $result = null;
-        } else if ($result->cantidad_reg == 1) {
-            $password_encrypt = hash('sha512', $password); //aplica algoritmo de seguridad
-            //Si las contraseñas son diferentes
-//            pr('aa '.$password_encrypt);
-//            pr($result->usr_passwd);
-            if ($password_encrypt != $result->usr_passwd) {
-                //Le decimos que si existe el usuario, pero que el passwores incorrecto
-                $result->cantidad_reg = -1;
-            }
-        }
-//        pr($this->db->last_query());
-//        $result->usr_passwd = " ";
-        $query->free_result();
-        return $result;
-    }
-
-    /**
      * 
      * @param String $matricula Matricula del usuario
      * @param Integer $lapso_intentos
@@ -195,13 +219,13 @@ class Login_model extends CI_Model {
      * intento acceder a su cuenta de forma fallida en cierto tiempo. Para proteger 
      * un ataque por fuerza bruta  
      */
-    public function set_checkbrute_usuario($matricula = null, $lapso_intentos = null) {
+    public function set_checkbrute_usuario($nick = null, $lapso_intentos = null) {
         $this->db->select('LOG_INI_SES_FCH_INICIO');
         $this->db->from('log_inicio_sesion as ises');
         $this->db->join('usuario as us', 'us.USUARIO_CVE = ises.USUARIO_CVE');
-        $this->db->where('us.USU_MATRICULA', $matricula);
+        $this->db->where('us.usu_nick', $matricula);
         $this->db->where('ises.INICIO_SATISFACTORIO', 0);
-        $this->db->where("LOG_INI_SES_FCH_INICIO > now() - " . $lapso_intentos);
+        $this->db->where("LOG_INI_SES_FCH_INICIO > now() - " . intval($lapso_intentos));
         $query = $this->db->get(); //Obtener número de registros
         /* pr($this->db->last_query());
           pr($query->num_rows());

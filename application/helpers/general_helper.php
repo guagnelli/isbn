@@ -240,6 +240,26 @@ if (!function_exists('html_message')) {
 }
 
 /**
+ * Método que define una plantilla para los mensajes que se mostrarán con bootstrap
+ * @autor     : Jesús Díaz P.
+ * @modified  : 
+ * @param     : string $message Texto a mostrar
+ * @param     : string $tipo Posibles valores('success','info','warning','danger')
+ * @return    : string Mensaje de alerta con formato predefinido
+ */
+if (!function_exists('imprimir_resultado')) {
+    function imprimir_resultado($resultado){
+        $tipo_mensaje = ($resultado['result']===true) ? 'success' : 'danger';
+
+        return '<div id="js_msg" class="row">
+                <div class="col-lg-12 alert alert-'.$tipo_mensaje.'">
+                    '.$resultado['msg'].'
+                </div>
+            </div>';
+    }
+}
+
+/**
  * Método que obtiene un listado de archivos de la ruta otorgada
  * @autor 		: Jesús Díaz P.
  * @modified 	: 
@@ -605,35 +625,59 @@ if (!function_exists('get_ip_cliente')) {
     }
 
 }
-if (!function_exists('limpiar_cadena_javascript')) {
+if (!function_exists('guardar_archivos')) {
 
-    function limpiar_cadena_javascript($array_datos, $caracteres_limpiar) {
-        $array_result = array();
-        if (isset($array_datos)) {
-            return $array_datos;
-        }
+    /**
+     * 
+     * @param type $file_name
+     * @param type $directorio ejemplo ./uploads/
+     * @param type $extencion
+     * @param type $max_size_file
+     */
+    function guardar_archivos($file_name = null, $client_file_componente = 'userfile', $directorio = './uploads/', $extencion = 'pdf', $max_size_file = '50000') {
+        $config['upload_path'] = $directorio;
+        $config['allowed_types'] = $extencion;
+        $config['max_size'] = $max_size_file;
+        $config['overwrite'] = TRUE;
+        $config['file_name'] = $file_name;
+        $CI = & get_instance();
+        $CI->load->library('upload', $config);
+        if (!$CI->upload->do_upload($client_file_componente)) {
+            $data['error'] = $CI->upload->display_errors();
+        } else {
 
-        if (isset($caracteres_limpiar) AND empty($caracteres_limpiar)) {
-            return $array_datos;
+            $file_data = $CI->upload->data();
+            $data['file_path'] = $directorio . $file_data['file_name'];
         }
-        pr('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-        foreach ($array_datos as $key => $value) {
-            for ($i = 0; $i < strlen($caracteres_limpiar); $i++) {
-                $char = substr($caracteres_limpiar, $i, $i + 1);
-                if ($i === 0) {
-                    $array_datos[$key] = str_replace($char, '', $value);
-                } else {
-                    $valtmp = $array_datos[$key];
-                    $array_datos[$key] = str_replace($char, '', $valtmp);
-                }
-            }
-        }
-        return $array_result;
+        return $data;
     }
 
 }
+if (!function_exists('eliminar_archivo')) {
 
+    /**
+     * 
+     * @param type $directorio 
+     * @param type $file_name
+     * @param type $extencion
+     */
+    function eliminar_archivo($directorio = './uploads/', $file_name = null, $extencion = 'pdf', $max_size_file = '5000') {
+        $config['upload_path'] = $directorio;
+        $config['allowed_types'] = $extencion;
+        $config['max_size'] = $max_size_file;
+        $config['file_name'] = $filename;
+        $CI = & get_instance();
+        $CI->load->library('upload', $config);
+        if (!$CI->upload->do_upload()) {
+            $data['error'] = $CI->upload->display_errors();
+        } else {
 
+            $file_data = $CI->upload->data();
+            $data['file_path'] = $directorio . $file_data['file_name'];
+        }
+    }
+
+}
 
 
     /* End of file general_helper.php */
