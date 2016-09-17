@@ -12,7 +12,7 @@ class Request_model extends CI_Model {
     }
 
     public function request_list(){
-    	$list = array("Soy una lista");
+    	$list = query = $this->db->get('solicitud');
     	return $list;
     }
 

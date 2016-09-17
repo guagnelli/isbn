@@ -61,3 +61,19 @@ create table solicitud(
     constraint pk_solicitud
     primary key(solicitud_id)
 );
+
+CREATE TABLE IF NOT EXISTS `estado_solicitud`(
+    `estado_solicitud_id` INT NOT NULL,
+    `solicitud_id` INT NOT NULL,
+    `estado_id` INT NOT NULL,
+    `date_changed` TIMESTAMP NOT NULL DEFAULT now(),
+    `comment` TEXT NULL,
+    CONSTRAINT `fk_estado_solicitud_solicitud` 
+    FOREIGN KEY(solicitud_id)
+    REFERENCES solicitud(solicitud_id),
+    CONSTRAINT `fk_estado_solicitud_estado` 
+    FOREIGN KEY(`estado_id` )
+    REFERENCES estado(estado_id),
+    CONSTRAINT pk_estado_solicitud_id
+    PRIMARY KEY (`estado_solicitud_id`))
+ENGINE = InnoDB;
