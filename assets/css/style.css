@@ -1368,9 +1368,9 @@ input#disabledTextInput,select#disabledSelect {
     background-color: #fde0dc;
     border-color: #f69988 !important;
 }
-.checkbox-inline label,.checkbox-inline1 label,.form-group label{
+/*.checkbox-inline label,.checkbox-inline1 label,.form-group label{
 	font-weight:400;
-}
+}*/
 /*--validation--*/
 .validation-form{
 	background: #fff;
