@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'mysql',
-	'database' => 'isbn',
+	'hostname' => '11.32.41.86',
+	'username' => 'sipimss',
+	'password' => 'sipimss',
+	'database' => 'unam_isbn_20161015',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
