@@ -20,17 +20,6 @@ create table c_entidad(
     primary key(id)
 );
 
-create table c_usuario(
-    id integer not null auto_increment,
-    nombre varchar(60) not null,
-    id_categoria integer not null,
-    constraint pk_subcategoria
-    primary key(id),
-    constraint pk_sc_cat
-    foreign key(id_categoria)
-    references c_categoria(id)
-);
-
 create table c_estado(
     id integer not null,
     name varchar(50) not null,

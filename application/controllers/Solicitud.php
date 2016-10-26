@@ -33,6 +33,9 @@ class Solicitud extends MY_Controller {
     }
 
     function detalle(){
+        $this->load->model("Solicitud_model",'req');
+        $solicitud = $this->req->getSolicitud(1);
+        pr($solicitud);
     	$main_contet = $this->load->view('solicitud/detalle.tpl.php', null, true);
 		$this->template->multiligual = TRUE;
 		$this->template->setMainContent($main_contet);
