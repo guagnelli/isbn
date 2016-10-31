@@ -39,8 +39,10 @@ $config['bon_sum_act_min'] = 26;
 
 $config['cestado_usuario'] = array('ACTIVO'=>array('id'=>1), 'INACTIVO'=>array('id'=>2), 'RESTABLECERCONTRASENIA'=>array('id'=>3), 'RESTABLECERCMA'=>array('id'=>4));
 
-$config['catalogos'] = array(
-    Enum_cg::c_barcode_size => array('id', 'desc'),
+$config['catalogos_definidos'] = array(
+    Enum_cg::c_barcode_size => array('id'=>'', 'desc'=>''),
+    Enum_cg::c_entidad => array('id'=>'id', 'desc'=>'name'),
+    Enum_cg::c_estado => array('id'=>'id', 'desc'=>'name'),
 );
 
 
