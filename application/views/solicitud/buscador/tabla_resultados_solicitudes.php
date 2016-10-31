@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //                pr($val['hist_validacion_cve']);
                 $solicitud_cve = $this->seguridad->encrypt_base64($val['solicitud_cve']);
                 $hist_solicitud = $this->seguridad->encrypt_base64(intval($val['hist_solicitud']));
+                $estado_solicitud = $this->seguridad->encrypt_base64(intval($val['estado_cve']));
                 $link_ver_detalle = '';
 
                 $link_ver_detalle = '<button '
@@ -36,6 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'class="btn btn-link btn-sm" '
                         . 'data-row="' . $key_ai . '"'
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
+                        . 'data-estadosolicitud="' . $estado_solicitud . '"'
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
                         . 'data-toggle="modal"'
                         . 'data-target="#modal_censo"'
@@ -47,7 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'onclick="funcion_ver_solicitud_entidad(this)" '
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
                         . 'data-row="' . $key_ai . '"'
-                        . 'data-histsolicitudcve="' . $hist_solicitud . '"';
+                        . 'data-histsolicitudcve="' . $hist_solicitud . '"'
+                        . 'data-estadosolicitud="' . $estado_solicitud . '"';
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";

@@ -72,7 +72,7 @@ class Solicitud_model extends MY_Model {
 
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
-            'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"'
+            'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
         );
 
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
@@ -145,64 +145,66 @@ class Solicitud_model extends MY_Model {
     }
 
     function getReglasEstadosSolicitud() {
+        
         $this->reglas_estado = array(
             Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Registro),
-                'is_boton' => FALSE,
+                'is_boton' => 0,
                 'titulo_boton' => '',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Registro => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Registrar solicitud',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Correccion, Enum_es::Revision_indautor),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Enviar a revisión',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Revisado_indautor),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Revisión por indautor',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Radicado, Enum_es::Correccion),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Cargar resultado de indautor',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Radicado => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(),
-                'is_boton' => FALSE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Radicar',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
         );
+        return $this->reglas_estado;
     }
 
 }

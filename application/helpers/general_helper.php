@@ -679,6 +679,77 @@ if (!function_exists('eliminar_archivo')) {
 
 }
 
+if (!function_exists('genera_botones_estado_solicitud')) {
+
+    function genera_botones_estado_solicitud($paramentros) {
+        $mensaje = "No se encontrarón opciones";
+//        if (isset($paramentros['msj_vacio'])) {
+//            $mensaje = $paramentros['msj_vacio']; //Validador N1, Validador N2, Profesionalización o docente-->
+//        }
+
+        $reglas_estado = $paramentros['reglas_validacion'];
+        $estado_actual = $paramentros['estado_cve'];
+        $tipo_validador_rol = $paramentros['rol_seleccionado']; //Validador N1, Validador N2, Profesionalización o docente-->
+//        pr($estado_actual);
+//        pr($tipo_validador_rol);
+        $CI = & get_instance();
+        $valida_acceso_rol = valida_acceso_rol_validador($tipo_validador_rol, $estado_actual, $reglas_estado); //Valida el acceso al rol seleccionado
+        $respuesta_html_botones = array();
+        if ($valida_acceso_rol == 1) {//**Tiene acceso el validar el estado actual la validación del docente 
+            $pro_estado_actual = $reglas_estado[$estado_actual]; //Carga el estado actual del docente 
+//            Enum_ev::Por_validar_n1;
+//            pr($pro_estado_actual);
+//            exit(); 
+//            $estado_transicion = $pro_estado_actual['estados_transicion'];
+            $CI->load->library('seguridad');
+
+            foreach ($pro_estado_actual['estados_transicion'] as $value_est_trans) {//Obtiene estados de trancision
+                $estados_trans = $reglas_estado[$value_est_trans];
+//                pr($estados_trans['is_boton']);
+                if ($estados_trans['is_boton']) {//Verifica si es un botón o el cambio va implicito por el sistema, como es el caso del cambio de estado a "En revision por .."
+//                    pr($value_est_trans);
+                    $value_est_trans = $CI->seguridad->encrypt_base64($value_est_trans);
+//                    $tipo_transicion = $CI->seguridad->encrypt_base64($estados_trans['color_status']);
+                    $respuesta_html_botones[] = '<button '
+                            . 'type="button" '
+                            . 'class="btn btn-success" '
+                            . 'data-estadocambiocve ="' . $value_est_trans . '"'
+//                            . 'data-tipotransicion ="' . $tipo_transicion . '"'
+                            . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
+                            $estados_trans['titulo_boton']
+                            . '</button>';
+                }
+            }
+        }
+
+        return $respuesta_html_botones;
+    }
+
+}
+
+if (!function_exists('valida_acceso_rol_validador')) {
+
+    /**
+     * @author LEAS
+     * @fecha 31/08/2016
+     * @param type $rol_validador Rol que intenta validar el estado actual del docente
+     * @param type $estado_validacion  Estado actual que se pretende validar por dicho rol
+     * @return int 0=No tiene acceso el rol a la validación 1=Tiene acceso el rol a la validación
+     */
+    function valida_acceso_rol_validador($rol_validador, $estado_validacion, $reglas_estados) {
+            //Valida el acceso al rol seleccionado
+            $valida_acceso_rol = 0;
+            foreach ($reglas_estados[$estado_validacion]['rol_permite'] as $value_rol) {
+                if ($value_rol === $rol_validador) {//Si algún rol coinside, acepta el acceso al rol y termina el recorrido del foreach()
+                    $valida_acceso_rol = 1;
+                    break;
+                }
+            }
+            return $valida_acceso_rol;
+    }
+
+}
+
 
     /* End of file general_helper.php */
     

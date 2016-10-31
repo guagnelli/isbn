@@ -134,7 +134,7 @@ class Solicitud extends MY_Controller {
                 $datosPerfil['string_values'] = $string_values; 
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
 //                pr($datos_post);
-                $rol_seleccionado = $this->session->userdata('rol_seleccionado'); //Rol seleccionado de la pantalla de roles
+                $rol_seleccionado = $this->session->userdata('rol_usuario_cve'); //Rol seleccionado de la pantalla de roles
 //                pr($rol_seleccionado);
                 $datos_solicitud = array();
                 $datos_solicitud['estado_correccion'] = null;
@@ -146,10 +146,19 @@ class Solicitud extends MY_Controller {
                 if (!empty($datos_post['histsolicitudcve'])) {
                     $datos_solicitud['histsolicitudcve'] = $this->seguridad->decrypt_base64($datos_post['histsolicitudcve']); //Identificador de la comisión
                 }
-
+                if (!empty($datos_post['estado_cve'])) {
+                    $datos_solicitud['estado_cve'] = $this->seguridad->decrypt_base64($datos_post['estado_cve']); //Identificador de la comisión
+                }
+                //Genera reglas de estado 
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+                $parametros_estado['reglas_validacion'] = $reglas_validacion;
+                $parametros_estado['rol_seleccionado'] = $rol_seleccionado;
+                $parametros_estado['estado_cve'] = $datos_solicitud['estado_cve'];
+                $datosPerfil['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
+//                pr($datos_perfil['boton_estado']);
+                
                 //Carga datos de la solicitud del ISBN
                 $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la información del usuario al que se va a validar
-
                 echo $this->load->view('solicitud/buscador/index', $datosPerfil, true);
             }
 //            pr($this->session->userdata('datosvalidadoactual'));$datos_empleado_validar

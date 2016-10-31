@@ -60,9 +60,10 @@ function funcion_ver_solicitud_entidad(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
     var solicitud_cve = button_obj.data('solicitudcve');
     var histsolicitudcve = button_obj.data('histsolicitudcve');
+    var estado_solicitud = button_obj.data('estadosolicitud');
     //Remover contenido de un div 
     $('#select_perfil_solicitud').empty();
-    var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve};
+    var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve, estado_cve: estado_solicitud};
     data_ajax_post(site_url + '/solicitud/seccion_index', null, '#select_perfil_solicitud', obj_post);
 }
 function funcion_cerrar_validacion_empleado(element) {
