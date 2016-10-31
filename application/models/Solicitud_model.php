@@ -13,7 +13,32 @@ class Solicitud_model extends MY_Model {
     }
 
     function addSolicitud($data){
-        return true;
+        pr($data);
+        $this->db->trans_begin();
+        $this->db->insert("libro",$data["libro"]);
+        if($this->db->affected_rows() > 0){
+            $data["solicitud"]["libro_id"] = $this->db->insert_id(); 
+            $data["solicitud"]["folio"] = "folio-".str_pad($this->db->insert_id(), 10,0,STR_PAD_LEFT);
+            $this->db->insert("solicitud",$data["solicitud"]);
+            if($this->db->affected_rows() > 0){
+                $solicitud_id = $this->db->insert_id();
+                $this->db->insert("hist_revision_isbn",array(
+                    "c_estado_id"=>1,
+                    "solicitud_cve"=>$solicitud_id
+                ));
+                if($this->db->affected_rows() > 0){
+                    $this->db->trans_commit();
+                    return $solicitud_id;
+                }else{
+                    $this->db->trans_rollback();
+                }
+            }else{
+                $this->db->trans_rollback();
+            }            
+        }else{
+            $this->db->trans_rollback();
+        }
+        return false;
     }
 
     function getSolicitud($id=null,$array=true){

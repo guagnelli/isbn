@@ -23,19 +23,19 @@
               <b><span class="required">*</span>Título de la obra:</b> 
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="libro[titulo]" 
+              <input id="libro[title]" 
                      class="form-control col-md-7 col-xs-12" 
                      data-validate-length-range="6" 
                      data-validate-words="2" 
-                     name="libro[titulo]" 
+                     name="libro[title]" 
                      placeholder="Título de la obra" 
                      type="text"
                      required="required"
-                     value="<?php echo isset($save['libro']['titulo'])? $save['libro']['titulo'] : '';?>"
+                     value="<?php echo isset($save['libro']['title'])? $save['libro']['title'] : '';?>"
                      oninvalid="this.setCustomValidity('Debe ingresar el título de la obra')"
                      oninput="setCustomValidity('')" 
                      >
-              <?php echo form_error_format('libro[titulo]'); ?>
+              <?php echo form_error_format('libro[title]'); ?>
             </div>
           </div>
           <div class="item form-group">
@@ -43,12 +43,12 @@
               <b>Subtítulo: </b>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="libro[subtitulo]" 
+              <input id="libro[subtitle]" 
                  class="form-control col-md-7 col-xs-12" 
                  data-validate-length-range="6" 
                  data-validate-words="2" 
-                 name="libro[subtitulo]" 
-                 value="<?php echo isset($save['libro']['subtitulo'])? $save['libro']['subtitulo'] : '';?>"
+                 name="libro[subtitle]" 
+                 value="<?php echo isset($save['libro']['subtitle'])? $save['libro']['subtitle'] : '';?>"
                  placeholder="Subtítulo de la obra" 
                  type="text">
             </div>
@@ -105,8 +105,8 @@
               <b><span class="required">*</span>Sub-categoría:</b>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select id="solicitud_subcategoria" 
-                      name="solicitud[subcategoria_id]" 
+              <select id="solicitud[id_subcategoria]" 
+                      name="solicitud[id_subcategoria]" 
                       class="form-control" 
                       required="required" >
                 <?php 
@@ -114,7 +114,7 @@
                   echo "<option>Seleccione una subcategoría</option>";
                   $selected = "";
                 foreach ($options as $key => $value) {
-                  if($key==$save["solicitud"]["subcategoria_id"]){
+                  if($key==$save["solicitud"]["id_subcategoria"]){
                     $selected = "selected";
                   }
                   echo "<option value='$key' $selected>$value</option>";
@@ -122,7 +122,7 @@
                 ?>
               </select>
               <span class="error">
-                <?php echo form_error("solicitud[subcategoria_id]");?>
+                <?php echo form_error("solicitud[id_subcategoria]");?>
               </span>
             </div>
           </div>

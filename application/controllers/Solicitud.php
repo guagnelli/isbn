@@ -39,7 +39,7 @@ class Solicitud extends MY_Controller {
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $array_catalogos = array(Enum_cg::c_estado);
-                $datos_usuario['entidad_cve'] = 2;
+                $datos_usuario['entidad_cve'] = 1;
                 break;
             case E_rol::DGAJ://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad);
@@ -157,7 +157,6 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar(){
-        $this->load->model("solicitud_model",'sol');
         $id_entidad = 1; //from session
         $id_categoria = null;
         $id_subcategoria = null;
@@ -174,10 +173,8 @@ class Solicitud extends MY_Controller {
             if ($this->form_validation->run()) {
                 //$data["datos"]["entidad"] = $this->sol->getEntidad($id_entidad);
                 $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
-                $solicitud = $this->sol->addSolicitud(); 
-                if(!$solicitud){
-                    echo "no se ha podido guardar";
-                }else{
+                $solicitud = $this->req->addSolicitud($data["save"]); 
+                if($solicitud > 0){
                     redirect("solicitud/secciones/$solicitud");
                 }
                 //pr($data);
@@ -185,8 +182,8 @@ class Solicitud extends MY_Controller {
             
         }
 
-        $data["datos"]["categorias"] = $this->sol->listCategoria();
-        $data["datos"]["sub_categorias"] = $this->sol->listSubCategoria($id_categoria);
+        $data["datos"]["categorias"] = $this->req->listCategoria();
+        $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
 
         $main_contet = $this->load->view('solicitud/registrar.tpl.php', $data, true);
         $this->template->setMainContent($main_contet);

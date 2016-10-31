@@ -22,7 +22,7 @@ $config['inicio_sesion'] = array(
 );
 $config["solicitud"]=array(
         array(
-            'field' => 'libro[titulo]',
+            'field' => 'libro[title]',
             'label' => 'Título de la obra',
             'rules' => 'required'
         ),
@@ -35,7 +35,7 @@ $config["solicitud"]=array(
             )
         ),
         array(
-            'field' => 'solicitud[subcategoria_id]',
+            'field' => 'solicitud[id_subcategoria]',
             'label' => 'Sub categoría',
             'rules' => 'greater_than[0]',
             'errors'=>array(
