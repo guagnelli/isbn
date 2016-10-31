@@ -10,6 +10,13 @@ class Solicitud_model extends MY_Model {
         $this->load->database();
     }
 
+    function addSolicitud($data){
+        return true;
+    }
+
+    function getList($id=null,$filtro=array(),$offset=0,$limit=10,$array=true){
+    }
+
     function getSolicitud($id=null,$array=true){
     	if(is_null($id)){
     		throw new Exception("Identificador no definido", 1);
@@ -58,6 +65,34 @@ class Solicitud_model extends MY_Model {
         $entidad->subsistema_nombre = $result->row()->subsistema_nombre;
         $result->free_result();
         return $entidad;
+    }
+
+    function listCategoria($id_categoria=null){
+        if(!is_null($id_categoria)){
+            $this->db->where("id_categoria",$id_categoria);
+        }
+        $result = $this->db->get("c_categoria");
+        if($result->num_rows() != 1){
+            throw new Exception("El catálogo esta vacio", 1);
+        }
+        $list = $result->result_array();
+        $result->free_result();
+        return $list;
+    }
+
+    function listSubCategoria($id_categoria=null,$id_subcategoria=null){
+        if(!is_null($id_subcategoria)){
+            $this->db->where("id",$id_subcategoria);
+        }elseif(!is_null($id_categoria)){
+            $this->db->where("id_categoria",$id_categoria);
+        }
+        $result = $this->db->get("c_subcategoria");
+        if($result->num_rows() != 1){
+            throw new Exception("La categoria {$id} no existe", 1);
+        }
+        $list = $result->result_array();
+        $result->free_result();
+        return $list;
     }
 
     function getLibro(){
