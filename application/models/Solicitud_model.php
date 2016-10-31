@@ -9,11 +9,13 @@ class Solicitud_model extends MY_Model {
     function __construct() {
         // Call the CI_Model constructor
         parent::__construct();
+        // $ci = get_instance(); // CI_Loader instance
+        $this->load->config('general');
         $this->load->database();
     }
 
     function addSolicitud($data){
-        pr($data);
+        // pr($data);
         $this->db->trans_begin();
         $this->db->insert("libro",$data["libro"]);
         if($this->db->affected_rows() > 0){
@@ -55,7 +57,7 @@ class Solicitud_model extends MY_Model {
         $solicitud = $result->row_array();
         $result->free_result();
 
-        $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
+        // $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
         $solicitud["libro"] = $this->getLibro($solicitud["libro_id"]);
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
         // secciones
@@ -63,7 +65,9 @@ class Solicitud_model extends MY_Model {
         foreach ($secciones->result_array() as $seccion) {
             $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
         }
-
+        $tipo_obra =  $this->config->item('tipo_obra');
+        $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
+        //pr($solicitud);
         return $solicitud;
     }
 
@@ -184,12 +188,19 @@ class Solicitud_model extends MY_Model {
         return $list;
     }
 
-    function getLibro(){
-        return new Libro_dao();
+    function getLibro($id){
+        $this->db->where("id",$id);
+        $libro = $this->db->get("libro");
+        return $libro->row_array();
     }
 
-    function getClasifTematica(){
-        return new Clasif_tematica_dao();
+    function getClasifTematica($id){
+        $this->db->select("c_categoria.id id_categoria,c_categoria.nombre categoria, 
+            c_subcategoria.id id_subcategoria, c_subcategoria.nombre subcategoria");
+        $this->db->where("c_subcategoria.id",$id); 
+        $this->db->join("c_categoria","c_subcategoria.id_categoria = c_categoria.id");
+        $ct = $this->db->get("c_subcategoria");
+        return $ct->row_array();
     }
 
     function getReglasEstadosSolicitud() {

@@ -181,7 +181,6 @@ class Solicitud extends MY_Controller {
             }
             
         }
-
         $data["datos"]["categorias"] = $this->req->listCategoria();
         $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
 
@@ -191,7 +190,11 @@ class Solicitud extends MY_Controller {
     }
 
     function secciones($solicitud){
-        echo "soy las secciones de una solicitud";
+        // echo "soy las secciones de una solicitud";
+        $data["datos"]["solicitud"]=$this->req->getSolicitud($solicitud);
+        $main_contet = $this->load->view('solicitud/secciones.tpl.php', $data, true);
+        $this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
     }
 
     function baja(){
