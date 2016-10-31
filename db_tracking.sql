@@ -63,3 +63,7 @@ alter table solicitud add column sol_tipo_obra char(1);
 alter table solicitud add constraint ck_tipo_obra check(sol_tipo_obra in('I','C','V'));
 
 ALTER TABLE solicitud modify date_created datetime DEFAULT current_timestamp
+
+
+-----31/10/2016
+ALTER TABLE usuario ADD entidad_id int(11) NULL;

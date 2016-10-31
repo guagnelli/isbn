@@ -4,19 +4,27 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 $config['salt'] = "B0no5"; ///SALT
-
 $config['modulos_no_sesion'] = array(
     'login' => array('index', 'cerrar_session', 'cerrar_session_ajax'),
-    'registro' => array('*'),
     'pagina_no_encontrada' => array('index'),
-    'recuperar_contrasenia' => '*',
-    'captcha' => '*'
+    'recuperar_contrasenia' => array('*'),
+    'captcha' => array('*')
 );
 $config['modulos_sesion_generales'] = array(
     'login' => array('cerrar_session', 'cerrar_session_ajax'),
-    'rol' => '*',
-    'pagina_no_encontrada' => array('index'),
-    'pruebas' => '*'
+    'dashboard' => array('*'),
+    'pagina_no_encontrada' => array('index')
+);
+/*$config['modulos_permisos'] = array(E_rol::SUPERADMINISTRADOR => array('solicitud' => array('*')), 
+    E_rol::ADMINISTRADOR => array('solicitud' => array('*')),
+    E_rol::DGAJ => array('solicitud' => array('*')), 
+    E_rol::ENTIDAD => array('solicitud' => array('*'))
+);*/
+$config['modulos_permisos'] = array(
+    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')), 
+    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')),
+    E_rol::DGAJ => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud')), 
+    E_rol::ENTIDAD => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud'))
 );
 
 /////Ruta de solicitudes
@@ -43,6 +51,9 @@ $config['catalogos_definidos'] = array(
     Enum_cg::c_barcode_size => array('id' => '', 'desc' => ''),
     Enum_cg::c_entidad => array('id' => 'id', 'desc' => 'name'),
     Enum_cg::c_estado => array('id' => 'id', 'desc' => 'name'),
+    Enum_cg::c_subsistema => array('id'=>'id', 'desc'=>'name'),
+    Enum_cg::c_categoria => array('id'=>'id', 'desc'=>'nombre'),
+    Enum_cg::c_subcategoria => array('id'=>'id', 'desc'=>'nombre'),
 );
 
 $config['alert_msg'] = array(
@@ -57,5 +68,3 @@ $config['tipo_obra'] = array(
     'C' => 'Completa',
     'V' => 'Volumen',
 );
-
-
