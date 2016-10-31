@@ -14,44 +14,44 @@ class Solicitud_model extends MY_Model {
         $this->load->database();
     }
 
-    function addSolicitud($data){
+    function addSolicitud($data) {
         // pr($data);
         $this->db->trans_begin();
-        $this->db->insert("libro",$data["libro"]);
-        if($this->db->affected_rows() > 0){
-            $data["solicitud"]["libro_id"] = $this->db->insert_id(); 
-            $data["solicitud"]["folio"] = "folio-".str_pad($this->db->insert_id(), 10,0,STR_PAD_LEFT);
-            $this->db->insert("solicitud",$data["solicitud"]);
-            if($this->db->affected_rows() > 0){
+        $this->db->insert("libro", $data["libro"]);
+        if ($this->db->affected_rows() > 0) {
+            $data["solicitud"]["libro_id"] = $this->db->insert_id();
+            $data["solicitud"]["folio"] = "folio-" . str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
+            $this->db->insert("solicitud", $data["solicitud"]);
+            if ($this->db->affected_rows() > 0) {
                 $solicitud_id = $this->db->insert_id();
-                $this->db->insert("hist_revision_isbn",array(
-                    "c_estado_id"=>1,
-                    "solicitud_cve"=>$solicitud_id
+                $this->db->insert("hist_revision_isbn", array(
+                    "c_estado_id" => 1,
+                    "solicitud_cve" => $solicitud_id
                 ));
-                if($this->db->affected_rows() > 0){
+                if ($this->db->affected_rows() > 0) {
                     $this->db->trans_commit();
                     return $solicitud_id;
-                }else{
+                } else {
                     $this->db->trans_rollback();
                 }
-            }else{
+            } else {
                 $this->db->trans_rollback();
-            }            
-        }else{
+            }
+        } else {
             $this->db->trans_rollback();
         }
         return false;
     }
 
-    function getSolicitud($id=null,$array=true){
-    	if(is_null($id)){
-    		throw new Exception("Identificador no definido", 1);
-    	}
+    function getSolicitud($id = null, $array = true) {
+        if (is_null($id)) {
+            throw new Exception("Identificador no definido", 1);
+        }
 
         //solicitud
-        $this->db->where("solicitud.id",$id);
-    	$result = $this->db->get("solicitud");
-        if($result->num_rows()<1){
+        $this->db->where("solicitud.id", $id);
+        $result = $this->db->get("solicitud");
+        if ($result->num_rows() < 1) {
             throw new Exception("El identificador no se encuentra registrado", 1);
         }
         $solicitud = $result->row_array();
@@ -63,26 +63,26 @@ class Solicitud_model extends MY_Model {
         // secciones
         $secciones = $this->db->get("seccion_solicitud");
         foreach ($secciones->result_array() as $seccion) {
-            $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
+            $solicitud["secciones"][$seccion["cve_seccion"]] = "hello world_" . $seccion["cve_seccion"];
         }
-        $tipo_obra =  $this->config->item('tipo_obra');
+        $tipo_obra = $this->config->item('tipo_obra');
         $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
         //pr($solicitud);
         return $solicitud;
     }
 
-    function getEntidad($id=null){
-        if(is_null($id)){
+    function getEntidad($id = null) {
+        if (is_null($id)) {
             throw new Exception("Identificador no definido", 1);
         }
 
         $this->db->select("c_entidad.id as id, c_entidad.name as nombre, c_entidad.code, 
             c_subsistema.id as subsistema_id, c_subsistema.name as subsistema_nombre");
-        $this->db->where("c_entidad.id",$id);
-        $this->db->join("c_subsistema","c_subsistema.id=c_entidad.subsistema_id");
+        $this->db->where("c_entidad.id", $id);
+        $this->db->join("c_subsistema", "c_subsistema.id=c_entidad.subsistema_id");
         $result = $this->db->get("c_entidad");
         // echo $this->db->last_query();
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("Error inesperado en la entidad {$id}", 1);
         }
         $entidad = new Entidad_dao();
@@ -160,12 +160,12 @@ class Solicitud_model extends MY_Model {
         return $result;
     }
 
-    function listCategoria($id_categoria=null){
-        if(!is_null($id_categoria)){
-            $this->db->where("id_categoria",$id_categoria);
+    function listCategoria($id_categoria = null) {
+        if (!is_null($id_categoria)) {
+            $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_categoria");
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("El catálogo esta vacio", 1);
         }
         $list = $result->result_array();
@@ -173,14 +173,14 @@ class Solicitud_model extends MY_Model {
         return $list;
     }
 
-    function listSubCategoria($id_categoria=null,$id_subcategoria=null){
-        if(!is_null($id_subcategoria)){
-            $this->db->where("id",$id_subcategoria);
-        }elseif(!is_null($id_categoria)){
-            $this->db->where("id_categoria",$id_categoria);
+    function listSubCategoria($id_categoria = null, $id_subcategoria = null) {
+        if (!is_null($id_subcategoria)) {
+            $this->db->where("id", $id_subcategoria);
+        } elseif (!is_null($id_categoria)) {
+            $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_subcategoria");
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("La categoria {$id} no existe", 1);
         }
         $list = $result->result_array();
@@ -188,31 +188,40 @@ class Solicitud_model extends MY_Model {
         return $list;
     }
 
-    function getLibro($id){
-        $this->db->where("id",$id);
+    function getLibro($id) {
+        $this->db->where("id", $id);
         $libro = $this->db->get("libro");
         return $libro->row_array();
     }
 
-    function getClasifTematica($id){
+    function getClasifTematica($id) {
         $this->db->select("c_categoria.id id_categoria,c_categoria.nombre categoria, 
             c_subcategoria.id id_subcategoria, c_subcategoria.nombre subcategoria");
-        $this->db->where("c_subcategoria.id",$id); 
-        $this->db->join("c_categoria","c_subcategoria.id_categoria = c_categoria.id");
+        $this->db->where("c_subcategoria.id", $id);
+        $this->db->join("c_categoria", "c_subcategoria.id_categoria = c_categoria.id");
         $ct = $this->db->get("c_subcategoria");
         return $ct->row_array();
     }
 
     function getReglasEstadosSolicitud() {
-        
+
         $this->reglas_estado = array(
+            Enum_es::__default => array(//El estado default
+                'rol_permite' => array(E_rol::ENTIDAD),
+                'estados_transicion' => array(Enum_es::Carga_datos_libro),
+                'is_boton' => 1,
+                'titulo_boton' => 'Realizar solicitud',
+                'color_status' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
+            ),
             Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Registro),
-                'is_boton' => 0,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"'
             ),
             Enum_es::Registro => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -221,6 +230,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Registrar solicitud',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'mensaje_guardado_correcto' => 'save_envio_revision',
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -248,7 +258,7 @@ class Solicitud_model extends MY_Model {
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
-                'estados_transicion' => array(Enum_es::Radicado, Enum_es::Correccion),
+                'estados_transicion' => array(Enum_es::Correccion, Enum_es::Radicado),
                 'is_boton' => 1,
                 'titulo_boton' => 'Cargar resultado de indautor',
                 'color_status' => '',
@@ -266,34 +276,95 @@ class Solicitud_model extends MY_Model {
         return $this->reglas_estado;
     }
 
+    public function update_insert_estado_solicitud($parametros_insert_nuevo_hist, $parametros_update_hist_actual, $condicion_hist_actual) {
+
+        $this->db->trans_begin(); //Definir inicio de transacción
+        //Actualiza el estado actual de la historia de la solicitud, para darla de baja
+        $this->db->where($condicion_hist_actual);
+        $this->db->update('hist_revision_isbn', $parametros_update_hist_actual); //Inserción de registro
+//        pr($this->db->last_query());
+
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return 0; //Rollback 
+        } else {
+            $this->db->insert('hist_revision_isbn', $parametros_insert_nuevo_hist); //Inserción de registro
+            $data_hist_id = $this->db->insert_id(); //Obtener identificador insertado
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                return 0; //Rollback 
+            } else {
+//                pr($this->db->last_query());
+                $this->db->trans_commit();
+                return $data_hist_id; //retorna el id de la última historia de la solicitud
+            }
+            //pr($this->db->last_query());
+        }
+    }
+
 }
 
-class Libro_dao{
+//LLave fin de la class
+
+class Libro_dao {
+
     var $id;
     var $titulo;
     var $subtitulo;
     var $isbn;
+
 }
-class Clasif_tematica_dao{
+
+class Clasif_tematica_dao {
+
     var $id;
     var $categoria;
     var $subcategoria_id;
     var $sub_categoria;
+
 }
-class Entidad_dao{
+
+class Entidad_dao {
+
     var $id;
     var $nombre;
     var $code;
     var $subsistema_id;
     var $subsistema_nombre;
+
 }
-class Barcode_dao{}
-class Colaboradores_dao{}
-class E_desc_dao{}
-class P_desc_dao{}
-class Edicion_dao{}
-class E_pay_dao{}
-class Tema_dao{}
-class Traduccion_dao{}
+
+class Barcode_dao {
+    
+}
+
+class Colaboradores_dao {
+    
+}
+
+class E_desc_dao {
+    
+}
+
+class P_desc_dao {
+    
+}
+
+class Edicion_dao {
+    
+}
+
+class E_pay_dao {
+    
+}
+
+class Tema_dao {
+    
+}
+
+class Traduccion_dao {
+    
+}
 
 ?>

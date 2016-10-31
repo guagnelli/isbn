@@ -248,15 +248,17 @@ if (!function_exists('html_message')) {
  * @return    : string Mensaje de alerta con formato predefinido
  */
 if (!function_exists('imprimir_resultado')) {
-    function imprimir_resultado($resultado){
-        $tipo_mensaje = ($resultado['result']===true) ? 'success' : 'danger';
+
+    function imprimir_resultado($resultado) {
+        $tipo_mensaje = ($resultado['result'] === true) ? 'success' : 'danger';
 
         return '<div id="js_msg" class="row">
-                <div class="col-lg-12 alert alert-'.$tipo_mensaje.'">
-                    '.$resultado['msg'].'
+                <div class="col-lg-12 alert alert-' . $tipo_mensaje . '">
+                    ' . $resultado['msg'] . '
                 </div>
             </div>';
     }
+
 }
 
 /**
@@ -590,7 +592,7 @@ if (!function_exists('get_busca_hijos')) {
         foreach ($array_busqueda as $keys => $valores) {
             $cad1 = strtolower($controlador);
             $cad2 = strtolower($valores['nombre_padre']);
-            if (!empty($valores['padre']) AND ($cad1 === $cad2)) {
+            if (!empty($valores['padre']) AND ( $cad1 === $cad2)) {
                 $array_result[$keys] = $valores;
             }
         }
@@ -616,7 +618,7 @@ if (!function_exists('get_ip_cliente')) {
         $ip_cliente = '';
         $conexiones_ip = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR');
         foreach ($conexiones_ip as $value) {
-            if (isset($_SERVER[$value]) AND !empty($_SERVER[$value])) {
+            if (isset($_SERVER[$value]) AND ! empty($_SERVER[$value])) {
                 $ip_cliente = $_SERVER[$value];
                 break;
             }
@@ -694,6 +696,7 @@ if (!function_exists('genera_botones_estado_solicitud')) {
 //        pr($tipo_validador_rol);
         $CI = & get_instance();
         $valida_acceso_rol = valida_acceso_rol_validador($tipo_validador_rol, $estado_actual, $reglas_estado); //Valida el acceso al rol seleccionado
+//        pr($valida_acceso_rol);
         $respuesta_html_botones = array();
         if ($valida_acceso_rol == 1) {//**Tiene acceso el validar el estado actual la validación del docente 
             $pro_estado_actual = $reglas_estado[$estado_actual]; //Carga el estado actual del docente 
@@ -710,14 +713,21 @@ if (!function_exists('genera_botones_estado_solicitud')) {
 //                    pr($value_est_trans);
                     $value_est_trans = $CI->seguridad->encrypt_base64($value_est_trans);
 //                    $tipo_transicion = $CI->seguridad->encrypt_base64($estados_trans['color_status']);
-                    $respuesta_html_botones[] = '<button '
-                            . 'type="button" '
-                            . 'class="btn btn-success" '
-                            . 'data-estadocambiocve ="' . $value_est_trans . '"'
+                    if (isset($estados_trans['atributos'])) {
+                        $respuesta_html_botones[] = '<button ' .
+                                $estados_trans['atributos'] . '>' .
+                                $estados_trans['titulo_boton']
+                                . '</button>';
+                    } else {
+                        $respuesta_html_botones[] = '<button '
+                                . 'type="button" '
+                                . 'class="btn btn-primary" '
+                                . 'data-estadosolicitudcve ="' . $value_est_trans . '"'
 //                            . 'data-tipotransicion ="' . $tipo_transicion . '"'
-                            . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
-                            $estados_trans['titulo_boton']
-                            . '</button>';
+                                . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
+                                $estados_trans['titulo_boton']
+                                . '</button>';
+                    }
                 }
             }
         }
@@ -737,15 +747,15 @@ if (!function_exists('valida_acceso_rol_validador')) {
      * @return int 0=No tiene acceso el rol a la validación 1=Tiene acceso el rol a la validación
      */
     function valida_acceso_rol_validador($rol_validador, $estado_validacion, $reglas_estados) {
-            //Valida el acceso al rol seleccionado
-            $valida_acceso_rol = 0;
-            foreach ($reglas_estados[$estado_validacion]['rol_permite'] as $value_rol) {
-                if ($value_rol === $rol_validador) {//Si algún rol coinside, acepta el acceso al rol y termina el recorrido del foreach()
-                    $valida_acceso_rol = 1;
-                    break;
-                }
+        //Valida el acceso al rol seleccionado
+        $valida_acceso_rol = 0;
+        foreach ($reglas_estados[$estado_validacion]['rol_permite'] as $value_rol) {
+            if ($value_rol === $rol_validador) {//Si algún rol coinside, acepta el acceso al rol y termina el recorrido del foreach()
+                $valida_acceso_rol = 1;
+                break;
             }
-            return $valida_acceso_rol;
+        }
+        return $valida_acceso_rol;
     }
 
 }

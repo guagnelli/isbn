@@ -20,7 +20,8 @@
 		<?php echo css("style.css"); ?>
 		<?php echo css("font-awesome.css"); ?>
 		<?php echo css("nprogress.css"); ?>
-		<?php echo css("style-isbn.css"); ?>
+		<?php // echo css("style-isbn.css"); ?>
+		<?php // echo css("style-isbn.css"); ?>
 		<?php //echo css("bootstrap-datetimepicker.css"); ?>
 
 		<!-- Custom and plugin javascript -->

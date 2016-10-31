@@ -28,15 +28,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <div class="list-group-item">
         <div class="panel-body tab-content">
-            <div class="row" >
-                <div class="col-md-12 col-sm-12 col-xs-12 " id='div_error_index' style='display:none'>
-                    <div id='mensaje_error_div_index' class='alert'>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <span id='mensaje_error_index'></span>
-                    </div>
-                </div>
-            </div>
-
             <div id="select_buscador_solicitud_entidad" class="tab-pane fade active in">
                 <div>
                     <br>
@@ -149,19 +140,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
-                <?php echo form_close(); ?>
-                <div class="row" >
-                    <div id="div_result_solicitudes" class="row" style="padding:0 20px;">
+            </div>
+            <?php echo form_close(); ?>
+            <div class="row" >
+                <div id="div_result_solicitudes" class="row" style="padding:0 20px;">
 
-                    </div>
                 </div>
             </div>
-            <div id="select_perfil_solicitud" class="tab-pane fade">
+        </div>
+        <div id="select_perfil_solicitud" class="tab-pane fade">
 
-            </div>
         </div>
     </div>    
 
+</div>
 </div>
 
 

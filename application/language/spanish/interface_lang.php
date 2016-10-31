@@ -84,6 +84,7 @@ $lang['interface'] = array(
         'order_estado_solicitud' => 'Estado de la solicitud',
         'order_subtitulo_libro' => 'Sub titulo del libro',
         'order_isbn' => 'ISBN',
+        'btn_agreagar_solicitud' => 'Nueva solicitud',
         
     ),
     'tabla_resultados' => array(
@@ -101,6 +102,12 @@ $lang['interface'] = array(
     ),
     'solicitud_detalle' => array(
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
+    ),
+    'solicitud_cambio_estado' => array(
+        'lbl_titulo_seccion' => 'Detalle de la solicitud',
+        'save_estado_error' => 'Detalle de la solicitud',
+        'save_default' => 'El cambio de estado se efectuo correctamente',
+        'save_envio_revision' => 'La solicitud se envió a revisión correctamente',
     )
 );
 

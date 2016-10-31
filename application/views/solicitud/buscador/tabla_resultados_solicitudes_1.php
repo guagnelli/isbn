@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'class="btn btn-link btn-sm" '
                         . 'data-row="' . $key_ai . '"'
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
-                        . 'data-estadosolicitudcve="' . $estado_solicitud . '"'
+                        . 'data-estadosolicitud="' . $estado_solicitud . '"'
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
                         . 'data-toggle="modal"'
                         . 'data-target="#modal_censo"'
@@ -48,9 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $link_ver_solicitud = 'class=" text-center" '
                         . 'onclick="funcion_ver_solicitud_entidad(this)" '
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
-                        . 'data-estadosolicitudcve="' . $estado_solicitud . '"'
+                        . 'data-row="' . $key_ai . '"'
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
-                        . 'data-row="' . $key_ai . '"';
+                        . 'data-estadosolicitud="' . $estado_solicitud . '"';
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";

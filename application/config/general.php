@@ -37,18 +37,25 @@ $config['bon_pro_eva_min'] = (float) 80.00;
 
 $config['bon_sum_act_min'] = 26;
 
-$config['cestado_usuario'] = array('ACTIVO'=>array('id'=>1), 'INACTIVO'=>array('id'=>2), 'RESTABLECERCONTRASENIA'=>array('id'=>3), 'RESTABLECERCMA'=>array('id'=>4));
+$config['cestado_usuario'] = array('ACTIVO' => array('id' => 1), 'INACTIVO' => array('id' => 2), 'RESTABLECERCONTRASENIA' => array('id' => 3), 'RESTABLECERCMA' => array('id' => 4));
 
 $config['catalogos_definidos'] = array(
-    Enum_cg::c_barcode_size => array('id'=>'', 'desc'=>''),
-    Enum_cg::c_entidad => array('id'=>'id', 'desc'=>'name'),
-    Enum_cg::c_estado => array('id'=>'id', 'desc'=>'name'),
+    Enum_cg::c_barcode_size => array('id' => '', 'desc' => ''),
+    Enum_cg::c_entidad => array('id' => 'id', 'desc' => 'name'),
+    Enum_cg::c_estado => array('id' => 'id', 'desc' => 'name'),
+);
+
+$config['alert_msg'] = array(
+    'SUCCESS' => array('id_msg' => 1, 'class' => 'success'),
+    'DANGER' => array('id_msg' => 2, 'class' => 'danger'),
+    'WARNING' => array('id_msg' => 3, 'class' => 'warning'),
+    'INFO' => array('id_msg' => 4, 'class' => 'info')
 );
 
 $config['tipo_obra'] = array(
-    'I'=>'Independiente',
-    'C'=>'Completa',
-    'V'=>'Volumen',
+    'I' => 'Independiente',
+    'C' => 'Completa',
+    'V' => 'Volumen',
 );
 
 
