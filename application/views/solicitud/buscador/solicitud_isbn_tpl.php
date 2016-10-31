@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 ?>
 
 <style type="text/css">
@@ -10,18 +9,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     .borderlist {    list-style-position:inside; border: 1px solid #8c9494}
     .lip { cursor: pointer;
            display:block; }
-    </style>
 
-    <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
-    </script>
 
-    <!-- Inicio informacion personal -->
+</style>
 
-    <?php echo form_open('', array('id' => 'form_busqueda_solicitudes')); ?>
-    <div class="list-group">
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
+    var hash = window.location.hash;
+    $('.nav.nav-pills a[href="' + hash + '"]').tab('show', function () {
+        alert('invocacion');
+        $(document).scrollTop();
+    });
+</script>
+
+<!-- Inicio informacion personal -->
+
+<?php echo form_open('', array('id' => 'form_busqueda_solicitudes')); ?>
+<div class="list-group">
 
     <div class="list-group-item">
-
         <div class="panel-body tab-content">
             <div id="select_buscador_solicitud_entidad" class="tab-pane fade active in">
                 <div>
@@ -29,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h4><?php echo $string_values['title_template']; ?> </h4>
                     <br>
                 </div>
-                <?php if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad ?> 
+                <?php if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad  ?> 
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-sm-12">
                             <div class="panel-body input-group ">
@@ -112,19 +117,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row">
                     <div class="col-lg-4 col-sm-4 col-md-4">
                         <div class="panel-body input-group">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_cantidad_registros'];?></span>
+                            <span class="input-group-addon"><?php echo $string_values['lbl_cantidad_registros']; ?></span>
                             <?php echo $this->form_complete->create_element(array('id' => 'per_page', 'type' => 'dropdown', 'options' => array(10 => 10, 20 => 20, 50 => 50, 100 => 100, 500 => 500), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Número de registros a mostrar', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Número de registros a mostrar', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-4 col-md-4">
                         <div class="panel-body input-group input-group-sm">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_ordenar_por'];?>:</span>
+                            <span class="input-group-addon"><?php echo $string_values['lbl_ordenar_por']; ?>:</span>
                             <?php echo $this->form_complete->create_element(array('id' => 'order', 'type' => 'dropdown', 'options' => $order_columns, 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-4 col-md-4">
                         <div class="panel-body input-group input-group-sm">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_tipo_orden'];?></span>
+                            <span class="input-group-addon"><?php echo $string_values['lbl_tipo_orden']; ?></span>
                             <?php echo $this->form_complete->create_element(array('id' => 'order_type', 'type' => 'dropdown', 'options' => array('ASC' => 'Ascendente', 'DESC' => 'Descendente'), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
                         </div>
                     </div>
