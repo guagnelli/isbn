@@ -65,6 +65,42 @@ $lang['interface'] = array(
         'advertencia_agregar_todos_los_datos' => 'Debe llenar todos los campos obligatorios',
         'datos_almacenados_correctamente' => 'Los datos se almacenaron correctamente',
         'error_guardar' => 'Los datos no se almacenaron. Por favor intentemo más tarde'
+    ),
+    'solicitud_index' => array(
+        'title_template' => 'Revisión de solicitudes',
+        'lbl_cantidad_registros' => 'Cantidad de registros',
+        'lbl_ordenar_por' => 'Ordenar por:',
+        'lbl_tipo_orden' => 'Tipo de orden:',
+        'lbl_estado_solicitud' => 'Estado de la solicitud',
+        'lbl_entidades' => 'Entidades',
+        'text_buscar_por' => 'Buscar por: ',
+        'txt_buscar_solicitud' => 'Buscar por: ',
+        'drop_estado_solicitud' => 'Selecciona estado de la solicitud',
+        'drop_entidades' => 'Seleccionar entidad',
+        'li_isbn' => 'ISBN',
+        'li_title_obra' => 'Titulo del libro',
+        'li_sub_title_obra' => 'Sub titulo del libro',
+        'order_titulo_libro' => 'Titulo del libro',
+        'order_estado_solicitud' => 'Estado de la solicitud',
+        'order_subtitulo_libro' => 'Sub titulo del libro',
+        'order_isbn' => 'ISBN',
+        
+    ),
+    'tabla_resultados' => array(
+        'resp_sin_resultados' => 'No se encontraron resultados',
+        'title_folio' => 'Folio',
+        'title_estado' => 'Esado del libro',
+        'title_libro' => 'Titulo del libro',
+        'title_isbn_libro' => 'ISBN del libro',
+        'title_name_entidad' => 'Entidad',
+        'title_fecha_validacion' => 'Fecha última validacion',
+        'title_validacion' => 'Validar',
+        'title_ver_detalle' => 'Detalle',
+        'link_ver_detalle_solicitud' => 'Detalle',
+        'link_ver_solicitud' => 'Ver solicitud',
+    ),
+    'solicitud_detalle' => array(
+        'lbl_titulo_seccion' => 'Detalle de la solicitud',
     )
 );
 
