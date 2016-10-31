@@ -45,4 +45,10 @@ $config['catalogos_definidos'] = array(
     Enum_cg::c_estado => array('id'=>'id', 'desc'=>'name'),
 );
 
+$config['tipo_obra'] = array(
+    'I'=>'Independiente',
+    'C'=>'Completa',
+    'V'=>'Volumen',
+);
+
 

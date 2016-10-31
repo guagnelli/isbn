@@ -57,3 +57,9 @@ values
 	('Descripción física impresa','dfi','desc_fisica_impresa',7),
 	('Pago electrónico','epay','epay',8),
 	('Código de barras','bc','barcode',10);
+----30/10/2016
+
+alter table solicitud add column sol_tipo_obra char(1);
+alter table solicitud add constraint ck_tipo_obra check(sol_tipo_obra in('I','C','V'));
+
+ALTER TABLE solicitud modify date_created datetime DEFAULT current_timestamp

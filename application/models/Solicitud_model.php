@@ -6,50 +6,83 @@ class Solicitud_model extends MY_Model {
 
     private $reglas_estado = null;
 
-    public function __construct() {
+    function __construct() {
         // Call the CI_Model constructor
         parent::__construct();
+        // $ci = get_instance(); // CI_Loader instance
+        $this->load->config('general');
         $this->load->database();
     }
 
-    function getSolicitud($id = null, $array = true) {
-        if (is_null($id)) {
-            throw new Exception("Identificador no definido", 1);
+    function addSolicitud($data){
+        // pr($data);
+        $this->db->trans_begin();
+        $this->db->insert("libro",$data["libro"]);
+        if($this->db->affected_rows() > 0){
+            $data["solicitud"]["libro_id"] = $this->db->insert_id(); 
+            $data["solicitud"]["folio"] = "folio-".str_pad($this->db->insert_id(), 10,0,STR_PAD_LEFT);
+            $this->db->insert("solicitud",$data["solicitud"]);
+            if($this->db->affected_rows() > 0){
+                $solicitud_id = $this->db->insert_id();
+                $this->db->insert("hist_revision_isbn",array(
+                    "c_estado_id"=>1,
+                    "solicitud_cve"=>$solicitud_id
+                ));
+                if($this->db->affected_rows() > 0){
+                    $this->db->trans_commit();
+                    return $solicitud_id;
+                }else{
+                    $this->db->trans_rollback();
+                }
+            }else{
+                $this->db->trans_rollback();
+            }            
+        }else{
+            $this->db->trans_rollback();
         }
+        return false;
+    }
+
+    function getSolicitud($id=null,$array=true){
+    	if(is_null($id)){
+    		throw new Exception("Identificador no definido", 1);
+    	}
 
         //solicitud
-        $this->db->where("solicitud.id", $id);
-        $result = $this->db->get("solicitud");
-        if ($result->num_rows() < 1) {
+        $this->db->where("solicitud.id",$id);
+    	$result = $this->db->get("solicitud");
+        if($result->num_rows()<1){
             throw new Exception("El identificador no se encuentra registrado", 1);
         }
         $solicitud = $result->row_array();
         $result->free_result();
 
-        $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
+        // $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
         $solicitud["libro"] = $this->getLibro($solicitud["libro_id"]);
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
         // secciones
         $secciones = $this->db->get("seccion_solicitud");
         foreach ($secciones->result_array() as $seccion) {
-            $solicitud["secciones"][$seccion["cve_seccion"]] = "hello world_" . $seccion["cve_seccion"];
+            $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
         }
-
+        $tipo_obra =  $this->config->item('tipo_obra');
+        $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
+        //pr($solicitud);
         return $solicitud;
     }
 
-    function getEntidad($id = null) {
-        if (is_null($id)) {
+    function getEntidad($id=null){
+        if(is_null($id)){
             throw new Exception("Identificador no definido", 1);
         }
 
         $this->db->select("c_entidad.id as id, c_entidad.name as nombre, c_entidad.code, 
             c_subsistema.id as subsistema_id, c_subsistema.name as subsistema_nombre");
-        $this->db->where("c_entidad.id", $id);
-        $this->db->join("c_subsistema", "c_subsistema.id=c_entidad.subsistema_id");
+        $this->db->where("c_entidad.id",$id);
+        $this->db->join("c_subsistema","c_subsistema.id=c_entidad.subsistema_id");
         $result = $this->db->get("c_entidad");
         // echo $this->db->last_query();
-        if ($result->num_rows() != 1) {
+        if($result->num_rows() != 1){
             throw new Exception("Error inesperado en la entidad {$id}", 1);
         }
         $entidad = new Entidad_dao();
@@ -69,22 +102,18 @@ class Solicitud_model extends MY_Model {
             'sub_titulo_obra' => 'lb.subtitle',
         );
         $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
-
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
             'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
         );
-
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
 //        $this->db->from('cdepartamento as dp');
         $this->db->join('c_estado ce', 'ce.id = hri.c_estado_id');
         $this->db->join('solicitud s', 's.id = hri.solicitud_cve');
         $this->db->join('c_entidad cent', 'cent.id = s.entidad_id');
         $this->db->join('libro lb', 'lb.id = s.libro_id');
-
         //where que son obligatorios
         $this->db->where('hri.is_actual', 1); //último estado
-
         if ($params['estado_cve'] > 0) {
             $this->db->where('hri.c_estado_id', $params['estado_cve']);
         }
@@ -97,8 +126,6 @@ class Solicitud_model extends MY_Model {
             case E_rol::DGAJ:
                 break;
         }
-
-
         if (is_array($busqueda_text)) {//si es un array lo recorre, ejemplo es la concatenación de nombre, ap y am
             foreach ($busqueda_text as $value) {
                 $this->db->or_like($value, $params['buscador_solicitudes']);
@@ -114,9 +141,7 @@ class Solicitud_model extends MY_Model {
         if (isset($params['per_page']) && isset($params['current_row'])) { //Establecer límite definido para paginación 
             $this->db->limit($params['per_page'], $params['current_row']);
         }
-
         $order_type = (isset($params['order_type'])) ? $params['order_type'] : 'asc';
-
         if (isset($params['order'])) { //Establecer límite definido para paginación 
             $orden = $params['order'];
 //            pr($orden);
@@ -125,7 +150,6 @@ class Solicitud_model extends MY_Model {
             }
             $this->db->order_by($orden, $order_type);
         }
-
         $ejecuta = $this->db->get('hist_revision_isbn hri'); //Prepara la consulta ( aún no la ejecuta)
         $query = $ejecuta->result_array();
 //        pr($this->db->last_query());
@@ -136,12 +160,47 @@ class Solicitud_model extends MY_Model {
         return $result;
     }
 
-    function getLibro() {
-        return new Libro_dao();
+    function listCategoria($id_categoria=null){
+        if(!is_null($id_categoria)){
+            $this->db->where("id_categoria",$id_categoria);
+        }
+        $result = $this->db->get("c_categoria");
+        if($result->num_rows() != 1){
+            throw new Exception("El catálogo esta vacio", 1);
+        }
+        $list = $result->result_array();
+        $result->free_result();
+        return $list;
     }
 
-    function getClasifTematica() {
-        return new Clasif_tematica_dao();
+    function listSubCategoria($id_categoria=null,$id_subcategoria=null){
+        if(!is_null($id_subcategoria)){
+            $this->db->where("id",$id_subcategoria);
+        }elseif(!is_null($id_categoria)){
+            $this->db->where("id_categoria",$id_categoria);
+        }
+        $result = $this->db->get("c_subcategoria");
+        if($result->num_rows() != 1){
+            throw new Exception("La categoria {$id} no existe", 1);
+        }
+        $list = $result->result_array();
+        $result->free_result();
+        return $list;
+    }
+
+    function getLibro($id){
+        $this->db->where("id",$id);
+        $libro = $this->db->get("libro");
+        return $libro->row_array();
+    }
+
+    function getClasifTematica($id){
+        $this->db->select("c_categoria.id id_categoria,c_categoria.nombre categoria, 
+            c_subcategoria.id id_subcategoria, c_subcategoria.nombre subcategoria");
+        $this->db->where("c_subcategoria.id",$id); 
+        $this->db->join("c_categoria","c_subcategoria.id_categoria = c_categoria.id");
+        $ct = $this->db->get("c_subcategoria");
+        return $ct->row_array();
     }
 
     function getReglasEstadosSolicitud() {
@@ -209,64 +268,32 @@ class Solicitud_model extends MY_Model {
 
 }
 
-class Libro_dao {
-
+class Libro_dao{
     var $id;
     var $titulo;
     var $subtitulo;
     var $isbn;
-
 }
-
-class Clasif_tematica_dao {
-
+class Clasif_tematica_dao{
     var $id;
     var $categoria;
     var $subcategoria_id;
     var $sub_categoria;
-
 }
-
-class Entidad_dao {
-
+class Entidad_dao{
     var $id;
     var $nombre;
     var $code;
     var $subsistema_id;
     var $subsistema_nombre;
-
 }
-
-class Barcode_dao {
-    
-}
-
-class Colaboradores_dao {
-    
-}
-
-class E_desc_dao {
-    
-}
-
-class P_desc_dao {
-    
-}
-
-class Edicion_dao {
-    
-}
-
-class E_pay_dao {
-    
-}
-
-class Tema_dao {
-    
-}
-
-class Traduccion_dao {
-    
-}
+class Barcode_dao{}
+class Colaboradores_dao{}
+class E_desc_dao{}
+class P_desc_dao{}
+class Edicion_dao{}
+class E_pay_dao{}
+class Tema_dao{}
+class Traduccion_dao{}
 
 ?>

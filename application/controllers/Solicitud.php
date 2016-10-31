@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -20,13 +19,12 @@ class Solicitud extends MY_Controller {
         $this->load->config('general');
         $this->load->library('form_validation');
         $this->load->library('seguridad');
-//        $this->load->library('Ventana_modal');
-        //*****Datos model
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Solicitud_model", 'req');
+
     }
 
-    function index() {
+    function index(){
         $this->session->set_userdata('rol_usuario_cve', E_rol::ENTIDAD); //entidad
 //       $this->session->set_userdata('rol_usuario_cve', '2');//Juridico
         $this->lang->load('interface', 'spanish');
@@ -41,7 +39,7 @@ class Solicitud extends MY_Controller {
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $array_catalogos = array(Enum_cg::c_estado);
-                $datos_usuario['entidad_cve'] = 2;
+                $datos_usuario['entidad_cve'] = 1;
                 break;
             case E_rol::DGAJ://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad);
@@ -167,25 +165,62 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function registrar() {
-        
+    function registrar(){
+        $id_entidad = 1; //from session
+        $id_categoria = null;
+        $id_subcategoria = null;
+
+        //si tiene datosbusca por id
+        if($this->input->post()){
+            $post = $this->input->post();
+            $this->config->load('form_validation'); //Cargar archivo con validaciones
+            $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
+            $this->form_validation->set_rules($validations); //Añadir validaciones
+            //pr($post);
+            $data["save"]=$post;
+            
+            if ($this->form_validation->run()) {
+                //$data["datos"]["entidad"] = $this->sol->getEntidad($id_entidad);
+                $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
+                $solicitud = $this->req->addSolicitud($data["save"]); 
+                if($solicitud > 0){
+                    redirect("solicitud/secciones/$solicitud");
+                }
+                //pr($data);
+            }
+            
+        }
+        $data["datos"]["categorias"] = $this->req->listCategoria();
+        $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
+
+        $main_contet = $this->load->view('solicitud/registrar.tpl.php', $data, true);
+        $this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
     }
 
-    function baja() {
-        
+    function secciones($solicitud){
+        // echo "soy las secciones de una solicitud";
+        $data["datos"]["solicitud"]=$this->req->getSolicitud($solicitud);
+        $main_contet = $this->load->view('solicitud/secciones.tpl.php', $data, true);
+        $this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
     }
 
-    function edicion() {
-        
+    function baja(){
+
     }
 
-    function detalle() {
+    function edicion(){
+
+    }
+
+    function detalle(){
+        $this->load->model("Solicitud_model",'req');
         $solicitud = $this->req->getSolicitud(1);
         pr($solicitud);
-       echo $this->load->view('solicitud/detalle.tpl.php', null, true);
-//        $this->template->multiligual = TRUE;
-//        $this->template->setMainContent($main_contet);
-//        $this->template->getTemplate();
+    	$main_contet = $this->load->view('solicitud/detalle.tpl.php', null, true);
+		$this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
     }
 
 }
