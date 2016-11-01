@@ -189,7 +189,8 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar(){
-        $id_entidad = 1; //from session
+        //pr($this->session->userdata());
+        $id_entidad = $this->session->userdata("datos_usuario")["entidad_cve"]; //from session
         $id_categoria = null;
         $id_subcategoria = null;
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles

@@ -101,9 +101,9 @@ class Solicitud_model extends MY_Model {
         );
         $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
-            's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
-            'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"'
-        );
+           's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
+           'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
+       );
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
 //        $this->db->from('cdepartamento as dp');
         $this->db->join('c_estado ce', 'ce.id = hri.c_estado_id');
