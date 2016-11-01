@@ -2130,6 +2130,13 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   color: #fff; }
 
+.btn{
+  background: #7c7c7c !important;
+}
+
+.btn:hover{
+  background: #f42434 !important;
+}
 .btn-success {
   background: #26B99A;
   border: 1px solid #169F85; }
