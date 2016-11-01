@@ -81,10 +81,11 @@ class Catalogos_generales extends CI_Model {
         //Seleccione una opción
         $catalogo = $this->db->get($table);
         //$options = array();
-        $options[0]="Seleccione una opción";
+        
         foreach ($catalogo->result_array() as $key => $value) {
             $options[$value[$field_key]] = $value[$field_value];
         }
+        $options[0]="Seleccione una opción";
         return $options;
     }
    

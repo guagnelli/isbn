@@ -101,7 +101,7 @@ if(isset($tema["id"])){
 </div>
 <div class="form-group">
   <div class="col-md-12 text-center">
-    <button id="send1" 
+    <button id="send_tema" 
             type="button" 
             class="btn btn-form" 
             data-type="tema"

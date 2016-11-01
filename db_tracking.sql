@@ -67,3 +67,6 @@ ALTER TABLE solicitud modify date_created datetime DEFAULT current_timestamp
 
 -----31/10/2016
 ALTER TABLE usuario ADD entidad_id int(11) NULL;
+------01/11/2016
+insert into c_tipo_contenido(nombre)values('Periodística'),('Cuento');
+insert into c_idioma (nombre) values('Español'),('Inglés'),('Italiano');

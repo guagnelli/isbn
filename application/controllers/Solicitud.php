@@ -218,8 +218,9 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar(){
-        //pr($this->session->userdata());
-        $id_entidad = $this->session->userdata("datos_usuario")["entidad_cve"]; //from session
+        // pr($this->session->userdata());
+        
+        $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
         $id_subcategoria = null;
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
@@ -402,7 +403,28 @@ class Solicitud extends MY_Controller {
 
     }
 
-    function add_seccion(){
+    function sec_idioma(){
+        if($this->input->is_ajax_request()){
+            /*if($this->input->post()){
+                $data["tema"] = $this->input->post();
+                if(count($data["tema"])==1){//first load
+                    //buscar idiomas seleccionados
+                }
+            }*/
+            $response['message'] = pr($this->input->post(),true);
+            $response['result'] = "true";   
+            $data["combos"]["idioma"] = $this->cg->get_combo_catalogo("c_idioma");
+            $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
+            echo json_encode($response);
+                return 0;
+        }else{
+            redirect("/");
+        }
+    }
+
+
+
+    /*function add_seccion(){
         if($this->input->is_ajax_request()){
             $data = $this->input->post();
             $seccion = $data["seccion"];
@@ -426,5 +448,5 @@ class Solicitud extends MY_Controller {
         }else{
             redirect("/");
         }
-    }
+    }*/
 }

@@ -128,18 +128,15 @@
                 </div>
                 <div class="ln_solid"></div>
                 <div class="form-group">
-                    <div class="list-group-item text-center center ">
-                        <button type="button" class="btn btn-primary" onclick="window.close()">Cancelar</button>
-                        <?php if (isset($boton_estado)) { ?>
-
-                            <?php
-                            foreach ($boton_estado as $botones) {
-                                echo $botones;
-                            }
-                            ?>
-                        <?php } ?>  
-
-                        <!--<button id="send" type="submit" class="btn" onclick="retrun false;" >Realizar solicitud</button>-->
+                  <div class="list-group-item text-center center ">
+              <?php if (isset($boton_estado)) { ?>
+                    <?php
+                      foreach ($boton_estado as $botones) {
+                        echo $botones;
+                      }
+                      ?>
+              <?php } ?>  
+                      <button type="button" class="btn btn-primary" onclick="window.close()">Cancelar</button>
                     </div>
                 </div>
                 <?php echo form_close(); ?>

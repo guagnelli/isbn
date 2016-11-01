@@ -34,8 +34,8 @@ function ajax(action,form_data,div_content,div_msg){
 }
 function load_sections(){
 	var form_data = {solicitud_id:$("#sol").val()};
-	//alert(site_url+"/solicitud/load_seccion")
 	ajax(site_url+"/solicitud/sec_tema",form_data,'#tab_tema','#msg_general');
+	ajax(site_url+"/solicitud/sec_idioma",form_data,'#tab_idioma','#msg_general');
 	btn();
 }
 $("#tab_sections").ready(function (){

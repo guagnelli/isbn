@@ -11,7 +11,10 @@ if (!defined('BASEPATH'))
  */
 if (!function_exists('pr')) {
 
-    function pr($mix) {
+    function pr($mix,$string=false) {
+        if($string){
+          return "<pre>".print_r($mix,true)."</pre>";
+        }
         echo "<pre>";
         print_r($mix);
         echo "</pre>";
