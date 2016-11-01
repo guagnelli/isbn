@@ -43,5 +43,38 @@ $config["solicitud"]=array(
             )
         ),
     );
-
+$config["sol_sec_tema"]=array(
+    array(
+        'field' => 'tema[coleccion]',
+        'label' => 'Colección',
+        'rules' => 'requiered',
+        'errors'=>array(
+            'requiered'=>"El campo %s es obligatorio"
+        )
+    ),
+    array(
+        'field' => 'tema[no_coleccion]',
+        'label' => 'No. de colección',
+        'rules' => 'requiered',
+        'errors'=>array(
+            'requiered'=>"El campo %s es obligatorio"
+        )
+    ),
+    array(
+        'field' => 'tema[tipo_contenido]',
+        'label' => 'Tipo de contenido',
+        'rules' => 'greater_than[0]',
+        'errors'=>array(
+            'greater_than'=>"El campo %s es obligatorio"
+        )
+    ),
+    array(
+        'field' => 'tema[nombre_serie]',
+        'label' => 'Colección',
+        'rules' => 'requiered',
+        'errors'=>array(
+            'greater_than'=>"El campo %s es obligatorio"
+        )
+    ),
+);
 

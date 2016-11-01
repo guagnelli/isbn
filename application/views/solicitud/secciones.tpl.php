@@ -1,16 +1,21 @@
-<?php pr($datos);?>
-<!-- page content -->
-<form action="entidad_nueva_solicitud.html" method="post" class="form-horizontal form-label-left" novalidate>
+<?php 
+// pr($combos);
+// pr($datos);
+echo js("solicitud/secciones.js");
+?>
+<!-- page content >
+<form action="entidad_nueva_solicitud.html" method="post" class="form-horizontal form-label-left" novalidate-->
   <!---Cuerpo-->
-  <div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-12 col-sm-12 col-xs-12" id="div_secciones">
     <div class="x_panel">
       <div class="x_title">
-        <h2> Solicitud de ISBN </h2>
+        <h2> Solicitud de ISBN de la <?php echo $datos["solicitud"]["entidad"]["nombre"]?></h2>
         <ul class="nav navbar-right panel_toolbox">
         </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
+        <label class="" id="msg_general"></label>
         <p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"]?></p>
         <p><b>Subtítulo:</b> <?php echo $datos["solicitud"]["libro"]["subtitle"]?></p>
         <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"]?></p>
@@ -19,10 +24,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs tabs-left">
             <li class="active">
-              <a href="#clas_tematica" data-toggle="tab">Clasificación temática</a>
-            </li>
-            <li>
-              <a href="#tema" data-toggle="tab">Tema</a>
+              <a href="#tab_tema" data-toggle="tab">Tema</a>
             </li>
             <li>
               <a href="#idioma" data-toggle="tab">Idioma</a>
@@ -41,78 +43,10 @@
 
         <div class="col-xs-9">
           <!-- Tab panes -->
-          <div class="tab-content">
-            <div class="tab-pane active" id="clas_tematica">
-              <p class="lead">Clasificación temática.<br><small>Para realizar la clasificación temática principal. Después aparecerá un listado de temáticas más específicas que le permitan clasificar el libro con más precisión.</small></p>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>Temática principal: 
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                   <select id="heard" class="form-control" required>
-                    <option value="">Selecciones una opción...</option>
-                    <option value="press">Generalidades</option>
-                    <option value="net">Filosofía y psicología</option>
-                    <option value="mouth">Religión</option>
-                    <option value="mouth">Ciencias sociales</option>
-                  </select>
-                </div>
-              </div>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>Sub-categoría:
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                   <select id="heard" class="form-control" required>
-                    <option value="">Filosofía y Psicología...</option>
-                    <option value="press">Diccionarios y enciclopedias de Filosofía</option>
-                    <option value="net">Educación. investigación. temas relacionados con la filosofía</option>
-                    <option value="mouth">Tratamiento histórico y colectivo de la filosofía</option>
-                    <option value="mouth">Metafísica</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane" id="tema">
-              <p class="lead">Tema</p>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>Colección: 
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
-                </div>
-              </div>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>No. de colección: 
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
-                </div>
-              </div>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>Tipo de contenido:
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                   <select id="heard" class="form-control" required>
-                    <option value="">Seleccione una opción</option>
-                    <option value="press">Periodística</option>
-                    <option value="net">Cuento</option>
-                    <option value="mouth">Educación básica y Media</option>
-                    <option value="mouth">Ensayo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                  <span class="required">*</span>Nombre de la serie: 
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
-                </div>
-              </div>
+          <div class="tab-content" id="tab_sections">
+          <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id']?>">
+            <div class="tab-pane active" id="tab_tema">
+              <!--tema-->              
             </div>
             <div class="tab-pane" id="idioma">
               <p class="lead">Idiomas</p>
@@ -313,5 +247,5 @@
       </div>
     </div>
   </div> 
-  </form>
+  <!--/form>
 <!-- /page content -->

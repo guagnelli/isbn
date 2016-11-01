@@ -25,13 +25,9 @@
 
 		<!-- Custom and plugin javascript -->
 		<?php echo css("custom.css"); ?>
-		<?php //echo css("apprise.css"); ?>
-		<?php //echo css("bonos.css"); ?>
-		<?php // echo js("jquery.min.js"); ?>
 		<?php echo js("jquery-2.1.4.min.js"); ?>
-		<?php echo js("moment.js"); ?>
+		<?php //echo js("moment.js"); ?>
 		<?php echo js("transition.js"); ?>
-		<?php //echo js("bootstrap-datetimepicker.js"); ?>
 		<?php echo js("collapse.js"); ?>
 		<?php echo js("file-browse.js"); ?>
 		<?php echo js("apprise.js"); ?>
@@ -51,7 +47,7 @@
 		<?php echo js("curvedLines.js"); ?>
 		<?php echo js("DateJS/build/date.js"); ?>
 		<?php echo js("daterangepicker.js"); ?>
-		<?php echo js("custom.min.js"); ?>
+		<?php //echo js("custom.min.js"); ?>
 		<?php echo js("general.js"); ?>
 
 		<script type="text/javascript">

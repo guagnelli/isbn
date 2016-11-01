@@ -179,7 +179,6 @@ class Solicitud extends MY_Controller {
                 }
                 //pr($data);
             }
-            
         }
         $data["datos"]["categorias"] = $this->req->listCategoria();
         $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
@@ -190,11 +189,110 @@ class Solicitud extends MY_Controller {
     }
 
     function secciones($solicitud){
-        // echo "soy las secciones de una solicitud";
-        $data["datos"]["solicitud"]=$this->req->getSolicitud($solicitud);
+        try{
+            $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud);    
+        }catch(Exception $ex){
+            print ($ex);
+        }
         $main_contet = $this->load->view('solicitud/secciones.tpl.php', $data, true);
         $this->template->setMainContent($main_contet);
         $this->template->getTemplate();
+    }
+
+    function load_seccion(){
+        if ($this->input->is_ajax_request()){
+            $seccion = $this->input->post("seccion");
+            //$response['message'] = $this->input->post("seccion");
+            $response['result'] = "true";
+            $func = "_load_sec_$seccion";
+            $response['content'] = $this->$func($this->input->post("solicitud_id"));
+            echo json_encode($response);
+            return 0;
+        }else{
+            redirect("/");
+        }
+    }
+
+    function sec_tema(){
+        if($this->input->is_ajax_request()){
+           if($this->input->post()){
+                $data["tema"] = $this->input->post();
+                //load from the begining
+                if(count($data["tema"])==1){
+                    $tema = $this->req->get_tema($data["tema"]["solicitud_id"]);
+                    if(is_array($tema)){
+                        $data["tema"] = $tema;
+                    }
+                }elseif(isset($data["tema"]["id"])){//update
+                    $this->config->load('form_validation'); //Cargar archivo con validaciones
+                    $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
+                    $this->form_validation->set_rules($validations);
+                    
+                    $where = array("id"=>$data["tema"]["id"]);
+                    unset($data["tema"]["id"]);
+                    $update = $this->req->update("tema",$data["tema"],$where);
+                    if($update){
+                        $response['message'] = "El tema se ha guardado exitosamente";
+                        $response['result'] = "true"; 
+                    }else{
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false"; 
+                    }
+                }else{
+                    $this->config->load('form_validation'); //Cargar archivo con validaciones
+                    $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
+                    $this->form_validation->set_rules($validations);
+                    
+                    $save = $this->req->add("tema",$data["tema"]);
+                    if($save){
+                        $update = $this->req->update("solicitud",
+                            array("has_tema"=>1),
+                            array("id"=>$data["tema"]["solicitud_id"]));
+                        $response['message'] = "El tema se ha guardado exitosamente";
+                        $response['result'] = "true";
+
+                    }else{
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false"; 
+                    }
+                }
+                $data["combos"]["tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido");
+                $response['content'] = $this->load->view("solicitud/secciones/sec_tema.tpl.php", $data, true);
+                echo json_encode($response);
+                return 0;
+            }
+        }else{
+            redirect("/");
+        }
+
+    }
+
+
+
+    function add_seccion(){
+        if($this->input->is_ajax_request()){
+            $data = $this->input->post();
+            $seccion = $data["seccion"];
+            $this->config->load('form_validation'); //Cargar archivo con validaciones
+            $validations = $this->config->item('sol_sec_'.$seccion); //Obtener validaciones de archivo 
+            $this->form_validation->set_rules($validations);
+            if($this->form_validation->run()){
+                $response['message'] = "guardado";
+                $response['result'] = "true";
+                //$response['content'] = pr($data,true);
+            }else{
+                $response['message'] = "Hola ajax";
+                $response['result'] = "true";
+                //$response['content'] = pr($data,true);
+            }
+            $func = "_load_sec_$seccion";
+            $response['content'] = $this->$func($data[$seccion]["solicitud_id"]);
+            
+            echo json_encode($response);
+            return 0;
+        }else{
+            redirect("/");
+        }
     }
 
     function baja(){

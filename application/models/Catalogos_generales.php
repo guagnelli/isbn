@@ -71,5 +71,21 @@ class Catalogos_generales extends CI_Model {
             return $obtiene_id_comprobante;
         }
     }
+
+    public function get_combo_catalogo($table, $field_key="id", $field_value="nombre",$conditions=null){
+        
+        if(!is_null($conditions) && is_array($conditions)){
+            $this->db->where($conditions);
+        }
+        $this->db->select("$field_key,$field_value");
+        //Seleccione una opción
+        $catalogo = $this->db->get($table);
+        //$options = array();
+        $options[0]="Seleccione una opción";
+        foreach ($catalogo->result_array() as $key => $value) {
+            $options[$value[$field_key]] = $value[$field_value];
+        }
+        return $options;
+    }
    
 }

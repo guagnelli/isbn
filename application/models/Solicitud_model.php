@@ -43,7 +43,7 @@ class Solicitud_model extends MY_Model {
         return false;
     }
 
-    function getSolicitud($id=null,$array=true){
+    function getSolicitud($id=null,$load_secciones=true,$array=true){
     	if(is_null($id)){
     		throw new Exception("Identificador no definido", 1);
     	}
@@ -57,16 +57,19 @@ class Solicitud_model extends MY_Model {
         $solicitud = $result->row_array();
         $result->free_result();
 
-        // $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
+        $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
         $solicitud["libro"] = $this->getLibro($solicitud["libro_id"]);
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
-        // secciones
-        $secciones = $this->db->get("seccion_solicitud");
-        foreach ($secciones->result_array() as $seccion) {
-            $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
-        }
         $tipo_obra =  $this->config->item('tipo_obra');
         $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
+
+        if($load_secciones){
+            // secciones
+            $secciones = $this->db->get("seccion_solicitud");
+            foreach ($secciones->result_array() as $seccion) {
+                $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
+            }    
+        }
         //pr($solicitud);
         return $solicitud;
     }
@@ -85,12 +88,7 @@ class Solicitud_model extends MY_Model {
         if($result->num_rows() != 1){
             throw new Exception("Error inesperado en la entidad {$id}", 1);
         }
-        $entidad = new Entidad_dao();
-        $entidad->id = $result->row()->id;
-        $entidad->nombre = $result->row()->nombre;
-        $entidad->code = $result->row()->code;
-        $entidad->subsistema_id = $result->row()->subsistema_id;
-        $entidad->subsistema_nombre = $result->row()->subsistema_nombre;
+        $entidad = $result->row_array();
         $result->free_result();
         return $entidad;
     }
@@ -264,34 +262,39 @@ class Solicitud_model extends MY_Model {
         );
     }
 
-}
+    function get_tema($solicitud_id=null){
+        $this->db->where("solicitud_id",$solicitud_id);
+        $result = $this->db->get("tema");
+        if($result->num_rows() == 0){
+            return TRUE;
+        }elseif($result->num_rows() == 1){
+            $tema = $result->row_array();
+            $result->free_result();
+            return $tema;
+        }else{
+            return false;
+        }
+    }
 
-class Libro_dao{
-    var $id;
-    var $titulo;
-    var $subtitulo;
-    var $isbn;
+    function add($table=null,$data = null){
+        if(!isset($data["solicitud_id"]) || is_null($table)){
+            return false;
+        }
+        $this->db->insert($table,$data);
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function update($table=null,$data = null,$where=array()){
+        if(is_null($table) || !is_array($where)){
+            return false;
+        }
+        $this->db->update($table,$data,$where);
+        return true;
+    }
+
 }
-class Clasif_tematica_dao{
-    var $id;
-    var $categoria;
-    var $subcategoria_id;
-    var $sub_categoria;
-}
-class Entidad_dao{
-    var $id;
-    var $nombre;
-    var $code;
-    var $subsistema_id;
-    var $subsistema_nombre;
-}
-class Barcode_dao{}
-class Colaboradores_dao{}
-class E_desc_dao{}
-class P_desc_dao{}
-class Edicion_dao{}
-class E_pay_dao{}
-class Tema_dao{}
-class Traduccion_dao{}
 
 ?>
