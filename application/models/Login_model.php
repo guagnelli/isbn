@@ -29,6 +29,7 @@ class Login_model extends CI_Model {
                     'mail' => $login_user->usu_correo,
                     'rol_cve' => $login_user->rol_cve,
                     'rol_name' => $login_user->rol_nombre,
+                    'entidad_id' => $login_user->entidad_id,
                 );
                 $result['datos_session'] = $datos_session;
                 /*$parametros_log = $CI->config->item('parametros_log');
@@ -81,6 +82,7 @@ class Login_model extends CI_Model {
             }
         }
         $query->free_result();
+//        pr($this->db->last_query());
         return $result;
     }
 

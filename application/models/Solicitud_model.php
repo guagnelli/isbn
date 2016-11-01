@@ -202,64 +202,76 @@ class Solicitud_model extends MY_Model {
     }
 
     function getReglasEstadosSolicitud() {
+
         $this->reglas_estado = array(
+            Enum_es::__default => array(//El estado default
+                'rol_permite' => array(E_rol::ENTIDAD),
+                'estados_transicion' => array(Enum_es::Carga_datos_libro),
+                'is_boton' => 1,
+                'titulo_boton' => 'Realizar solicitud',
+                'color_status' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
+            ),
             Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Registro),
-                'is_boton' => FALSE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
+                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"'
             ),
             Enum_es::Registro => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Registrar solicitud',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
+                'mensaje_guardado_correcto' => 'save_envio_revision',
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Correccion, Enum_es::Revision_indautor),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Enviar a revisión',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Revisado_indautor),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Revisión por indautor',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
-                'estados_transicion' => array(Enum_es::Radicado, Enum_es::Correccion),
-                'is_boton' => TRUE,
-                'titulo_boton' => '',
+                'estados_transicion' => array(Enum_es::Correccion, Enum_es::Radicado),
+                'is_boton' => 1,
+                'titulo_boton' => 'Cargar resultado de indautor',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
             Enum_es::Radicado => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(),
-                'is_boton' => FALSE,
-                'titulo_boton' => '',
+                'is_boton' => 1,
+                'titulo_boton' => 'Radicar',
                 'color_status' => '',
-                'funcion_demandada' => '',
+                'funcion_demandada' => 'cambio_estado(this)',
             ),
         );
+        return $this->reglas_estado;
     }
 
     function get_tema($solicitud_id=null){
@@ -273,6 +285,33 @@ class Solicitud_model extends MY_Model {
             return $tema;
         }else{
             return false;
+        }
+    }
+
+    public function update_insert_estado_solicitud($parametros_insert_nuevo_hist, $parametros_update_hist_actual, $condicion_hist_actual) {
+
+        $this->db->trans_begin(); //Definir inicio de transacción
+        //Actualiza el estado actual de la historia de la solicitud, para darla de baja
+        $this->db->where($condicion_hist_actual);
+        $this->db->update('hist_revision_isbn', $parametros_update_hist_actual); //Inserción de registro
+//        pr($this->db->last_query());
+
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return 0; //Rollback 
+        } else {
+            $this->db->insert('hist_revision_isbn', $parametros_insert_nuevo_hist); //Inserción de registro
+            $data_hist_id = $this->db->insert_id(); //Obtener identificador insertado
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                return 0; //Rollback 
+            } else {
+//                pr($this->db->last_query());
+                $this->db->trans_commit();
+                return $data_hist_id; //retorna el id de la última historia de la solicitud
+            }
+            //pr($this->db->last_query());
         }
     }
 

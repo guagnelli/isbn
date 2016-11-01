@@ -73,10 +73,12 @@ $lang['interface'] = array(
         'lbl_tipo_orden' => 'Tipo de orden:',
         'lbl_estado_solicitud' => 'Estado de la solicitud',
         'lbl_entidades' => 'Entidades',
+        'lbl_subsistema' => 'Subsistemas',
         'text_buscar_por' => 'Buscar por: ',
         'txt_buscar_solicitud' => 'Buscar por: ',
         'drop_estado_solicitud' => 'Selecciona estado de la solicitud',
         'drop_entidades' => 'Seleccionar entidad',
+        'drop_subsistema' => 'Seleccionar Subsistemas',
         'li_isbn' => 'ISBN',
         'li_title_obra' => 'Titulo del libro',
         'li_sub_title_obra' => 'Sub titulo del libro',
@@ -84,12 +86,13 @@ $lang['interface'] = array(
         'order_estado_solicitud' => 'Estado de la solicitud',
         'order_subtitulo_libro' => 'Sub titulo del libro',
         'order_isbn' => 'ISBN',
+        'btn_agreagar_solicitud' => 'Nueva solicitud',
         
     ),
     'tabla_resultados' => array(
         'resp_sin_resultados' => 'No se encontraron resultados',
         'title_folio' => 'Folio',
-        'title_estado' => 'Esado del libro',
+        'title_estado' => 'Estado del libro',
         'title_libro' => 'Titulo del libro',
         'title_isbn_libro' => 'ISBN del libro',
         'title_name_entidad' => 'Entidad',
@@ -101,6 +104,12 @@ $lang['interface'] = array(
     ),
     'solicitud_detalle' => array(
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
+    ),
+    'solicitud_cambio_estado' => array(
+        'lbl_titulo_seccion' => 'Detalle de la solicitud',
+        'save_estado_error' => 'Detalle de la solicitud',
+        'save_default' => 'El cambio de estado se efectuo correctamente',
+        'save_envio_revision' => 'La solicitud se envió a revisión correctamente',
     )
 );
 

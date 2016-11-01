@@ -11,15 +11,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!--Mostrará la tabla de actividad docente --> 
     <table class="table table-striped table-hover table-bordered" id="tabla_investigacion_docente">
         <thead>
-            <tr class="bg-info">
-                <th ><?php echo $string_values['title_folio'] ?></th>
-                <th ><?php echo $string_values['title_estado'] ?></th>
-                <th ><?php echo $string_values['title_isbn_libro'] ?></th>
-                <th ><?php echo $string_values['title_libro'] ?></th>
-                <th ><?php echo $string_values['title_name_entidad'] ?></th>
-                <th ><?php echo $string_values['title_fecha_validacion'] ?></th>
-                <th ><?php echo $string_values['title_ver_detalle'] ?></th>
-                <th ><?php echo $string_values['title_validacion'] ?></th>
+            <tr class="bg-red">
+                <th  style="color:#ffffff"><?php echo $string_values['title_folio'] ?></th>
+                <th style="color:#ffffff" ><?php echo $string_values['title_estado'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_isbn_libro'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_libro'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_name_entidad'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_fecha_validacion'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_ver_detalle'] ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_validacion'] ?></th>
             </tr>
         </thead >
         <tbody>
@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //                pr($val['hist_validacion_cve']);
                 $solicitud_cve = $this->seguridad->encrypt_base64($val['solicitud_cve']);
                 $hist_solicitud = $this->seguridad->encrypt_base64(intval($val['hist_solicitud']));
+                $estado_solicitud = $this->seguridad->encrypt_base64(intval($val['estado_cve']));
                 $link_ver_detalle = '';
 
                 $link_ver_detalle = '<button '
@@ -36,6 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'class="btn btn-link btn-sm" '
                         . 'data-row="' . $key_ai . '"'
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
+                        . 'data-estadosolicitudcve="' . $estado_solicitud . '"'
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
                         . 'data-toggle="modal"'
                         . 'data-target="#modal_censo"'
@@ -46,8 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $link_ver_solicitud = 'class=" text-center" '
                         . 'onclick="funcion_ver_solicitud_entidad(this)" '
                         . 'data-solicitudcve ="' . $solicitud_cve . '"'
-                        . 'data-row="' . $key_ai . '"'
-                        . 'data-histsolicitudcve="' . $hist_solicitud . '"';
+                        . 'data-estadosolicitudcve="' . $estado_solicitud . '"'
+                        . 'data-histsolicitudcve="' . $hist_solicitud . '"'
+                        . 'data-row="' . $key_ai . '"';
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";

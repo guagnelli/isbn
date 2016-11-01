@@ -28,7 +28,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </h1>
             </div>
             <div class="panel-body">
+                <?php if (isset($boton_estado)) { ?>
 
+                    <div class="list-group-item text-center center ">
+                        <a class="btn btn-primary" data-toggle='tab' href='#select_buscador_solicitud_entidad'>Cancelar</a>
+                        <?php
+                        foreach ($boton_estado as $botones) {
+                            echo $botones;
+                        }
+                        ?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -36,8 +46,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 contenedor" >
-        <span id="pie"  onclick="funcion_cerrar_validacion_empleado(this)">
-            <a class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];    ?></a>
+        <span id="pie"  onclick="funcion_cerrar_vista_solicitud(this)">
+            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];?></a>
         </span>
     </div>
 </div>

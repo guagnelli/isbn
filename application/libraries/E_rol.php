@@ -4,8 +4,9 @@ class E_rol {
 
     const
             __default = 0,
-            ENTIDAD = 1,
-            DGAJ = 2,
-            ADMINISTRADOR = 3
+            ENTIDAD = 4,
+            DGAJ = 3,
+            ADMINISTRADOR = 2,
+            SUPERADMINISTRADOR = 1
     ;
 }

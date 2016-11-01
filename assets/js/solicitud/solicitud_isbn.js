@@ -9,16 +9,6 @@ $(function () {
     $('.nav.nav-pills a[href="' + hash + '"]').tab('show', function () {
         $(document).scrollTop();
     });
-
-//    $('.botonF1').hover(function () {
-//        $('.btn').addClass('animacionVer');
-//    })
-//    
-//    $('.contenedor').mouseleave(function () {
-//        $('.btn').removeClass('animacionVer');
-//    })
-
-
 });
 
 
@@ -60,25 +50,18 @@ function funcion_ver_solicitud_entidad(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
     var solicitud_cve = button_obj.data('solicitudcve');
     var histsolicitudcve = button_obj.data('histsolicitudcve');
+    var estado_solicitud = button_obj.data('estadosolicitudcve');
     //Remover contenido de un div 
     $('#select_perfil_solicitud').empty();
-    var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve};
+    var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve, estado_cve: estado_solicitud};
     data_ajax_post(site_url + '/solicitud/seccion_index', null, '#select_perfil_solicitud', obj_post);
 }
-function funcion_cerrar_validacion_empleado(element) {
+function funcion_cerrar_vista_solicitud(element) {
 //    alert('jsahjhdadas');
     $('#select_perfil_validar').empty();
-//    data_ajax_post(site_url + '/validacion_censo_profesores/seccion_delete_datos_validado', null, null);
+    data_ajax_post(site_url + '/solicitud/seccion_delete_datos_solicituid', null, null);
 }
 
-function ver_comentario_estado_doc(element) {
-    var obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
-//    var hist_val_cve = obj.data('histvalcve');
-    var empleado_cve = obj.data('empcve');
-    var convocatoria_cve = obj.data('convocatoriacve');
-    var formData = {convocatoria_cve: convocatoria_cve, empleado_cve: empleado_cve};
-    data_ajax_post(site_url + '/validacion_censo_profesores/ver_comentario_estado', null, '#modal_content', formData);
-}
 function ver_detalle_solicitud(element) {
     var obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
 //    var hist_val_cve = obj.data('histvalcve');

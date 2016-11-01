@@ -4,19 +4,27 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 $config['salt'] = "B0no5"; ///SALT
-
 $config['modulos_no_sesion'] = array(
     'login' => array('index', 'cerrar_session', 'cerrar_session_ajax'),
-    'registro' => array('*'),
     'pagina_no_encontrada' => array('index'),
-    'recuperar_contrasenia' => '*',
-    'captcha' => '*'
+    'recuperar_contrasenia' => array('*'),
+    'captcha' => array('*')
 );
 $config['modulos_sesion_generales'] = array(
     'login' => array('cerrar_session', 'cerrar_session_ajax'),
-    'rol' => '*',
-    'pagina_no_encontrada' => array('index'),
-    'pruebas' => '*'
+    'dashboard' => array('*'),
+    'pagina_no_encontrada' => array('index')
+);
+/*$config['modulos_permisos'] = array(E_rol::SUPERADMINISTRADOR => array('solicitud' => array('*')), 
+    E_rol::ADMINISTRADOR => array('solicitud' => array('*')),
+    E_rol::DGAJ => array('solicitud' => array('*')), 
+    E_rol::ENTIDAD => array('solicitud' => array('*'))
+);*/
+$config['modulos_permisos'] = array(
+    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')), 
+    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')),
+    E_rol::DGAJ => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud')), 
+    E_rol::ENTIDAD => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud'))
 );
 
 /////Ruta de solicitudes
@@ -37,18 +45,26 @@ $config['bon_pro_eva_min'] = (float) 80.00;
 
 $config['bon_sum_act_min'] = 26;
 
-$config['cestado_usuario'] = array('ACTIVO'=>array('id'=>1), 'INACTIVO'=>array('id'=>2), 'RESTABLECERCONTRASENIA'=>array('id'=>3), 'RESTABLECERCMA'=>array('id'=>4));
+$config['cestado_usuario'] = array('ACTIVO' => array('id' => 1), 'INACTIVO' => array('id' => 2), 'RESTABLECERCONTRASENIA' => array('id' => 3), 'RESTABLECERCMA' => array('id' => 4));
 
 $config['catalogos_definidos'] = array(
-    Enum_cg::c_barcode_size => array('id'=>'', 'desc'=>''),
-    Enum_cg::c_entidad => array('id'=>'id', 'desc'=>'name'),
-    Enum_cg::c_estado => array('id'=>'id', 'desc'=>'name'),
+    Enum_cg::c_barcode_size => array('id' => '', 'desc' => ''),
+    Enum_cg::c_entidad => array('id' => 'id', 'desc' => 'name'),
+    Enum_cg::c_estado => array('id' => 'id', 'desc' => 'name'),
+    Enum_cg::c_subsistema => array('id'=>'id', 'desc'=>'name'),
+    Enum_cg::c_categoria => array('id'=>'id', 'desc'=>'nombre'),
+    Enum_cg::c_subcategoria => array('id'=>'id', 'desc'=>'nombre'),
+);
+
+$config['alert_msg'] = array(
+    'SUCCESS' => array('id_msg' => 1, 'class' => 'success'),
+    'DANGER' => array('id_msg' => 2, 'class' => 'danger'),
+    'WARNING' => array('id_msg' => 3, 'class' => 'warning'),
+    'INFO' => array('id_msg' => 4, 'class' => 'info')
 );
 
 $config['tipo_obra'] = array(
-    'I'=>'Independiente',
-    'C'=>'Completa',
-    'V'=>'Volumen',
+    'I' => 'Independiente',
+    'C' => 'Completa',
+    'V' => 'Volumen',
 );
-
-

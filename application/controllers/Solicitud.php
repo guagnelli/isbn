@@ -24,8 +24,15 @@ class Solicitud extends MY_Controller {
 
     }
 
+    private function limpia_varsesion() {
+        $variables = array('rol_seleccionado_cve',);
+        foreach ($variables as $value) {
+            $this->session->unset_userdata($value);
+        }
+    }
+
     function index(){
-        $this->session->set_userdata('rol_usuario_cve', E_rol::ENTIDAD); //entidad
+        $this->session->set_userdata('rol_cve', E_rol::ENTIDAD); //entidad
 //       $this->session->set_userdata('rol_usuario_cve', '2');//Juridico
         $this->lang->load('interface', 'spanish');
         $string_values = $this->lang->line('interface')['solicitud_index'];
@@ -33,13 +40,14 @@ class Solicitud extends MY_Controller {
         $data['order_columns'] = array('hri.c_estado_id' => $string_values['order_estado_solicitud'], 'lb.title' => $string_values['order_titulo_libro'],
             'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
         );
-        $rol_sesion = $this->session->userdata('rol_usuario_cve');
+        $rol_sesion = $this->session->userdata('rol_cve');
 
-                $datos_usuario = array();
+        $datos_usuario = array();
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $array_catalogos = array(Enum_cg::c_estado);
                 $datos_usuario['entidad_cve'] = 1;
+                $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 break;
             case E_rol::DGAJ://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad);
@@ -119,7 +127,23 @@ class Solicitud extends MY_Controller {
                 </script>';
     }
     
-    
+    public function seccion_delete_datos_solicituid() {
+        if ($this->input->is_ajax_request()) {
+//            if ($this->input->post()) {
+//                $datos_post = $this->input->post(null, TRUE);
+            $this->delete_datos_validado(); //Elimina los datos de empleado validado, si se encuentran los datos almacenados en la variable de sesión
+//            }
+        } else {
+            redirect(site_url());
+        }
+    }
+
+    private function delete_datos_validado() {
+        if (!is_null($this->session->userdata('detalle_solicitud'))) {
+            $this->session->unset_userdata('detalle_solicitud');
+        }
+    }
+
     /**
      * 
      */
@@ -129,10 +153,10 @@ class Solicitud extends MY_Controller {
             if (!is_null($this->input->post())) {
                 $this->lang->load('interface', 'spanish');
                 $string_values = $this->lang->line('interface')['solicitud_detalle'];
-                $datosPerfil['string_values'] = $string_values; 
+                $datosPerfil['string_values'] = $string_values;
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
 //                pr($datos_post);
-                $rol_seleccionado = $this->session->userdata('rol_seleccionado'); //Rol seleccionado de la pantalla de roles
+                $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
 //                pr($rol_seleccionado);
                 $datos_solicitud = array();
                 $datos_solicitud['estado_correccion'] = null;
@@ -144,10 +168,18 @@ class Solicitud extends MY_Controller {
                 if (!empty($datos_post['histsolicitudcve'])) {
                     $datos_solicitud['histsolicitudcve'] = $this->seguridad->decrypt_base64($datos_post['histsolicitudcve']); //Identificador de la comisión
                 }
-
+                if (!empty($datos_post['estado_cve'])) {
+                    $datos_solicitud['estado_cve'] = $this->seguridad->decrypt_base64($datos_post['estado_cve']); //Identificador de la comisión
+                }
+                //Genera reglas de estado 
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+                $parametros_estado['reglas_validacion'] = $reglas_validacion;
+                $parametros_estado['rol_seleccionado'] = $rol_seleccionado;
+                $parametros_estado['estado_cve'] = $datos_solicitud['estado_cve'];
+                $datosPerfil['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
+//                pr($datos_perfil['boton_estado']);
                 //Carga datos de la solicitud del ISBN
                 $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la información del usuario al que se va a validar
-
                 echo $this->load->view('solicitud/buscador/index', $datosPerfil, true);
             }
 //            pr($this->session->userdata('datosvalidadoactual'));$datos_empleado_validar
@@ -160,21 +192,21 @@ class Solicitud extends MY_Controller {
         $id_entidad = 1; //from session
         $id_categoria = null;
         $id_subcategoria = null;
-
+        $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
         //si tiene datosbusca por id
-        if($this->input->post()){
+        if ($this->input->post()) {
             $post = $this->input->post();
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //Añadir validaciones
             //pr($post);
-            $data["save"]=$post;
-            
+            $data["save"] = $post;
+
             if ($this->form_validation->run()) {
                 //$data["datos"]["entidad"] = $this->sol->getEntidad($id_entidad);
                 $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
-                $solicitud = $this->req->addSolicitud($data["save"]); 
-                if($solicitud > 0){
+                $solicitud = $this->req->addSolicitud($data["save"]);
+                if ($solicitud > 0) {
                     redirect("solicitud/secciones/$solicitud");
                 }
                 //pr($data);
@@ -182,6 +214,14 @@ class Solicitud extends MY_Controller {
         }
         $data["datos"]["categorias"] = $this->req->listCategoria();
         $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
+
+        //Genera reglas de estado 
+        $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+        $parametros_estado['reglas_validacion'] = $this->req->getReglasEstadosSolicitud();
+        $parametros_estado['rol_seleccionado'] = $rol_seleccionado;
+        $parametros_estado['estado_cve'] = Enum_es::__default; //Estado inicial para enviar una solicitud
+        $data['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
+//        pr($data['boton_estado']);
 
         $main_contet = $this->load->view('solicitud/registrar.tpl.php', $data, true);
         $this->template->setMainContent($main_contet);
@@ -199,7 +239,61 @@ class Solicitud extends MY_Controller {
         $this->template->getTemplate();
     }
 
-    function load_seccion(){
+    function detalle() {
+        $this->load->model("Solicitud_model", 'req');
+        $solicitud = $this->req->getSolicitud(1);
+//        pr($solicitud);
+        $main_contet = $this->load->view('solicitud/detalle.tpl.php', null, true);
+        $this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
+    }
+
+    public function enviar_cambio_estado_solicitud() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                $this->lang->load('interface', 'spanish');
+                $tipo_msg = $this->config->item('alert_msg');
+                $string_values = $this->lang->line('interface')['solicitud_cambio_estado'];
+                $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_solicitud_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisión el estado
+                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisión el estado
+                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Identifica si es un tipo de validar, enviar a correccion o en revisión el estado
+//                pr($datos_post);
+                //Obtiene las reglas de estado 
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+                $estado_ca = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transición
+                $pasa_validacion_datos = 1;
+
+                if ($pasa_validacion_datos == 1) {
+                    $parametro_hist_actual_mod = array('is_actual' => 0);
+                    $condicion_actualizacion = array('id' => $hist_validacion_actual);
+                    $parametros_insert_hist_val = array('is_actual' => 1, 'solicitud_cve' => $solicitud_cve, 'c_estado_id' => $estado_transicion_cve);
+                    $result_cam_estado = $this->req->update_insert_estado_solicitud($parametros_insert_hist_val, $parametro_hist_actual_mod, $condicion_actualizacion);
+                    if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
+                        if (isset($estado_ca['mensaje_guardado_correcto'])) {
+                            $data['error'] = $string_values[$estado_ca['mensaje_guardado_correcto']]; //
+                        } else {
+                            $data['error'] = $string_values['save_default']; //
+                        }
+                        $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
+                        $data['result'] = 1; //Error resultado success
+                    } else {//Manda mensaje de error que no se pudo almacenar los datos
+                        $data['error'] = $string_values['save_estado_error']; //
+                        $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
+                        $data['result'] = 0; //Error resultado success
+                    }
+                    echo json_encode($data);
+                    exit();
+                } else {//Regresar mensaje de que no paso el estado cde la validación
+                }
+            }
+        } else {
+            redirect(site_url());
+        }
+    }
+
+    /*function load_seccion(){
         if ($this->input->is_ajax_request()){
             $seccion = $this->input->post("seccion");
             //$response['message'] = $this->input->post("seccion");
@@ -211,7 +305,7 @@ class Solicitud extends MY_Controller {
         }else{
             redirect("/");
         }
-    }
+    }*/
 
     function sec_tema(){
         if($this->input->is_ajax_request()){
@@ -267,8 +361,6 @@ class Solicitud extends MY_Controller {
 
     }
 
-
-
     function add_seccion(){
         if($this->input->is_ajax_request()){
             $data = $this->input->post();
@@ -294,22 +386,4 @@ class Solicitud extends MY_Controller {
             redirect("/");
         }
     }
-
-    function baja(){
-
-    }
-
-    function edicion(){
-
-    }
-
-    function detalle(){
-        $this->load->model("Solicitud_model",'req');
-        $solicitud = $this->req->getSolicitud(1);
-        pr($solicitud);
-    	$main_contet = $this->load->view('solicitud/detalle.tpl.php', null, true);
-		$this->template->setMainContent($main_contet);
-        $this->template->getTemplate();
-    }
-
 }
