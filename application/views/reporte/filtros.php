@@ -23,7 +23,7 @@
             <div id="select_buscador_solicitud_entidad" class="tab-pane fade active in">
                 <div>
                     <br>
-                    <h4><?php echo $string_values['title_template']; ?> </h4>
+                    <h4><?php echo $string_values['title_reporte']; ?> </h4>
                     <br>
                 </div>
                 <?php //if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad ?> 
@@ -65,6 +65,44 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <div class="panel-body input-group ">
+                                <span class="input-group-addon"><?php echo $string_values['lbl_subcategoria']; ?></span>
+                                <?php
+                                echo $this->form_complete->create_element(array('id' => 'subcategoria_cve',
+                                    'type' => 'dropdown',
+                                    'options' => $c_subcategoria,
+                                    'first' => array('' => $string_values['drop_subcategoria']),
+                                    'value' => '',
+                                    'class' => 'form-control',
+                                    'attributes' => array('class' => 'form-control',
+                                        'placeholder' => $string_values['lbl_subcategoria'],
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => $string_values['lbl_subcategoria'])));
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <div class="panel-body input-group ">
+                                <span class="input-group-addon"><?php echo $string_values['lbl_categoria']; ?></span>
+                                <?php
+                                echo $this->form_complete->create_element(array('id' => 'categoria_cve',
+                                    'type' => 'dropdown',
+                                    'options' => $c_categoria,
+                                    'first' => array('' => $string_values['drop_categoria']),
+                                    'value' => '',
+                                    'class' => 'form-control',
+                                    'attributes' => array('class' => 'form-control',
+                                        'placeholder' => $string_values['lbl_categoria'],
+                                        'data-toggle' => 'tooltip',
+                                        'data-placement' => 'top',
+                                        'title' => $string_values['lbl_categoria'])));
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                 <?php //} ?>
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-sm-6">
@@ -88,7 +126,7 @@
 
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="panel-body input-group">
-                            <input type="hidden" id="menu_select" name="menu_busqueda" value="titulo_obra">
+                            <input type="hidden" id="menu_busqueda" name="menu_busqueda" value="titulo_obra">
                             <div class="input-group-btn">
                                 <button id="btn_buscar_por" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default dropdown-toggle " data-toggle="tooltip" data-original-title="<?php echo $string_values['text_buscar_por']; ?>"><?php echo $string_values['li_title_obra']; ?><span class="caret"> </span></button>
                                 <ul id="ul_menu_buscar_por" data-seleccionado='titulo_obra' class="dropdown-menu borderlist">

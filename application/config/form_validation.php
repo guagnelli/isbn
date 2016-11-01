@@ -43,6 +43,38 @@ $config["solicitud"]=array(
             )
         ),
     );
+$config["form_perfil"]=array(
+        array(
+            'field' => 'nombre',
+            'label' => 'Nombre',
+            'rules' => 'trim|required|max_length[20]'
+        ),
+        array(
+            'field' => 'apaterno',
+            'label' => 'Apellido paterno',
+            'rules' => 'trim|required|max_length[20]'
+        ),
+        array(
+            'field' => 'amaterno',
+            'label' => 'Apellido materno',
+            'rules' => 'trim|required|max_length[20]'
+        ),
+        array(
+            'field' => 'correo',
+            'label' => 'Correo',
+            'rules' => 'trim|required|max_length[40]|valid_email'
+        ),
+        array(
+            'field' => 'contrasenia',
+            'label' => 'Contraseña',
+            'rules' => 'trim|required|max_length[150]'
+        ),
+        array(
+            'field' => 'confirmacion',
+            'label' => 'Confirmar contraseña',
+            'rules' => 'trim|required|max_length[150]|matches[contrasenia]'
+        ),
+    );
 $config["sol_sec_tema"]=array(
     array(
         'field' => 'tema[coleccion]',

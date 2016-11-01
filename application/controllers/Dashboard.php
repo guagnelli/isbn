@@ -3,7 +3,7 @@
 /**
  * Clase que gestiona EL DASHBOARD
  * @version 	: 1.0.0
- * @autor 		: Pablo José D.
+ * @autor 		: JZDP
  */
 
 class Dashboard extends CI_Controller {

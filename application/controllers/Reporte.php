@@ -17,6 +17,7 @@ class Reporte extends MY_Controller {
         $this->load->config('general');
         $this->load->library('form_validation');
         $this->load->library('seguridad');
+        $this->load->helper('date');
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Reporte_model", 'reporte');
     }
@@ -26,7 +27,8 @@ class Reporte extends MY_Controller {
         $string_values = $this->lang->line('interface')['solicitud_index'];
         $data['string_values'] = $string_values;
         $data['order_columns'] = array('hri.c_estado_id' => $string_values['order_estado_solicitud'], 'lb.title' => $string_values['order_titulo_libro'],
-            'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
+            'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn'], 'cent.name' => $string_values['order_entidad'],
+            'c_subsistema.name' => $string_values['order_subsistema'], 'c_categoria.nombre' => $string_values['order_categoria'], 'c_subcategoria.nombre' => $string_values['order_subcategoria']
         );
         //$rol_sesion = $this->session->userdata('rol_usuario_cve');
 
@@ -70,7 +72,7 @@ class Reporte extends MY_Controller {
                         'elemento_resultado' => '#div_result_solicitudes'
                     )); //Generar listado en caso de obtener datos
                 } else {
-                    echo $string_values ['resp_sin_resultados'];
+                    echo $string_values['resp_sin_resultados'];
                 }
             }
         } else {
@@ -78,9 +80,44 @@ class Reporte extends MY_Controller {
         }
     }
 
+    public function descargar_solicitudes(){
+        if (!is_null($this->input->post())) {
+            $this->lang->load('interface');
+            $string_values = $this->lang->line('interface')['tabla_resultados'];
+            $filtros = $this->input->post(null, true); //Obtenemos el post o los valores 
+            
+            $filtros['current_row'] = (isset($current_row) && !empty($current_row)) ? $current_row : 0;
+            $data['descarga'] = true;
+            $resultado = $this->reporte->get_buscar_solicitudes($filtros+$data);
+            //pr($resultado['result']);
+            //exit();
+            $data['string_values'] = $string_values;
+            $data['lista_solicitudes'] = $resultado['result'];
+            $data['total'] = $resultado['total'];
+            $data['current_row'] = $filtros['current_row'];
+            $data['per_page'] = $this->input->post('per_page');
+
+            if (isset($data['lista_solicitudes']) && !empty($data['lista_solicitudes'])) {
+                //$datos['lista_solicitudes'] = $data['lista_solicitudes'];
+                //$datos['string_values'] = $data['string_values'];
+                header('Content-type: application/vnd.ms-excel; charset=UTF-8');
+                header("Content-Disposition: attachment; filename=Reporte_ISBN_".date('Y_m_d-h_m_s').".xls");
+                header("Pragma: no-cache");
+                header("Expires: 0");
+                echo pack("CCC",0xef,0xbb,0xbf);
+                echo $this->load->view('reporte/tabla_resultados_solicitudes', $data, TRUE);
+                /*$this->listado_resultado_unidades($data, array('form_recurso' => '#form_busqueda_solicitudes',
+                    'elemento_resultado' => '#div_result_solicitudes'
+                )); //Generar listado en caso de obtener datos*/
+            } else {                
+                redirect(site_url());
+            }
+        }
+    }
+
     private function listado_resultado_unidades($data, $form) {
-        $data['controller'] = 'Reporte_model';
-        $data['action'] = 'get_buscar_solicitudes';
+        $data['controller'] = 'reporte';
+        $data['action'] = 'buscador_solicitudes';
         $pagination = $this->template->pagination_data($data); //Crear mensaje y links de paginación
         //$pagination = $this->template->pagination_data_buscador_asignar_validador($data); //Crear mensaje y links de paginación
         $links = "<div class='col-sm-5 dataTables_info' style='line-height: 50px;'>" . $pagination['total'] . "</div>

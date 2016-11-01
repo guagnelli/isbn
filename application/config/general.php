@@ -13,6 +13,7 @@ $config['modulos_no_sesion'] = array(
 $config['modulos_sesion_generales'] = array(
     'login' => array('cerrar_session', 'cerrar_session_ajax'),
     'dashboard' => array('*'),
+    'perfil' => array('*'),
     'pagina_no_encontrada' => array('index')
 );
 /*$config['modulos_permisos'] = array(E_rol::SUPERADMINISTRADOR => array('solicitud' => array('*')), 
