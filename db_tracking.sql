@@ -67,3 +67,7 @@ ALTER TABLE solicitud modify date_created datetime DEFAULT current_timestamp
 
 -----31/10/2016
 ALTER TABLE usuario ADD entidad_id int(11) NULL;
+
+-----01112018 LEAS 
+ALTER TABLE observaciones_seccion_solicitud ADD comentarios text NULL;
+ALTER TABLE observaciones_seccion_solicitud ADD fecha_comment datetime default current_timestamp;;

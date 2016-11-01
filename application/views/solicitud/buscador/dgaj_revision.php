@@ -27,7 +27,7 @@
                 <li>Tipo de contenido: Ensayo  . Filosofía</li>
             </ul>
 
-            <p><b>Colaboradores:</b></p>
+            <p><b>Colaboradores:</b></p><?php echo $botones_seccion[En_secciones::COLABORADORES]; ?>
             <ul>    
                 <li>SN / Colaboradores</li>
             </ul>

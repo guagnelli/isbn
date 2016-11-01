@@ -12,44 +12,44 @@ class Solicitud_model extends MY_Model {
         $this->load->database();
     }
 
-    function addSolicitud($data){
+    function addSolicitud($data) {
         // pr($data);
         $this->db->trans_begin();
-        $this->db->insert("libro",$data["libro"]);
-        if($this->db->affected_rows() > 0){
-            $data["solicitud"]["libro_id"] = $this->db->insert_id(); 
-            $data["solicitud"]["folio"] = "folio-".str_pad($this->db->insert_id(), 10,0,STR_PAD_LEFT);
-            $this->db->insert("solicitud",$data["solicitud"]);
-            if($this->db->affected_rows() > 0){
+        $this->db->insert("libro", $data["libro"]);
+        if ($this->db->affected_rows() > 0) {
+            $data["solicitud"]["libro_id"] = $this->db->insert_id();
+            $data["solicitud"]["folio"] = "folio-" . str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
+            $this->db->insert("solicitud", $data["solicitud"]);
+            if ($this->db->affected_rows() > 0) {
                 $solicitud_id = $this->db->insert_id();
-                $this->db->insert("hist_revision_isbn",array(
-                    "c_estado_id"=>1,
-                    "solicitud_cve"=>$solicitud_id
+                $this->db->insert("hist_revision_isbn", array(
+                    "c_estado_id" => 1,
+                    "solicitud_cve" => $solicitud_id
                 ));
-                if($this->db->affected_rows() > 0){
+                if ($this->db->affected_rows() > 0) {
                     $this->db->trans_commit();
                     return $solicitud_id;
-                }else{
+                } else {
                     $this->db->trans_rollback();
                 }
-            }else{
+            } else {
                 $this->db->trans_rollback();
-            }            
-        }else{
+            }
+        } else {
             $this->db->trans_rollback();
         }
         return false;
     }
 
-    function getSolicitud($id=null,$load_secciones=true,$array=true){
-    	if(is_null($id)){
-    		throw new Exception("Identificador no definido", 1);
-    	}
+    function getSolicitud($id = null, $load_secciones = true, $array = true) {
+        if (is_null($id)) {
+            throw new Exception("Identificador no definido", 1);
+        }
 
         //solicitud
-        $this->db->where("solicitud.id",$id);
-    	$result = $this->db->get("solicitud");
-        if($result->num_rows()<1){
+        $this->db->where("solicitud.id", $id);
+        $result = $this->db->get("solicitud");
+        if ($result->num_rows() < 1) {
             throw new Exception("El identificador no se encuentra registrado", 1);
         }
         $solicitud = $result->row_array();
@@ -58,32 +58,32 @@ class Solicitud_model extends MY_Model {
         $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
         $solicitud["libro"] = $this->getLibro($solicitud["libro_id"]);
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
-        $tipo_obra =  $this->config->item('tipo_obra');
+        $tipo_obra = $this->config->item('tipo_obra');
         $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
 
-        if($load_secciones){
+        if ($load_secciones) {
             // secciones
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
-                $solicitud["secciones"][$seccion["cve_seccion"]]="hello world_".$seccion["cve_seccion"];
-            }    
+                $solicitud["secciones"][$seccion["cve_seccion"]] = "hello world_" . $seccion["cve_seccion"];
+            }
         }
         //pr($solicitud);
         return $solicitud;
     }
 
-    function getEntidad($id=null){
-        if(is_null($id)){
+    function getEntidad($id = null) {
+        if (is_null($id)) {
             throw new Exception("Identificador no definido", 1);
         }
 
         $this->db->select("c_entidad.id as id, c_entidad.name as nombre, c_entidad.code, 
             c_subsistema.id as subsistema_id, c_subsistema.name as subsistema_nombre");
-        $this->db->where("c_entidad.id",$id);
-        $this->db->join("c_subsistema","c_subsistema.id=c_entidad.subsistema_id");
+        $this->db->where("c_entidad.id", $id);
+        $this->db->join("c_subsistema", "c_subsistema.id=c_entidad.subsistema_id");
         $result = $this->db->get("c_entidad");
         // echo $this->db->last_query();
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("Error inesperado en la entidad {$id}", 1);
         }
         $entidad = $result->row_array();
@@ -99,9 +99,9 @@ class Solicitud_model extends MY_Model {
         );
         $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
-           's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
-           'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
-       );
+            's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
+            'hri.reg_revision "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
+        );
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
 //        $this->db->from('cdepartamento as dp');
         $this->db->join('c_estado ce', 'ce.id = hri.c_estado_id');
@@ -156,12 +156,12 @@ class Solicitud_model extends MY_Model {
         return $result;
     }
 
-    function listCategoria($id_categoria=null){
-        if(!is_null($id_categoria)){
-            $this->db->where("id_categoria",$id_categoria);
+    function listCategoria($id_categoria = null) {
+        if (!is_null($id_categoria)) {
+            $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_categoria");
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("El catálogo esta vacio", 1);
         }
         $list = $result->result_array();
@@ -169,14 +169,14 @@ class Solicitud_model extends MY_Model {
         return $list;
     }
 
-    function listSubCategoria($id_categoria=null,$id_subcategoria=null){
-        if(!is_null($id_subcategoria)){
-            $this->db->where("id",$id_subcategoria);
-        }elseif(!is_null($id_categoria)){
-            $this->db->where("id_categoria",$id_categoria);
+    function listSubCategoria($id_categoria = null, $id_subcategoria = null) {
+        if (!is_null($id_subcategoria)) {
+            $this->db->where("id", $id_subcategoria);
+        } elseif (!is_null($id_categoria)) {
+            $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_subcategoria");
-        if($result->num_rows() != 1){
+        if ($result->num_rows() != 1) {
             throw new Exception("La categoria {$id} no existe", 1);
         }
         $list = $result->result_array();
@@ -184,17 +184,17 @@ class Solicitud_model extends MY_Model {
         return $list;
     }
 
-    function getLibro($id){
-        $this->db->where("id",$id);
+    function getLibro($id) {
+        $this->db->where("id", $id);
         $libro = $this->db->get("libro");
         return $libro->row_array();
     }
 
-    function getClasifTematica($id){
+    function getClasifTematica($id) {
         $this->db->select("c_categoria.id id_categoria,c_categoria.nombre categoria, 
             c_subcategoria.id id_subcategoria, c_subcategoria.nombre subcategoria");
-        $this->db->where("c_subcategoria.id",$id); 
-        $this->db->join("c_categoria","c_subcategoria.id_categoria = c_categoria.id");
+        $this->db->where("c_subcategoria.id", $id);
+        $this->db->join("c_categoria", "c_subcategoria.id_categoria = c_categoria.id");
         $ct = $this->db->get("c_subcategoria");
         return $ct->row_array();
     }
@@ -288,7 +288,7 @@ class Solicitud_model extends MY_Model {
         );
         return $reglas_estado;
     }
-    
+
     function getSeccionesSolicitud() {
         $secciones = array(
             En_secciones::TEMA, En_secciones::IDIOMA, En_secciones::COLABORADORES, En_secciones::TRADUCCION,
@@ -296,23 +296,18 @@ class Solicitud_model extends MY_Model {
             En_secciones::DESC_FISICA_IMPRESA, En_secciones::PAGO_ELECTRONICO, En_secciones::CODIGO_BARRAS
         );
         return $secciones;
-
-
-
-
-
     }
 
-    function get_tema($solicitud_id=null){
-        $this->db->where("solicitud_id",$solicitud_id);
+    function get_tema($solicitud_id = null) {
+        $this->db->where("solicitud_id", $solicitud_id);
         $result = $this->db->get("tema");
-        if($result->num_rows() == 0){
+        if ($result->num_rows() == 0) {
             return TRUE;
-        }elseif($result->num_rows() == 1){
+        } elseif ($result->num_rows() == 1) {
             $tema = $result->row_array();
             $result->free_result();
             return $tema;
-        }else{
+        } else {
             return false;
         }
     }
@@ -344,23 +339,59 @@ class Solicitud_model extends MY_Model {
         }
     }
 
-    function add($table=null,$data = null){
-        if(!isset($data["solicitud_id"]) || is_null($table)){
+    function add($table = null, $data = null) {
+        if (!isset($data["solicitud_id"]) || is_null($table)) {
             return false;
         }
-        $this->db->insert($table,$data);
-        if($this->db->affected_rows() > 0){
+        $this->db->insert($table, $data);
+        if ($this->db->affected_rows() > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    function update($table=null,$data = null,$where=array()){
-        if(is_null($table) || !is_array($where)){
+
+    function update($table = null, $data = null, $where = array()) {
+        if (is_null($table) || !is_array($where)) {
             return false;
         }
-        $this->db->update($table,$data,$where);
+        $this->db->update($table, $data, $where);
         return true;
+    }
+
+    function get_comentarios_seccion($seccion_cve, $solicitud_cve) {
+        $select = array('oss.id "observacion_seccion_cve"', 'oss.hist_revision_isbn_id "hist_cve"',
+            'oss.comentarios "comentario"', 'oss.fecha_comment "fecha_comentario"', 'ce.name "name_estado"',
+            'ss.nom_seccion "name_seccion"'
+        );
+        $this->db->select($select);
+        $this->db->join('hist_revision_isbn hri', 'hri.id = oss.hist_revision_isbn_id');
+        $this->db->join('seccion_solicitud ss', 'ss.id = oss.seccion_cve');
+        $this->db->join('c_estado ce', 'ce.id = hri.c_estado_id');
+        //where que son obligatorios
+        $this->db->where('ss.id', $seccion_cve); //seccion
+        $this->db->where('hri.solicitud_cve', $solicitud_cve); //último estado
+        $result = $this->db->get("observaciones_seccion_solicitud oss");
+        // echo $this->db->last_query();
+        $comentarios = $result->result_array();
+        $result->free_result();
+        return $comentarios;
+    }
+
+    function get_datos_grales_solicitud($seccion_cve, $solicitud_cve) {
+        $subselect = '(select ss.nom_seccion from seccion_solicitud ss where ss.id = ' . $seccion_cve . ') as "name_seccion"';
+        $select = array('lb.title "titulo_libro"', 'lb.subtitle "subtitulo_libro"', 'lb.isbn "isbn_libro"',
+            $subselect
+        );
+        $this->db->select($select);
+        $this->db->join('libro lb', 'lb.id  = s.libro_id');
+        //where que son obligatorios
+        $this->db->where('s.id', $solicitud_cve); //seccion
+        $result = $this->db->get("solicitud s");
+//         echo $this->db->last_query();
+        $comentarios = $result->result_array();
+        $result->free_result();
+        return $comentarios;
     }
 
 }

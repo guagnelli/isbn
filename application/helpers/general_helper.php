@@ -762,6 +762,30 @@ if (!function_exists('valida_acceso_rol_validador')) {
 
 }
 
+if (!function_exists('get_fecha_local')) {
+
+    function get_fecha_local($date = null, $nFormato = 'es_MX') {
+//        es_ES, 
+        if (is_null($date)) {
+            $date = new DateTime("now");
+        }
+//        pr($date);
+//        $fecha = "ss";
+        switch ($nFormato) {
+            case 'es_MX':
+//                setlocale(LC_TIME, 'es_MX.UTF-8');
+                setlocale(LC_TIME, 'es_ES');
+                $fecha = strftime("%a, %d de %B de %Y",  strtotime($date));
+                break;
+            default :
+                setlocale(LC_TIME, 'es_ES');
+                $fecha = strftime("%a, %d de %B de %Y",  strtotime($date));
+        }
+        return $fecha;
+    }
+
+}
+
 
     /* End of file general_helper.php */
     

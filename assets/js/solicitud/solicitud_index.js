@@ -61,6 +61,6 @@ $('.comentario').click(function () {
     var hist_cve = button_obj.data('histsolicitudcve');
     var solicitud_cve = button_obj.data('solicitudcve');
     var seccion_cve = button_obj.data('seccioncve');
-    var obj = {hist_cve:hist_cve, solicitud_cve: solicitud_cve, seccion_cve:seccion_cve};
+    var obj = {hist_cve: hist_cve, solicitud_cve: solicitud_cve, seccion_cve: seccion_cve};
     data_ajax_post(site_url + '/solicitud/comentarios_seccion', null, '#modal_content', obj);
 });
