@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -22,9 +21,10 @@ class Solicitud extends MY_Controller {
         $this->load->library('seguridad');
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Solicitud_model", 'req');
+
     }
 
-    private function limpia_varsesion() {
+      private function limpia_varsesion() {
         $variables = array('detalle_solicitud',);
         foreach ($variables as $value) {
             $this->session->unset_userdata($value);
@@ -128,7 +128,7 @@ class Solicitud extends MY_Controller {
                 });
                 </script>';
     }
-
+    
     public function seccion_delete_datos_solicituid() {
         if ($this->input->is_ajax_request()) {
 //            if ($this->input->post()) {
@@ -218,7 +218,8 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar(){
-        // pr($this->session->userdata());    
+        // pr($this->session->userdata());
+        
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
         $id_subcategoria = null;
@@ -258,10 +259,10 @@ class Solicitud extends MY_Controller {
         $this->template->getTemplate();
     }
 
-    function secciones($solicitud) {
-        try {
-            $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud);
-        } catch (Exception $ex) {
+    function secciones($solicitud){
+        try{
+            $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud);    
+        }catch(Exception $ex){
             print ($ex);
         }
         $main_contet = $this->load->view('solicitud/secciones.tpl.php', $data, true);
@@ -322,113 +323,73 @@ class Solicitud extends MY_Controller {
             redirect(site_url());
         }
     }
-
-    function comentarios_seccion() {
+    
+    public function comentarios_seccion() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
-                $this->lang->load('interface', 'spanish');
-//                $tipo_msg = $this->config->item('alert_msg');
-                $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
-                $solicitud_cve = $this->seguridad->decrypt_base64($datos_post['solicitud_cve']);
-                $seccion = $datos_post['seccion_cve'];
-                //Obtiene datos de la solicitud
-                $array_solicitud = $this->req->get_datos_grales_solicitud($seccion, $solicitud_cve);
-                $data_coment['hist_sol'] = $datos_post['hist_cve'];
-                $data_coment['seccion'] = $seccion;
-
-                $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
-                $data_coment['string_values'] = $string_values;
-                $titulo_seccion = '';
-                if (!empty($array_solicitud)) {
-                    $data_coment['titulo_libro'] = $array_solicitud[0]['titulo_libro'];
-                    $data_coment['isbn'] = $array_solicitud[0]['isbn_libro'];
-                    $data_coment['subtitulo'] = $array_solicitud[0]['subtitulo_libro'];
-                    $titulo_seccion = $string_values['title_seccion'] . $array_solicitud[0]['name_seccion'];
-                }
-//                pr($datos_post);
-
-
-                $data = array(
-                    'titulo_modal' => $titulo_seccion,
-                    'cuerpo_modal' => $this->load->view('solicitud/buscador/comentario_seccion', $data_coment, true),
-                    'pie_modal' => $this->load->view('solicitud/buscador/comentario_pie', $data_coment, true)
-                );
-                echo $this->ventana_modal->carga_modal($data);
             }
         } else {
             redirect(site_url());
         }
+        pr('abjsbjabf');
     }
 
-    function guarda_comentario_seccion() {
-        if ($this->input->is_ajax_request()) {
-            if ($this->input->post()) {
-                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
-                $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
-                $tipo_msg = $this->config->item('alert_msg');
-                $this->lang->load('interface', 'spanish');
-//                pr($datos_post);
-//                exit();
-//                $tipo_msg = $this->config->item('alert_msg');
-                $seccion = $datos_post['seccion_cve'];
-                //Obtiene datos del historial
-                $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
-
-                $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
-                if ($insert_comentario > 0) {
-                    $data['error'] = $string_values['save_correcto_comentario']; //
-                    $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
-                    $data['result'] = 1; //Error resultado success
-                } else {
-                    $data['error'] = $string_values['save_incorrecto_comentario']; //
-                    $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
-                    $data['result'] = 0; //Error resultado success
-                }
-            }
-        } else {
-            redirect(site_url());
+    /*function load_seccion(){
+        if ($this->input->is_ajax_request()){
+            $seccion = $this->input->post("seccion");
+            //$response['message'] = $this->input->post("seccion");
+            $response['result'] = "true";
+            $func = "_load_sec_$seccion";
+            $response['content'] = $this->$func($this->input->post("solicitud_id"));
+            echo json_encode($response);
+            return 0;
+        }else{
+            redirect("/");
         }
-    }
+    }*/
 
-    function sec_tema() {
-        if ($this->input->is_ajax_request()) {
-            if ($this->input->post()) {
+    function sec_tema(){
+        if($this->input->is_ajax_request()){
+           if($this->input->post()){
                 $data["tema"] = $this->input->post();
                 //load from the begining
-                if (count($data["tema"]) == 1) {
+                if(count($data["tema"])==1){
                     $tema = $this->req->get_tema($data["tema"]["solicitud_id"]);
-                    if (is_array($tema)) {
+                    if(is_array($tema)){
                         $data["tema"] = $tema;
                     }
-                } elseif (isset($data["tema"]["id"])) {//update
+                }elseif(isset($data["tema"]["id"])){//update
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
-
-                    $where = array("id" => $data["tema"]["id"]);
+                    
+                    $where = array("id"=>$data["tema"]["id"]);
                     unset($data["tema"]["id"]);
-                    $update = $this->req->update("tema", $data["tema"], $where);
-                    if ($update) {
+                    $update = $this->req->update("tema",$data["tema"],$where);
+                    if($update){
                         $response['message'] = "El tema se ha guardado exitosamente";
-                        $response['result'] = "true";
-                    } else {
+                        $response['result'] = "true"; 
+                    }else{
                         $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
+                        $response['result'] = "false"; 
                     }
-                } else {
+                }else{
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
-
-                    $save = $this->req->add("tema", $data["tema"]);
-                    if ($save) {
-                        $update = $this->req->update("solicitud", array("has_tema" => 1), array("id" => $data["tema"]["solicitud_id"]));
+                    
+                    $save = $this->req->add("tema",$data["tema"]);
+                    if($save){
+                        $update = $this->req->update("solicitud",
+                            array("has_tema"=>1),
+                            array("id"=>$data["tema"]["solicitud_id"]));
                         $response['message'] = "El tema se ha guardado exitosamente";
                         $response['result'] = "true";
-                    } else {
+
+                    }else{
                         $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
+                        $response['result'] = "false"; 
                     }
                 }
                 $data["combos"]["tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido");
@@ -436,9 +397,10 @@ class Solicitud extends MY_Controller {
                 echo json_encode($response);
                 return 0;
             }
-        } else {
+        }else{
             redirect("/");
         }
+
     }
 
     function sec_idioma(){
@@ -459,5 +421,32 @@ class Solicitud extends MY_Controller {
             redirect("/");
         }
     }
-}
 
+
+
+    /*function add_seccion(){
+        if($this->input->is_ajax_request()){
+            $data = $this->input->post();
+            $seccion = $data["seccion"];
+            $this->config->load('form_validation'); //Cargar archivo con validaciones
+            $validations = $this->config->item('sol_sec_'.$seccion); //Obtener validaciones de archivo 
+            $this->form_validation->set_rules($validations);
+            if($this->form_validation->run()){
+                $response['message'] = "guardado";
+                $response['result'] = "true";
+                //$response['content'] = pr($data,true);
+            }else{
+                $response['message'] = "Hola ajax";
+                $response['result'] = "true";
+                //$response['content'] = pr($data,true);
+            }
+            $func = "_load_sec_$seccion";
+            $response['content'] = $this->$func($data[$seccion]["solicitud_id"]);
+            
+            echo json_encode($response);
+            return 0;
+        }else{
+            redirect("/");
+        }
+    }*/
+}

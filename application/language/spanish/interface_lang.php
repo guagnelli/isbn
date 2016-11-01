@@ -134,6 +134,22 @@ $lang['interface'] = array(
         'save_estado_error' => 'Detalle de la solicitud',
         'save_default' => 'El cambio de estado se efectuo correctamente',
         'save_envio_revision' => 'La solicitud se envió a revisión correctamente',
+    ),
+    'solicitud_comentarios_seccion' => array(
+        'title_seccion' => 'Comentarios de la seccion: ',
+        'fecha_comentario' => 'Fecha: ',
+        'estado_solicitud' => 'Estado de la solicitud: ',
+        'name_seccion' => 'Sección: ',
+        'comentario' => 'Observaciones: ',
+        'title_libro' => 'Titulo del libro: ',
+        'title_isbn' => 'ISBN: ',
+        'title_sub_titulo' => 'Subtitulo del libro: ',
+        'btn_text_collapse_mensajes' => 'Historial de comentarios de la sección',
+        'lbl_comentario' => 'Comentario:',
+        'btn_guardar_comentario' => 'Guardar',
+        'btn_close' => 'Cancelar',
+        'save_correcto_comentario' => 'Las observaciones se guardaron correctamente',
+        'save_incorrecto_comentario' => 'No fue posible guardar las observaciones de la sección.<br>Por favor intentelo más tarde',
     )
 );
 

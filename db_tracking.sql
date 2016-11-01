@@ -67,6 +67,12 @@ ALTER TABLE solicitud modify date_created datetime DEFAULT current_timestamp
 
 -----31/10/2016
 ALTER TABLE usuario ADD entidad_id int(11) NULL;
+
 ------01/11/2016
 insert into c_tipo_contenido(nombre)values('Periodística'),('Cuento');
 insert into c_idioma (nombre) values('Español'),('Inglés'),('Italiano');
+
+-----01112018 LEAS 
+ALTER TABLE observaciones_seccion_solicitud ADD comentarios text NULL;
+ALTER TABLE observaciones_seccion_solicitud ADD fecha_comment datetime default current_timestamp;;
+
