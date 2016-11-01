@@ -82,6 +82,7 @@ class Login_model extends CI_Model {
             }
         }
         $query->free_result();
+//        pr($this->db->last_query());
         return $result;
     }
 

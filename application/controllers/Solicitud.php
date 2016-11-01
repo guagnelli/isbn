@@ -32,7 +32,7 @@ class Solicitud extends MY_Controller {
     }
 
     function index() {
-        $this->session->set_userdata('rol_usuario_cve', E_rol::ENTIDAD); //entidad
+//        $this->session->set_userdata('rol_cve', E_rol::ENTIDAD); //entidad
 //       $this->session->set_userdata('rol_usuario_cve', '2');//Juridico
         $this->lang->load('interface', 'spanish');
         $string_values = $this->lang->line('interface')['solicitud_index'];
@@ -40,7 +40,7 @@ class Solicitud extends MY_Controller {
         $data['order_columns'] = array('hri.c_estado_id' => $string_values['order_estado_solicitud'], 'lb.title' => $string_values['order_titulo_libro'],
             'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
         );
-        $rol_sesion = $this->session->userdata('rol_usuario_cve');
+        $rol_sesion = $this->session->userdata('rol_cve');
 
         $datos_usuario = array();
         switch ($rol_sesion) {
@@ -83,7 +83,7 @@ class Solicitud extends MY_Controller {
 //                pr($filtros);
                 $datos_usuario = $this->session->userdata('datos_usuario');
                 $filtros += $datos_usuario;
-                $filtros['rol_seleccionado'] = $this->session->userdata('rol_usuario_cve'); //Carga el rol actual (entidad o DGAJ)
+                $filtros['rol_seleccionado'] = $this->session->userdata('rol_cve'); //Carga el rol actual (entidad o DGAJ)
 //                pr($filtros);
                 $filtros['current_row'] = (isset($current_row) && !empty($current_row)) ? $current_row : 0;
 
@@ -156,7 +156,7 @@ class Solicitud extends MY_Controller {
                 $datosPerfil['string_values'] = $string_values;
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
 //                pr($datos_post);
-                $rol_seleccionado = $this->session->userdata('rol_usuario_cve'); //Rol seleccionado de la pantalla de roles
+                $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
 //                pr($rol_seleccionado);
                 $datos_solicitud = array();
                 $datos_solicitud['estado_correccion'] = null;
@@ -192,7 +192,7 @@ class Solicitud extends MY_Controller {
         $id_entidad = 1; //from session
         $id_categoria = null;
         $id_subcategoria = null;
-        $rol_seleccionado = $this->session->userdata('rol_usuario_cve'); //Rol seleccionado de la pantalla de roles
+        $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
         //si tiene datosbusca por id
         if ($this->input->post()) {
             $post = $this->input->post();
