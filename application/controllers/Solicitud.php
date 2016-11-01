@@ -340,14 +340,12 @@ class Solicitud extends MY_Controller {
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
                 $data_coment['string_values'] = $string_values;
                 $titulo_seccion = '';
-                if(!empty($array_solicitud)) {
+                if (!empty($array_solicitud)) {
                     $data_coment['titulo_libro'] = $array_solicitud[0]['titulo_libro'];
                     $data_coment['isbn'] = $array_solicitud[0]['isbn_libro'];
                     $data_coment['subtitulo'] = $array_solicitud[0]['subtitulo_libro'];
                     $titulo_seccion = $string_values['title_seccion'] . $array_solicitud[0]['name_seccion'];
                 }
-                
-
 //                pr($datos_post);
 
 
@@ -357,6 +355,36 @@ class Solicitud extends MY_Controller {
                     'pie_modal' => $this->load->view('solicitud/buscador/comentario_pie', $data_coment, true)
                 );
                 echo $this->ventana_modal->carga_modal($data);
+            }
+        } else {
+            redirect(site_url());
+        }
+    }
+
+    public function guarda_comentario_seccion() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
+                $tipo_msg = $this->config->item('alert_msg');
+                $this->lang->load('interface', 'spanish');
+//                pr($datos_post);
+//                exit();
+//                $tipo_msg = $this->config->item('alert_msg');
+                $seccion = $datos_post['seccion_cve'];
+                //Obtiene datos del historial
+                $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
+
+                $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
+                if ($insert_comentario > 0) {
+                    $data['error'] = $string_values['save_correcto_comentario']; //
+                    $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
+                    $data['result'] = 1; //Error resultado success
+                } else {
+                    $data['error'] = $string_values['save_incorrecto_comentario']; //
+                    $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
+                    $data['result'] = 0; //Error resultado success
+                }
             }
         } else {
             redirect(site_url());

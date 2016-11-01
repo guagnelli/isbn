@@ -140,7 +140,7 @@ $lang['interface'] = array(
         'fecha_comentario' => 'Fecha: ',
         'estado_solicitud' => 'Estado de la solicitud: ',
         'name_seccion' => 'Sección: ',
-        'comentario' => 'Comentario: ',
+        'comentario' => 'Observaciones: ',
         'title_libro' => 'Titulo del libro: ',
         'title_isbn' => 'ISBN: ',
         'title_sub_titulo' => 'Subtitulo del libro: ',
@@ -148,6 +148,8 @@ $lang['interface'] = array(
         'lbl_comentario' => 'Comentario:',
         'btn_guardar_comentario' => 'Guardar',
         'btn_close' => 'Cancelar',
+        'save_correcto_comentario' => 'Las observaciones se guardaron correctamente',
+        'save_incorrecto_comentario' => 'No fue posible guardar las observaciones de la sección.<br>Por favor intentelo más tarde',
     )
 );
 

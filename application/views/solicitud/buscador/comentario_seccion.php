@@ -34,12 +34,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <strong><?php echo $string_values['estado_solicitud'] ?></strong><?php echo $value['name_estado']; ?><br>
                             <strong><?php echo $string_values['comentario'] ?></strong><?php echo $value['comentario']; ?><br>
                         </div>
+                        <br/>
                     <?php } ?>
                 </div>
             </div>
         </div>
     <?php } ?>
     <br/>
+    <?php echo form_open('', array('id' => 'form_comentario_seccion')); ?>
     <div class="row">
         <div class="col-md-12">
             <strong><?php echo $string_values['lbl_comentario']; ?></strong>
@@ -63,6 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php echo form_error_format('comentario_justificacion'); ?>
         </div>
     </div>
+    <?php echo form_close(); ?>
 </div>
 
 

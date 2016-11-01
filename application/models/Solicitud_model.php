@@ -371,6 +371,7 @@ class Solicitud_model extends MY_Model {
         //where que son obligatorios
         $this->db->where('ss.id', $seccion_cve); //seccion
         $this->db->where('hri.solicitud_cve', $solicitud_cve); //último estado
+        $this->db->order_by('oss.fecha_comment', 'desc');
         $result = $this->db->get("observaciones_seccion_solicitud oss");
         // echo $this->db->last_query();
         $comentarios = $result->result_array();
@@ -392,6 +393,29 @@ class Solicitud_model extends MY_Model {
         $comentarios = $result->result_array();
         $result->free_result();
         return $comentarios;
+    }
+
+    /**
+     * 
+     * @param type $parametros_insert_comentarios Agrega un comentario a la seccion actual y 
+     * relacionada con su historia
+     * @return int
+     */
+    public function insert_comentario_seccion($parametros_insert_comentarios) {
+
+        $this->db->trans_begin(); //Definir inicio de transacción
+        //Inserta un comentario de sección
+        $this->db->insert('observaciones_seccion_solicitud', $parametros_insert_comentarios); //Inserción de registro
+
+        $data_hist_id = $this->db->insert_id(); //Obtener identificador insertado
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return 0; //Rollback 
+        } else {
+//                pr($this->db->last_query());
+            $this->db->trans_commit();
+            return $data_hist_id; //retorna el id de la última historia de la solicitud
+        }
     }
 
 }
