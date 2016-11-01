@@ -104,6 +104,7 @@ $lang['interface'] = array(
     ),
     'solicitud_detalle' => array(
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
+        'add_ver_comment' => 'Agregar comentario',
     ),
     'solicitud_cambio_estado' => array(
         'lbl_titulo_seccion' => 'Detalle de la solicitud',

@@ -56,4 +56,11 @@ function cambio_estado(element) {
             });
 }
 
-    
+$('.comentario').click(function () {
+    var button_obj = $(this); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+    var hist_cve = button_obj.data('histsolicitudcve');
+    var solicitud_cve = button_obj.data('solicitudcve');
+    var seccion_cve = button_obj.data('seccioncve');
+    var obj = {hist_cve:hist_cve, solicitud_cve: solicitud_cve, seccion_cve:seccion_cve};
+    data_ajax_post(site_url + '/solicitud/comentarios_seccion', null, '#modal_content', obj);
+});

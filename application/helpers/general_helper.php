@@ -696,7 +696,7 @@ if (!function_exists('genera_botones_estado_solicitud')) {
 //        pr($tipo_validador_rol);
         $CI = & get_instance();
         $valida_acceso_rol = valida_acceso_rol_validador($tipo_validador_rol, $estado_actual, $reglas_estado); //Valida el acceso al rol seleccionado
-//        pr($valida_acceso_rol);
+//        pr($estado_actual);
         $respuesta_html_botones = array();
         if ($valida_acceso_rol == 1) {//**Tiene acceso el validar el estado actual la validación del docente 
             $pro_estado_actual = $reglas_estado[$estado_actual]; //Carga el estado actual del docente 
@@ -747,10 +747,12 @@ if (!function_exists('valida_acceso_rol_validador')) {
      * @return int 0=No tiene acceso el rol a la validación 1=Tiene acceso el rol a la validación
      */
     function valida_acceso_rol_validador($rol_validador, $estado_validacion, $reglas_estados) {
+//        pr($reglas_estados[$estado_validacion]['rol_permite']);
+//        pr($rol_validador);
         //Valida el acceso al rol seleccionado
         $valida_acceso_rol = 0;
         foreach ($reglas_estados[$estado_validacion]['rol_permite'] as $value_rol) {
-            if ($value_rol === $rol_validador) {//Si algún rol coinside, acepta el acceso al rol y termina el recorrido del foreach()
+            if ($value_rol == $rol_validador) {//Si algún rol coinside, acepta el acceso al rol y termina el recorrido del foreach()
                 $valida_acceso_rol = 1;
                 break;
             }

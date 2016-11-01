@@ -4,8 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Solicitud_model extends MY_Model {
 
-    private $reglas_estado = null;
-
     function __construct() {
         // Call the CI_Model constructor
         parent::__construct();
@@ -203,7 +201,7 @@ class Solicitud_model extends MY_Model {
 
     function getReglasEstadosSolicitud() {
 
-        $this->reglas_estado = array(
+        $reglas_estado = array(
             Enum_es::__default => array(//El estado default
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Carga_datos_libro),
@@ -211,6 +209,8 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 0,
+                'vista_detalle_solicitud' => 0,
             ),
             Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -219,7 +219,9 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
-                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"'
+                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
+                'add_comment_seccion' => 0,
+                'vista_detalle_solicitud' => 0,
             ),
             Enum_es::Registro => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -229,6 +231,8 @@ class Solicitud_model extends MY_Model {
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
                 'mensaje_guardado_correcto' => 'save_envio_revision',
+                'add_comment_seccion' => 0,
+                'vista_detalle_solicitud' => 0,
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -237,6 +241,8 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a revisión',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 1,
+                'vista_detalle_solicitud' => 1,
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -245,6 +251,9 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 0,
+                'vista_detalle_solicitud' => 0,
+                'vista_detalle_solicitud' => 0,
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
@@ -253,6 +262,8 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Revisión por indautor',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 1,
+                'vista_detalle_solicitud' => 1,
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
@@ -261,6 +272,8 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Cargar resultado de indautor',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 1,
+                'vista_detalle_solicitud' => 1,
             ),
             Enum_es::Radicado => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -269,9 +282,25 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Radicar',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 1,
+                'vista_detalle_solicitud' => 1,
             ),
         );
-        return $this->reglas_estado;
+        return $reglas_estado;
+    }
+    
+    function getSeccionesSolicitud() {
+        $secciones = array(
+            En_secciones::TEMA, En_secciones::IDIOMA, En_secciones::COLABORADORES, En_secciones::TRADUCCION,
+            En_secciones::INFO_EDICION, En_secciones::COMERCIALIZACION, En_secciones::DESC_FISICA_ELECTRONICA,
+            En_secciones::DESC_FISICA_IMPRESA, En_secciones::PAGO_ELECTRONICO, En_secciones::CODIGO_BARRAS
+        );
+        return $secciones;
+
+
+
+
+
     }
 
     function get_tema($solicitud_id=null){

@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('template','session', 'Enum_cg', 'Enum_es', 'E_rol');
+$autoload['libraries'] = array('template','session', 'Enum_cg', 'Enum_es', 'E_rol', 'En_secciones');
 
 /*
 | -------------------------------------------------------------------

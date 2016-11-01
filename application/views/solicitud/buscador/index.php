@@ -28,6 +28,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </h1>
             </div>
             <div class="panel-body">
+                <div id="cuerpo_solicitud" class="list-group-item text-center center ">
+                    <?php if (isset($vista)) { ?> 
+                        <?php echo $vista; ?>
+                    <?php } ?>
+                </div>
+
                 <?php if (isset($boton_estado)) { ?>
 
                     <div class="list-group-item text-center center ">
@@ -47,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 contenedor" >
         <span id="pie"  onclick="funcion_cerrar_vista_solicitud(this)">
-            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];?></a>
+            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];   ?></a>
         </span>
     </div>
 </div>

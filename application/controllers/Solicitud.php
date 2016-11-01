@@ -24,16 +24,18 @@ class Solicitud extends MY_Controller {
 
     }
 
-    private function limpia_varsesion() {
-        $variables = array('rol_seleccionado_cve',);
+      private function limpia_varsesion() {
+        $variables = array('detalle_solicitud',);
         foreach ($variables as $value) {
             $this->session->unset_userdata($value);
         }
     }
 
-    function index(){
-        $this->session->set_userdata('rol_cve', E_rol::ENTIDAD); //entidad
+    function index() {
+//        $this->session->set_userdata('rol_cve', E_rol::ENTIDAD); //entidad
 //       $this->session->set_userdata('rol_usuario_cve', '2');//Juridico
+
+        $this->limpia_varsesion();
         $this->lang->load('interface', 'spanish');
         $string_values = $this->lang->line('interface')['solicitud_index'];
         $data['string_values'] = $string_values;
@@ -41,12 +43,12 @@ class Solicitud extends MY_Controller {
             'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
         );
         $rol_sesion = $this->session->userdata('rol_cve');
-
+//        pr($this->session->userdata('entidad_id'));
         $datos_usuario = array();
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $array_catalogos = array(Enum_cg::c_estado);
-                $datos_usuario['entidad_cve'] = 1;
+                $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 break;
             case E_rol::DGAJ://Juridico
@@ -83,7 +85,7 @@ class Solicitud extends MY_Controller {
 //                pr($filtros);
                 $datos_usuario = $this->session->userdata('datos_usuario');
                 $filtros += $datos_usuario;
-                $filtros['rol_seleccionado'] = $this->session->userdata('rol_usuario_cve'); //Carga el rol actual (entidad o DGAJ)
+                $filtros['rol_seleccionado'] = $this->session->userdata('rol_cve'); //Carga el rol actual (entidad o DGAJ)
 //                pr($filtros);
                 $filtros['current_row'] = (isset($current_row) && !empty($current_row)) ? $current_row : 0;
 
@@ -177,7 +179,34 @@ class Solicitud extends MY_Controller {
                 $parametros_estado['rol_seleccionado'] = $rol_seleccionado;
                 $parametros_estado['estado_cve'] = $datos_solicitud['estado_cve'];
                 $datosPerfil['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
-//                pr($datos_perfil['boton_estado']);
+
+                //Obtiene las propiedades del estado actual
+                $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']];
+
+                //Carga la vista actual
+                if ($propEstadoActual['vista_detalle_solicitud'] == 1) {//Muestra pantalla de detalle de la solicitud y lo mensajes comentarios
+                    $datosSeccion['solicitud_cve'] = $datos_solicitud['solicitud_cve'];
+                    $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
+                    $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
+
+                    $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
+                    $array_comentarios = array();
+                    foreach ($secciones as $value) {
+                        $array_comentarios[$value] = '<button '
+                                . 'type="button" '
+                                . 'class="btn btn-link comentario" '
+                                . 'data-solicitudcve="' . $datos_post['solicitud_cve'] . '"'
+                                . 'data-histsolicitudcve="' . $datos_post['histsolicitudcve'] . '"'
+                                . 'data-seccioncve="' . $value . '"'
+                                . 'data-toggle="modal" data-target="#modal_censo">'
+                                . $string_values['add_ver_comment']
+                                . '</button>';
+                    }
+                    $datosSeccion['botones_seccion'] = $array_comentarios;
+                    $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
+                } else {
+                    
+                }
                 //Carga datos de la solicitud del ISBN
                 $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la información del usuario al que se va a validar
                 echo $this->load->view('solicitud/buscador/index', $datosPerfil, true);
@@ -292,6 +321,17 @@ class Solicitud extends MY_Controller {
         } else {
             redirect(site_url());
         }
+    }
+    
+    public function comentarios_seccion() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+            }
+        } else {
+            redirect(site_url());
+        }
+        pr('abjsbjabf');
     }
 
     /*function load_seccion(){
