@@ -20,24 +20,25 @@
                 <li>Temática principal: Análisis del mexicano</li>
             </ul>
 
-            <p><b>Tema: </b></p><?php echo $botones_seccion[En_secciones::TEMA]; ?> 
+            <p><b>Tema: </b><?php echo $botones_seccion[En_secciones::TEMA];?></p> 
             <ul>    
                 <li>Los imprescindibles de la literatura mexicana</li>
                 <li>No. de colección: 2 </li>
                 <li>Tipo de contenido: Ensayo  . Filosofía</li>
             </ul>
 
-            <p><b>Colaboradores:</b></p><?php echo $botones_seccion[En_secciones::COLABORADORES]; ?>
+            <p><b>Colaboradores:</b><?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
+            <!--<a href="#" class="comentario" ><span class="glyphicon glyphicon-comment"></span></a>-->
             <ul>    
                 <li>SN / Colaboradores</li>
             </ul>
 
-            <p><b>Idioma:</b></p>
+            <p><b>Idioma:</b><?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>
             <ul>    
                 <li>Idioma. Español</li>
             </ul>
 
-            <p><b>Traducción:</b></p>
+            <p><b>Traducción:</b><?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
             <ul>    
                 <li>SN/ Traducción</li>
             </ul>
