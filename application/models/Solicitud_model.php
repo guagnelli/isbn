@@ -54,7 +54,7 @@ class Solicitud_model extends MY_Model {
         }
         $solicitud = $result->row_array();
         $result->free_result();
-
+//        pr($this->db->last_query());
         $solicitud["entidad"] = $this->getEntidad($solicitud["entidad_id"]);
         $solicitud["libro"] = $this->getLibro($solicitud["libro_id"]);
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
@@ -204,7 +204,7 @@ class Solicitud_model extends MY_Model {
         $reglas_estado = array(
             Enum_es::__default => array(//El estado default
                 'rol_permite' => array(E_rol::ENTIDAD),
-                'estados_transicion' => array(Enum_es::Carga_datos_libro),
+                'estados_transicion' => array(Enum_es::Registro),
                 'is_boton' => 1,
                 'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
@@ -212,17 +212,18 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => 0,
                 'vista_detalle_solicitud' => 0,
             ),
-            Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
-                'rol_permite' => array(E_rol::ENTIDAD),
-                'estados_transicion' => array(Enum_es::Registro),
-                'is_boton' => 1,
-                'titulo_boton' => 'Guardar solicitud',
-                'color_status' => '',
-                'funcion_demandada' => 'cambio_estado(this)',
-                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
-                'add_comment_seccion' => 0,
-                'vista_detalle_solicitud' => 0,
-            ),
+//            Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
+//                'rol_permite' => array(E_rol::ENTIDAD),
+//                'estados_transicion' => array(Enum_es::Registro),
+//                'is_boton' => 1,
+//                'titulo_boton' => 'Guardar solicitud',
+//                'color_status' => '',
+//                'funcion_demandada' => 'cambio_estado(this)',
+//                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
+//                'add_comment_seccion' => 0,
+//                'vista_detalle_solicitud' => 0,
+//                'vista' => 'tema',
+//            ),
             Enum_es::Registro => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
@@ -232,7 +233,7 @@ class Solicitud_model extends MY_Model {
                 'funcion_demandada' => 'cambio_estado(this)',
                 'mensaje_guardado_correcto' => 'save_envio_revision',
                 'add_comment_seccion' => 0,
-                'vista_detalle_solicitud' => 0,
+                'vista' => 'editar_registro',
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -243,6 +244,7 @@ class Solicitud_model extends MY_Model {
                 'funcion_demandada' => 'cambio_estado(this)',
                 'add_comment_seccion' => 1,
                 'vista_detalle_solicitud' => 1,
+                'vista' => 'detalle',
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),

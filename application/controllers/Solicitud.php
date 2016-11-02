@@ -184,28 +184,37 @@ class Solicitud extends MY_Controller {
                 $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']];
 
                 //Carga la vista actual
-                if ($propEstadoActual['vista_detalle_solicitud'] == 1) {//Muestra pantalla de detalle de la solicitud y lo mensajes comentarios
-                    $datosSeccion['solicitud_cve'] = $datos_solicitud['solicitud_cve'];
-                    $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
-                    $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
+                switch ($propEstadoActual['vista']) {
+                    case 'detalle':
+                        $datosSeccion['solicitud_cve'] = $datos_solicitud['solicitud_cve'];
+                        $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
+                        $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
 
-                    $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
-                    $array_comentarios = array();
-                    foreach ($secciones as $value) {
-                        $array_comentarios[$value] = '<button '
-                                . 'type="button" '
-                                . 'class="btn btn-link comentario" '
-                                . 'data-solicitudcve="' . $datos_post['solicitud_cve'] . '"'
-                                . 'data-histsolicitudcve="' . $datos_post['histsolicitudcve'] . '"'
-                                . 'data-seccioncve="' . $value . '"'
-                                . 'data-toggle="modal" data-target="#modal_censo">'
-                                . $string_values['add_ver_comment']
-                                . '</button>';
-                    }
-                    $datosSeccion['botones_seccion'] = $array_comentarios;
-                    $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
-                } else {
-                    
+                        $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
+                        $array_comentarios = array();
+                        foreach ($secciones as $value) {
+                            $array_comentarios[$value] = '<button '
+                                    . 'type="button" '
+                                    . 'class="btn btn-link comentario" '
+                                    . 'data-solicitudcve="' . $datos_post['solicitud_cve'] . '"'
+                                    . 'data-histsolicitudcve="' . $datos_post['histsolicitudcve'] . '"'
+                                    . 'data-seccioncve="' . $value . '"'
+                                    . 'data-toggle="modal" data-target="#modal_censo">'
+                                    . $string_values['add_ver_comment']
+                                    . '</button>';
+                        }
+                        $datosSeccion['botones_seccion'] = $array_comentarios;
+                        $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
+                        break;
+                    case 'editar_registro':
+                        $data = null;
+                        try {
+                            $data["datos"]["solicitud"] = $this->req->getSolicitud(intval($datos_solicitud['solicitud_cve']));
+                        } catch (Exception $ex) {
+                            print ($ex);
+                        }
+                        $datosPerfil['vista'] = $this->load->view('solicitud/secciones.tpl.php', $data, true);
+                        break;
                 }
                 //Carga datos de la solicitud del ISBN
                 $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la información del usuario al que se va a validar
@@ -217,7 +226,7 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function registrar(){
+    function registrar() {
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
@@ -349,7 +358,7 @@ class Solicitud extends MY_Controller {
                         $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
                         $data['result'] = 0; //Error resultado success
                     }
-                    echo json_encode($data); 
+                    echo json_encode($data);
                     exit();
                 }
                 //Obtiene datos de la solicitud
@@ -412,7 +421,7 @@ class Solicitud extends MY_Controller {
             redirect(site_url());
         }
     }
-    
+
     function sec_tema() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
@@ -463,23 +472,23 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function sec_idioma(){
-        if($this->input->is_ajax_request()){
-            /*if($this->input->post()){
-                $data["tema"] = $this->input->post();
-                if(count($data["tema"])==1){//first load
-                    //buscar idiomas seleccionados
-                }
-            }*/
-            $response['message'] = pr($this->input->post(),true);
-            $response['result'] = "true";   
+    function sec_idioma() {
+        if ($this->input->is_ajax_request()) {
+            /* if($this->input->post()){
+              $data["tema"] = $this->input->post();
+              if(count($data["tema"])==1){//first load
+              //buscar idiomas seleccionados
+              }
+              } */
+            $response['message'] = pr($this->input->post(), true);
+            $response['result'] = "true";
             $data["combos"]["idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
             echo json_encode($response);
-                return 0;
-        }else{
+            return 0;
+        } else {
             redirect("/");
         }
     }
-}
 
+}

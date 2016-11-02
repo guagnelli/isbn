@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 ?>
 <?php echo css("style-sipimss.css"); ?>
 
@@ -28,11 +29,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </h1>
             </div>
             <div class="panel-body">
-                <div id="cuerpo_solicitud" class="list-group-item text-center center ">
-                    <?php if (isset($vista)) { ?> 
+                <!--<div id="cuerpo_solicitud" class="list-group-item text-center center ">-->
+                <div class="row">
+                    <?php if (isset($vista)) {?>
+                        
                         <?php echo $vista; ?>
                     <?php } ?>
                 </div>
+                <!--</div>-->
 
                 <?php if (isset($boton_estado)) { ?>
 
