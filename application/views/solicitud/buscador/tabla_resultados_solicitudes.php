@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($lista_solicitudes);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();   ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+<!--<script type='text/javascript' src="<?php // echo base_url();      ?>assets/js/validacion_docente/validar_censo.js"></script>-->
 </style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
 </script>
@@ -52,6 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
                         . 'data-row="' . $key_ai . '"';
 
+//                $link_editar = '<a class="btn btn-primary" '
+//                        . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
+//                        . 'target="_blank">Editar solicitud</a>';
+                $link_editar = '';
+                if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados)) {
+                    $link_editar = '<form method=POST action="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" target="_blank">'
+                            . '<input type="hidden" name="solicitud" value="' . $val['solicitud_cve'] . '"> '
+                            . '<input class="btn btn-primary" type="submit" value="Editar solicitud" name="btn_' . $key_ai . '"> '
+                            . ' </form>';
+                }
+
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";
                 echo "<td>" . $val['name_estado'] . "</td>";
@@ -59,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 echo "<td>" . $val['titulo_libro'] . "</td>";
                 echo "<td>" . $val['name_entidad'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td>" . $link_ver_detalle . "</td>";
+                echo "<td>" . $link_ver_detalle . $link_editar . "</td>";
                 echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "<tr>";
             }

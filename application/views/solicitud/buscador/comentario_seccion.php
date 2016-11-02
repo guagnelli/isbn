@@ -41,31 +41,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php } ?>
     <br/>
-    <?php echo form_open('', array('id' => 'form_comentario_seccion')); ?>
-    <div class="row">
-        <div class="col-md-12">
-            <strong><?php echo $string_values['lbl_comentario']; ?></strong>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-comment"> </span>
-                </span>
-                <?php
-                echo $this->form_complete->create_element(array('id' => 'comentario_justificacion',
-                    'type' => 'textarea',
-                    'value' => '',
-                    'attributes' => array(
-                        'class' => 'form-control',
-                        'placeholder' => $string_values['lbl_comentario'],
-                        'maxlength' => '4000',
-                        'data-toggle' => 'tooltip',
-                        'data-placement' => 'top',
-                        'title' => $string_values['lbl_comentario'])));
-                ?>
+    <?php if ($rol_cve == E_rol::DGAJ) {//Sólo el dgaj puede validar ?>
+        <?php echo form_open('', array('id' => 'form_comentario_seccion')); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <strong><?php echo $string_values['lbl_comentario']; ?></strong>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-comment"> </span>
+                    </span>
+                    <?php
+                    echo $this->form_complete->create_element(array('id' => 'comentario_justificacion',
+                        'type' => 'textarea',
+                        'value' => '',
+                        'attributes' => array(
+                            'class' => 'form-control',
+                            'placeholder' => $string_values['lbl_comentario'],
+                            'maxlength' => '4000',
+                            'data-toggle' => 'tooltip',
+                            'data-placement' => 'top',
+                            'title' => $string_values['lbl_comentario'])));
+                    ?>
+                </div>
+                <?php echo form_error_format('comentario_justificacion'); ?>
             </div>
-            <?php echo form_error_format('comentario_justificacion'); ?>
         </div>
-    </div>
-    <?php echo form_close(); ?>
+        <?php echo form_close(); ?>
+    <?php } ?>
 </div>
 
 

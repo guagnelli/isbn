@@ -82,16 +82,20 @@ class Solicitud extends MY_Controller {
                 $this->lang->load('interface', 'spanish');
                 $string_values = $this->lang->line('interface')['tabla_resultados'];
                 $filtros = $this->input->post(null, true); //Obtenemos el post o los valores 
+                $rol_cve = $this->session->userdata('rol_cve');
 //                pr($filtros);
                 $datos_usuario = $this->session->userdata('datos_usuario');
                 $filtros += $datos_usuario;
-                $filtros['rol_seleccionado'] = $this->session->userdata('rol_cve'); //Carga el rol actual (entidad o DGAJ)
+                $filtros['rol_seleccionado'] = $rol_cve; //Carga el rol actual (entidad o DGAJ)
 //                pr($filtros);
                 $filtros['current_row'] = (isset($current_row) && !empty($current_row)) ? $current_row : 0;
 
                 $resutlado = $this->req->get_buscar_solicitudes($filtros);
 //                pr($resutlado['result']);
 //                exit();
+                
+                $data['rol_cve'] = $rol_cve;
+                $data['reglas_estados'] = $this->req->getReglasEstadosSolicitud();
                 $data['string_values'] = $string_values;
                 $data['lista_solicitudes'] = $resutlado['result'];
                 $data['total'] = $resutlado['total'];
@@ -120,6 +124,8 @@ class Solicitud extends MY_Controller {
                     <div class='col-sm-7 text-right'>" . $pagination['links'] . "</div>";
         $datos['lista_solicitudes'] = $data['lista_solicitudes'];
         $datos['string_values'] = $data['string_values'];
+        $datos['reglas_estados'] = $data['reglas_estados'];
+        $datos['rol_cve'] = $data['rol_cve'];
         echo $links . $this->load->view('solicitud/buscador/tabla_resultados_solicitudes', $datos, TRUE) . $links . '
                 <script>
                 $("ul.pagination li a").click(function(event){
@@ -193,15 +199,17 @@ class Solicitud extends MY_Controller {
                         $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
                         $array_comentarios = array();
                         foreach ($secciones as $value) {
-                            $array_comentarios[$value] = '<button '
-                                    . 'type="button" '
-                                    . 'class="btn btn-link comentario" '
+                            $array_comentarios[$value] = '<a href="#"'
+                                    . 'class="comentario"'
                                     . 'data-solicitudcve="' . $datos_post['solicitud_cve'] . '"'
                                     . 'data-histsolicitudcve="' . $datos_post['histsolicitudcve'] . '"'
                                     . 'data-seccioncve="' . $value . '"'
                                     . 'data-toggle="modal" data-target="#modal_censo">'
-                                    . $string_values['add_ver_comment']
-                                    . '</button>';
+//                                    . $string_values['add_ver_comment']
+                                    . '<span class="glyphicon glyphicon-comment btn-msg" '
+                                    . 'placeholder="' . $string_values['add_ver_comment'] . '"'
+                                    . 'title="' . $string_values['add_ver_comment'] . '">'
+                                    . '</span></a>';
                         }
                         $datosSeccion['botones_seccion'] = $array_comentarios;
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
@@ -238,7 +246,7 @@ class Solicitud extends MY_Controller {
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //Añadir validaciones
-            //pr($post);
+//            pr($post);
             $data["save"] = $post;
 
             if ($this->form_validation->run()) {
@@ -279,12 +287,35 @@ class Solicitud extends MY_Controller {
     }
 
     function detalle() {
-        $this->load->model("Solicitud_model", 'req');
-        $solicitud = $this->req->getSolicitud(1);
-//        pr($solicitud);
-        $main_contet = $this->load->view('solicitud/detalle.tpl.php', null, true);
-        $this->template->setMainContent($main_contet);
-        $this->template->getTemplate();
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                $solicitud_cve = intval($this->seguridad->decrypt_base64($datos_post['solicitud_cve']));
+                $hist_cve = intval($this->seguridad->decrypt_base64($datos_post['hist_solicitudcve']));
+//                pr();
+//                exit();
+                $datosSeccion['solicitud_cve'] = $solicitud_cve;
+                $datosSeccion['hist_cve'] = $hist_cve;
+//                $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
+                $solicitud_datos = $this->req->getSolicitud($solicitud_cve);
+                pr($solicitud_datos);
+                $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
+                $array_comentarios = array();
+                foreach ($secciones as $value) {
+                    $array_comentarios[$value] = '';
+                }
+                $datosSeccion['botones_seccion'] = $array_comentarios;
+                $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
+                $data = array(
+                    'titulo_modal' => null,
+                    'cuerpo_modal' => $data_detalle,
+                    'pie_modal' => null
+                );
+                echo $this->ventana_modal->carga_modal($data);
+            }
+        } else {
+            redirect(site_url());
+        }
     }
 
     public function enviar_cambio_estado_solicitud() {
@@ -341,14 +372,16 @@ class Solicitud extends MY_Controller {
                 $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
                 $solicitud_cve = $this->seguridad->decrypt_base64($datos_post['solicitud_cve']);
                 $seccion = $datos_post['seccion_cve'];
-
+//                pr($datos_post);
                 $this->config->load('form_validation'); //Cargar archivo con validaciones
-                $this->form_validation->set_rules('comentario_jus');
+                $validations = $this->config->item('comentario_jus');
+                $this->form_validation->set_rules($validations);
                 if ($this->form_validation->run()) {
                     //Obtiene datos del historial
                     $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
 
                     $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
+                    $tipo_msg = $this->config->item('alert_msg');
                     if ($insert_comentario > 0) {
                         $data['error'] = $string_values['save_correcto_comentario']; //
                         $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
@@ -365,7 +398,8 @@ class Solicitud extends MY_Controller {
                 $array_solicitud = $this->req->get_datos_grales_solicitud($seccion, $solicitud_cve);
                 $data_coment['hist_sol'] = $datos_post['hist_cve'];
                 $data_coment['seccion'] = $seccion;
-                $data_coment['solicitud_cve'] = $solicitud_cve;
+                $data_coment['solicitud_cve'] = $datos_post['solicitud_cve'];
+                $data_coment['rol_cve'] = $this->session->userdata('rol_cve');
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
                 $data_coment['string_values'] = $string_values;
