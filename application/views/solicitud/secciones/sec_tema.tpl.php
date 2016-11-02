@@ -71,6 +71,7 @@ if(isset($tema["id"])){
             $selected = "selected";
           }
           echo "<option value='$key' $selected>$value</option>";
+          $selected = "";
         }
       ?>
     </select>
@@ -105,7 +106,7 @@ if(isset($tema["id"])){
             type="button" 
             class="btn btn-form" 
             data-type="tema"
-            onclick="retrun false;" >
+            onclick="btn(this);" >
       Guardar tema
     </button>
   </div>
@@ -113,4 +114,4 @@ if(isset($tema["id"])){
 <?php
 echo form_close();
 ?>
-<script type="text/javascript">btn();</script>
+<script type="text/javascript">//btn();</script>

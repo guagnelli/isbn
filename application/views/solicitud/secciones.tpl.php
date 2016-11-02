@@ -92,11 +92,6 @@ echo js("solicitud/secciones.js");
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <div class="col-md-12 text-center">
-            <button id="send" type="submit" class="btn" onclick="retrun false;" >Enviar solicitud a revisión</button>
-          </div>
-        </div>
         <div class="clearfix"></div>
       </div>
     </div>

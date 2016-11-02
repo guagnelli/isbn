@@ -480,8 +480,9 @@ class Solicitud extends MY_Controller {
               //buscar idiomas seleccionados
               }
               } */
-            $response['message'] = pr($this->input->post(), true);
+            //$response['message'] = 
             $response['result'] = "true";
+            $data["debug"] = $this->input->post();
             $data["combos"]["idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
             echo json_encode($response);
