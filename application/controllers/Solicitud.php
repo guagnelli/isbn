@@ -323,7 +323,7 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function comentarios_seccion() {
+    public function comentarios_seccion() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
@@ -332,10 +332,31 @@ class Solicitud extends MY_Controller {
                 $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
                 $solicitud_cve = $this->seguridad->decrypt_base64($datos_post['solicitud_cve']);
                 $seccion = $datos_post['seccion_cve'];
+
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $this->form_validation->set_rules('comentario_jus');
+                if ($this->form_validation->run()) {
+                    //Obtiene datos del historial
+                    $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
+
+                    $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
+                    if ($insert_comentario > 0) {
+                        $data['error'] = $string_values['save_correcto_comentario']; //
+                        $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
+                        $data['result'] = 1; //Error resultado success
+                    } else {
+                        $data['error'] = $string_values['save_incorrecto_comentario']; //
+                        $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
+                        $data['result'] = 0; //Error resultado success
+                    }
+                    echo json_encode($data); 
+                    exit();
+                }
                 //Obtiene datos de la solicitud
                 $array_solicitud = $this->req->get_datos_grales_solicitud($seccion, $solicitud_cve);
                 $data_coment['hist_sol'] = $datos_post['hist_cve'];
                 $data_coment['seccion'] = $seccion;
+                $data_coment['solicitud_cve'] = $solicitud_cve;
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
                 $data_coment['string_values'] = $string_values;
@@ -361,36 +382,37 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function guarda_comentario_seccion() {
+    public function guarda_comentario_seccion() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
                 $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
                 $tipo_msg = $this->config->item('alert_msg');
                 $this->lang->load('interface', 'spanish');
-//                pr($datos_post);
-//                exit();
-//                $tipo_msg = $this->config->item('alert_msg');
-                $seccion = $datos_post['seccion_cve'];
-                //Obtiene datos del historial
-                $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $this->form_validation->set_rules('comentario_jus');
+                if ($this->form_validation->run() == TRUE) {
+                    $seccion = $datos_post['seccion_cve'];
+                    //Obtiene datos del historial
+                    $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
 
-                $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
-                if ($insert_comentario > 0) {
-                    $data['error'] = $string_values['save_correcto_comentario']; //
-                    $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
-                    $data['result'] = 1; //Error resultado success
-                } else {
-                    $data['error'] = $string_values['save_incorrecto_comentario']; //
-                    $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
-                    $data['result'] = 0; //Error resultado success
+                    $insert_comentario = $this->req->insert_comentario_seccion(array('hist_revision_isbn_id' => $hist_cve, 'seccion_cve' => $seccion, 'comentarios' => $datos_post['comentario_justificacion']));
+                    if ($insert_comentario > 0) {
+                        $data['error'] = $string_values['save_correcto_comentario']; //
+                        $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
+                        $data['result'] = 1; //Error resultado success
+                    } else {
+                        $data['error'] = $string_values['save_incorrecto_comentario']; //
+                        $data['tipo_msg'] = $tipo_msg['DANGER']['class']; //Tipo de mensaje de error
+                        $data['result'] = 0; //Error resultado success
+                    }
                 }
             }
         } else {
             redirect(site_url());
         }
     }
-
+    
     function sec_tema() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {

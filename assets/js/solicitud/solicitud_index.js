@@ -69,12 +69,13 @@ $('.comentario').click(function () {
 function  funcion_guardar_comentario(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
     var hist_cve = button_obj.data('histsolicitudcve');
+    var solicitud_cve = button_obj.data('solicitudcve');
     var seccion_cve = button_obj.data('seccioncve');
 
     var formData = $('#form_comentario_seccion').serialize();
-    formData += '&hist_cve=' + hist_cve + '&seccion_cve=' + seccion_cve;
+    formData += '&hist_cve=' + hist_cve + '&seccion_cve=' + seccion_cve + '&solicitud_cve=' + solicitud_cve;
     $.ajax({
-        url: site_url + '/solicitud/guarda_comentario_seccion',
+        url: site_url + '/solicitud/comentarios_seccion',
         data: formData,
         method: 'POST',
         beforeSend: function (xhr) {
@@ -85,11 +86,11 @@ function  funcion_guardar_comentario(element) {
                 try {
                     var response = $.parseJSON(response);
                     if (response.result === 1) {
-                        $('#mensaje_error_index').html(response.error);
-                        $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + response.tipo_msg);
-                        $('#div_error_index').show();
-                        setTimeout("$('#div_error_index').hide()", 5000);
                         try {//Si noexiste herror, cierra el modal
+                            $('#mensaje_error_index').html(response.error);
+                            $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + response.tipo_msg);
+                            $('#div_error_index').show();
+                            setTimeout("$('#div_error_index').hide()", 5000);
                             $('#modal_censo').modal('toggle');
                         } catch (e) {
                             $('#seccion_validar').html('Ocurrió un error durante el proceso, inténtelo más tarde.');
@@ -101,7 +102,7 @@ function  funcion_guardar_comentario(element) {
                         setTimeout("$('#div_error_index').hide()", 5000);
                         try {
                         } catch (e) {
-                            $('#seccion_validar').html('Ocurrió un error durante el proceso, inténtelo más tarde.');
+                            $('#modal_content').html('Ocurrió un error durante el proceso, inténtelo más tarde.');
                         }
 
                     }
@@ -119,4 +120,5 @@ function  funcion_guardar_comentario(element) {
             .always(function () {
                 remove_loader();
             });
-};
+}
+;

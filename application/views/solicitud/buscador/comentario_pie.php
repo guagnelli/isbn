@@ -4,6 +4,7 @@
     <button type="button" class="btn btn-default"
             data-seccioncve="<?php echo (isset($seccion)) ? $seccion: ''; ?> "
             data-histsolicitudcve="<?php echo (isset($hist_sol)) ? $hist_sol: ''; ?> "
+            data-solicitudcve="<?php echo (isset($solicitud_cve)) ? $solicitud_cve: ''; ?> "
             onclick="funcion_guardar_comentario(this)" >
                 <?php echo $string_values['btn_guardar_comentario']; ?>
     </button>

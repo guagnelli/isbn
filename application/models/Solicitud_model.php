@@ -216,7 +216,7 @@ class Solicitud_model extends MY_Model {
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Registro),
                 'is_boton' => 1,
-                'titulo_boton' => 'Realizar solicitud',
+                'titulo_boton' => 'Guardar solicitud',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
                 'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
@@ -227,7 +227,7 @@ class Solicitud_model extends MY_Model {
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::En_revision),
                 'is_boton' => 1,
-                'titulo_boton' => 'Registrar solicitud',
+                'titulo_boton' => 'Enviar a DGAJ',
                 'color_status' => '',
                 'funcion_demandada' => 'cambio_estado(this)',
                 'mensaje_guardado_correcto' => 'save_envio_revision',
@@ -319,8 +319,6 @@ class Solicitud_model extends MY_Model {
         $this->db->where($condicion_hist_actual);
         $this->db->update('hist_revision_isbn', $parametros_update_hist_actual); //Inserción de registro
 //        pr($this->db->last_query());
-
-
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return 0; //Rollback 
@@ -402,7 +400,6 @@ class Solicitud_model extends MY_Model {
      * @return int
      */
     public function insert_comentario_seccion($parametros_insert_comentarios) {
-
         $this->db->trans_begin(); //Definir inicio de transacción
         //Inserta un comentario de sección
         $this->db->insert('observaciones_seccion_solicitud', $parametros_insert_comentarios); //Inserción de registro

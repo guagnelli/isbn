@@ -108,12 +108,12 @@ $config["sol_sec_tema"] = array(
             'greater_than' => "El campo %s es obligatorio"
         )
     ),
-    $config["comentario_JUST"] = array(
-    array(
-        'field' => 'comentario_justificacion',
-        'label' => 'observacion',
-        'rules' => 'trim|required|max_length[150]|matches[contrasenia]'
-    ),
+    $config["comentario_jus"] = array(
+        array(
+            'field' => 'comentario_justificacion',
+            'label' => 'observacion',
+            'rules' => 'trim|required'
+        ),
     ),
 );
 
