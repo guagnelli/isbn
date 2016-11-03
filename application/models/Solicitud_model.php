@@ -65,7 +65,10 @@ class Solicitud_model extends MY_Model {
             // secciones
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
-                $solicitud["secciones"][$seccion["cve_seccion"]] = "hello world_" . $seccion["cve_seccion"];
+                $this->db->where($seccion["referencia"],$id);
+                $result = $this->db->get($seccion["tbl_seccion"]);
+                $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
+                $result->free_result();
             }
         }
         //pr($solicitud);
@@ -300,20 +303,6 @@ class Solicitud_model extends MY_Model {
         return $secciones;
     }
 
-    function get_tema($solicitud_id = null) {
-        $this->db->where("solicitud_id", $solicitud_id);
-        $result = $this->db->get("tema");
-        if ($result->num_rows() == 0) {
-            return TRUE;
-        } elseif ($result->num_rows() == 1) {
-            $tema = $result->row_array();
-            $result->free_result();
-            return $tema;
-        } else {
-            return false;
-        }
-    }
-
     public function update_insert_estado_solicitud($parametros_insert_nuevo_hist, $parametros_update_hist_actual, $condicion_hist_actual) {
 
         $this->db->trans_begin(); //Definir inicio de transacción
@@ -340,11 +329,11 @@ class Solicitud_model extends MY_Model {
     }
 
     function add($table = null, $data = null) {
-        if (!isset($data["solicitud_id"]) || is_null($table)) {
+        if (is_null($table)) {
             return false;
         }
         $this->db->insert($table, $data);
-        if ($this->db->affected_rows() > 0) {
+        if ($this->db->insert_id() > 0) {
             return true;
         } else {
             return false;
@@ -356,6 +345,14 @@ class Solicitud_model extends MY_Model {
             return false;
         }
         $this->db->update($table, $data, $where);
+        return true;
+    }
+
+    function delete($table= null, $where = array()){
+        if (is_null($table) || !is_array($where)) {
+            return false;
+        }
+        $this->db->delete($table,$where);
         return true;
     }
 
@@ -414,6 +411,35 @@ class Solicitud_model extends MY_Model {
 //                pr($this->db->last_query());
             $this->db->trans_commit();
             return $data_hist_id; //retorna el id de la última historia de la solicitud
+        }
+    }
+
+    function get_tema($solicitud_id = null) {
+        $this->db->where("solicitud_id", $solicitud_id);
+        $result = $this->db->get("tema");
+        if ($result->num_rows() == 0) {
+            return TRUE;
+        } elseif ($result->num_rows() == 1) {
+            $tema = $result->row_array();
+            $result->free_result();
+            return $tema;
+        } else {
+            return false;
+        }
+    }
+
+    function get_idiomas($solicitud_id = null){
+        $this->db->select("idioma");
+        $this->db->where("solicitud", $solicitud_id);
+        $result = $this->db->get("sol_idioma");
+        if ($result->num_rows() == 0) {
+            return TRUE;
+        } elseif ($result->num_rows() > 0) {
+            $idiomas = $result->row_array();
+            $result->free_result();
+            return $idiomas;
+        } else {
+            return false;
         }
     }
 

@@ -11,9 +11,12 @@
 }
 </style>
 <?php 
+/*if(isset($idiomas)){
+  pr($idiomas);
+}
 if(isset($debug)){
   pr($debug);
-}
+}*/
 echo form_open("solicitud/sec_idioma",array(
     'id'=>'frm_idioma',
     'class'=>'form-horizontal form-label-left',
@@ -24,20 +27,25 @@ echo form_open("solicitud/sec_idioma",array(
   <label class="control-label col-md-3 col-sm-3 col-xs-12">
     <b><span class="required">*</span>Seleccionar idioma:</b>
   </label>
-  <div class="col-md-6 col-sm-6 col-xs-12">
-    <select id="drop_idiomas" data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
-            <option value=""></option>
-            <option value="es" selected>Español</option>
-            <option value="en" selected>Inglés</option>
-            <option value="it">Italiano</option>
-            <option value="fr">Polaco</option>
-            <option value="pl">Frances</option>
-            <option value="j">Algeria</option>
-            <option value="la">Samoa</option>
-            <option value="Andorra">Andorra</option>
-            
+  <div class="col-md-9 col-sm-9 col-xs-12">
+    <select id="drop_idiomas" 
+            name="drop_idiomas" 
+            data-placeholder="Selecciona un idioma" 
+            class="chosen-select" 
+            multiple style="width:350px;" 
+            tabindex="4">
+        <?php 
+            $selected = "";
+            foreach ($combos["c_idioma"] as $key => $value) {
+              if(isset($idiomas["idiomas"]) && in_array($key,$idiomas["idiomas"])){
+                $selected = "selected";
+              }
+              echo "<option value='$key' $selected>$value</option>";
+              $selected = "";
+            }
+          ?>
     </select>
-    <input type="hidden" id="idiomas" value="">
+    <input type="hidden" id="idiomas" name="idiomas" value="">
   </div>
 </div>
 <div class="form-group">
@@ -53,22 +61,11 @@ echo form_open("solicitud/sec_idioma",array(
 </div>
 <?php echo form_close(); ?>
 <script type="text/javascript">
-  /*$(".select2_multiple").ready(function() {
-    $(".select2_multiple").select2({
-      data: [{'id': 'pol','text':'Polonia'}],
-      //maximumSelectionLength: 10,
-      placeholder: "Seleccione un idioma",
-      allowClear: true
-    });
-  });
-  //btn();*/
-</script>
-<script type="text/javascript">
     $('.chosen-select').chosen().change(function(event){
         var select = $(event.target).attr("id");
         var str = "";
         $( "#"+select+" option:selected" ).each(function(){
-          str += ","+$(this).text() + " ";
+          str += ","+$(this).val() + " ";
         });
         $("#idiomas").val(str);
     }).trigger( "change" );

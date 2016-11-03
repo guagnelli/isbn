@@ -508,16 +508,40 @@ class Solicitud extends MY_Controller {
 
     function sec_idioma() {
         if ($this->input->is_ajax_request()) {
-            /* if($this->input->post()){
-              $data["tema"] = $this->input->post();
-              if(count($data["tema"])==1){//first load
-              //buscar idiomas seleccionados
-              }
-              } */
+            $data["idiomas"] = $this->input->post();
+
+            if (count($data["idiomas"]) == 1) {
+                $idiomas = $this->req->get_idiomas($data["idiomas"]["solicitud_id"]);
+                if (is_array($idiomas) && !empty($idiomas)) {
+                    $data["idiomas"]["idiomas"] = $idiomas;
+                }
+            } else if(isset($data["idiomas"]["idiomas"])){
+                $lang = explode(",",$data["idiomas"]["idiomas"]);
+                $data["idiomas"]["idiomas"] = $lang = array_filter($lang);
+
+                //remover registros
+                $this->req->delete("sol_idioma",array("solicitud" =>$data["idiomas"]["solicitud_id"]));
+                
+                //registrar idiomas
+                
+                foreach($lang as $id=>$row){
+                    $save = array(
+                        "idioma"=>$row,
+                        "solicitud"=>$data["idiomas"]["solicitud_id"]
+                    );
+                    
+                    if(!$this->req->add("sol_idioma",$save)){
+                        $data["debug"][$id] = $save;
+                    }
+                    else{
+                        
+                    }
+                }
+            }
             //$response['message'] = 
             $response['result'] = "true";
-            $data["debug"] = $this->input->post();
-            $data["combos"]["idioma"] = $this->cg->get_combo_catalogo("c_idioma");
+            
+            $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
             echo json_encode($response);
             return 0;

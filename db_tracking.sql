@@ -76,3 +76,6 @@ insert into c_idioma (nombre) values('Español'),('Inglés'),('Italiano');
 ALTER TABLE observaciones_seccion_solicitud ADD comentarios text NULL;
 ALTER TABLE observaciones_seccion_solicitud ADD fecha_comment datetime default current_timestamp;;
 
+-----03112016
+alter table seccion_solicitud add column referencia varchar(50) not null ;
+update seccion_solicitud set referencia = 'solicitud_id';

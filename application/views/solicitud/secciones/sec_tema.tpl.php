@@ -90,7 +90,7 @@ if(isset($tema["id"])){
            name="nombre_serie" 
            placeholder="Nombre de la serie" 
            required="required"
-           <?php
+          <?php
           if(isset($tema["nombre_serie"])){
           ?>
           value="<?php echo $tema["nombre_serie"];?>"
