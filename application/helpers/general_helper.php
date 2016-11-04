@@ -751,7 +751,8 @@ if (!function_exists('valida_acceso_rol_validador')) {
      */
     function valida_acceso_rol_validador($rol_validador, $estado_validacion, $reglas_estados) {
 //        pr($reglas_estados[$estado_validacion]['rol_permite']);
-//        pr($rol_validador);
+//        pr($rol_validador . ' <--> ' . $estado_validacion);
+//        pr($estado_validacion);
         //Valida el acceso al rol seleccionado
         $valida_acceso_rol = 0;
         foreach ($reglas_estados[$estado_validacion]['rol_permite'] as $value_rol) {

@@ -3,6 +3,17 @@ menu_busqueda_solicitud['isbn'] = 'isbn';
 menu_busqueda_solicitud['titulo_obra'] = 'Titulo del libro';
 menu_busqueda_solicitud['sub_titulo_obra'] = 'Sub titulo del libro';
 
+//$(document).ready(function () {
+//    setTimeout(function () {
+//        funcion_buscar_solicitudes();
+//    }, 3000);
+//});
+
+//Carga las solicitudes
+$(window).load(function () {
+    funcion_buscar_solicitudes();
+});
+
 $(function () {
 
     var hash = window.location.hash;

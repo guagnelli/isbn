@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 ?>
 <?php echo css("style-sipimss.css"); ?>
 
@@ -19,36 +18,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-sm-12 col-md-12 col-lg-12">
 
         <div class="panel">
-            <div class="breadcrumbs6 panel-heading" style="padding-left:20px;">
-                <h1 id="titulo_registro">
-                    <small>
-                        <span class="glyphicon glyphicon-info-sign">
-                        </span>
-                    </small>
-                    <?php echo $string_values['lbl_titulo_seccion']; ?>
-                </h1>
-            </div>
+            <!--            <div class="breadcrumbs6 panel-heading" style="padding-left:20px;">
+                            <h1 id="titulo_registro">
+                                <small>
+                                    <span class="glyphicon glyphicon-info-sign">
+                                    </span>
+                                </small>
+            <?php // echo $string_values['lbl_titulo_seccion']; ?>
+                            </h1>
+                        </div>-->
             <div class="panel-body">
                 <!--<div id="cuerpo_solicitud" class="list-group-item text-center center ">-->
-                <div class="row">
-                    <?php if (isset($vista)) {?>
-                        
-                        <?php echo $vista; ?>
-                    <?php } ?>
-                </div>
+                <?php if (isset($vista)) { ?>
+
+                    <?php echo $vista; ?>
+                <?php } ?>
+                <!--</div>-->
                 <!--</div>-->
 
-                <?php if (isset($boton_estado)) { ?>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <?php if (isset($boton_estado)) { ?>
+                            <a class="btn btn-primary" data-toggle='tab' href='#select_buscador_solicitud_entidad'>Cancelar</a>
 
-                    <div class="list-group-item text-center center ">
-                        <a class="btn btn-primary" data-toggle='tab' href='#select_buscador_solicitud_entidad'>Cancelar</a>
-                        <?php
-                        foreach ($boton_estado as $botones) {
-                            echo $botones;
-                        }
-                        ?>
+                            <?php
+                            foreach ($boton_estado as $botones) {
+                                echo $botones;
+                            }
+                            ?>
+                        <?php } ?>
                     </div>
-                <?php } ?>
+                </div>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 contenedor" >
         <span id="pie"  onclick="funcion_cerrar_vista_solicitud(this)">
-            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];   ?></a>
+            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];       ?></a>
         </span>
     </div>
 </div>

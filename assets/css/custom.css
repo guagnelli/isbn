@@ -4218,3 +4218,11 @@ ul.notifications {
   background:none;
   color:#f42434;
 }
+.btn-msg,.btn-msg:visited{
+  color:#7c7c7c;
+  font-size:20px; 
+}
+.btn-msg:hover{
+  color:#f42434;
+  font-size:20px; 
+}
