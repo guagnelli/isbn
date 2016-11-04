@@ -79,3 +79,21 @@ ALTER TABLE observaciones_seccion_solicitud ADD fecha_comment datetime default c
 -----03112016
 alter table seccion_solicitud add column referencia varchar(50) not null ;
 update seccion_solicitud set referencia = 'solicitud_id';
+alter table traduccion drop foreign key fk_translate_idiomaal;
+alter table traduccion drop foreign key fk_translate_idiomadel;
+alter table traduccion drop foreign key fk_translate_idiomaoriginal;
+
+alter table traduccion add
+  CONSTRAINT `fk_translate_idiomaal` 
+  FOREIGN KEY (`idioma_al`) 
+  REFERENCES `c_idioma` (`id`);
+
+alter table traduccion add
+  CONSTRAINT `fk_translate_idiomadel` 
+  FOREIGN KEY (`idioma_del`) 
+  REFERENCES `c_idioma` (`id`);
+
+alter table traduccion add
+  CONSTRAINT `fk_translate_idiomaoriginal` 
+  FOREIGN KEY (`idioma_original`) 
+  REFERENCES `c_idioma` (`id`);

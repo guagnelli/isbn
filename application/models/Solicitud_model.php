@@ -443,6 +443,13 @@ class Solicitud_model extends MY_Model {
         }
     }
 
+    function get_section($tabla,$where=array()){
+        $this->db->where($where);
+        $result = $this->db->get($tabla);
+        $seccion = $result->result_array();
+        $result->free_result();
+        return $seccion; 
+    }
 }
 
 ?>

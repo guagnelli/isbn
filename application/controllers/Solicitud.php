@@ -521,20 +521,14 @@ class Solicitud extends MY_Controller {
 
                 //remover registros
                 $this->req->delete("sol_idioma",array("solicitud" =>$data["idiomas"]["solicitud_id"]));
-                
                 //registrar idiomas
-                
                 foreach($lang as $id=>$row){
                     $save = array(
                         "idioma"=>$row,
                         "solicitud"=>$data["idiomas"]["solicitud_id"]
                     );
-                    
                     if(!$this->req->add("sol_idioma",$save)){
                         $data["debug"][$id] = $save;
-                    }
-                    else{
-                        
                     }
                 }
             }
@@ -543,6 +537,65 @@ class Solicitud extends MY_Controller {
             
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function sec_traduccion(){
+        if ($this->input->is_ajax_request()) {
+            // $data["debug"] = 
+            $data["traduccion"] = $this->input->post();
+                //load from the begining
+            if (count($data["traduccion"]) == 1) {
+                load:
+                // $data["debug"][0] = 
+                $data["traduccion"] = $this->req->get_section("traduccion",
+                    array(
+                        "solicitud_id"=>$data["traduccion"]["solicitud_id"]
+                    ));
+                if(count($data["traduccion"])==1){
+                    $data["traduccion"] = $data["traduccion"][0];
+                    $data["traduccion"]["has_traduction"]=1;
+                }
+            }elseif(isset($data["traduccion"]["id"])){
+                $where = array("id" => $data["traduccion"]["id"]);
+                unset($data["traduccion"]["id"]);
+                unset($data["traduccion"]["has_traduction"]);
+                $update = $this->req->update("traduccion", $data["traduccion"], $where);
+                if ($update) {
+                    $response['message'] = "La traducción se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+                //$data["debug"][1]="update;";
+                goto load;
+            }else{
+                unset($data["traduccion"]["has_traduction"]);
+                $save = $this->req->add("traduccion", $data["traduccion"]);
+                    if ($save) {
+                         $update = $this->req->update("solicitud", 
+                            array("has_traduccion" => 1), 
+                            array("id" => $data["traduccion"]["solicitud_id"]));
+                        $response['message'] = "La sección se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                $data["debug"][2]="new brand";
+                goto load;
+            }
+
+            $response['result'] = "true";
+            $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
+            // $data["combos"]["c_idioma_del"] = $this->cg->get_combo_catalogo("c_idioma");
+            // $data["combos"]["c_idioma_al"] = $this->cg->get_combo_catalogo("c_idioma");
+            $response['content'] = $this->load->view("solicitud/secciones/sec_traduccion.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
         } else {
