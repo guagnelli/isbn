@@ -17,7 +17,7 @@ if(isset($traduccion["id"])){
 <?php
 }
 ?>
-<p class="lead">Traducción</p>
+<p class="lead">Traducción <?php echo $comentarios; ?></p>
 <!--div class="form-group">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 	  	<label>

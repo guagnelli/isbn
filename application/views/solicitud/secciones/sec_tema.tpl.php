@@ -11,7 +11,7 @@ if(isset($tema["id"])){
 <?php
 }
 ?>
-<p class="lead">Tema</p>
+<p class="lead">Tema <?php echo $comentarios; ?></p>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
     <b><span class="required">*</span>Colección: </b>

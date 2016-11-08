@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
     var hash = window.location.hash;
     $('.nav.nav-pills a[href="' + hash + '"]').tab('show', function () {
-        alert('invocacion');
+//        alert('invocacion');
         $(document).scrollTop();
     });
 </script>

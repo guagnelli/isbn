@@ -21,8 +21,10 @@ echo form_open("solicitud/sec_idioma",array(
     'id'=>'frm_idioma',
     'class'=>'form-horizontal form-label-left',
     'method'=>'post'
-));?>
-<p class="lead">Idiomas</p>
+));
+//pr($comentarios);
+?>
+<p class="lead">Idiomas <?php echo $comentarios; ?></p>
 <div class="form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12">
     <b><span class="required">*</span>Seleccionar idioma:</b>

@@ -1,4 +1,4 @@
-<?php ?>
+<?php pr($solicitud);?>
 <!DOCTYPE html>
 
 
@@ -9,15 +9,15 @@
     <!---Cuerpo-->
     <div class="x_panel">
         <div class="x_title">
-            <h2> Revisión de ISBN </h2>
+            <h2> Detalle del libro: <?php echo $solicitud['libro']['title']; ?> </h2>
             <ul class="nav navbar-right panel_toolbox">
             </ul>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <p><b>Clasificación temática:</b></p>
+            <p><b>Clasificación temática: </b></p>
             <ul>    
-                <li>Temática principal: Análisis del mexicano</li>
+                <li><?php echo $solicitud['clasificacion_tematica']['categoria']; ?></li>
             </ul>
 
             <p><b>Tema: </b><?php echo $botones_seccion[En_secciones::TEMA];?></p> 
