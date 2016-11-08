@@ -235,7 +235,8 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a DGAJ',
                 'color_status' => '',
                 'is_editable_solicitud' => 1,
-                'funcion_demandada' => 'cambio_estado(this)',
+//                'funcion_demandada' => 'cambio_estado(this)',
+                'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
                 'mensaje_guardado_correcto' => 'save_envio_revision',
                 'add_comment_seccion' => 0,
                 'vista' => 'editar_registro',
@@ -263,6 +264,7 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => 0,
                 'vista_detalle_solicitud' => 0,
                 'vista_detalle_solicitud' => 0,
+                'vista' => 'editar_registro',
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
@@ -274,6 +276,7 @@ class Solicitud_model extends MY_Model {
                 'funcion_demandada' => 'cambio_estado(this)',
                 'add_comment_seccion' => 1,
                 'vista_detalle_solicitud' => 1,
+                'vista' => 'detalle',
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
@@ -285,6 +288,7 @@ class Solicitud_model extends MY_Model {
                 'funcion_demandada' => 'cambio_estado(this)',
                 'add_comment_seccion' => 1,
                 'vista_detalle_solicitud' => 1,
+                'vista' => 'detalle',
             ),
             Enum_es::Radicado => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -296,6 +300,7 @@ class Solicitud_model extends MY_Model {
                 'funcion_demandada' => 'cambio_estado(this)',
                 'add_comment_seccion' => 1,
                 'vista_detalle_solicitud' => 1,
+                'vista' => 'detalle',
             ),
         );
         return $reglas_estado;

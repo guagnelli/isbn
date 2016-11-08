@@ -8,7 +8,7 @@
     </div>
     <div class="x_content">
         <div class="row" style="border-bottom: 1px solid #E0E0E0; padding-bottom: 5px; margin-bottom: 5px;">
-            <div class="col-md-12" style="overflow:hidden;">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow:hidden;">
                 <div class="col-md-8 center-margin">
                         <div class="form-group">
                             <?php if(isset($error)){ ?>
@@ -35,7 +35,7 @@
                             ?>
                             <span class="text-danger"> <?php echo form_error('passwd','','');?> </span>
                         </div>
-                        <div class="list-group-item">
+                        <div class="">
                             <div id="captcha_first"></div>
 
                             <script type="text/javascript">
@@ -48,7 +48,7 @@
                             
                             <input type="text" class="form-control" name="userCaptcha" id="userCaptcha" placeholder="Escribe el texto de la imágen" autocomplete="off" value="<?php if(!empty($userCaptcha))echo $userCaptcha; ?>">
                             <span class="text-danger"> <?php echo form_error('userCaptcha','','');?> </span>
-                        </div>
+                        </div><br>
                         <div class="form-group">
                             <!-- <button id="entidad" type="button" class="btn">Ingresar como Entidad</button> -->
                             <?php

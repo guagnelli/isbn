@@ -1,6 +1,6 @@
 <?php
 if(isset($debug)){
-  pr($debug);
+  //pr($debug);
 }
 echo form_open("solicitud/sec_colaboradores",array(
     'id'=>'frm_colaboradores',

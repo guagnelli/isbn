@@ -25,13 +25,17 @@
                     <br>
                 </div>
                 <div class="row">
+                    <?php if(isset($msg) && !is_null($msg)){ echo $msg; } //Imprimir mensaje ?>
+                    <div id="mensaje"></div>
+                </div>
+                <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_nombre']; ?>: </span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_nombre']; ?>: </span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'nombre',
                                 'type' => 'text',
-                                'value' => '',
+                                'value' => $dato_usuario['usu_nombre'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
                                     'placeholder' => $string_values['lbl_nombre'],
@@ -40,16 +44,17 @@
                                     'title' => $string_values['lbl_nombre'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('nombre'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_paterno']; ?></span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_paterno']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'apaterno',
                                 'type' => 'text',
-                                'value' => '',
+                                'value' => $dato_usuario['usu_paterno'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
                                     'placeholder' => $string_values['lbl_paterno'],
@@ -58,16 +63,17 @@
                                     'title' => $string_values['lbl_paterno'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('apaterno'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_materno']; ?></span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_materno']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'amaterno',
                                 'type' => 'text',
-                                'value' => '',
+                                'value' => $dato_usuario['usu_materno'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
                                     'placeholder' => $string_values['lbl_materno'],
@@ -76,16 +82,17 @@
                                     'title' => $string_values['lbl_materno'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('amaterno'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_correo']; ?></span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_correo']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'correo',
                                 'type' => 'text',
-                                'value' => '',
+                                'value' => $dato_usuario['usu_correo'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
                                     'placeholder' => $string_values['lbl_correo'],
@@ -94,6 +101,7 @@
                                     'title' => $string_values['lbl_correo'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('correo'); ?>
                     </div>
                 </div>
                 <div class="row">
@@ -102,7 +110,7 @@
                             <span class="input-group-addon"><?php echo $string_values['lbl_contrasenia']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'contrasenia',
-                                'type' => 'text',
+                                'type' => 'password',
                                 'value' => '',
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
@@ -112,24 +120,26 @@
                                     'title' => $string_values['lbl_contrasenia'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('contrasenia'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_confirmacion']; ?></span>
+                            <span class="input-group-addon"><?php echo $string_values['lbl_contrasenia_confirmacion']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'confirmacion',
-                                'type' => 'text',
+                                'type' => 'password',
                                 'value' => '',
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
-                                    'placeholder' => $string_values['lbl_confirmacion'],
+                                    'placeholder' => $string_values['lbl_contrasenia_confirmacion'],
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
-                                    'title' => $string_values['lbl_confirmacion'])));
+                                    'title' => $string_values['lbl_contrasenia_confirmacion'])));
                             ?>
                         </div>
+                        <?php echo form_error_format('confirmacion'); ?>
                     </div>
                 </div>
                 <div class="row">
@@ -138,7 +148,7 @@
                                 class="btn btn-default browse" 
                                 title="<?php echo $string_values['lbl_guardar']; ?>" 
                                 data-toggle="tooltip">
-                            <?php echo $string_values['lbl_guardar'];?> <span aria-hidden="true" class="glyphicon glyphicon-search"></span>
+                            <?php echo $string_values['lbl_guardar'];?> <span aria-hidden="true" class="glyphicon glyphicon-send"></span>
                         </button>
                     </div>
                 </div>

@@ -11,95 +11,68 @@ if(isset($tema["id"])){
 <?php
 }
 ?>
-<p class="lead">Tema</p>
+<p class="lead">Información de edición</p>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>Colección: </b>
+    <span class="required">*</span>No. Edición: 
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
-    <input id="coleccion" 
-      class="form-control col-md-7 col-xs-12" 
-      data-validate-length-range="6" 
-      data-validate-words="2" 
-      name="coleccion" 
-      placeholder="Colección" 
-      required="required" 
-      <?php
-      if(isset($tema["coleccion"])){
-      ?>
-      value="<?php echo $tema['coleccion'];?>"
-      <?php
-      }?>
-      type="text">
+    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
   </div>
-  <?php echo form_error('coleccion'); ?>
 </div>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>No. de colección: </b>
+    <span class="required">*</span>Departamento, provincia o estado: 
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
-    <input id="no_coleccion" 
-      class="form-control col-md-7 col-xs-12" 
-      data-validate-length-range="6" 
-      data-validate-words="2" 
-      name="no_coleccion" 
-      placeholder="Número de colección" 
-      required="required" 
-      <?php
-      if(isset($tema["no_coleccion"])){
-      ?>
-      value="<?php echo $tema["no_coleccion"];?>"
-      <?php
-      }?>
-      type="text">
+    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
   </div>
-  <?php echo form_error('no_coleccion'); ?>
 </div>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>Tipo de contenido:</b>
+    <span class="required">*</span>Ciudad de edición: 
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
-     <select name="tipo_contenido" 
-             id="tipo_contenido" 
-             class="form-control" required>
-      <?php 
-        $selected = "";
-        foreach ($combos["tipo_contenido"] as $key => $value) {
-          if($key==$tema["tipo_contenido"]){
-            $selected = "selected";
-          }
-          echo "<option value='$key' $selected>$value</option>";
-          $selected = "";
-        }
-      ?>
-    </select>
+    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
   </div>
-  <?php echo form_error('tipo_contenido'); ?>
+</div>
+<div class="item xdisplay_inputx form-group has-feedback">
+  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+    <span class="required">*</span>Fecha de aparición: 
+  </label>
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <input type="text" class="form-control has-feedback-left" id="single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+    <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+  </div>
+  <script>
+    $('#single_cal2').daterangepicker({
+        singleDatePicker: true,
+        calender_style: "picker_2"
+      }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
+  </script>
+</div>
+  
+<div class="item form-group">
+  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+    <span class="required">*</span>Coedición: 
+  </label>
+  <div class="col-md-6 col-sm-6 col-xs-12">
+      <input type="checkbox" class="js-switch" checked />
+  </div>
 </div>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>Nombre de la serie: </b>
+    <span class="required">*</span>Coeditor: 
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
-    <input id="nombre_serie" 
-           class="form-control col-md-7 col-xs-12" 
-           data-validate-length-range="6" 
-           data-validate-words="2" 
-           name="nombre_serie" 
-           placeholder="Nombre de la serie" 
-           required="required"
-          <?php
-          if(isset($tema["nombre_serie"])){
-          ?>
-          value="<?php echo $tema["nombre_serie"];?>"
-          <?php
-          }?> 
-           type="text">
+    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
   </div>
-  <?php echo form_error('nombre_serie'); ?>
 </div>
+
+
 <div class="form-group">
   <div class="col-md-12 text-center">
     <button id="send_tema" 

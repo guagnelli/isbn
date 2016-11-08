@@ -22,8 +22,8 @@ $config['modulos_sesion_generales'] = array(
     E_rol::ENTIDAD => array('solicitud' => array('*'))
 );*/
 $config['modulos_permisos'] = array(
-    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')), 
-    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud', 'reporte'=>'Reporte')),
+    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte')), 
+    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte')),
     E_rol::DGAJ => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud')), 
     E_rol::ENTIDAD => array(
         'permisos' => array('solicitud' => array('*'),"colaborador"=>array('*')), 

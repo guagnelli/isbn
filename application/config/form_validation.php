@@ -63,17 +63,7 @@ $config["form_perfil"] = array(
         'field' => 'correo',
         'label' => 'Correo',
         'rules' => 'trim|required|max_length[40]|valid_email'
-    ),
-    array(
-        'field' => 'contrasenia',
-        'label' => 'Contraseña',
-        'rules' => 'trim|required|max_length[150]'
-    ),
-    array(
-        'field' => 'confirmacion',
-        'label' => 'Confirmar contraseña',
-        'rules' => 'trim|required|max_length[150]|matches[contrasenia]'
-    ),
+    )
 );
 $config["sol_sec_tema"] = array(
     array(

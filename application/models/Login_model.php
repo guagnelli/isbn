@@ -13,7 +13,7 @@ class Login_model extends CI_Model {
 
     public function validar_usuario($nick, $passwd){
         $login_user = $this->set_login_user($nick, $passwd); ///Verificar contra base de datos
-        if ($login_user->cantidad_reg == 1) { ///Usuario existe en base de datos
+        if (isset($login_user->cantidad_reg) && $login_user->cantidad_reg == 1) { ///Usuario existe en base de datos
             $password_encrypt = hash('sha512', $passwd);
             //pr($login_user);
             if ($login_user->usu_contrasenia == $password_encrypt) {

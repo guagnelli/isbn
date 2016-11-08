@@ -30,32 +30,71 @@ class Perfil extends CI_Controller {
         $string_values = $this->lang->line('interface')['perfil'];
         $data['string_values'] = $string_values;
         $usuario_id = $this->session->userdata('identificador');
-        pr($this->session->userdata());
+        //pr($this->session->userdata());
 
         if(!is_null($this->input->post()) && !empty($this->input->post())){ //Se verifica que se haya recibido información por método post
             $datos_formulario = $this->input->post(null, true); //Datos del formulario se envían para generar la consulta
-            pr($datos_formulario);
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             
-            $this->form_validation->set_rules('form_perfil');
-            if(!empty($datos_formulario['contrasenia'])) { //Añadir opción en caso de ser edición y exista información en campo de contraseñia
-                $this->form_validation->set_rules('contrasenia','Contraseña','callback_valid_pass|max_length[30]|min_length[8]');
+            $this->form_validation->set_rules($this->config->item('form_perfil')); //Agregar validaciones
+
+            if(!empty($datos_formulario['contrasenia']) && !empty($datos_formulario['confirmacion'])) { //Añadir opción en caso de ser edición y exista información en campo de contraseñia
+                //$this->form_validation->set_rules('contrasenia','Contraseña','callback_valid_pass|max_length[30]|min_length[8]');
+                $this->form_validation->set_rules('contrasenia','Contraseña','alpha_numeric|max_length[30]|min_length[8]');
+                $this->form_validation->set_rules('confirmacion','Confirmar contraseña','matches[contrasenia]');
             }
             if($this->form_validation->run() == TRUE){ //Validar datos
-                /*$usu_vo->USU_CONTRASENIA = contrasenia_formato($usu_vo->USU_MATRICULA, $usu_vo->USU_CONTRASENIA);
-                unset($usu_vo->USU_MATRICULA); //Se elimina matrícula porque no se actualiza en una edición
+                $usu_vo = $this->usuario_vo($datos_formulario);
+
+                if(!empty($datos_formulario['contrasenia'])) { //Añadir opción en caso de ser edición y exista información en campo de contraseñia
+                    $usu_vo->usu_contrasenia = hash('sha512', $datos_formulario['contrasenia']); //aplica algoritmo de seguridad
+                }
+                //$usu_vo->usu_contrasenia = contrasenia_formato($usu_vo->USU_MATRICULA, $usu_vo->USU_CONTRASENIA);
+                /*unset($usu_vo->USU_MATRICULA); //Se elimina matrícula porque no se actualiza en una edición
                 if(empty($usu_vo->USU_CONTRASENIA)){ //Se elimina contraseña de objeto si se envía vacía
                     unset($usu_vo->USU_CONTRASENIA);
                 }*/
-                $password_encrypt = hash('sha512', $password); //aplica algoritmo de seguridad
 
                 $resultado = $this->perfil->update_usuario($usuario_id, $usu_vo); //Actualización de información
-                $datos['msg'] = imprimir_resultado($resultado); ///Muestra mensaje
-            }
+                if($resultado['result']===true){ //Almacenar en sesión
+                    $this->session->set_userdata(array('nombre'=>$datos_formulario['nombre'], 'apaterno'=>$datos_formulario['apaterno'], 'amaterno'=>$datos_formulario['amaterno'], 'mail'=>$datos_formulario['correo'])); ///Si es correcto iniciamos sesión
+                }
+                $data['msg'] = imprimir_resultado($resultado); ///Muestra mensaje
+            }/* else {
+                pr(validation_errors());
+            }*/
         }
-        $datos['dato_usuario'] = $this->perfil->get_usuario(array('conditions'=>array('usuario_cve'=>$usuario_id)))[0]; //Obtener datos
+        $data['dato_usuario'] = $this->perfil->get_usuario(array('conditions'=>array('usuario_cve'=>$usuario_id)))[0]; //Obtener datos
         
         $this->template->setMainContent($this->load->view('perfil/formulario', $data, TRUE));
         $this->template->getTemplate();
 	}
+
+
+    private function usuario_vo($usuario=array()){
+        $result = new Usuario_dao;
+        //$result->usu_nick = (isset($usuario['matricula']) && !empty($usuario['matricula'])) ? $usuario['matricula'] : NULL;
+        $result->usu_nombre = (isset($usuario['nombre']) && !empty($usuario['nombre'])) ? $usuario['nombre'] : NULL;
+        $result->usu_paterno = (isset($usuario['apaterno']) && !empty($usuario['apaterno'])) ? $usuario['apaterno'] : NULL;
+        $result->usu_materno = (isset($usuario['amaterno']) && !empty($usuario['amaterno'])) ? $usuario['amaterno'] : NULL;
+        $result->usu_correo = (isset($usuario['correo']) && !empty($usuario['correo'])) ? $usuario['correo'] : NULL;
+        //$result->usu_contrasenia = (isset($usuario['contrasenia']) && !empty($usuario['contrasenia'])) ? $usuario['contrasenia'] : NULL;
+        
+        return $result;
+    }
+}
+
+class Usuario_dao {
+    //public $usuario_cve;
+    //public $usu_nick;
+    public $usu_nombre;
+    public $usu_paterno;
+    public $usu_materno;
+    public $usu_correo;
+    //public $usu_contrasenia;
+    /*public $USU_CORREO_ALTERNATIVO;
+    public $USU_TEL_LABORAL;
+    public $USU_TEL_PARTICULAR;
+    public $ESTADO_USUARIO_CVE;
+    public $CESTADO_CIVIL_CVE;*/
 }

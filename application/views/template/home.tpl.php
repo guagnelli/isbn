@@ -117,8 +117,8 @@
 						</header>
 				<?php   }   ?>
 				<div class="row">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-8">
+					<div class="col-md-2 col-lg-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						<div class="row">
 							<?php if($this->session->flashdata('success')){?>
 								<div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
@@ -129,17 +129,17 @@
 							<?php } ?>
 						</div>
 					</div>
-					<div class="col-sm-2"></div>
+					<div class="col-md-2 col-lg-2"></div>
 				</div>
 				<div class="row">
-		            <div class="col-md-2"></div>
-	              	<div class="col-md-8">
+		            <div class="col-md-2 col-lg-2"></div>
+	              	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 						<?php 
 						if( ! is_null($main_content) ){
 							echo $main_content;
 						} ?>
 					</div>
-					<div class="col-md-2"></div>
+					<div class="col-md-2 col-lg-2"></div>
 				</div>
 			</div>
 
