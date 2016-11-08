@@ -64,7 +64,9 @@ $lang['interface'] = array(
         'msg_no_existe_empleado' => 'No se encontrarón datos del empleado. Por favor registre sus datos',
         'advertencia_agregar_todos_los_datos' => 'Debe llenar todos los campos obligatorios',
         'datos_almacenados_correctamente' => 'Los datos se almacenaron correctamente',
-        'error_guardar' => 'Los datos no se almacenaron. Por favor intentemo más tarde'
+        'error_guardar' => 'Los datos no se almacenaron. Por favor intentemo más tarde',
+        'actualizacion' => 'Se han guardado satisfactoriamente los cambios.',
+        'error' => 'Ha ocurrido un error durante el almacenamiento, inténtelo más tarde por favor.'
     ),
     'solicitud_index' => array(
         'title_template' => 'Revisión de solicitudes',
@@ -122,7 +124,7 @@ $lang['interface'] = array(
         'lbl_materno' => 'Apellido materno',
         'lbl_correo' => 'Correo electrónico',
         'lbl_contrasenia' => 'Contraseña',
-        'lbl_confirmacion' => 'Confirmar contraseña',
+        'lbl_contrasenia_confirmacion' => 'Confirmar contraseña',
         'lbl_guardar' => 'Guardar'
     ),
     'solicitud_detalle' => array(

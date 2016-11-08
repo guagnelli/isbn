@@ -49,7 +49,7 @@ class Login extends CI_Controller {
                 //echo "<pre>";
                 //var_dump($resultado);
                 //echo "</pre>";
-                if ($resultado['login']->cantidad_reg == 1) { ///Usuario existe en base de datos
+                if (isset($resultado['login']->cantidad_reg) && $resultado['login']->cantidad_reg == 1) { ///Usuario existe en base de datos
                     if (!$this->checkbrute($nick)) { //Verificamos que no exista ataque de fuerza bruta
                         if ($resultado['success']===1) {//Password correcto
 
@@ -64,7 +64,7 @@ class Login extends CI_Controller {
                         $error = $string_values['login']['er_general'];
                     }
                 } else {
-                    if ($resultado['login']->cantidad_reg == 0) {
+                    if (isset($resultado['login']->cantidad_reg) && $resultado['login']->cantidad_reg == 0) {
                         //La matrícula es incorrecta (no existe en el sistema)
                         $error = $string_values['login']['er_no_usuario'];
                     } else {

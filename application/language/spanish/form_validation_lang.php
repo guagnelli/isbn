@@ -40,3 +40,4 @@ $lang['form_validation_greater_than_equal_to']	= 'El campo {field} debe contener
 $lang['form_validation_error_message_not_set']	= 'No se ha podido acceder al mensaje de error correspondiente para el campo {field}.';
 $lang['form_validation_in_list']		= 'El campo {field} debe contener uno de estos: {param}.';
 $lang['form_validation_check_captcha']    = 'Por favor introduce correctamente los caracteres';
+$lang['form_validation_valid_pass']						= 'El campo {field} debe tener una longitud mínima de 8 caracteres. Debe contener al menos una letra mayúscula, una minúscula, 1 dígito y 1 caracter especial (+%#.,).';
