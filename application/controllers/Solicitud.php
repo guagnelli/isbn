@@ -668,6 +668,10 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    function sec_edicion(){
+        
+    }
+
     function seccion(){
         if ($this->input->is_ajax_request()) {
             $data["debug"] = $data["seccion"] = $this->input->post();
