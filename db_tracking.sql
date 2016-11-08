@@ -97,3 +97,16 @@ alter table traduccion add
   CONSTRAINT `fk_translate_idiomaoriginal` 
   FOREIGN KEY (`idioma_original`) 
   REFERENCES `c_idioma` (`id`);
+
+insert into c_entidad(name,code,subsistema_id)values('Facultad de Medicina','FM','1');
+
+insert into usuario (usu_nick,usu_nombre, usu_paterno,
+		usu_materno,usu_correo,entidad_id,rol_cve,usu_contrasenia) 
+	values('medicina','Facultad de Medicina','unam',''
+		  ,'medicina@unam.mx',4,4,
+'affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686');
+
+alter table colaboradores drop column orden;
+
+alter table seccion_solicitud add column estado numeric(1) default 1;
+

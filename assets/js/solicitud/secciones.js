@@ -32,17 +32,6 @@ function ajax(action,form_data,div_content,div_msg){
         remove_loader();
     });
 }
-function load_sections(){
-	var form_data = {solicitud_id:$("#sol").val()};
-	ajax(site_url+"/solicitud/sec_tema",form_data,'#tab_tema','#msg_general');
-    ajax(site_url+"/solicitud/sec_idioma",form_data,'#tab_idioma','#msg_general');
-	ajax(site_url+"/solicitud/sec_traduccion",form_data,'#tab_traduccion','#msg_general');
-	//btn();
-}
-$("#tab_sections").ready(function (){
-	load_sections();
-	
-});
 
 function btn(obj){
 	//alert("hola");
@@ -51,7 +40,7 @@ function btn(obj){
 	var type = $(obj).data("type");
 	var id = "#frm_"+type;
 	var solicitud = $("#sol").val();
-	alert(id)
+	// alert(id)
 	//alert(solicitud);
 	
 	var input = $('<input name="solicitud_id" type="hidden" value="'+solicitud+'">');
@@ -59,7 +48,7 @@ function btn(obj){
 	//data_ajax($(id).attr("action"),id,"#msg_secciones");
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();
-	//alert(action);
+	//alert(form_data);
 	ajax(action,form_data,'#tab_'+type,'#msg_general');
 	//});
 }

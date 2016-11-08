@@ -1,7 +1,3 @@
-<?php ?>
-<!DOCTYPE html>
-
-
 <div class="text-left" role="main">
     <div class="">
         <h3>Dirección General de Asuntos Jurídicos</h3>

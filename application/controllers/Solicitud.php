@@ -242,12 +242,12 @@ class Solicitud extends MY_Controller {
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
         //si tiene datosbusca por id
         if ($this->input->post()) {
-            $post = $this->input->post();
+            $data["save"] = $this->input->post();
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //Añadir validaciones
 //            pr($post);
-            $data["save"] = $post;
+            //$data["save"] = $post;
 
             if ($this->form_validation->run()) {
                 //$data["datos"]["entidad"] = $this->sol->getEntidad($id_entidad);
@@ -264,7 +264,7 @@ class Solicitud extends MY_Controller {
 
         //Genera reglas de estado 
         $reglas_validacion = $this->req->getReglasEstadosSolicitud();
-        $parametros_estado['reglas_validacion'] = $this->req->getReglasEstadosSolicitud();
+        $parametros_estado['reglas_validacion'] = $reglas_validacion;
         $parametros_estado['rol_seleccionado'] = $rol_seleccionado;
         $parametros_estado['estado_cve'] = Enum_es::__default; //Estado inicial para enviar una solicitud
         $data['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
@@ -278,6 +278,8 @@ class Solicitud extends MY_Controller {
     function secciones($solicitud) {
         try {
             $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud);
+            $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
+            $data["secciones"] = $this->req->get_sections();
         } catch (Exception $ex) {
             print ($ex);
         }
@@ -506,14 +508,19 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function sec_idioma() {
+    function sec_sol_idioma() {
         if ($this->input->is_ajax_request()) {
             $data["idiomas"] = $this->input->post();
 
             if (count($data["idiomas"]) == 1) {
+                load:
                 $idiomas = $this->req->get_idiomas($data["idiomas"]["solicitud_id"]);
+                
                 if (is_array($idiomas) && !empty($idiomas)) {
-                    $data["idiomas"]["idiomas"] = $idiomas;
+                    foreach($idiomas as $id => $idioma){
+                        $data["idiomas"]["idiomas"][$id] = $idioma["idioma"];
+                    }
+                    //$data["debug"]["idiomas"] = $data["idiomas"]["idiomas"];
                 }
             } else if(isset($data["idiomas"]["idiomas"])){
                 $lang = explode(",",$data["idiomas"]["idiomas"]);
@@ -527,16 +534,20 @@ class Solicitud extends MY_Controller {
                         "idioma"=>$row,
                         "solicitud"=>$data["idiomas"]["solicitud_id"]
                     );
-                    if(!$this->req->add("sol_idioma",$save)){
+                    $data["debug"]["idioma_".$id] = $this->req->add("sol_idioma",$save,TRUE);
+                    /*if(!$this->req->add("sol_idioma",$save,TRUE)){
                         $data["debug"][$id] = $save;
-                    }
+                    }*/
                 }
-            }
+                goto load;
+            }/*else{
+                $data["debug"][0] = "Hola mundo";
+            }*/
             //$response['message'] = 
             $response['result'] = "true";
             
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
-            $response['content'] = $this->load->view("solicitud/secciones/sec_idioma.tpl.php", $data, true);
+            $response['content'] = $this->load->view("solicitud/secciones/sec_sol_idioma.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
         } else {
@@ -587,7 +598,7 @@ class Solicitud extends MY_Controller {
                         $response['message'] = "Se ha producido un error, favor de verificarlo";
                         $response['result'] = "false";
                     }
-                $data["debug"][2]="new brand";
+                //$data["debug"][2]="new brand";
                 goto load;
             }
 
@@ -596,6 +607,89 @@ class Solicitud extends MY_Controller {
             // $data["combos"]["c_idioma_del"] = $this->cg->get_combo_catalogo("c_idioma");
             // $data["combos"]["c_idioma_al"] = $this->cg->get_combo_catalogo("c_idioma");
             $response['content'] = $this->load->view("solicitud/secciones/sec_traduccion.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+    
+    function sec_colaboradores(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"]["colab"] = $data["colab"] = $this->input->post();
+            if(count($data["colab"])==1 && isset($data["colab"]["solicitud_id"])){
+                //$data["debug"]="load section";
+                $response['result'] = "true";
+            }elseif (isset($data["colab"]["update"])) {
+                $where = array("solicitud_id"=>$data["colab"]["solicitud_id"],
+                          "id_colab"=>$data["colab"]["id_colab"]);
+                unset($data["colab"]["id_colab"]);
+                unset($data["colab"]["solicitud_id"]);
+                unset($data["colab"]["update"]);
+                $update = $this->req->update("colaboradores",
+                                   $data["colab"],$where);
+                if ($update) {
+                    $response['message'] = "La información del colaborador/autor se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+
+            }elseif(isset($data["colab"]["id_colab"])){
+                $data["colab"] = $this->req->get_section("colaboradores",
+                    array("solicitud_id"=>$data["colab"]["solicitud_id"],
+                          "id_colab"=>$data["colab"]["id_colab"]
+                    )
+                );
+                if(count($data["colab"])==1){
+                    $data["colab"] = $data["colab"][0];
+                }
+                
+            }else{
+                //$data["debug"]="save";
+                $save = $this->req->add("colaboradores", $data["colab"]);
+                if ($save) {
+                     $update = $this->req->update("solicitud", 
+                        array("has_colaboradores" => 1), 
+                        array("id" => $data["colab"]["solicitud_id"]));
+                    $response['message'] = "La información del colaborador/autor se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }
+            $response['content'] = $this->load->view("solicitud/secciones/sec_colaboradores.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function seccion(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["seccion"] = $this->input->post();
+
+            //load from the begining
+            if (count($data["seccion"]) == 2 && isset($data["seccion"]["seccion_id"]) && isset($data["seccion"]["solicitud_id"]) ){
+                load:
+                $data["debug"][0]="Load";
+                //buscar registro
+            }elseif(isset($data[$data["seccion_id"]["id"]])){
+                //update
+                $data["debug"][1]="update";
+                goto load;
+            }else{
+                
+                $data["debug"][2]="new brand";
+                goto load;
+            }
+            $response['result'] = "true";
+            
+            
+            $response['content'] = $this->load->view("solicitud/secciones/sec_".$data['seccion']['seccion_id'].".tpl.php", $data, true);
             echo json_encode($response);
             return 0;
         } else {

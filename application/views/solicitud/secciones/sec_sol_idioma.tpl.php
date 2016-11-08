@@ -13,12 +13,12 @@
 <?php 
 /*if(isset($idiomas)){
   pr($idiomas);
-}
+}*/
 if(isset($debug)){
   pr($debug);
-}*/
-echo form_open("solicitud/sec_idioma",array(
-    'id'=>'frm_idioma',
+}
+echo form_open("solicitud/sec_sol_idioma",array(
+    'id'=>'frm_sol_idioma',
     'class'=>'form-horizontal form-label-left',
     'method'=>'post'
 ));?>
@@ -53,7 +53,7 @@ echo form_open("solicitud/sec_idioma",array(
     <button id="send_idioma" 
             type="button" 
             class="btn btn-form" 
-            data-type="idioma"
+            data-type="sol_idioma"
             onclick="btn(this)" >
       Guardar tema
     </button>

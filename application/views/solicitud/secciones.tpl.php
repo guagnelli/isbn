@@ -1,7 +1,6 @@
 <?php 
-// pr($combos);
+//pr($secciones);
 // pr($datos);
-echo js("solicitud/secciones.js");
 ?>
 <!-- page content >
 <form action="entidad_nueva_solicitud.html" method="post" class="form-horizontal form-label-left" novalidate-->
@@ -23,73 +22,33 @@ echo js("solicitud/secciones.js");
           <!-- required for floating -->
           <!-- Nav tabs -->
           <ul class="nav nav-tabs tabs-left">
-            <li class="active">
-              <a href="#tab_tema" data-toggle="tab">Tema</a>
+          <?php 
+            foreach($secciones as $id=>$seccion){
+            ?>
+            <li class="">
+              <a href="#tab_<?php echo $seccion["tbl_seccion"]?>" data-toggle="tab">
+                <?php echo $seccion["nom_seccion"]?>
+              </a>
             </li>
-            <li>
-              <a href="#tab_idioma" data-toggle="tab">Idioma</a>
-            </li>
-            <li>
-              <a href="#tab_colaboradores" data-toggle="tab">Colaboradores</a>
-            </li>
-            <li>
-              <a href="#tab_traduccion" data-toggle="tab">Traducción</a>
-            </li>
-            <li>
-              <a href="#tab_edicion" data-toggle="tab">Información de edición</a>
-            </li>
-            <li>
-              <a href="#tab_comerce" data-toggle="tab">Comercializable</a>
-            </li>
-            <li>
-              <a href="#tab_fisica" data-toggle="tab">Descripción física</a>
-            </li>
-            <li>
-              <a href="#tab_epay" data-toggle="tab">Pago electrónico E5Cinco</a>
-            </li>
-            <li>
-              <a href="#tab_barcode" data-toggle="tab">Código de barras</a>
-            </li>
-            <li>
-              <a href="#tab_epaybc" data-toggle="tab">Pago electrónico E5Cinco del CB</a>
-            </li>
+            <?php
+            }
+          ?>
           </ul>
         </div>
 
         <div class="col-xs-9">
           <!-- Tab panes -->
           <div class="tab-content" id="tab_sections">
-          <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id']?>">
-            <div class="tab-pane active" id="tab_tema">
-              <!--tema-->              
+            <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id']?>">
+            <?php 
+            foreach($secciones as $id=>$seccion){
+            ?>
+            <div class="tab-pane" id="tab_<?php echo $seccion["tbl_seccion"]?>">
+              <?php echo $seccion["nom_seccion"]?>
             </div>
-            <div class="tab-pane" id="tab_idioma">
-              <!--idioma-->
-            </div>
-            <div class="tab-pane" id="tab_colaboradores">
-              <!--colaboradores-->
-            </div>
-            <div class="tab-pane" id="tab_traduccion">
-              <!--traduccion-->
-            </div>
-            <div class="tab-pane" id="tab_edicion">
-              <!--edicion-->
-            </div>
-            <div class="tab-pane" id="tab_comerce">
-              <!--comercializable-->
-            </div>
-            <div class="tab-pane" id="tab_fisica">              
-              <!--fisica-->
-            </div>
-            <div class="tab-pane" id="tab_epay">
-              <!--pago electronico-->
-            </div>
-            <div class="tab-pane" id="tab_barcode">
-              <!--codigo de barras-->
-            </div>
-            <div class="tab-pane" id="tab_epaybc">
-              <!--epay bar code-->
-            </div>
+            <?php
+            }
+            ?>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -98,3 +57,27 @@ echo js("solicitud/secciones.js");
   </div> 
   <!--/form>
 <!-- /page content -->
+<script type="text/javascript">
+//alert("step one");
+function load_sections(){
+
+  var solicitud = $("#sol").val();
+  <?php foreach($secciones as $id=>$seccion){?>
+    //alert("/solicitud/sec_<?php echo $seccion["tbl_seccion"]?>");
+    ajax(site_url+"/solicitud/sec_<?php echo $seccion["tbl_seccion"]?>",{
+          "solicitud_id":solicitud,
+        },
+        "#tab_<?php echo $seccion['tbl_seccion']?>",
+        "#msg_general");
+  <?php
+  }
+  ?>
+}
+$(document).ready(function (){
+    //alert("step one");
+    load_sections();
+});
+</script>
+<?php
+echo js("solicitud/secciones.js");
+?>

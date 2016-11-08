@@ -335,11 +335,14 @@ class Solicitud_model extends MY_Model {
         }
     }
 
-    function add($table = null, $data = null) {
+    function add($table = null, $data = null, $return_id=false) {
         if (is_null($table)) {
             return false;
         }
         $this->db->insert($table, $data);
+        if($return_id){
+            return $this->db->insert_id();
+        }
         if ($this->db->insert_id() > 0) {
             return true;
         } else {
@@ -442,7 +445,7 @@ class Solicitud_model extends MY_Model {
         if ($result->num_rows() == 0) {
             return TRUE;
         } elseif ($result->num_rows() > 0) {
-            $idiomas = $result->row_array();
+            $idiomas = $result->result_array();
             $result->free_result();
             return $idiomas;
         } else {
@@ -456,6 +459,12 @@ class Solicitud_model extends MY_Model {
         $seccion = $result->result_array();
         $result->free_result();
         return $seccion; 
+    }
+
+    function get_sections(){
+        $this->db->where("estado",1);
+        $secciones = $this->db->get("seccion_solicitud");
+        return $secciones->result_array();
     }
 }
 
