@@ -61,7 +61,7 @@ class Captcha extends CI_Controller {
             'img_path'      => './captcha/',
             'img_url'       =>  base_url().'captcha/',
             'img_width'     => 220,
-            'img_height'    => 50,
+            'img_height'    => 70,
             'word_length'   => 5,
             'expiration'    => 7200,
             'font_size'     => array(30, true),

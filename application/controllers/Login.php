@@ -88,6 +88,7 @@ class Login extends CI_Controller {
         }
         $data['string_values'] = $string_values;
         $this->token(); //Crear un token cada vez que se ingresa al formulario de inicio sesión
+
         $this->template->setMainContent($this->formulario($data));
         $this->template->getTemplate();
     }
@@ -139,6 +140,7 @@ class Login extends CI_Controller {
         $data['captcha'] = create_captcha($this->captcha_config());
         $this->session->set_userdata('captchaWord', $data['captcha']['word']);
         //echo $data['token'] = $this->session->userdata('token'); //Se envia token al formulario
+        //$form_login = $this->twig->render('login/formulario', $data);
         $form_login = $this->load->view('login/formulario', $data, TRUE);
         return $form_login;
     }
