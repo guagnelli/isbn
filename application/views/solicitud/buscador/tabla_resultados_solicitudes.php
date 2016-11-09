@@ -6,6 +6,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
 </script>
+<?php
+echo js("solicitud/secciones.js");
+?>
 
 <div id="tabla_designar_validador" class="col-lg-12 table-responsive">
     <!--Mostrará la tabla de actividad docente --> 
@@ -63,12 +66,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         . 'data-histsolicitudcve="' . $hist_solicitud . '"'
                         . 'data-row="' . $key_ai . '"';
 
-//                $link_editar = '<a class="btn btn-primary" '
-//                        . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
-//                        . 'target="_blank">Editar solicitud</a>';
-                $link_editar = '';
+               $link_editar = '<a class="" '
+                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
+                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
+                /*$link_editar = '';
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
-                    $link_editar = '<form method="POST" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
+                    $link_editar = '<form method="post" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
                             . '<input type="hidden" id="editar" name="editar" value="' . $val['solicitud_cve'] . '" /> '
                             . '<span class="glyphicon glyphicon-edit btn-msg" '
                             . 'data-original-title="' . $string_values['link_ver_detalle_solicitud'] . '" title="" placeholder="Ordernar por"'
@@ -76,12 +79,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             . 'onclick="editar_sol(this)">'
                             . '</span> '
                             . ' </form>';
+                */ 
+
+
 //                    $link_editar = '<a href="#" class="button search">
 //                                        <span class="spanclass"></span>
 //                                        <input class="expand" name="searchString" type="text">
 //                                        <span id="searchButton" class="search icon-small open-btn"></span>
 //                                    </a>';
-                }
+                //}
 //                            . '<input class = "btn btn-primary" type = "submit" value = "" name = "btn_' . $key_ai . '">'
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
@@ -92,7 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 echo "<td>" . $val['name_entidad'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
                 echo "<td>" . $link_ver_detalle . $link_editar . "</td>";
-                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'><span class='glyphicon glyphicon-eye-open btn-msg'></span>'</a></td>";
+                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'><span class='glyphicon glyphicon-eye-open btn-msg'></span></a></td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "<tr>";
             }
@@ -106,6 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     function editar_sol(element) {
         var obj = $(element);
         var key = obj.data('keyrow');
+        ajax();
         $("#form_editar_" + key).submit();
     }
 </script>

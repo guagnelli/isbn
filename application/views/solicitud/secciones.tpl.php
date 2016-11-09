@@ -57,6 +57,9 @@
   </div> 
   <!--/form>
 <!-- /page content -->
+<?php
+echo js("solicitud/secciones.js");
+?>
 <script type="text/javascript">
 //alert("step one");
 function load_sections(){
@@ -78,6 +81,3 @@ $(document).ready(function (){
     load_sections();
 });
 </script>
-<?php
-echo js("solicitud/secciones.js");
-?>
