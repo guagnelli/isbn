@@ -675,6 +675,9 @@ class Solicitud extends MY_Controller {
                     $response['result'] = "false";
                 }
             }
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COLABORADORES])) ? $this->session->userdata('botones_seccion')[En_secciones::COLABORADORES] : ''; //Botones de comentarios para las secciones
+
             $response['content'] = $this->load->view("solicitud/secciones/sec_colaboradores.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
