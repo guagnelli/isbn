@@ -34,14 +34,14 @@ $config["solicitud"] = array(
             'greater_than' => "El campo %s es obligatorio"
         )
     ),
-    array(
+    /*array(
         'field' => 'solicitud[id_subcategoria]',
         'label' => 'Sub categoría',
         'rules' => 'greater_than[0]',
         'errors' => array(
             'greater_than' => "El campo %s es obligatorio"
         )
-    ),
+    ),*/
 );
 $config["form_perfil"] = array(
     array(

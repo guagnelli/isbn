@@ -68,8 +68,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //                        . 'target="_blank">Editar solicitud</a>';
                 $link_editar = '';
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
-                    $link_editar = '<form method=POST id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
-                            . '<input type="hidden" id="solicitud" name="solicitud" value="' . $val['solicitud_cve'] . '"> '
+                    $link_editar = '<form method="POST" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
+                            . '<input type="hidden" id="editar" name="editar" value="' . $val['solicitud_cve'] . '" /> '
                             . '<span class="glyphicon glyphicon-edit btn-msg" '
                             . 'data-original-title="' . $string_values['link_ver_detalle_solicitud'] . '" title="" placeholder="Ordernar por"'
                             . 'data-keyrow="' . $key_ai . '" '
