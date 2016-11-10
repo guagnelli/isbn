@@ -246,6 +246,7 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar() {
+        
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;

@@ -67,7 +67,7 @@ echo js("solicitud/secciones.js");
                         . 'data-row="' . $key_ai . '"';
 
                $link_editar = '<a class="" '
-                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
+                       . 'href="' . site_url() . '/solicitud/registrar/edit:' . $val['solicitud_cve'] . '" '
                        . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
                 /*$link_editar = '';
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
