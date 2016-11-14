@@ -20,6 +20,7 @@
 		<?php echo css("style.css"); ?>
 		<?php echo css("font-awesome.css"); ?>
 		<?php echo css("nprogress.css"); ?>
+		<?php echo css("apprise.css"); ?>
 		<?php // echo css("style-isbn.css"); ?>
 		<?php // echo css("style-isbn.css"); ?>
 		<?php //echo css("bootstrap-datetimepicker.css"); ?>
@@ -50,6 +51,7 @@
 		<?php echo js("daterangepicker.js"); ?>
 		<?php //echo js("custom.min.js"); ?>
 		<?php echo js("general.js"); ?>
+		<?php echo js("apprise.js"); ?>
 
 		<script type="text/javascript">
 			var img_url_loader = "<?php echo img_url_loader(); ?>";
