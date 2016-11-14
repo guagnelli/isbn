@@ -29,20 +29,6 @@ function funcion_buscar_solicitudes() {
     data_ajax(path, '#form_busqueda_solicitudes', '#div_result_solicitudes', 'tabla_isbn');
 }
 
-$(document).ready(function () {
-    $('#tabla_isbn').DataTable({
-        "ajax": "data/objects.txt",
-        "columns": [
-            {"data": "name"},
-            {"data": "position"},
-            {"data": "office"},
-            {"data": "extn"},
-            {"data": "start_date"},
-            {"data": "salary"}
-        ]
-    });
-});
-
 /**
  * 
  * @param {type} name Menu de opciónes de filtro

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($lista_solicitudes);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();                    ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+<!--<script type='text/javascript' src="<?php // echo base_url();                     ?>assets/js/validacion_docente/validar_censo.js"></script>-->
 
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>
 <?php
@@ -59,7 +59,7 @@ echo js("solicitud/secciones.js");
                         . ' title="' . $string_values['link_ver_detalle_solicitud']
                         . ' onclick="ver_detalle_solicitud(this)"> '
                         . '<span class="glyphicon glyphicon-eye-open btn-msg" '
-                        .  '"> '
+                        . '"> '
                         . '</span></a>';
 
 //                $link_ver_solicitud = 'class=" text-center" ';
@@ -124,4 +124,17 @@ echo js("solicitud/secciones.js");
         ajax();
         $("#form_editar_" + key).submit();
     }
+//    $(document).ready(function () {
+//        $('#tabla_isbn').DataTable({
+////            "ajax": "data/objects.txt",
+//            "columns": [
+//                {"data": "name"},
+//                {"data": "position"},
+//                {"data": "office"},
+//                {"data": "extn"},
+//                {"data": "start_date"},
+//                {"data": "salary"}
+//            ]
+//        });
+//    });
 </script>
