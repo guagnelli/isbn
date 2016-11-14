@@ -131,6 +131,8 @@ $lang['interface'] = array(
     ),
     'solicitud_detalle' => array(
         'title_detalle_gral' => 'Dirección General de Asuntos Jurídicos',
+        'title_titulo_libro' => 'Detalle del libro: ',
+        'title_subtitulo_libro' => 'Sub titulo del libro: ',
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
         'add_ver_comment' => 'Agregar comentario',
         'title_clas_tematica' => 'Clasificación temática: ',
@@ -139,6 +141,12 @@ $lang['interface'] = array(
         'title_idioma' => 'Idioma: ',
         'title_traduccion' => 'Traducción:',
         'title_info_edicion' => 'Información de edición:',
+        'li_categoria' => 'Categoría: ',
+        'li_sub_categoria' => 'Sub categoría: ',
+        'li_coleccion' => 'Colección: ',
+        'li_num_coleccion' => 'No. de colección: ',
+        'li_nom_serie_coleccion' => 'Nombre de la colección: ',
+        'li_tipo_contenido_coleccion' => 'Tipo de contenido: ',
         
     ),
     'solicitud_cambio_estado' => array(
