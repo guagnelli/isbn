@@ -65,7 +65,7 @@ class Solicitud_model extends MY_Model {
             // secciones
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
-                $this->db->where($seccion["referencia"],$id);
+                $this->db->where($seccion["referencia"], $id);
                 $result = $this->db->get($seccion["tbl_seccion"]);
                 $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
                 $result->free_result();
@@ -253,9 +253,21 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
                 'vista' => 'detalle',
             ),
+            Enum_es::Revision_de_correccion => array(
+                'rol_permite' => array(E_rol::DGAJ),
+                'estados_transicion' => array(Enum_es::Correccion, Enum_es::Revision_indautor),
+                'is_boton' => 1,
+                'titulo_boton' => 'Enviar a revisión',
+                'color_status' => '',
+                'is_editable_solicitud' => 0,
+                'funcion_demandada' => 'cambio_estado(this)',
+                'add_comment_seccion' => 1,
+                'vista_detalle_solicitud' => 1,
+                'vista' => 'detalle',
+            ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
-                'estados_transicion' => array(Enum_es::En_revision),
+                'estados_transicion' => array(Enum_es::Revision_de_correccion),
                 'is_boton' => 1,
                 'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
@@ -340,12 +352,12 @@ class Solicitud_model extends MY_Model {
         }
     }
 
-    function add($table = null, $data = null, $return_id=false) {
+    function add($table = null, $data = null, $return_id = false) {
         if (is_null($table)) {
             return false;
         }
         $this->db->insert($table, $data);
-        if($return_id){
+        if ($return_id) {
             return $this->db->insert_id();
         }
         if ($this->db->insert_id() > 0) {
@@ -363,11 +375,11 @@ class Solicitud_model extends MY_Model {
         return true;
     }
 
-    function delete($table= null, $where = array()){
+    function delete($table = null, $where = array()) {
         if (is_null($table) || !is_array($where)) {
             return false;
         }
-        $this->db->delete($table,$where);
+        $this->db->delete($table, $where);
         return true;
     }
 
@@ -443,7 +455,7 @@ class Solicitud_model extends MY_Model {
         }
     }
 
-    function get_idiomas($solicitud_id = null){
+    function get_idiomas($solicitud_id = null) {
         $this->db->select("idioma");
         $this->db->where("solicitud", $solicitud_id);
         $result = $this->db->get("sol_idioma");
@@ -458,19 +470,20 @@ class Solicitud_model extends MY_Model {
         }
     }
 
-    function get_section($tabla,$where=array()){
+    function get_section($tabla, $where = array()) {
         $this->db->where($where);
         $result = $this->db->get($tabla);
         $seccion = $result->result_array();
         $result->free_result();
-        return $seccion; 
+        return $seccion;
     }
 
-    function get_sections(){
-        $this->db->where("estado",1);
+    function get_sections() {
+        $this->db->where("estado", 1);
         $secciones = $this->db->get("seccion_solicitud");
         return $secciones->result_array();
     }
+
 }
 
 ?>

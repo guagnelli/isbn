@@ -30,6 +30,8 @@ class Login_model extends CI_Model {
                     'rol_cve' => $login_user->rol_cve,
                     'rol_name' => $login_user->rol_nombre,
                     'entidad_id' => $login_user->entidad_id,
+                    'name_entidad' => $login_user->name,
+                    
                 );
                 $result['datos_session'] = $datos_session;
                 /*$parametros_log = $CI->config->item('parametros_log');
@@ -62,6 +64,7 @@ class Login_model extends CI_Model {
             return null;
         }
         $this->db->join('rol', 'usuario.rol_cve = rol.rol_cve');
+        $this->db->join('c_entidad', 'c_entidad.id = usuario.entidad_id', 'left');
         $this->db->where('usuario.usu_nick', $nick);
         $this->db->limit(1);
         $query = $this->db->get('usuario');
@@ -82,6 +85,7 @@ class Login_model extends CI_Model {
             }
         }
         $query->free_result();
+//        $this->session->set_userdata('query_', $this->db->last_query());
 //        pr($this->db->last_query());
         return $result;
     }

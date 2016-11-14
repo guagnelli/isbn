@@ -9,7 +9,9 @@ class Enum_es {
             Correccion = 3,
             Revision_indautor = 4,
             Revisado_indautor = 5,
-            Radicado = 6
+            Radicado = 6,
+            Revision_de_correccion = 7
+
     ;
     /*
       guardar actuación (evaluaciones)

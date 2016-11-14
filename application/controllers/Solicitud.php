@@ -42,18 +42,21 @@ class Solicitud extends MY_Controller {
             'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
         );
         $rol_sesion = $this->session->userdata('rol_cve');
-//        pr($this->session->userdata('entidad_id'));
+//        pr($this->session->userdata());
         $datos_usuario = array();
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $array_catalogos = array(Enum_cg::c_estado);
                 $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
+                $data['title_template'] = $string_values['title_template_entidad'] . $this->session->userdata('name_entidad');
                 break;
             case E_rol::DGAJ://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad);
+                $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
                 break;
             case E_rol::ADMINISTRADOR://Juridico
+                $data['title_template'] = $string_values['title_template_default'];
         }
         //Carga catÃ¡logos
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name'));
@@ -306,7 +309,8 @@ class Solicitud extends MY_Controller {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
                 $solicitud_cve = intval($this->seguridad->decrypt_base64($datos_post['solicitud_cve']));
                 $hist_cve = intval($this->seguridad->decrypt_base64($datos_post['hist_solicitudcve']));
-//                pr();
+                $rol_actual = $this->session->userdata('rol_cve'); //Rol seleccionado actual
+//                pr($datos_post);
 //                exit();
                 $datosSeccion['solicitud_cve'] = $solicitud_cve;
                 $datosSeccion['hist_cve'] = $hist_cve;
@@ -315,11 +319,28 @@ class Solicitud extends MY_Controller {
 //                pr($solicitud_datos);
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
                 $datosSeccion['solicitud'] = $solicitud_datos;
+                $datosSeccion['is_botones'] = $solicitud_datos;
                 $array_comentarios = array();
                 foreach ($secciones as $value) {
                     $array_comentarios[$value] = '';
                 }
                 $datosSeccion['botones_seccion'] = $array_comentarios;
+
+                $datosSeccion['link_editar'] = '';
+                if (isset($datos_post['is_botones']) and $datos_post['is_botones'] == 1 and $rol_actual == E_rol::ENTIDAD) {//Genera botones para editar la información de la solicitid 
+//                        data-dismiss="modal"
+                    $boton_editar = '<a class="btn btn-default" data-toggle="tab" href="#select_perfil_solicitud" 
+                        data-dismiss="modal"
+                        onclick="funcion_ver_solicitud_entidad(this)" 
+                        data-solicitudcve="' . $datos_post['solicitud_cve'] . '" 
+                        data-histsolicitudcve="' . $datos_post['hist_solicitudcve'] . '" 
+                        data-estadosolicitudcve="' . $datos_post['estado_solicitud'] . '" 
+                        data-row="0" aria-expanded="true">
+                        Editar
+                        </a>';
+                    $datosSeccion['link_editar'] = $boton_editar;
+                }
+
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                 $data = array(
                     'titulo_modal' => null,

@@ -26,8 +26,22 @@ $(function () {
 function funcion_buscar_solicitudes() {
     var path = site_url + '/solicitud/buscador_solicituides/0';
 //    var val_post = $('#form_busqueda_docentes_validar').serialize();
-    data_ajax(path, '#form_busqueda_solicitudes', '#div_result_solicitudes');
+    data_ajax(path, '#form_busqueda_solicitudes', '#div_result_solicitudes', 'tabla_isbn');
 }
+
+$(document).ready(function () {
+    $('#tabla_isbn').DataTable({
+        "ajax": "data/objects.txt",
+        "columns": [
+            {"data": "name"},
+            {"data": "position"},
+            {"data": "office"},
+            {"data": "extn"},
+            {"data": "start_date"},
+            {"data": "salary"}
+        ]
+    });
+});
 
 /**
  * 
@@ -62,6 +76,7 @@ function funcion_ver_solicitud_entidad(element) {
     var solicitud_cve = button_obj.data('solicitudcve');
     var histsolicitudcve = button_obj.data('histsolicitudcve');
     var estado_solicitud = button_obj.data('estadosolicitudcve');
+    
     //Remover contenido de un div 
     $('#select_perfil_solicitud').empty();
     var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve, estado_cve: estado_solicitud};
@@ -78,8 +93,9 @@ function ver_detalle_solicitud(element) {
 //    var hist_val_cve = obj.data('histvalcve');
     var row = obj.data('row');
     var hist_solicitudcve = obj.data('histsolicitudcve');
+    var estado_solicitud = obj.data('estadosolicitudcve');
     var solicitud_cve = obj.data('solicitudcve');
-    var formData = {hist_solicitudcve: hist_solicitudcve, solicitud_cve: solicitud_cve};
+    var formData = {hist_solicitudcve: hist_solicitudcve, solicitud_cve: solicitud_cve, estado_solicitud: estado_solicitud, is_botones: 1};
     data_ajax_post(site_url + '/solicitud/detalle', null, '#modal_content', formData);
 }
 

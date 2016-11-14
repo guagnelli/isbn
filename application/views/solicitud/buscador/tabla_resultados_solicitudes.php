@@ -2,32 +2,33 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($lista_solicitudes);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();                 ?>assets/js/validacion_docente/validar_censo.js"></script>-->
-</style>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js">
-</script>
+<!--<script type='text/javascript' src="<?php // echo base_url();                    ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>
 <?php
 echo js("solicitud/secciones.js");
 ?>
 
-<div id="tabla_designar_validador" class="col-lg-12 table-responsive">
+<div id="div_tabla_isbn" class="col-lg-12 table-responsive">
     <!--Mostrará la tabla de actividad docente --> 
-    <table class="table table-striped table-hover table-bordered" id="tabla_investigacion_docente">
+    <table class="table table-striped table-hover table-bordered" id="tabla_isbn">
         <thead>
             <tr class="bg-red">
-                <th  style="color:#ffffff"><?php echo $string_values['title_folio'] ?></th>
-                <th style="color:#ffffff" ><?php echo $string_values['title_estado'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_isbn_libro'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_libro'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_name_entidad'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_fecha_validacion'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_ver_detalle'] ?></th>
-                <th style="color:#ffffff"><?php echo $string_values['title_validacion'] ?></th>
+                <th  style="color:#ffffff"><?php echo $string_values['title_folio']; ?></th>
+                <th style="color:#ffffff" ><?php echo $string_values['title_estado']; ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_isbn_libro']; ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_libro']; ?></th>
+                <?php if ($rol_cve != E_rol::ENTIDAD) { ?>
+                    <th style="color:#ffffff"><?php echo $string_values['title_name_entidad']; ?></th>
+                <?php } ?>
+                <th style="color:#ffffff"><?php echo $string_values['title_fecha_validacion']; ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_operacion']; ?></th>
             </tr>
         </thead >
         <tbody>
             <?php
             foreach ($lista_solicitudes as $key_ai => $val) {
+//                pr($val);
 //                pr($val['hist_validacion_cve']);
                 $solicitud_cve = $this->seguridad->encrypt_base64($val['solicitud_cve']);
                 $hist_solicitud = $this->seguridad->encrypt_base64(intval($val['hist_solicitud']));
@@ -54,32 +55,39 @@ echo js("solicitud/secciones.js");
                         . 'data-histsolicitudcve="' . $hist_solicitud . '" '
                         . 'data-toggle="modal" '
                         . 'data-target="#modal_censo" '
-                        . 'onclick="ver_detalle_solicitud(this)"> '
-                        . '<span class="glyphicon glyphicon-new-window btn-msg" '
-                        . 'data-original-title="' . $string_values['link_ver_detalle_solicitud'] . '">'
+                        . 'data-original-title="' . $string_values['link_ver_detalle_solicitud']
+                        . ' title="' . $string_values['link_ver_detalle_solicitud']
+                        . ' onclick="ver_detalle_solicitud(this)"> '
+                        . '<span class="glyphicon glyphicon-eye-open btn-msg" '
+                        .  '"> '
                         . '</span></a>';
 
-                $link_ver_solicitud = 'class=" text-center" '
-                        . 'onclick="funcion_ver_solicitud_entidad(this)" '
-                        . 'data-solicitudcve ="' . $solicitud_cve . '"'
-                        . 'data-estadosolicitudcve="' . $estado_solicitud . '"'
-                        . 'data-histsolicitudcve="' . $hist_solicitud . '"'
-                        . 'data-row="' . $key_ai . '"';
+//                $link_ver_solicitud = 'class=" text-center" ';
 
-               $link_editar = '<a class="" '
-                       . 'href="' . site_url() . '/solicitud/registrar/edit:' . $val['solicitud_cve'] . '" '
-                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
-                /*$link_editar = '';
+                $href_solicitud = '<a data-toggle="tab" href="#select_perfil_solicitud" '
+                        . 'onclick="funcion_ver_solicitud_entidad(this)" '
+                        . 'data-solicitudcve ="' . $solicitud_cve . '" '
+                        . 'data-estadosolicitudcve="' . $estado_solicitud . '" '
+                        . 'data-histsolicitudcve="' . $hist_solicitud . '" '
+                        . 'data-row="' . $key_ai . '" '
+                        . '> '
+                        . '<span class="glyphicon glyphicon-edit btn-msg"></span> '
+                        . '</a>';
+
+//               $link_editar = '<a class="" '
+//                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
+//                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
+                $link_editar = '';
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
                     $link_editar = '<form method="post" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
-                            . '<input type="hidden" id="editar" name="editar" value="' . $val['solicitud_cve'] . '" /> '
+                            . '<input type="hidden" id="solicitud" name="solicitud" value="' . $val['solicitud_cve'] . '" /> '
                             . '<span class="glyphicon glyphicon-edit btn-msg" '
                             . 'data-original-title="' . $string_values['link_ver_detalle_solicitud'] . '" title="" placeholder="Ordernar por"'
                             . 'data-keyrow="' . $key_ai . '" '
                             . 'onclick="editar_sol(this)">'
                             . '</span> '
                             . ' </form>';
-                */ 
+
 
 
 //                    $link_editar = '<a href="#" class="button search">
@@ -87,7 +95,7 @@ echo js("solicitud/secciones.js");
 //                                        <input class="expand" name="searchString" type="text">
 //                                        <span id="searchButton" class="search icon-small open-btn"></span>
 //                                    </a>';
-                //}
+                }
 //                            . '<input class = "btn btn-primary" type = "submit" value = "" name = "btn_' . $key_ai . '">'
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
@@ -95,12 +103,13 @@ echo js("solicitud/secciones.js");
                 echo "<td>" . $val['name_estado'] . "</td>";
                 echo "<td>" . $val['isbn_libro'] . "</td>";
                 echo "<td>" . $val['titulo_libro'] . "</td>";
-                echo "<td>" . $val['name_entidad'] . "</td>";
+                if ($rol_cve != E_rol::ENTIDAD) {
+                    echo "<td>" . $val['name_entidad'] . "</td>";
+                }
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td>" . $link_ver_detalle . $link_editar . "</td>";
-                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'><span class='glyphicon glyphicon-eye-open btn-msg'></span></a></td>";
+                echo "<td >" . $link_ver_detalle . $href_solicitud . "</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
-                echo "<tr>";
+                echo "</tr>";
             }
             ?>
         </tbody>

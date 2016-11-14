@@ -110,3 +110,5 @@ alter table colaboradores drop column orden;
 
 alter table seccion_solicitud add column estado numeric(1) default 1;
 
+---Leas estado de validacion rvisión de la correción de la solicitud 
+insert into c_estado (id, name) value (7, 'Revisión de corrección de la solicitud');

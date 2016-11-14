@@ -40,18 +40,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div id="select_buscador_solicitud_entidad" class="tab-pane fade active in">
                 <div>
                     <br>
-                    <h4><?php echo $string_values['title_template']; ?> </h4>
+                    <h4><?php echo $title_template; ?> </h4>
                     <br>
                 </div>
-                <?php if (!isset($c_entidad)) { //Si existe entidad, no es ususario entidad  ?> 
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-sm-12">
-                            <a class="btn btn-primary" href="<?php echo site_url(); ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
-                        </div>
-                    </div>
-                <?php } else { //Si existe entidad, no es ususario entidad  ?> 
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="row">
+                    <?php if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad  ?> 
+                        <!--                    <div class="row">
+                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                    <a class="btn btn-primary" href="<?php // echo site_url();     ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
+                                                </div>
+                                            </div>-->
+                        <?php // } else { //Si existe entidad, no es ususario entidad  ?> 
+                        <div class="col-md-6 col-lg-6 col-sm-6">
                             <div class="panel-body input-group ">
                                 <span class="input-group-addon"><?php echo $string_values['lbl_entidades']; ?></span>
                                 <?php
@@ -65,13 +65,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         'placeholder' => $string_values['lbl_entidades'],
                                         'data-toggle' => 'tooltip',
                                         'data-placement' => 'top',
-                                        'title' => $string_values['lbl_entidades'])));
+                                        'title' => $string_values['lbl_entidades'],
+                                        'onchange' => 'funcion_buscar_solicitudes()')));
                                 ?>
                             </div>
                         </div>
-                    </div>
-                <?php } ?>
-                <div class="row">
+                    <?php } ?>
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="panel-body input-group ">
                             <span class="input-group-addon"><?php echo $string_values['lbl_estado_solicitud']; ?></span>
@@ -86,12 +85,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     'placeholder' => $string_values['lbl_estado_solicitud'],
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
-                                    'title' => $string_values['lbl_estado_solicitud'])));
+                                    'title' => $string_values['lbl_estado_solicitud'],
+                                    'onchange' => 'funcion_buscar_solicitudes()'
+                                )
+                            ));
                             ?>
                         </div>
                     </div>
-
-                    <div class="col-md-6 col-lg-6 col-sm-6">
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <div class="panel-body input-group">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_cantidad_registros']; ?></span>
+                            <?php echo $this->form_complete->create_element(array('id' => 'per_page', 'type' => 'dropdown', 'options' => array(10 => 10, 20 => 20, 50 => 50, 100 => 100, 500 => 500), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Número de registros a mostrar', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Número de registros a mostrar', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <div class="panel-body input-group input-group-sm">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_ordenar_por']; ?>:</span>
+                            <?php echo $this->form_complete->create_element(array('id' => 'order', 'type' => 'dropdown', 'options' => $order_columns, 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <div class="panel-body input-group input-group-sm">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_tipo_orden']; ?></span>
+                            <?php echo $this->form_complete->create_element(array('id' => 'order_type', 'type' => 'dropdown', 'options' => array('ASC' => 'Ascendente', 'DESC' => 'Descendente'), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group">
                             <input type="hidden" id="menu_select" name="menu_busqueda" value="titulo_obra">
                             <div class="input-group-btn">
@@ -126,26 +149,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <span aria-hidden="true" class="glyphicon glyphicon-search"></span>
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-sm-4 col-md-4">
-                        <div class="panel-body input-group">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_cantidad_registros']; ?></span>
-                            <?php echo $this->form_complete->create_element(array('id' => 'per_page', 'type' => 'dropdown', 'options' => array(10 => 10, 20 => 20, 50 => 50, 100 => 100, 500 => 500), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Número de registros a mostrar', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Número de registros a mostrar', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4 col-md-4">
-                        <div class="panel-body input-group input-group-sm">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_ordenar_por']; ?>:</span>
-                            <?php echo $this->form_complete->create_element(array('id' => 'order', 'type' => 'dropdown', 'options' => $order_columns, 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4 col-md-4">
-                        <div class="panel-body input-group input-group-sm">
-                            <span class="input-group-addon"><?php echo $string_values['lbl_tipo_orden']; ?></span>
-                            <?php echo $this->form_complete->create_element(array('id' => 'order_type', 'type' => 'dropdown', 'options' => array('ASC' => 'Ascendente', 'DESC' => 'Descendente'), 'attributes' => array('class' => 'form-control', 'placeholder' => 'Ordernar por', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Ordenar por', 'onchange' => "funcion_buscar_solicitudes()"))); ?>
                         </div>
                     </div>
                 </div>

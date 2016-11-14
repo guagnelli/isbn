@@ -69,7 +69,9 @@ $lang['interface'] = array(
         'error' => 'Ha ocurrido un error durante el almacenamiento, inténtelo más tarde por favor.'
     ),
     'solicitud_index' => array(
-        'title_template' => 'Revisión de solicitudes',
+        'title_template_dgj' => 'Revisión de solicitudes por ',
+        'title_template_entidad' => 'Revisión de solicitudes de la entidad ',
+        'title_template_default' => 'Revisión de solicitudes',
         'title_reporte' => 'Reporte',
         'lbl_cantidad_registros' => 'Cantidad de registros',
         'lbl_ordenar_por' => 'Ordenar por:',
@@ -112,8 +114,8 @@ $lang['interface'] = array(
         'title_name_categoria' => 'Categoría',
         'title_name_subcategoria' => 'Subcategoría',
         'title_fecha_validacion' => 'Fecha última validacion',
-        'title_validacion' => 'Validar',
-        'title_ver_detalle' => 'Detalle',
+        'title_operacion' => 'Acciones',
+//        'title_ver_detalle' => 'Detalle',
         'link_ver_detalle_solicitud' => 'Detalle',
         'link_ver_solicitud' => 'Ver solicitud',
     ),
@@ -128,8 +130,16 @@ $lang['interface'] = array(
         'lbl_guardar' => 'Guardar'
     ),
     'solicitud_detalle' => array(
+        'title_detalle_gral' => 'Dirección General de Asuntos Jurídicos',
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
         'add_ver_comment' => 'Agregar comentario',
+        'title_clas_tematica' => 'Clasificación temática: ',
+        'title_tema' => 'Tema:',
+        'title_colaboradores' => 'Colaboradores:',
+        'title_idioma' => 'Idioma: ',
+        'title_traduccion' => 'Traducción:',
+        'title_info_edicion' => 'Información de edición:',
+        
     ),
     'solicitud_cambio_estado' => array(
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
