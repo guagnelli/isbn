@@ -10,7 +10,12 @@ $(function () {
         ?>
         $('#container_entidad').highcharts({
             chart: {
-                type: 'bar'
+                type: 'bar',
+                events: {
+                    click: function(event) {
+                        alert ('x: '+ event.xAxis[0].value +', y: '+ event.yAxis[0].value);
+                    }
+                } 
             },
             title: {
                 text: 'Solicitudes por entidad'
@@ -34,7 +39,7 @@ $(function () {
                     borderWidth: 0,
                     dataLabels: {
                         enabled: true,
-                    }
+                    },
                 }
             },
             tooltip: {
@@ -45,6 +50,18 @@ $(function () {
                 name: 'Entidades',
                 colorByPoint: true,
                 data: <?php echo $solicitud_x_entidad; ?>,
+                point: {
+                    events: {
+                         click: function() {
+                             /*console.log('Category: '+ this.category +', value: '+ this.y+' '+this.x);
+                             //console.log(this);
+                             console.log(this.name);
+                             console.log(this.identificador);
+                             console.log(this.tipo);*/
+                             document.location.href='solicitud/index?tipo='+this.tipo+'&id='+this.identificador;
+                         }
+                    }
+                }
             }],
         });
     <?php }
@@ -58,9 +75,6 @@ $(function () {
             title: {
                 text: 'Solicitudes por subcategoría'
             },
-            /*subtitle: {
-                text: 'Clic en la columna para ver más detalle.'
-            },*/
             xAxis: {
                 type: 'category'
             },
@@ -88,6 +102,13 @@ $(function () {
                 name: 'Subcategorías',
                 colorByPoint: true,
                 data: <?php echo $solicitud_x_subcategoria; ?>,
+                point: {
+                    events: {
+                         click: function() {
+                             document.location.href='solicitud/index?tipo='+this.tipo+'&id='+this.identificador;
+                         }
+                    }
+                }
             }],
         });
     <?php }
@@ -99,9 +120,6 @@ $(function () {
             title: {
                 text: 'Solicitudes por estado'
             },
-            /*subtitle: {
-                text: 'Clic en la columna para ver más detalle.'
-            },*/
             xAxis: {
                 type: 'category'
             },
@@ -129,6 +147,13 @@ $(function () {
                 name: 'Estados',
                 colorByPoint: true,
                 data: <?php echo $solicitud_x_estado; ?>,
+                point: {
+                    events: {
+                         click: function() {
+                             document.location.href='solicitud/index?tipo='+this.tipo+'&id='+this.identificador;
+                         }
+                    }
+                }
             }],
         });
     <?php } 
@@ -142,9 +167,6 @@ $(function () {
             title: {
                 text: 'Solicitudes por subsistema'
             },
-            /*subtitle: {
-                text: 'Clic en la columna para ver más detalle.'
-            },*/
             xAxis: {
                 type: 'category'
             },
@@ -172,6 +194,13 @@ $(function () {
                 name: 'Subsistemas',
                 colorByPoint: true,
                 data: <?php echo $solicitud_x_subsistema; ?>,
+                point: {
+                    events: {
+                         click: function() {
+                             document.location.href='solicitud/index?tipo='+this.tipo+'&id='+this.identificador;
+                         }
+                    }
+                }
             }],
         });
     <?php } ?>

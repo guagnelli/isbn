@@ -13,11 +13,18 @@ class Catalogo extends MY_Controller {
         $this->load->library('form_complete');
         $this->load->library('form_validation');
         $this->load->library('seguridad');
-        $this->load->model('Catalogos_generales');
         $this->load->model('Adminstracion_catalogos_model','adm_catmod');*/
+        $this->load->model('Catalogos_generales');
     }
 
     public function index() {
+        /*$this->load->library('Enum_cg');
+        $refl = new ReflectionClass('Enum_cg');
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        pr($refl->getConstants());*/
+
         /*$main_content = null;
         $datos = array();
         $datos['string_values'] = $this->lang->line('interface_administracion')['usuario']; //Cargar textos utilizados en vista
@@ -34,28 +41,197 @@ class Catalogo extends MY_Controller {
 
     //bono_cestado_bono
 
-    public function bonoestado(){
+    public function barcode_size(){
         $this->load->library('grocery_CRUD');
         $crud = new grocery_CRUD();
 
-        $crud->set_table('bono_cestado_bono')
-            ->set_subject('Estado bono')
-            ->columns('est_nombre', 'est_estado_nombre')
-            ->display_as('est_nombre','Descripción')
-            ->display_as('est_estado_nombre','Estado');
+        $crud->set_table('c_barcode_size')
+            ->set_subject('Barcode size')
+            ->columns('id','nombre')
+            ->display_as('nombre','Barcode size');
         
-        $crud->edit_fields('est_estado_nombre','est_nombre');
-        $crud->required_fields('est_nombre');
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
 
-        $crud->callback_edit_field('est_estado_nombre',array($this,'edit_est_estado_nombre'));
-
-
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
         $crud->unset_delete(); //Remover la acción borrar
-        $crud->unset_add();
+        //$crud->unset_add();
         
         $main_content = $crud->render();
-        //pr($main_content);
-        $this->template->setMainContent($this->load->view('administracion/catalogos/plantilla.php', $main_content, TRUE));
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function categoria(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_categoria')
+            ->set_subject('Categoría')
+            ->columns('id','nombre')
+            ->display_as('nombre','Categoría');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function ciudad(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_ciudad')
+            ->set_subject('Ciudad')
+            ->columns('id','nombre')
+            ->display_as('nombre','Ciudad');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function departamento(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_departamento')
+            ->set_subject('Departamento')
+            ->columns('id','nombre')
+            ->display_as('nombre','Departamento');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function descripcion_fisica(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_desc_fisica')
+            ->set_subject('Descripción física')
+            ->columns('id','nombre')
+            ->display_as('nombre','Descripción física');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function encuadernacion(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_encuadernacion')
+            ->set_subject('Encuadernación')
+            ->columns('id','nombre')
+            ->display_as('nombre','Encuadernación');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function entidad(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_entidad')
+            ->set_subject('Entidad')
+            ->columns('id','name', 'code', 'subsistema_id')
+            ->display_as('name','Entidad')
+            ->display_as('code','Código')
+            ->display_as('subsistema_id','Subsistema');
+        
+        $crud->edit_fields('name', 'code', 'subsistema_id');
+        $crud->required_fields('nombre');
+
+        $crud->set_relation('subsistema_id','c_subsistema','name');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function estado(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_estado')
+            ->set_subject('Estado')
+            ->columns('id', 'name','description')
+            ->display_as('name','Nombre')
+            ->display_as('description','Descripción');
+        
+        $crud->edit_fields('name','description');
+        $crud->required_fields('name');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function formato(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_formato')
+            ->set_subject('Formato')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
         $this->template->getTemplate();
     }
 

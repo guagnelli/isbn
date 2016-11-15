@@ -22,8 +22,10 @@ $config['modulos_sesion_generales'] = array(
     E_rol::ENTIDAD => array('solicitud' => array('*'))
 );*/
 $config['modulos_permisos'] = array(
-    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte')), 
-    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte')),
+    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 'Catálogo' => array('catalogo/estado'=>'Estado', 'catalogo/entidad'=>'Entidad'))), 
+    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 
+        'Catálogo' => array('catalogo/barcode_size'=>'Barcode', 'catalogo/ciudad'=>'Ciudad', 'catalogo/categoria'=>'Categoría', 'catalogo/departamento'=>'Departamento', 'catalogo/descripcion_fisica'=>'Descripción física', 'catalogo/encuadernacion'=>'Encuadernación', 'catalogo/entidad'=>'Entidad', 'catalogo/estado'=>'Estado',
+            'catalogo/formato'=>'Formato'))),
     E_rol::DGAJ => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud')), 
     E_rol::ENTIDAD => array(
         'permisos' => array('solicitud' => array('*'),"colaborador"=>array('*')), 
@@ -71,4 +73,11 @@ $config['tipo_obra'] = array(
     'I' => 'Independiente',
     'C' => 'Completa',
     'V' => 'Volumen',
+);
+
+$config['tipo_busqueda'] = array(
+    1 => array('id'=>1, 'desc'=>'ENTIDAD'),
+    2 => array('id'=>2, 'desc'=>'SUBSISTEMA'),
+    3 => array('id'=>3, 'desc'=>'ESTADO'),
+    4 => array('id'=>4, 'desc'=>'SUBCATEGORIA')
 );
