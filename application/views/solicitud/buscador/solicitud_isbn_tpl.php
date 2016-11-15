@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//pr($entidad_id);
 ?>
 
 <style type="text/css">
@@ -47,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad  ?> 
                         <!--                    <div class="row">
                                                 <div class="col-md-12 col-lg-12 col-sm-12">
-                                                    <a class="btn btn-primary" href="<?php // echo site_url();     ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
+                                                    <a class="btn btn-primary" href="<?php // echo site_url();      ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
                                                 </div>
                                             </div>-->
                         <?php // } else { //Si existe entidad, no es ususario entidad  ?> 
@@ -59,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     'type' => 'dropdown',
                                     'options' => $c_entidad,
                                     'first' => array('' => $string_values['drop_estado_solicitud']),
-                                    'value' => '',
+                                    'value' => (isset($entidad_id)) ? $entidad_id : '',
                                     'class' => 'form-control',
                                     'attributes' => array('class' => 'form-control',
                                         'placeholder' => $string_values['lbl_entidades'],
@@ -79,13 +80,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 'type' => 'dropdown',
                                 'options' => $c_estado,
                                 'first' => array('' => $string_values['drop_estado_solicitud']),
-                                'value' => '',
+                                'value' => (isset($estado_cve)) ? $estado_cve : '',
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
                                     'placeholder' => $string_values['lbl_estado_solicitud'],
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
                                     'title' => $string_values['lbl_estado_solicitud'],
+                                    'onchange' => 'funcion_buscar_solicitudes()'
+                                )
+                            ));
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <div class="panel-body input-group ">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_subcategoria']; ?></span>
+                            <?php
+                            echo $this->form_complete->create_element(array('id' => 'sub_categoria_cve',
+                                'type' => 'dropdown',
+                                'options' => $c_subcategoria,
+                                'first' => array('' => $string_values['drop_subcategoria']),
+                                'value' => (isset($subcategoria_cve)) ? $subcategoria_cve : '',
+                                'class' => 'form-control',
+                                'attributes' => array('class' => 'form-control',
+                                    'placeholder' => $string_values['lbl_subcategoria'],
+                                    'data-toggle' => 'tooltip',
+                                    'data-placement' => 'top',
+                                    'title' => $string_values['lbl_subcategoria'],
+                                    'onchange' => 'funcion_buscar_solicitudes()'
+                                )
+                            ));
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <div class="panel-body input-group ">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_subsistema']; ?></span>
+                            <?php
+                            echo $this->form_complete->create_element(array('id' => 'sub_sistema_cve',
+                                'type' => 'dropdown',
+                                'options' => $c_subsistema,
+                                'first' => array('' => $string_values['drop_subsistema']),
+                                'value' => (isset($subsistema_cve)) ? $subsistema_cve : '',
+                                'class' => 'form-control',
+                                'attributes' => array('class' => 'form-control',
+                                    'placeholder' => $string_values['lbl_subsistema'],
+                                    'data-toggle' => 'tooltip',
+                                    'data-placement' => 'top',
+                                    'title' => $string_values['lbl_subsistema'],
                                     'onchange' => 'funcion_buscar_solicitudes()'
                                 )
                             ));

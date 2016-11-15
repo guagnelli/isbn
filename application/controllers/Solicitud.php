@@ -41,25 +41,58 @@ class Solicitud extends MY_Controller {
         $data['order_columns'] = array('hri.c_estado_id' => $string_values['order_estado_solicitud'], 'lb.title' => $string_values['order_titulo_libro'],
             'lb.subtitle' => $string_values['order_subtitulo_libro'], 'lb.isbn' => $string_values['order_isbn']
         );
+
+        //Obtiene datos para cargar de inicio
+        $tmp_get_value = $_SERVER['QUERY_STRING']; //Verificando si tiene variables por GET iduser=487&idcurso=819
+        if (!empty($tmp_get_value) & $_SERVER['REQUEST_METHOD'] == 'GET') {
+            $varr = array();
+            $variable = explode('&', $tmp_get_value);
+            if (!empty($variable)and isset($variable[0])and isset($variable[1])) {
+                $var_tipo = explode('=', $variable[0]);
+                $var_id = explode('=', $variable[1]);
+                if ($var_tipo[0] == 'tipo' and $var_id[0] == 'id') {
+                    $tipo_f = intval($var_tipo[1]);
+                    $value_f = intval($var_id[1]);
+                }
+            }
+        }
+//        pr($tipo_f);
+//        pr($value_f);
+        //********************
+
         $rol_sesion = $this->session->userdata('rol_cve');
 //        pr($this->session->userdata());
         $datos_usuario = array();
+        $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda según el archivo de configuración
+        $array_where = NULL;
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
-                $array_catalogos = array(Enum_cg::c_estado);
                 $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $sub_sistema_id = carga_catalogos_generales(array(Enum_cg::c_entidad), null, array(Enum_cg::c_entidad => array('id' => $datos_usuario['entidad_cve'])), false, null, array(Enum_cg::c_entidad => 'name'));
+                $array_where = array(Enum_cg::c_subsistema => array('id' => $sub_sistema_id[Enum_cg::c_entidad][0]['subsistema_id']));
+//                pr($array_where);
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 $data['title_template'] = $string_values['title_template_entidad'] . $this->session->userdata('name_entidad');
+                //Verifica que se este invocando la carga de algún catálogo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                    $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
+                }
                 break;
             case E_rol::DGAJ://Juridico
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad);
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
+                //Verifica que se este invocando la carga de algún catálogo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                    $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
+//                    pr($data);
+                }
                 break;
             case E_rol::ADMINISTRADOR://Juridico
                 $data['title_template'] = $string_values['title_template_default'];
         }
         //Carga catÃ¡logos
-        $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name'));
+        $data = carga_catalogos_generales($array_catalogos, $data, $array_where, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
 
         //Carga datos de usuario 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad
@@ -249,7 +282,7 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar() {
-        
+
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;

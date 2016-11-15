@@ -76,8 +76,8 @@ $config['tipo_obra'] = array(
 );
 
 $config['tipo_busqueda'] = array(
-    1 => array('id'=>1, 'desc'=>'ENTIDAD'),
-    2 => array('id'=>2, 'desc'=>'SUBSISTEMA'),
-    3 => array('id'=>3, 'desc'=>'ESTADO'),
-    4 => array('id'=>4, 'desc'=>'SUBCATEGORIA')
+    1 => array('id'=>1, 'desc'=>'ENTIDAD', 'rol_permite' => array(E_rol::DGAJ), 'nom_var' => 'entidad_id'),
+    2 => array('id'=>2, 'desc'=>'SUBSISTEMA', 'rol_permite' => array(E_rol::DGAJ, E_rol::ENTIDAD), 'nom_var' => 'subsistema_cve'),
+    3 => array('id'=>3, 'desc'=>'ESTADO', 'rol_permite' => array(E_rol::DGAJ, E_rol::ENTIDAD), 'nom_var' => 'estado_cve'),
+    4 => array('id'=>4, 'desc'=>'SUBCATEGORIA', 'rol_permite' => array(E_rol::DGAJ, E_rol::ENTIDAD), 'nom_var' => 'subcategoria_cve')
 );

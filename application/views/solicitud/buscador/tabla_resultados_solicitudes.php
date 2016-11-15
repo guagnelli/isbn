@@ -21,6 +21,7 @@ echo js("solicitud/secciones.js");
                 <?php if ($rol_cve != E_rol::ENTIDAD) { ?>
                     <th style="color:#ffffff"><?php echo $string_values['title_name_entidad']; ?></th>
                 <?php } ?>
+                <th style="color:#ffffff"><?php echo $string_values['title_subcategoria']; ?></th>
                 <th style="color:#ffffff"><?php echo $string_values['title_fecha_validacion']; ?></th>
                 <th style="color:#ffffff"><?php echo $string_values['title_operacion']; ?></th>
             </tr>
@@ -106,6 +107,7 @@ echo js("solicitud/secciones.js");
                 if ($rol_cve != E_rol::ENTIDAD) {
                     echo "<td>" . $val['name_entidad'] . "</td>";
                 }
+                echo "<td>" . $val['sub_categoria'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
                 echo "<td >" . $link_ver_detalle . $href_solicitud . "</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";

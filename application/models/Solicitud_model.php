@@ -103,7 +103,8 @@ class Solicitud_model extends MY_Model {
         $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
-            'DATE_FORMAT(hri.reg_revision,"%d-%m-%Y %r" ) "fecha_ultima_revision"', 'cent.name "name_entidad"', 'hri.c_estado_id "estado_cve"'
+            'DATE_FORMAT(hri.reg_revision,"%d-%m-%Y %r" ) "fecha_ultima_revision"', 'cent.name "name_entidad"', 
+            'hri.c_estado_id "estado_cve"', 'sc.nombre "sub_categoria"'
         );
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
 //        $this->db->from('cdepartamento as dp');
@@ -111,6 +112,7 @@ class Solicitud_model extends MY_Model {
         $this->db->join('solicitud s', 's.id = hri.solicitud_cve');
         $this->db->join('c_entidad cent', 'cent.id = s.entidad_id');
         $this->db->join('libro lb', 'lb.id = s.libro_id');
+        $this->db->join('c_subcategoria sc', 'sc.id = s.id_subcategoria', 'left');
         //where que son obligatorios
         $this->db->where('hri.is_actual', 1); //último estado
         if ($params['estado_cve'] > 0) {
@@ -118,6 +120,9 @@ class Solicitud_model extends MY_Model {
         }
         if ($params['entidad_cve'] > 0) {
             $this->db->where('s.entidad_id', $params['entidad_cve']);
+        }
+        if ($params['sub_categoria_cve'] > 0) {
+            $this->db->where('sc.id', $params['sub_categoria_cve']);
         }
         switch ($params['rol_seleccionado']) {
             case E_rol::ENTIDAD:
