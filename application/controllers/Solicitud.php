@@ -64,13 +64,13 @@ class Solicitud extends MY_Controller {
 //        pr($this->session->userdata());
         $datos_usuario = array();
         $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda según el archivo de configuración
-        $array_where = NULL;
+//        $array_where = NULL;
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
-                $sub_sistema_id = carga_catalogos_generales(array(Enum_cg::c_entidad), null, array(Enum_cg::c_entidad => array('id' => $datos_usuario['entidad_cve'])), false, null, array(Enum_cg::c_entidad => 'name'));
-                $array_where = array(Enum_cg::c_subsistema => array('id' => $sub_sistema_id[Enum_cg::c_entidad][0]['subsistema_id']));
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria);
+//                $sub_sistema_id = carga_catalogos_generales(array(Enum_cg::c_entidad), null, array(Enum_cg::c_entidad => array('id' => $datos_usuario['entidad_cve'])), false, null, array(Enum_cg::c_entidad => 'name'));
+//                $array_where = array(Enum_cg::c_subsistema => array('id' => $sub_sistema_id[Enum_cg::c_entidad][0]['subsistema_id']));
 //                pr($array_where);
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 $data['title_template'] = $string_values['title_template_entidad'] . $this->session->userdata('name_entidad');
@@ -92,7 +92,7 @@ class Solicitud extends MY_Controller {
                 $data['title_template'] = $string_values['title_template_default'];
         }
         //Carga catÃ¡logos
-        $data = carga_catalogos_generales($array_catalogos, $data, $array_where, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
+        $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
 
         //Carga datos de usuario 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad

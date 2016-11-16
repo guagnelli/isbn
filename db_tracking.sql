@@ -110,5 +110,34 @@ alter table colaboradores drop column orden;
 
 alter table seccion_solicitud add column estado numeric(1) default 1;
 
----Leas estado de validacion rvisión de la correción de la solicitud 
+---LEAS estado de validacion rvisión de la correción de la solicitud 
 insert into c_estado (id, name) value (7, 'Revisión de corrección de la solicitud');
+
+--- Modifica la entidad "sse_result_evaluacion" del esquema de encuestas -- Ejecución LEAS
+CREATE TABLE encuestas.sse_result_evaluacion_encuesta_curso (
+	evaluacion_resul_cve int8 NOT NULL DEFAULT nextval('encuestas.sse_result_evaluacion_evaluacion_resul_cve_seq'::regclass),
+	encuesta_cve int4 NOT NULL,
+	course_cve int4 NOT NULL,
+	group_id int4 NOT NULL,
+	evaluado_user_cve int4 NOT NULL,
+	evaluador_user_cve int4 NOT NULL,
+	total_puntua_si int4 NOT NULL DEFAULT 0,
+	total_nos int4 NOT NULL DEFAULT 0,
+	total_no_puntua_napv int4 NOT NULL DEFAULT 0,
+	total_reactivos_bono int4 NOT NULL DEFAULT 0,
+	base int4 NOT NULL DEFAULT 0,
+	calif_emitida numeric(6,3) NOT NULL DEFAULT 0,
+	CONSTRAINT sse_result_evaluacion_encuesta_cursopkey PRIMARY KEY (evaluacion_resul_cve)
+)
+WITH (
+	OIDS=FALSE
+);
+
+ALTER SEQUENCE encuestas.sse_indicador RESTART WITH 1; --reinicia contador de "encuestas.sse_indicador"
+
+alter table encuestas.sse_preguntas add
+  CONSTRAINT fkpre_indicador
+  FOREIGN KEY (tipo_indicador_cve) 
+  REFERENCES  encuestas.sse_indicador(indicador_cve);
+
+

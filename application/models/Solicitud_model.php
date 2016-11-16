@@ -115,14 +115,17 @@ class Solicitud_model extends MY_Model {
         $this->db->join('c_subcategoria sc', 'sc.id = s.id_subcategoria', 'left');
         //where que son obligatorios
         $this->db->where('hri.is_actual', 1); //último estado
-        if ($params['estado_cve'] > 0) {
+        if ($params['estado_cve'] > 0) {//Filtro de estado 
             $this->db->where('hri.c_estado_id', $params['estado_cve']);
         }
-        if ($params['entidad_cve'] > 0) {
+        if ($params['entidad_cve'] > 0) {//Filtro de entidad 
             $this->db->where('s.entidad_id', $params['entidad_cve']);
         }
-        if ($params['sub_categoria_cve'] > 0) {
+        if ($params['sub_categoria_cve'] > 0) {//Filtro de categoria 
             $this->db->where('sc.id', $params['sub_categoria_cve']);
+        }
+        if (isset($params['sub_sistema_cve']) and $params['sub_sistema_cve'] > 0) {//Filtro subsistema 
+            $this->db->where('cent.subsistema_id', $params['sub_sistema_cve']);
         }
         switch ($params['rol_seleccionado']) {
             case E_rol::ENTIDAD:
