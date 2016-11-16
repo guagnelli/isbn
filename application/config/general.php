@@ -22,10 +22,14 @@ $config['modulos_sesion_generales'] = array(
     E_rol::ENTIDAD => array('solicitud' => array('*'))
 );*/
 $config['modulos_permisos'] = array(
-    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 'Catálogo' => array('catalogo/estado'=>'Estado', 'catalogo/entidad'=>'Entidad'))), 
-    E_rol::ADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 
+    E_rol::SUPERADMINISTRADOR => array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 
         'Catálogo' => array('catalogo/barcode_size'=>'Barcode', 'catalogo/ciudad'=>'Ciudad', 'catalogo/categoria'=>'Categoría', 'catalogo/departamento'=>'Departamento', 'catalogo/descripcion_fisica'=>'Descripción física', 'catalogo/encuadernacion'=>'Encuadernación', 'catalogo/entidad'=>'Entidad', 'catalogo/estado'=>'Estado',
-            'catalogo/formato'=>'Formato'))),
+            'catalogo/formato'=>'Formato', 'catalogo/gramaje'=>'Gramaje', 'catalogo/idioma'=>'Idioma', 'catalogo/idioma_al'=>'Idioma al', 'catalogo/idioma_del'=>'Idioma del', 'catalogo/imagen_tamanio'=>'Imagen tamaño', 'catalogo/impresion'=>'Impresión', 'catalogo/medio'=>'Medio', 'catalogo/subcategoria'=>'Subcategoría',
+            'catalogo/subsistema'=>'Subsistema', 'catalogo/tamanio'=>'Tamaño', 'catalogo/tinta'=>'Tinta', 'catalogo/tipo_contenido'=>'Tipo de contenido', 'catalogo/tipo_papel'=>'Tipo de papel'))), 
+    E_rol::ADMINISTRADOR =>      array('permisos' => array('solicitud' => array('*'), 'catalogo' => array('*'), 'reporte' => array('*')), 'menu'=>array('Solicitud' => array('solicitud/index'=>'Solicitud', 'solicitud/registrar'=>'Registrar'), 'reporte'=>'Reporte', 
+        'Catálogo' => array('catalogo/barcode_size'=>'Barcode', 'catalogo/ciudad'=>'Ciudad', 'catalogo/categoria'=>'Categoría', 'catalogo/departamento'=>'Departamento', 'catalogo/descripcion_fisica'=>'Descripción física', 'catalogo/encuadernacion'=>'Encuadernación', 'catalogo/entidad'=>'Entidad', 'catalogo/estado'=>'Estado',
+            'catalogo/formato'=>'Formato', 'catalogo/gramaje'=>'Gramaje', 'catalogo/idioma'=>'Idioma', 'catalogo/idioma_al'=>'Idioma al', 'catalogo/idioma_del'=>'Idioma del', 'catalogo/imagen_tamanio'=>'Imagen tamaño', 'catalogo/impresion'=>'Impresión', 'catalogo/medio'=>'Medio', 'catalogo/subcategoria'=>'Subcategoría',
+            'catalogo/subsistema'=>'Subsistema', 'catalogo/tamanio'=>'Tamaño', 'catalogo/tinta'=>'Tinta', 'catalogo/tipo_contenido'=>'Tipo de contenido', 'catalogo/tipo_papel'=>'Tipo de papel'))),
     E_rol::DGAJ => array('permisos' => array('solicitud' => array('*')), 'menu'=>array('solicitud/index'=>'Solicitud')), 
     E_rol::ENTIDAD => array(
         'permisos' => array('solicitud' => array('*'),"colaborador"=>array('*')), 

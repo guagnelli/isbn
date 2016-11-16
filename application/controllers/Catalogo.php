@@ -235,6 +235,282 @@ class Catalogo extends MY_Controller {
         $this->template->getTemplate();
     }
 
+    public function gramaje(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_gramaje')
+            ->set_subject('Gramaje')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function idioma(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_idioma')
+            ->set_subject('Idioma')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function idioma_al(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_idioma_al')
+            ->set_subject('Idioma al')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function idioma_del(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_idioma_del')
+            ->set_subject('Idioma del')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function imagen_tamanio(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_img_size')
+            ->set_subject('Tamaño de imagen')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function impresion(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_impresion')
+            ->set_subject('Impresión')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function medio(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_medio')
+            ->set_subject('Medio')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function subcategoria(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_subcategoria')
+            ->set_subject('Subcategoría')
+            ->columns('id','nombre', 'id_categoria')
+            ->display_as('nombre','Nombre')
+            ->display_as('id_categoria','Categoría');
+        
+        $crud->edit_fields('nombre', 'id_categoria');
+        $crud->required_fields('nombre', 'id_categoria');
+
+        $crud->set_relation('id_categoria','c_categoria','nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function subsistema(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_subsistema')
+            ->set_subject('Subsistema')
+            ->columns('id','name')
+            ->display_as('name','Nombre');
+        
+        $crud->edit_fields('name');
+        $crud->required_fields('name');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function tamanio(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_tamanio')
+            ->set_subject('Tamaño')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function tinta(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_tinta')
+            ->set_subject('Tinta')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function tipo_contenido(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_tipo_contenido')
+            ->set_subject('Tipo de contenido')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    public function tipo_papel(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('c_tipo_papel')
+            ->set_subject('Tipo de papel')
+            ->columns('id','nombre')
+            ->display_as('nombre','Nombre');
+        
+        $crud->edit_fields('nombre');
+        $crud->required_fields('nombre');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
 
     /*function edit_est_estado_nombre($value, $primary_key)
     {
