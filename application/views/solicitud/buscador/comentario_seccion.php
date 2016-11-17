@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php } ?>
     <br/>
-    <?php if ($rol_cve == E_rol::DGAJ) {//Sólo el dgaj puede validar ?>
+    <?php if ($add_comment_seccion == E_rol::DGAJ) {//Sólo el dgaj puede validar ?>
         <?php echo form_open('', array('id' => 'form_comentario_seccion')); ?>
         <div class="row">
             <div class="col-md-12">

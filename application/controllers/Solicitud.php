@@ -89,7 +89,22 @@ class Solicitud extends MY_Controller {
                 }
                 break;
             case E_rol::ADMINISTRADOR://Juridico
-                $data['title_template'] = $string_values['title_template_default'];
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
+                //Verifica que se este invocando la carga de algún catálogo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                    $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
+//                    pr($data);
+                }
+                break;
+            case E_rol::SUPERADMINISTRADOR://Juridico
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
+                //Verifica que se este invocando la carga de algún catálogo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                    $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
+//                    pr($data);
+                }
         }
         //Carga catÃ¡logos
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
@@ -223,8 +238,6 @@ class Solicitud extends MY_Controller {
                 $parametros_estado['estado_cve'] = $datos_solicitud['estado_cve'];
                 $datosPerfil['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
 
-                //Obtiene las propiedades del estado actual
-                $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']];
                 //********** Obtiene mensajes por sección
                 //Propiedades de las secciones
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
@@ -243,8 +256,12 @@ class Solicitud extends MY_Controller {
                             . 'title="' . $string_values['add_ver_comment'] . '">'
                             . '</span></a>';
                 }
+//                pr($array_comentarios);
+                //Obtiene las propiedades del estado actual
+                $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']];
+                $vista = $propEstadoActual['vista'][$rol_seleccionado];
                 //Carga la vista actual
-                switch ($propEstadoActual['vista']) {
+                switch ($vista) {
                     case 'detalle':
                         $datosSeccion['solicitud_cve'] = $datos_solicitud['solicitud_cve'];
                         $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
@@ -345,6 +362,7 @@ class Solicitud extends MY_Controller {
                 $rol_actual = $this->session->userdata('rol_cve'); //Rol seleccionado actual
 //                pr($datos_post);
 //                exit();
+//                pr($solicitud_cve);
                 $datosSeccion['solicitud_cve'] = $solicitud_cve;
                 $datosSeccion['hist_cve'] = $hist_cve;
 //                $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
@@ -469,6 +487,10 @@ class Solicitud extends MY_Controller {
                 $data_coment['seccion'] = $seccion;
                 $data_coment['solicitud_cve'] = $datos_post['solicitud_cve'];
                 $data_coment['rol_cve'] = $this->session->userdata('rol_cve');
+                $estado_solisitud = $this->session->userdata('detalle_solicitud')['estado_cve'];
+                $rol_seleccionado = $this->session->userdata('rol_cve');
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud()[$estado_solisitud];//Obtiene reglas de estado
+                $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
                 $data_coment['string_values'] = $string_values;
