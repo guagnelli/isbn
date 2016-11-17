@@ -29,18 +29,18 @@ class Dashboard extends CI_Controller {
 
         switch ($this->session->userdata('rol_cve')) {
             case E_rol::SUPERADMINISTRADOR: case E_rol::ADMINISTRADOR: case E_rol::DGAJ:
-                $solicitud_x_entidad = $this->dashboard->get_solicitud_por_entidad(); //Total de solicitudes por entidad
-                $solicitud_x_subsistema = $this->dashboard->get_solicitud_por_subsistema(); //Total de solicitudes por subsistema
-                $solicitud_x_estado = $this->dashboard->get_solicitud_por_estado(); //Total de solicitudes por estado
-                $solicitud_x_subcategoria = $this->dashboard->get_solicitud_por_subcategoria(); //Total de solicitudes por subcategoria
+                $solicitud_x_entidad = $this->dashboard->get_solicitud_por_entidad(array('conditions'=>'hist_revision_isbn.is_actual=1')); //Total de solicitudes por entidad
+                $solicitud_x_subsistema = $this->dashboard->get_solicitud_por_subsistema(array('conditions'=>'hist_revision_isbn.is_actual=1')); //Total de solicitudes por subsistema
+                $solicitud_x_estado = $this->dashboard->get_solicitud_por_estado(array('conditions'=>'hist_revision_isbn.is_actual=1')); //Total de solicitudes por estado
+                $solicitud_x_subcategoria = $this->dashboard->get_solicitud_por_subcategoria(array('conditions'=>'hist_revision_isbn.is_actual=1')); //Total de solicitudes por subcategoria
                 break;
             case E_rol::ENTIDAD:
                 /*$solicitud_x_entidad = $this->dashboard->get_solicitud_por_entidad(array('conditions'=>'c_entidad.id='.$this->session->userdata('entidad_id'))); //Total de solicitudes por entidad
                 $solicitud_x_subsistema = $this->dashboard->get_solicitud_por_subsistema(array('conditions'=>'c_entidad.id='.$this->session->userdata('entidad_id'))); //Total de solicitudes por subsistema */
                 $solicitud_x_entidad = array(); //Total de solicitudes por entidad
                 $solicitud_x_subsistema = array(); //Total de solicitudes por subsistema
-                $solicitud_x_estado = $this->dashboard->get_solicitud_por_estado(array('conditions'=>'solicitud.entidad_id='.$this->session->userdata('entidad_id'))); //Total de solicitudes por estado
-                $solicitud_x_subcategoria = $this->dashboard->get_solicitud_por_subcategoria(array('conditions'=>'solicitud.entidad_id='.$this->session->userdata('entidad_id'))); //Total de solicitudes por subcategoria
+                $solicitud_x_estado = $this->dashboard->get_solicitud_por_estado(array('conditions'=>'solicitud.entidad_id='.$this->session->userdata('entidad_id').' AND hist_revision_isbn.is_actual=1')); //Total de solicitudes por estado
+                $solicitud_x_subcategoria = $this->dashboard->get_solicitud_por_subcategoria(array('conditions'=>'solicitud.entidad_id='.$this->session->userdata('entidad_id').' AND hist_revision_isbn.is_actual=1')); //Total de solicitudes por subcategoria
             break;
         }
         $tipo_busqueda = $this->config->item('tipo_busqueda');

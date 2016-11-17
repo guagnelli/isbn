@@ -35,6 +35,7 @@ class Dashboard_model extends CI_Model {
         $this->db->order_by('c_entidad.name');
 
         $this->db->join('solicitud', 'solicitud.entidad_id=c_entidad.id', 'left');
+        $this->db->join('hist_revision_isbn', 'hist_revision_isbn.solicitud_cve=solicitud.id', 'left');
 
         $query = $this->db->get('c_entidad'); //Obtener conjunto de registros
         //pr($this->db->last_query());
@@ -58,6 +59,7 @@ class Dashboard_model extends CI_Model {
         $this->db->order_by('c_subcategoria.nombre');
 
         $this->db->join('solicitud', 'solicitud.id_subcategoria=c_subcategoria.id', 'left');
+        $this->db->join('hist_revision_isbn', 'hist_revision_isbn.solicitud_cve=solicitud.id', 'left');
 
         $query = $this->db->get('c_subcategoria'); //Obtener conjunto de registros
         //pr($this->db->last_query());
@@ -103,6 +105,7 @@ class Dashboard_model extends CI_Model {
 
         $this->db->join('c_entidad', 'c_entidad.subsistema_id=c_subsistema.id', 'left');
         $this->db->join('solicitud', 'solicitud.entidad_id=c_entidad.id', 'left');
+        $this->db->join('hist_revision_isbn', 'hist_revision_isbn.solicitud_cve=solicitud.id', 'left');
 
         $query = $this->db->get('c_subsistema'); //Obtener conjunto de registros
         
