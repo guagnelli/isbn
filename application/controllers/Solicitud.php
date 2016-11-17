@@ -391,7 +391,7 @@ class Solicitud extends MY_Controller {
                         </a>';
                     $datosSeccion['link_editar'] = $boton_editar;
                 }
-
+//                pr($this->get_datos_detalle_solicitud($solicitud_datos));
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                 $data = array(
                     'titulo_modal' => null,
@@ -489,7 +489,7 @@ class Solicitud extends MY_Controller {
                 $data_coment['rol_cve'] = $this->session->userdata('rol_cve');
                 $estado_solisitud = $this->session->userdata('detalle_solicitud')['estado_cve'];
                 $rol_seleccionado = $this->session->userdata('rol_cve');
-                $reglas_validacion = $this->req->getReglasEstadosSolicitud()[$estado_solisitud];//Obtiene reglas de estado
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud()[$estado_solisitud]; //Obtiene reglas de estado
                 $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);

@@ -139,7 +139,7 @@ $lang['interface'] = array(
         'title_clas_tematica' => 'Clasificación temática: ',
         'title_tema' => 'Tema:',
         'title_colaboradores' => 'Colaboradores: ',
-        'title_idioma' => 'Idioma: ',
+        'title_idioma' => 'Idioma(s): ',
         'title_traduccion' => 'Traducción: ',
         'title_info_edicion' => 'Información de edición: ',
         'li_categoria' => 'Categoría: ',
@@ -148,6 +148,12 @@ $lang['interface'] = array(
         'li_num_coleccion' => 'No. de colección: ',
         'li_nom_serie_coleccion' => 'Nombre de la colección: ',
         'li_tipo_contenido_coleccion' => 'Tipo de contenido: ',
+        'li_name_colaborador' => 'Nombre: ',
+        'li_tipo_colaborador' => ', ',
+        'li_title_original_traduccion' => 'Titulo original: ',
+        'li_idioma_orig_traduccion' => 'Idioma original: ',
+        'li_idioma_del_traduccion' => 'Tradicción del: ',
+        'li_idioma_al_traduccion' => 'Traducción al: ',
         
     ),
     'solicitud_cambio_estado' => array(

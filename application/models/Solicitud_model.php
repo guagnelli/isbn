@@ -60,15 +60,19 @@ class Solicitud_model extends MY_Model {
         $solicitud["clasificacion_tematica"] = $this->getClasifTematica($solicitud["id_subcategoria"]);
         $tipo_obra = $this->config->item('tipo_obra');
         $solicitud["sol_tipo_obra"] = $tipo_obra[$solicitud["sol_tipo_obra"]];
-
         if ($load_secciones) {
+            $conf_secciones = $this->config->item('conf_secciones');
             // secciones
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
+                $sConf = $conf_secciones[$seccion['id']]['select'];
+//                pr($sConf);
+                $this->db->select($sConf);
                 $this->db->where($seccion["referencia"], $id);
                 $result = $this->db->get($seccion["tbl_seccion"]);
                 $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
                 $result->free_result();
+//                pr($this->db->last_query());
             }
         }
         //pr($solicitud);

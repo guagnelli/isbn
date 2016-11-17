@@ -1,4 +1,4 @@
-<?php if ($rol_cve == E_rol::DGAJ) {//Sólo el dgaj puede validar  ?>
+<?php if ($add_comment_seccion == 1) {//Sólo el dgaj puede validar  ?>
     <div class="list-group-item text-center center">
         <button type="button" id="close_modal_censo" class="btn btn-default" data-dismiss="modal"><?php echo $string_values['btn_close']; ?></button>
         <button type="button" class="btn btn-default"

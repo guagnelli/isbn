@@ -26,7 +26,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             </ul>
 
             <?php if (!empty($solicitud['secciones']['t'])) { ?>
-                <p><b><?php echo $string_detalle['title_tema']; ?></b><?php echo $botones_seccion[En_secciones::TEMA]; ?></p> 
+                <p><b><?php echo $string_detalle['title_tema']; ?></b> <?php echo $botones_seccion[En_secciones::TEMA]; ?></p> 
                 <ul>    
                     <li><?php echo $string_detalle['li_coleccion'] . $solicitud['secciones']['t'][0]['coleccion']; ?></li>
                     <li><?php echo $string_detalle['li_nom_serie_coleccion'] . $solicitud['secciones']['t'][0]['nombre_serie']; ?></li>
@@ -36,24 +36,34 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['colab'])) { ?>
-                <p><b><?php echo $string_detalle['title_colaboradores']; ?></b><?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
-                <!--<a href="#" class="comentario" ><span class="glyphicon glyphicon-comment"></span></a>-->
+                <?php $tipoColab = $this->config->item('tipo_colab'); ?>
+                <p><b><?php echo $string_detalle['title_colaboradores']; ?></b> <?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
                 <ul>    
-                    <li>SN / Colaboradores</li>
+                    <?php foreach ($solicitud['secciones']['colab'] as $colaborador) { ?>
+                        <li><?php echo $string_detalle['li_name_colaborador'] . $colaborador['nombre'] . $string_detalle['li_tipo_colaborador'] . $tipoColab[$colaborador['tipo']]; ?></li>
+                    <?php } ?>
                 </ul>
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['lng'])) { ?>
-                <p><b><?php echo $string_detalle['title_idioma']; ?></b><?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>
+                <p><b><?php echo $string_detalle['title_idioma']; ?></b> <?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>
+                <?php // $coma = ''; ?>
                 <ul>    
-                    <li>Idioma. Español</li>
+                    <?php foreach ($solicitud['secciones']['lng'] as $lenguaje) { ?>
+                        <li><?php echo $lenguaje['nam_idioma']; ?></li>
+                        <?php // $coma = ', '; ?>
+                    <?php } ?>
                 </ul>
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['trns'])) { ?>
-                <p><b><?php echo $string_detalle['title_traduccion']; ?></b><?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
+                <p><b><?php echo $string_detalle['title_traduccion']; ?></b> <?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
                 <ul>    
-                    <li>SN/ Traducción</li>
+                    <?php $traduccion = $solicitud['secciones']['trns'][0]; ?>
+                    <li><?php echo $string_detalle['li_title_original_traduccion'] . $traduccion['titulo_original']; ?></li>
+                    <li><?php echo $string_detalle['li_idioma_orig_traduccion'] . $traduccion['ni_orig']; ?></li>
+                    <li><?php echo $string_detalle['li_idioma_del_traduccion'] . $traduccion['ni_del']; ?></li>
+                    <li><?php echo $string_detalle['li_idioma_al_traduccion'] . $traduccion['ni_al']; ?></li>
                 </ul>
             <?php } ?>
 
