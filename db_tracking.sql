@@ -112,6 +112,22 @@ alter table seccion_solicitud add column estado numeric(1) default 1;
 
 ---LEAS estado de validacion rvisión de la correción de la solicitud 
 insert into c_estado (id, name) value (7, 'Revisión de corrección de la solicitud');
+---Mr. Guag
+insert into c_ciudad (nombre) values('México');
+insert into c_ciudad (nombre) values('Roma');
+insert into c_ciudad (nombre) values('Grecia');
+
+insert into c_departamento (nombre) values('depto 1');
+insert into c_departamento (nombre) values('depto 2');
+insert into c_departamento (nombre) values('depto 3');
+
+update seccion_solicitud set  tbl_seccion='desc_fisica', nom_seccion = 'Descripción física', cve_seccion='df' where id = 7;
+delete from seccion_solicitud where id = 8;
+UPdate seccion_solicitud set id = 8 where id = 9;
+UPdate seccion_solicitud set id = 9 where id = 10;
+update seccion_solicitud set srt_seccion = id, estado = 1;
+update seccion_solicitud set estado=0 where id=7;
+
 
 --- Modifica la entidad "sse_result_evaluacion" del esquema de encuestas -- Ejecución LEAS
 CREATE TABLE encuestas.sse_result_evaluacion_encuesta_curso (

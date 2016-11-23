@@ -342,7 +342,7 @@ class Solicitud extends MY_Controller {
 
     function secciones($solicitud) {
         try {
-            $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud);
+            $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud,FALSE);
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $data["secciones"] = $this->req->get_sections();
         } catch (Exception $ex) {
@@ -764,7 +764,74 @@ class Solicitud extends MY_Controller {
     }
 
     function sec_edicion() {
-        
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["edicion"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION])) ? $this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $data["combos"]["c_ciudad"] = $this->cg->get_combo_catalogo("c_ciudad");
+            $data["combos"]["c_departamento"] = $this->cg->get_combo_catalogo("c_departamento");
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_edicion.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function sec_epay(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["epay"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO])) ? $this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_epay.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function sec_comercializable(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["comercializable"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION])) ? $this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_comercializable.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function sec_barcode(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["barcode"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS])) ? $this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_barcode.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
     }
 
     function seccion() {

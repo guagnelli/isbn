@@ -63,6 +63,7 @@ class Solicitud_model extends MY_Model {
         if ($load_secciones) {
             $conf_secciones = $this->config->item('conf_secciones');
             // secciones
+            $this->db->where("estado",1);
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
                 $sConf = $conf_secciones[$seccion['id']]['select'];
