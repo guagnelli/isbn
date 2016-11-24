@@ -7,7 +7,7 @@ echo form_open("solicitud/sec_edicion",array(
     'method'=>'post'
 ));
 if(isset($debug)){
-  pr($debug);
+  //pr($debug);
 }
 
 if(isset($edicion["id"])){

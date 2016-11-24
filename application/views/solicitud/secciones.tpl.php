@@ -34,7 +34,16 @@
             </li>
             <?php
             }
-          ?>
+            if(isset($files)){
+            ?>
+              <li>
+                <a href="#tab_files" data-toggle="tab">
+                Archivos
+                </a>
+              </li>
+            <?php
+            }
+            ?>
           </ul>
         </div>
 
@@ -47,6 +56,12 @@
             ?>
             <div class="tab-pane" id="tab_<?php echo $seccion["tbl_seccion"]?>">
               <?php echo $seccion["nom_seccion"]?>
+            </div>
+            <?php
+            }
+            if(isset($files)){?>
+            <div class="tab-pane" id="tab_files">
+              <?php echo $files?>
             </div>
             <?php
             }
@@ -77,6 +92,11 @@ function load_sections(){
   <?php
   }
   ?>
+  ajax(site_url+"/solicitud/sec_files",{
+          "solicitud_id":solicitud,
+        },
+        "#tab_files",
+        "#msg_general");
 }
 $(document).ready(function (){
     //alert("step one");

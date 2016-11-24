@@ -1,5 +1,5 @@
 <?php
-pr($solicitud);
+//pr($solicitud);
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 ?>

@@ -13,6 +13,7 @@ class En_secciones {
             DESC_FISICA_ELECTRONICA = 7,
             DESC_FISICA_IMPRESA = 8,
             PAGO_ELECTRONICO = 9,
-            CODIGO_BARRAS = 10
+            CODIGO_BARRAS = 10,
+            ARCHIVOS = 11
     ;
 }

@@ -55,7 +55,7 @@ class Login extends CI_Controller {
 
                             $this->session->set_userdata($resultado['datos_session']); ///Si es correcto iniciamos sesión
                             $this->session->unset_userdata('token'); //Eliminar token
-                            redirect('dashboard');
+                            redirect('solicitud');
                             exit();
                         } else { ///Insertar intento fallido
                             $error = $string_values['login']['er_general'];

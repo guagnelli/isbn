@@ -345,6 +345,7 @@ class Solicitud extends MY_Controller {
             $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud,FALSE);
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $data["secciones"] = $this->req->get_sections();
+            $data["files"] = "Mis archivos";
         } catch (Exception $ex) {
             print ($ex);
         }
@@ -827,6 +828,23 @@ class Solicitud extends MY_Controller {
             //Fin ***************
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_barcode.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function sec_files(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["barcode"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $response['content'] = $this->load->view("solicitud/secciones/registro_documentacion.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
         } else {
