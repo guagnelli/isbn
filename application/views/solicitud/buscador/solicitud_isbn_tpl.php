@@ -21,7 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $(document).scrollTop();
     });
 </script>
-
+<?php echo css("datatables/jquery.dataTables.css"); ?>
+<?php echo js("datatables/jquery.dataTables.js"); ?>
 <!-- Inicio informacion personal -->
 
 <?php echo form_open('', array('id' => 'form_busqueda_solicitudes')); ?>

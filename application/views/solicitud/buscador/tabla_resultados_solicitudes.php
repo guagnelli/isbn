@@ -2,12 +2,33 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($lista_solicitudes);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();                     ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+<!--<script type='text/javascript' src="<?php // echo base_url();                        ?>assets/js/validacion_docente/validar_censo.js"></script>-->
 
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>
+<!--<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>-->
+
+
 <?php
 echo js("solicitud/secciones.js");
 ?>
+<script type="text/javascript" language="javascript" class="init">
+
+    $(document).ready(function () {
+        $('#tabla_isbn').DataTable({
+//            "order": [[2, "desc"]]
+//            "order": [[0, 'desc'], [1, 'desc'], [2, 'desc']],
+//            "columnDefs": [
+////                {"orderData": [0, 1], "targets": 0},
+//                {"orderData": 0, "targets": 2},
+////                {"orderData": [2, 3, 4], "targets": 2}
+//            ]
+            "paging": false,
+            "ordering": true,
+            "info": false,
+            "search": false
+        });
+    });
+
+</script>
 
 <div id="div_tabla_isbn" class="col-lg-12 table-responsive">
     <!--Mostrará la tabla de actividad docente --> 
