@@ -24,7 +24,7 @@ echo js("solicitud/secciones.js");
             "paging": false,
             "ordering": true,
             "info": false,
-            "search": false
+            "searching": false
         });
     });
 
