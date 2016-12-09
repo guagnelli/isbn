@@ -72,15 +72,18 @@ class Catalogos_generales extends CI_Model {
         }
     }
 
-    public function get_combo_catalogo($table, $field_key="id", $field_value="nombre",$conditions=null){
+    public function get_combo_catalogo($table, $field_key="id", $field_value="nombre",$conditions=null, $order=null){
         
         if(!is_null($conditions) && is_array($conditions)){
             $this->db->where($conditions);
         }
+        if(!is_null($order)){
+            $this->db->order_by($order);
+        }
         $this->db->select("$field_key,$field_value");
         //Seleccione una opción
         $catalogo = $this->db->get($table);
-        //$options = array();
+        $options = array();
         
         foreach ($catalogo->result_array() as $key => $value) {
             $options[$value[$field_key]] = $value[$field_value];

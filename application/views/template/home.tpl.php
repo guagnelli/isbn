@@ -64,34 +64,41 @@
 		<![endif]-->
 	</head>
 	<body class="nav-md">
-		<div class="main-header" style="background: url('<?php echo asset_url(); ?>/img/p5.png');">
+		<div class="main-header" style="background: url('<?php echo asset_url(); ?>img/fondo_header.jpg');">
 	     	<div class="container">
 	      		<div class="row">
 	      			<!-- logo Starts -->
-			        <div class="col-sm-2 col-xs-12 header-links"></div>
-			        <div class="col-lg-1 col-md-2 col-xs-3">
-			            <a href="http://www.unam.mx/" target="_blank">
-			              	<!-- <img src="images/logoUNAM.png" title="UNAM" alt="UNAM" class="" id="exifviewer-img-2" exifid="-1540343779" oldsrc="http://www.revistas.unam.mx/front/sites/all/themes/revistas_unam/img/logoUNAM.png"> -->
-			              	<?php echo img('logoUNAM.png'); ?>
+			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
+			        <div class="col-lg-1 col-sm-2 col-xs-3">
+			            <a href="http://www.unam.mx/" target="_blank" class="">
+			              	<?php 
+			              	$image_properties = array(
+							        'class' => 'img-responsive'
+							);
+			              	echo img("unam_white.png",$image_properties); 
+			              	?>
 			            </a>
 			        </div>
 			      	<!-- logo Ends -->
 			      	<!-- Logo Starts -->
-			        <div class="col-lg-2 col-md-2 col-xs-3 ">
-			            <a href="http://www.libros.unam.mx" title="Inicio">
-			                <!-- <img src="<?php echo img('libunam.png'); ?>" class="" alt="Libros unam" id="exifviewer-img-1" exifid="433139048"> -->
-			                <?php //echo img(array('src'=>'libunam.png', 'alt'=>'Libros unam', 'id'=>'exifviewer-img-1', 'exifid'=>'433139048'));
-			                echo img('libunam.png'); ?>
+			        <div class="col-lg-2 col-sm-2 col-xs-3 ">
+			            <a href="#" title="Inicio">
+			                <?php 
+			                echo img('isbn_white.png',$image_properties); 
+			                ?>
 			            </a>
 			        </div>
-			        <div class="col-lg-3 col-md-3 col-xs-3 ">
+			        <div class="col-lg-5 col-sm-5 col-xs-5 text-right">
 				        <div>
-				            <a href="http://www.revistas.unam.mx" title="Revistas UNAM">
-				                <!-- <img src="images/revUNAM.png" class="" alt="Inicio" id="exifviewer-img-1"> -->
-				                <?php echo img('revUNAM.png'); ?>
+				            <a href="http://www.libros.unam.mx" title="Libros UNAM">
+				                <?php
+				                echo img('libros_white.png'); 
+
+				                ?>
 				            </a>
 				        </div>
 			        </div>
+			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
 		        </div>
 		        <!-- seccion buscadores Starts -->					        
 	    	</div>

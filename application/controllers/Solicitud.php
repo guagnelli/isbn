@@ -593,7 +593,7 @@ class Solicitud extends MY_Controller {
 //                pr($data['comentarios']);
 //                exit();
                 //Fin ***************
-                $data["combos"]["tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido");
+                $data["combos"]["tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido","id","nombre",null,"nombre asc");
                 $response['content'] = $this->load->view("solicitud/secciones/sec_tema.tpl.php", $data, true);
                 echo json_encode($response);
                 return 0;

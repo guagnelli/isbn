@@ -88,7 +88,7 @@
                                     $options = dropdown_options($datos["categorias"], "id", "nombre");
                                     $selected = "";
                                     foreach ($options as $key => $value) {
-                                        if ($key == $save["solicitud_categoria"]) {
+                                        if (isset($save["solicitud_categoria"]) && $key == $save["solicitud_categoria"]) {
                                             $selected = "selected";
                                         }
                                         echo "<option value='$key' $selected>$value</option>";

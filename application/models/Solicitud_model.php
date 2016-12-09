@@ -177,7 +177,7 @@ class Solicitud_model extends MY_Model {
             $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_categoria");
-        if ($result->num_rows() != 1) {
+        if ($result->num_rows() == 0) {
             throw new Exception("El catálogo esta vacio", 1);
         }
         $list = $result->result_array();
@@ -192,8 +192,8 @@ class Solicitud_model extends MY_Model {
             $this->db->where("id_categoria", $id_categoria);
         }
         $result = $this->db->get("c_subcategoria");
-        if ($result->num_rows() != 1) {
-            throw new Exception("La categoria {$id} no existe", 1);
+        if ($result->num_rows() == 0) {
+            return array();
         }
         $list = $result->result_array();
         $result->free_result();

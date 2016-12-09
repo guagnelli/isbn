@@ -300,8 +300,8 @@ body .container.body .right_col {
   color: #fff; }
 
 .bg-red {
-  background: #E74C3C !important;
-  border: 1px solid #E74C3C !important;
+  background: #007CCB !important;
+  border: 1px solid #007CCB !important;
   color: #fff; }
 
 .bg-blue {
@@ -851,7 +851,7 @@ h2 {
   transition: all .2s ease; }
 
 .x_title {
-  border-bottom: 1px solid #ff051E;
+  border-bottom: 1px solid #007CCB;
   padding: 1px 5px 6px;
   margin-bottom: 10px; }
 
@@ -2123,8 +2123,8 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 .btn:hover {
   border-radius: 3px; 
   color: #fff ;
-  background-color: #ff051E;
-  border-color: #ff051E;
+  background-color: #007CCB;
+  border-color: #007CCB;
 }
 
 a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
@@ -2135,7 +2135,7 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 }
 
 .btn:hover{
-  background: #f42434 !important;
+  background: #007CCB !important;
 }
 .btn-success {
   background: #26B99A;
@@ -4223,6 +4223,6 @@ ul.notifications {
   font-size:20px; 
 }
 .btn-msg:hover{
-  color:#f42434;
+  color:#007CCB;
   font-size:20px; 
 }
