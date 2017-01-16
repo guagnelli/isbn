@@ -818,6 +818,33 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    function sec__descripcion_fisica(){
+        if ($this->input->is_ajax_request()) {
+            $data["debug"] = $data["df"] = $this->input->post();
+            
+            $response['result'] = "true";
+            //Obtiene icono botón del comentario ***************
+            $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA])) ? $this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA] : ''; //Botones de comentarios para las secciones
+            //Fin ***************
+
+            $data["combos"]["c_desc_fisica"] = $this->cg->get_combo_catalogo("c_desc_fisica");
+            $data["combos"]["c_encuadernacion"] = $this->cg->get_combo_catalogo("c_encuadernacion");
+            $data["combos"]["c_gramaje"] = $this->cg->get_combo_catalogo("c_gramaje");
+            $data["combos"]["c_impresion"] = $this->cg->get_combo_catalogo("c_impresion");
+            $data["combos"]["c_tinta"] = $this->cg->get_combo_catalogo("c_tinta");
+            $data["combos"]["c_tipo_papel"] = $this->cg->get_combo_catalogo("c_tipo_papel");
+            $data["combos"]["c_formato"] = $this->cg->get_combo_catalogo("c_formato");
+            $data["combos"]["c_medio"] = $this->cg->get_combo_catalogo("c_medio");
+            $data["combos"]["c_tamanio"] = $this->cg->get_combo_catalogo("c_tamanio");
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_desc_fisica.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
     function sec_barcode(){
         if ($this->input->is_ajax_request()) {
             $data["debug"] = $data["barcode"] = $this->input->post();
@@ -851,6 +878,7 @@ class Solicitud extends MY_Controller {
             redirect("/");
         }
     }
+
 
     function seccion() {
         if ($this->input->is_ajax_request()) {

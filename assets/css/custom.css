@@ -2137,6 +2137,11 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 .btn:hover{
   background: #007CCB !important;
 }
+
+.btn-active {
+    background: #007CCB !important;
+}
+
 .btn-success {
   background: #26B99A;
   border: 1px solid #169F85; }
@@ -3036,7 +3041,7 @@ ul.project_files li a i {
   margin-left: -1px; }
 
 .tabs-left > li.active > a, .tabs-left > li.active > a:hover, .tabs-left > li.active > a:focus {
-  color: #ff051E;
+  color: #007CCB;
   border-bottom-color: #F7F7F7;
   border-right-color: transparent; }
 
@@ -3056,7 +3061,7 @@ ul.project_files li a i {
 }
 
 .tabs-left > li > a:hover {
-  background: #ff051E;
+  background: #007CCB;
   color: #fff;
 }
 

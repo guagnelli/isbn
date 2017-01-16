@@ -66,14 +66,17 @@ class Solicitud_model extends MY_Model {
             $this->db->where("estado",1);
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
-                $sConf = $conf_secciones[$seccion['id']]['select'];
-//                pr($sConf);
-                $this->db->select($sConf);
-                $this->db->where($seccion["referencia"], $id);
-                $result = $this->db->get($seccion["tbl_seccion"]);
-                $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
-                $result->free_result();
-//                pr($this->db->last_query());
+                if(substr($seccion["tbl_seccion"],0,1) != '_'){
+                    $sConf = $conf_secciones[$seccion['id']]['select'];
+    //                pr($sConf);
+                    $this->db->select($sConf);
+                    $this->db->where($seccion["referencia"], $id);
+                    //echo $seccion["tbl_seccion"],",";
+                    $result = $this->db->get($seccion["tbl_seccion"]);
+                    $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
+                    $result->free_result();
+    //                pr($this->db->last_query());
+                }
             }
         }
         //pr($solicitud);
@@ -346,9 +349,17 @@ class Solicitud_model extends MY_Model {
 
     function getSeccionesSolicitud() {
         $secciones = array(
-            En_secciones::TEMA, En_secciones::IDIOMA, En_secciones::COLABORADORES, En_secciones::TRADUCCION,
-            En_secciones::INFO_EDICION, En_secciones::COMERCIALIZACION, En_secciones::DESC_FISICA_ELECTRONICA,
-            En_secciones::DESC_FISICA_IMPRESA, En_secciones::PAGO_ELECTRONICO, En_secciones::CODIGO_BARRAS
+            En_secciones::TEMA, 
+            En_secciones::IDIOMA, 
+            En_secciones::COLABORADORES, 
+            En_secciones::TRADUCCION,
+            En_secciones::INFO_EDICION, 
+            En_secciones::COMERCIALIZACION, 
+            En_secciones::DESC_FISICA_ELECTRONICA,
+            En_secciones::DESC_FISICA_IMPRESA, 
+            En_secciones::PAGO_ELECTRONICO, 
+            En_secciones::CODIGO_BARRAS,
+            En_secciones::ARCHIVOS
         );
         return $secciones;
     }

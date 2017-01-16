@@ -82,8 +82,8 @@ echo js("solicitud/secciones.js");
 function load_sections(){
 
   var solicitud = $("#sol").val();
-  <?php foreach($secciones as $id=>$seccion){?>
-    //alert("/solicitud/sec_<?php echo $seccion["tbl_seccion"]?>");
+  <?php 
+  foreach($secciones as $id=>$seccion){?>
     ajax(site_url+"/solicitud/sec_<?php echo $seccion["tbl_seccion"]?>",{
           "solicitud_id":solicitud,
         },
