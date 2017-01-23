@@ -10,8 +10,7 @@ echo form_open("solicitud/sec_epay",array(
 //pr($combos);
 if(isset($epay["id"])){
 ?>
-  <input type="hidden" id="id_epay" name="id_epay" value="<?php echo $epay["id"]?>">
-  <input type="hidden" id="update" name="update" value="1">
+  <input type="hidden" id="id" name="id" value="<?php echo $epay["id"]?>">
 <?php
 }
 ?>

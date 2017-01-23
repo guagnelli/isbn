@@ -52,6 +52,8 @@
 		<?php //echo js("custom.min.js"); ?>
 		<?php echo js("general.js"); ?>
 		<?php echo js("apprise.js"); ?>
+		
+		
 
 		<script type="text/javascript">
 			var img_url_loader = "<?php echo img_url_loader(); ?>";
@@ -179,29 +181,5 @@
 	            </div>
 	        </div>
 	    </footer>
-
-		<!-- Mainly scripts -->
-		<?php //echo js("jquery.metisMenu.js"); ?>
-		<?php //echo js("jquery.slimscroll.min.js"); ?>
-		<?php //echo js("custom.js"); ?>
-		<?php //echo js("screenfull.js"); ?>
-
-		<script>
-			$(function () {
-				/*$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
-
-				if (!screenfull.enabled) {
-					return false;
-				}
-
-				$('#toggle').click(function () {
-					screenfull.toggle($('#container')[0]);
-				});
-				*/
-			});
-		</script>
-
-		<?php //echo js('jquery.nicescroll.js'); ?>
-		<?php //echo js('scripts.js'); ?>
 	</body>
 </html>

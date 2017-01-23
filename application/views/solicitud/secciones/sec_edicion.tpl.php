@@ -7,7 +7,7 @@ echo form_open("solicitud/sec_edicion",array(
     'method'=>'post'
 ));
 if(isset($debug)){
-  //pr($debug);
+  pr($debug);
 }
 
 if(isset($edicion["id"])){
@@ -28,7 +28,8 @@ if(isset($edicion["id"])){
            data-validate-words="2" 
            name="no_edicion" 
            placeholder="No. Edición" 
-           required="required" 
+           required="required"
+           value = '<?php echo isset($edicion["no_edicion"]) ? $edicion["no_edicion"]:""?>'
            type="text" />
   </div>
 </div>
@@ -71,20 +72,16 @@ if(isset($edicion["id"])){
     <b><span class="required">*</span>Fecha de aparición: </b>
   </label>
   <div class="col-md-9 col-sm-9 col-xs-12">
-    <input type="text" class="form-control has-feedback-left" id="single_cal2" placeholder="Fecha de aparición" aria-describedby="inputSuccess2Status2">
+    <input type="text" class="form-control has-feedback-left" 
+           id="fecha_aparicion"
+           name="fecha_aparicion"
+           placeholder="Fecha de aparición" 
+           aria-describedby="inputSuccess2Status2"
+           value = '<?php echo isset($edicion["fecha_aparicion"]) ? $edicion["fecha_aparicion"]:""?>'
+           >
     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
     <span id="inputSuccess2Status2" class="sr-only">(success)</span>
   </div>
-  <script>
-  /*$("#single_cal2").ready(function(){
-    $('#single_cal2').daterangepicker({
-        singleDatePicker: true,
-        calender_style: "picker_2"
-      }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-      });
-  });*/
-  </script>
 </div>
     
 <div class="item form-group">
@@ -92,7 +89,12 @@ if(isset($edicion["id"])){
     <b><span class="required">*</span>Coedición: </b>
   </label>
   <div class="col-md-9 col-sm-9 col-xs-12">
-      <input type="checkbox" class="js-switch" checked />
+      <input id="coedicion" 
+             name="coedicion" 
+             type="checkbox" 
+             class="js-switch" 
+             <?php echo $edicion["coedicion"]==1 ? "checked":""?>
+      />
   </div>
 </div>
 <div class="item form-group">
@@ -100,7 +102,13 @@ if(isset($edicion["id"])){
     <b><span class="required">*</span>Coeditor: </b>
   </label>
   <div class="col-md-9 col-sm-9 col-xs-12">
-    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="" required="required" type="text">
+    <input id="coeditor" 
+           class="form-control col-md-7 col-xs-12" 
+           name="coeditor" 
+           placeholder="Coeditor" 
+           required="required" 
+           value = '<?php echo isset($edicion["coeditor"]) ? $edicion["coeditor"]:""?>'
+           type="text">
   </div>
 </div>
 <div class="form-group">
@@ -110,7 +118,7 @@ if(isset($edicion["id"])){
             class="btn btn-form" 
             data-type="edicion"
             onclick="btn(this);" >
-      Guardar tema
+      Guardar Informaci&oacute;n de edici&oacute;n
     </button>
   </div>
 </div>

@@ -673,7 +673,7 @@ class Solicitud extends MY_Controller {
                 unset($data["traduccion"]["has_traduction"]);
                 $update = $this->req->update("traduccion", $data["traduccion"], $where);
                 if ($update) {
-                    $response['message'] = "La traducciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La traducci&oacute;n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -766,8 +766,51 @@ class Solicitud extends MY_Controller {
 
     function sec_edicion() {
         if ($this->input->is_ajax_request()) {
-            $data["debug"] = $data["edicion"] = $this->input->post();
-            
+            //$data["debug"] = 
+            $data["edicion"] = $this->input->post();
+
+            if(count($data["edicion"]) == 1 && isset($data["edicion"]["solicitud_id"])){
+                $edicion = $this->req->get_section("edicion",array(
+                        "solicitud_id"=>$data["edicion"]["solicitud_id"]
+                ));
+                if(count($edicion) > 0 ){
+                    $data["edicion"] = $edicion[0];
+                }
+                $response['result'] = "true";
+            }elseif( count($data["edicion"]) > 1 && !isset($data["edicion"]["id"]) ){
+                if(isset($data["edicion"]["coedicion"])){
+                    $data["edicion"]["coedicion"] = 1;
+                }
+                //save
+                $save = $this->req->add("edicion", $data["edicion"]);
+                if ($save) {
+                    $update = $this->req->update("solicitud", 
+                        array("has_informacion_edicion" => 1), 
+                        array("id" => $data["edicion"]["solicitud_id"])
+                    );
+                    $response['message'] = "La información de edición se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }elseif(count($data["edicion"]) > 1 && isset($data["edicion"]["id"])){
+                //edit
+                $data["edicion"]["coedicion"] = isset($data["edicion"]["coedicion"]) ? 1 :0;
+                //$data["debug"] = $data["edicion"];
+                $where = array(
+                    "solicitud_id" => $data["edicion"]["solicitud_id"],
+                    "id" => $data["edicion"]["id"]
+                );
+                $update = $this->req->update("edicion", $data["edicion"], $where);
+                if ($update) {
+                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }            
             $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION])) ? $this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION] : ''; //Botones de comentarios para las secciones
@@ -786,8 +829,47 @@ class Solicitud extends MY_Controller {
 
     function sec_epay(){
         if ($this->input->is_ajax_request()) {
-            $data["debug"] = $data["epay"] = $this->input->post();
-            
+            $data["epay"] = $this->input->post();
+
+            if(count($data["epay"]) == 1 && isset($data["epay"]["solicitud_id"])){
+                $epay = $this->req->get_section("epay",array(
+                        "solicitud_id"=>$data["epay"]["solicitud_id"]
+                ));
+                if(count($epay) > 0 ){
+                    $data["epay"] = $epay[0];
+                }
+                $response['result'] = "true";
+            }elseif( count($data["epay"]) > 1 && !isset($data["epay"]["id"]) ){
+                //save
+                //$data["debug"] = $data["epay"];
+                $save = $this->req->add("epay", $data["epay"]);
+                if ($save) {
+                    $update = $this->req->update("solicitud", 
+                        array("has_pago" => 1), 
+                        array("id" => $data["epay"]["solicitud_id"])
+                    );
+                    $response['message'] = "La información de edición se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }elseif(count($data["epay"]) > 1 && isset($data["epay"]["id"])){
+                //edit
+                //$data["debug"] = $data["epay"];
+                $where = array(
+                    "solicitud_id" => $data["epay"]["solicitud_id"],
+                    "id" => $data["epay"]["id"]
+                );
+                $update = $this->req->update("epay", $data["epay"], $where);
+                if ($update) {
+                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }            
             $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO])) ? $this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO] : ''; //Botones de comentarios para las secciones
@@ -803,9 +885,49 @@ class Solicitud extends MY_Controller {
 
     function sec_comercializable(){
         if ($this->input->is_ajax_request()) {
-            $data["debug"] = $data["comercializable"] = $this->input->post();
+            $data["comercializable"] = $this->input->post();
+            //$data["debug"] = $data["comercializable"];
+            if(count($data["comercializable"]) == 1 && isset($data["comercializable"]["solicitud_id"])){
+                $comercializable = $this->req->get_section("comercializable",array(
+                        "solicitud_id"=>$data["comercializable"]["solicitud_id"]
+                ));
+                if(count($comercializable) > 0 ){
+                    $data["comercializable"] = $comercializable[0];
+                }
+                //$data["debug"] = $data["comercializable"];
+                $response['result'] = "true";
+            }elseif( count($data["comercializable"]) > 1 && !isset($data["comercializable"]["id"]) ){
+                //save
+                
+                $save = $this->req->add("comercializable", $data["comercializable"]);
+                if ($save) {
+                    $update = $this->req->update("solicitud", 
+                        array("has_comercializable" => 1), 
+                        array("id" => $data["comercializable"]["solicitud_id"])
+                    );
+                    $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }elseif(count($data["comercializable"]) > 1 && isset($data["comercializable"]["id"])){
+                //edit
+                $where = array(
+                    "solicitud_id" => $data["comercializable"]["solicitud_id"],
+                    "id" => $data["comercializable"]["id"]
+                );
+                $update = $this->req->update("comercializable", $data["comercializable"], $where);
+                if ($update) {
+                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }
+
             
-            $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION])) ? $this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
@@ -820,8 +942,104 @@ class Solicitud extends MY_Controller {
 
     function sec__descripcion_fisica(){
         if ($this->input->is_ajax_request()) {
-            $data["debug"] = $data["df"] = $this->input->post();
+            $data["df"] = $this->input->post();
+            $fields = array("medio","formato","tamanio","id","solicitud_id");
+            $tipo = "print";
+            $tabla = array("print"=>"desc_fisica_impresa","digital"=>"desc_electronica");
+            if(isset($data["df"]["rad_df"])){
+                $tipo = $data["df"]["rad_df"];
+                unset($data["df"]["rad_df"]);
+                if($tipo == "digital"){
+                    foreach($data["df"] as $key=>$field){
+                        if(!in_array($key,$fields)){
+                            unset($data["df"][$key]);
+                        }
+                    }
+                }elseif($tipo == "print"){
+                    foreach($data["df"] as $key=>$field){
+                        if(in_array($key,$fields)){
+                            unset($data["df"][$key]);
+                        }
+                    }
+                }
+            }
+            if(count($data["df"]) == 1 && isset($data["df"]["solicitud_id"])){
+                $df = $this->req->get_section("desc_fisica_impresa",array(
+                        "solicitud_id"=>$data["df"]["solicitud_id"]
+                ));
+                if(count($df) > 0 ){
+                    $data["df"] = $df[0];
+                    $data["df"]["rad_df"]="print";
+
+                }else{
+                    $df = $this->req->get_section("desc_electronica",array(
+                        "solicitud_id"=>$data["df"]["solicitud_id"]
+                    ));
+                    if(count($df) > 0 ){
+                        $data["df"] = $df[0];
+                        $data["df"]["rad_df"]="digital";
+
+                    }
+                }
+                //$data["debug"] = $data["comercializable"];
+                $response['result'] = "true";
+            }elseif( count($data["df"]) > 1 && !isset($data["df"]["id"]) ){
+                //save
+                $save = $this->req->add($tabla[$tipo], $data["df"]);
+                if ($save) {
+                    $update = $this->req->update("solicitud", 
+                        array("has_desc_fisica" => 1), 
+                        array("id" => $data["df"]["solicitud_id"])
+                    );
+                    $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
+                    $response['result'] = "true";
+                } else {
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                }
+            }elseif(count($data["df"]) > 1 && isset($data["df"]["id"])){
+                //edit
+                $where = array(
+                    "solicitud_id" => $data["df"]["solicitud_id"],
+                    "id" => $data["df"]["id"]
+                );
+
+                $df = $this->req->get_section($tabla[$tipo],array(
+                        "solicitud_id"=>$data["df"]["solicitud_id"],
+                        "id"=>$data["df"]["id"]
+                ));
+                if(count($df) == 0 ){
+                    $this->req->delete(
+                        $tipo=="print" ? "desc_electronica" : "desc_fisica_impresa",
+                        $where
+                    );
+                    $save = $this->req->add($tabla[$tipo], $data["df"]);
+                    if ($save) {
+                        $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                }else {
+                    $update = $this->req->update($tabla[$tipo], $data["df"], $where);
+                    if ($update) {
+                        $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                }
+                
+                
+            }
             
+                
+
+            //$data["debug"] = $data["df"];
+            $data["_descripcion_fisica"] = $data["df"];
+            unset($data["df"]);
             $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA])) ? $this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA] : ''; //Botones de comentarios para las secciones
@@ -862,15 +1080,37 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    function upload(){
+        if(!$this->input->is_ajax_request()) {
+            redirect("/");
+        }
+        $allowed = array('png', 'jpg', 'gif','zip');
+            
+        if(isset($_FILES["upl"]) && $_FILES['upl']['error'] == 0){
+            $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
+            if(!in_array(strtolower($extension), $allowed)){
+                echo '{"status":"error"}';
+                exit;
+            }
+            $route = base_url()."assets/uf/uploads/".$_FILES['upl']['name'];
+            if(move_uploaded_file($_FILES['upl']['tmp_name'], $route)){
+                echo '{"status":"success"}';
+                exit;
+            }
+        }
+        echo '{"status":"error"}';
+        exit;
+    }
+
     function sec_files(){
         if ($this->input->is_ajax_request()) {
-            $data["debug"] = $data["barcode"] = $this->input->post();
+            $data["files"] = $this->input->post();
+            
             
             $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
             //Fin ***************
-
             $response['content'] = $this->load->view("solicitud/secciones/registro_documentacion.tpl.php", $data, true);
             echo json_encode($response);
             return 0;

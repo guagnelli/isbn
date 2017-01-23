@@ -1,6 +1,6 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip(); //Llamada a tooltip
-});
+});*/
 
 /**
  *	Método que muestra una imagen (gif animado) que indica que algo esta cargando

@@ -64,7 +64,7 @@ function cargar_validacion_archivo(req, ereq){
 				remove_loader();
 				$(carga).show();
 				$('#evidencia_archivo').val('');
-				$('[data-toggle="tooltip"]').tooltip();
+				/*$('[data-toggle="tooltip"]').tooltip();*/
 			});
 		} else {
 			$(error).html(html_message("El archivo seleccionado no esta permitido. Por favor elija un archivo con alguna de las siguientes extensiones: "+extension_documentacion, 'danger'));
@@ -107,7 +107,7 @@ function generar_solicitud_beca(){
 	.always(function() {
 		remove_loader();
 		$(carga).show();
-		$('[data-toggle="tooltip"]').tooltip();
+		/*$('[data-toggle="tooltip"]').tooltip();*/
 	});
 }
 

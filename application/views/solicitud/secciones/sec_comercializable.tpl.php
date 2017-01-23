@@ -1,7 +1,7 @@
 <?php
 
 echo form_open("solicitud/sec_comercializable",array(
-    'id'=>'frm_cmrc',
+    'id'=>'frm_comercializable',
     'class'=>'form-horizontal form-label-left',
     'method'=>'post'
 ));
@@ -9,9 +9,9 @@ if(isset($debug)){
   pr($debug);
 }
 
-if(isset($cmrc["id"])){
+if(isset($comercializable["id"])){
 ?>
-	<input type="hidden" name="id" value="<?php echo $cmrc["id"];?>">
+	<input type="hidden" name="id" value="<?php echo $comercializable["id"];?>">
 <?php
 }
 
@@ -35,7 +35,8 @@ if(isset($cmrc["id"])){
 	           class="form-control col-md-8 col-xs-12" 
 	           name="ejemplares_nacional" 
 	           placeholder="Ejemplares nacionales" 
-	           required="required" 
+	           required="required"
+	           value = '<?php echo isset($comercializable["ejemplares_nacional"]) ? $comercializable["ejemplares_nacional"]:""?>'
 	           type="number" />
 	  </div>
 	</div>
@@ -48,7 +49,8 @@ if(isset($cmrc["id"])){
 	           class="form-control col-md-8 col-xs-12" 
 	           name="precio_local" 
 	           placeholder="Precio local" 
-	           required="required" 
+	           required="required"
+	           value = '<?php echo isset($comercializable["precio_local"]) ? $comercializable["precio_local"]:""?>'
 	           type="number" />
 	  </div>
 	</div>
@@ -61,7 +63,8 @@ if(isset($cmrc["id"])){
 	           class="form-control col-md-8 col-xs-12" 
 	           name="ejemplares_externa" 
 	           placeholder="Ejemplares externos" 
-	           required="required" 
+	           required="required"
+	           value = '<?php echo isset($comercializable["ejemplares_externa"]) ? $comercializable["ejemplares_externa"]:""?>'
 	           type="number" />
 	  </div>
 	</div>
@@ -74,7 +77,8 @@ if(isset($cmrc["id"])){
 	           class="form-control col-md-8 col-xs-12" 
 	           name="precio_externo" 
 	           placeholder="Precio a externos" 
-	           required="required" 
+	           required="required"
+	           value = '<?php echo isset($comercializable["precio_externo"]) ? $comercializable["precio_externo"]:""?>'
 	           type="number" />
 	  </div>
 	</div>
@@ -87,7 +91,8 @@ if(isset($cmrc["id"])){
 	           class="form-control col-md-8 col-xs-12" 
 	           name="oferta_total" 
 	           placeholder="Oferta total" 
-	           required="required" 
+	           required="required"
+	           value = '<?php echo isset($comercializable["oferta_total"]) ? $comercializable["oferta_total"]:""?>'
 	           type="number" />
 	  </div>
 	</div>
@@ -96,7 +101,7 @@ if(isset($cmrc["id"])){
     	<button id="send_comercializable" 
             type="button" 
             class="btn btn-form" 
-            data-type="edicion"
+            data-type="comercializable"
             onclick="btn(this);" >
     	Guardar datos de comercialización
     </button>

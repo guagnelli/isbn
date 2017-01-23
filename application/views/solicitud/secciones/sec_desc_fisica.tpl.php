@@ -1,6 +1,6 @@
 <?php
 if(isset($debug)){
-  //pr($debug);
+  pr($debug);
 }
 echo form_open("solicitud/sec__descripcion_fisica",array(
     'id'=>'frm__descripcion_fisica',
@@ -10,8 +10,7 @@ echo form_open("solicitud/sec__descripcion_fisica",array(
 //pr($combos);
 if(isset($_descripcion_fisica["id"])){
 ?>
-  <input type="hidden" id="id__descripcion_fisica" name="id_colab" value="<?php echo $_descripcion_fisica["id"]?>">
-  <input type="hidden" id="update" name="update" value="1">
+  <input type="hidden" id="id" name="id" value="<?php echo $_descripcion_fisica["id"]?>">
 <?php
 }
 ?>
@@ -31,11 +30,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_desc_fisica',
+         'id' => 'desc_fisica',
          'type' => 'dropdown',
          'options' => $combos["c_desc_fisica"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_desc_fisica"]) ? $_descripcion_fisica["c_desc_fisica"]:"",
+         'value' => isset($_descripcion_fisica["desc_fisica"]) ? $_descripcion_fisica["desc_fisica"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -49,11 +48,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_encuadernacion',
+         'id' => 'encuadernacion',
          'type' => 'dropdown',
          'options' => $combos["c_encuadernacion"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_encuadernacion"]) ? $_descripcion_fisica["c_encuadernacion"]:"",
+         'value' => isset($_descripcion_fisica["encuadernacion"]) ? $_descripcion_fisica["encuadernacion"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -67,11 +66,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_gramaje',
+         'id' => 'gramaje',
          'type' => 'dropdown',
          'options' => $combos["c_gramaje"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_gramaje"]) ? $_descripcion_fisica["c_gramaje"]:"",
+         'value' => isset($_descripcion_fisica["gramaje"]) ? $_descripcion_fisica["gramaje"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -85,11 +84,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_impresion',
+         'id' => 'impresion',
          'type' => 'dropdown',
          'options' => $combos["c_impresion"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_impresion"]) ? $_descripcion_fisica["c_impresion"]:"",
+         'value' => isset($_descripcion_fisica["impresion"]) ? $_descripcion_fisica["impresion"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -103,11 +102,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_tinta',
+         'id' => 'tinta',
          'type' => 'dropdown',
          'options' => $combos["c_tinta"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_tinta"]) ? $_descripcion_fisica["c_tinta"]:"",
+         'value' => isset($_descripcion_fisica["tinta"]) ? $_descripcion_fisica["tinta"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -121,11 +120,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_tipo_papel',
+         'id' => 'tipo_papel',
          'type' => 'dropdown',
          'options' => $combos["c_tipo_papel"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_tipo_papel"]) ? $_descripcion_fisica["c_tipo_papel"]:"",
+         'value' => isset($_descripcion_fisica["tipo_papel"]) ? $_descripcion_fisica["tipo_papel"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -141,11 +140,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_formato',
+         'id' => 'formato',
          'type' => 'dropdown',
          'options' => $combos["c_formato"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_formato"]) ? $_descripcion_fisica["c_formato"]:"",
+         'value' => isset($_descripcion_fisica["formato"]) ? $_descripcion_fisica["formato"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -159,11 +158,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_medio',
+         'id' => 'medio',
          'type' => 'dropdown',
          'options' => $combos["c_medio"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_medio"]) ? $_descripcion_fisica["c_medio"]:"",
+         'value' => isset($_descripcion_fisica["medio"]) ? $_descripcion_fisica["medio"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -177,11 +176,11 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
-         'id' => 'c_tamanio',
+         'id' => 'tamanio',
          'type' => 'dropdown',
          'options' => $combos["c_tamanio"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["c_tamanio"]) ? $_descripcion_fisica["c_tamanio"]:"",
+         'value' => isset($_descripcion_fisica["tamanio"]) ? $_descripcion_fisica["tamanio"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -196,9 +195,19 @@ if(isset($_descripcion_fisica["id"])){
             class="btn btn-form" 
             data-type="_descripcion_fisica"
             onclick="btn(this)" >
-      Registrar descripci&oacute;n f&iacute;sica
+      Registrar descripci&oacute;n
     </button>
   </div>
 </div>
 <?php echo form_close(); ?>
 <script src='<?php echo asset_url()?>js/solicitud/descripcion_fisica.js'></script>
+<script type="text/javascript">
+  $(document).ready(function (){
+    <?php if(isset($_descripcion_fisica["rad_df"])){
+    ?>
+    $("#<?php echo $_descripcion_fisica['rad_df']; ?>").prop( "checked", true );
+    show_div("<?php echo $_descripcion_fisica['rad_df']; ?>");
+    <?php
+    }?>
+  });
+</script>

@@ -8,5 +8,13 @@ $(document).ready(function (){
 			$("#div_digital").show();
 		}		
 	});
-
 });
+function show_div(tipo){
+	if(tipo == "print"){
+		$("#div_digital").hide();
+		$("#div_print").show();
+	}else if(tipo == "digital"){
+		$("#div_print").hide();
+		$("#div_digital").show();
+	}	
+}
