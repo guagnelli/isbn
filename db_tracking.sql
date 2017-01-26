@@ -157,3 +157,15 @@ alter table encuestas.sse_preguntas add
   REFERENCES  encuestas.sse_indicador(indicador_cve);
 
 
+---25/01/17
+create table files(
+	id integer not null auto_increment,
+	nombre varchar(255) not null,
+	nombre_fisico varchar(255) not null,
+	solicitud_id integer not null,
+	constraint pk_files
+	primary key(id),
+	constraint fk_file_solicitud
+	foreign key(solicitud_id)
+	references solicitud(id) 
+);

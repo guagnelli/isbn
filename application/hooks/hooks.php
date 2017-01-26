@@ -65,7 +65,7 @@ class Log_user{
             //echo "bandeta_no_Aceeso:"; pr($bandera_no_acceso);
             //exit();
             if($bandera_encontrado===FALSE || $bandera_no_acceso===TRUE){
-                redirect('dashboard');
+                redirect('solicitud');
                 exit();
             }
         }

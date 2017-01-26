@@ -1,38 +1,57 @@
 <?php 
-//css
-echo css("../uf/css/style.css");
+if(isset($debug)){
+  pr($debug);
+}
 
 ?>
 <p class="lead">Registro de documentaci&oacute;n <?php echo $comentarios; ?></p>
 <?php
-echo form_open("solicitud/upload",array(
+echo form_open("solicitud/file/",array(
     'id'=>'upload',
     'method'=>'post',
     "enctype"=>"multipart/form-data"
 ));
-?>	
-	<div id="drop">
-		Arrastra aquí
-		<a>Buscar</a>
-		<input type="file" name="upl" multiple />
-	</div>
+?>
 
-	<ul>
-		<!-- The file uploads will be shown here -->
-	</ul>
+<div class="form-group">
+  <label class="control-label col-md-4 col-sm-4 col-xs-12">
+    <b><span class="required">*</span>Nombre del archivo:</b>
+  </label>
+  <div class="col-md-8 col-sm-8 col-xs-12">
+    <?php
+    echo $this->form_complete->create_element(array(
+     'id' => 'nombre',
+     'type' => 'text',
+     'value' => isset($files["nombre"]) ? $files["nombre"]:"",
+     'class' => 'form-control col-md-8 col-xs-12',
+     'attributes' => array('placeholder' => 'Nombre del archivo')
+     ));
+     ?>
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label col-md-4 col-sm-4 col-xs-12">
+    <b><span class="required">*</span>Archivo:</b>
+  </label>
+  <div class="col-md-8 col-sm-8 col-xs-12">
+    <input type="file" name="file" class="form-control col-md-8 col-xs-12" 
+    	placehorlder="Archivo" />
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-md-12 text-center">
+    <button id="send_file" 
+            type="button" 
+            class="btn btn-form" 
+            data-type="add"
+            onclick="btn_file(this)" >
+      Subir archivo
+  </div>
+</div>
+<div id="div_flist">
+</div>
+	
 <?php 
 echo form_close(); 
-//<!-- JavaScript Includes -->
-//echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>';
-?>
-<?php 
-		echo js("../uf/js/jquery.knob.js");
-		//<!-- jQuery File Upload Dependencies -->
-		echo js("../uf/js/jquery.ui.widget.js");
-		echo js("../uf/js/jquery.iframe-transport.js");
-		echo js("../uf/js/jquery.fileupload.js");
-		?>
-<?php
-//<!-- Our main JS file -->
-echo js("../uf/js/script.js");
+echo js("solicitud/uf.js");
 ?>

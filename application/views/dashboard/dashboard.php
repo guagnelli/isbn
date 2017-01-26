@@ -207,7 +207,8 @@ $(function () {
 });
 </script>
 <div id="container_estado" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<?php echo $div_entidad; 
-echo $div_subsistema;
-echo $div_subcategoria;
+<?php 
+echo isset($div_entidad) ? $div_entidad : ""; 
+echo isset($div_subsistema) ? $div_subsistema : "";
+echo isset($div_subcategoria) ? $div_subcategoria : "";
 ?>

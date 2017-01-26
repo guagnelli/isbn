@@ -1080,10 +1080,39 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function upload(){
+    function file(){
         if(!$this->input->is_ajax_request()) {
             redirect("/");
         }
+        $post = $this->input->post();
+        //pr($post);
+        if(isset($post["option"]) && isset($post["solicitud_id"])){
+            switch($post["option"]){
+                case "add": 
+                    $response['message'] = "add";
+                    $response['result'] = "true";
+                    //subir archivo
+                    //guardar en BD
+                    break;
+                case "remove": 
+                    $response['message'] = "remove";
+                    $response['result'] = "true";
+                break;
+                default: 
+                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $response['result'] = "false";
+                    break;
+            } 
+            $data["file_list"] = $this->req->get_section("files",array("solicitud_id"=>$post["solicitud_id"]));
+            $response['content'] = $this->load->view("solicitud/secciones/file_list.tpl.php", $data, true);
+        }else{
+            $response['message'] = "Se ha producido un error, favor de verificarlo";
+            $response['result'] = "false";
+        }
+        echo json_encode($response);
+        return 0;
+        
+/*
         $allowed = array('png', 'jpg', 'gif','zip');
             
         if(isset($_FILES["upl"]) && $_FILES['upl']['error'] == 0){
@@ -1092,21 +1121,29 @@ class Solicitud extends MY_Controller {
                 echo '{"status":"error"}';
                 exit;
             }
-            $route = base_url()."assets/uf/uploads/".$_FILES['upl']['name'];
+            $route = "/Applications/mappstack/apache2/htdocs/isbn/assets/uf/uploads/".$_FILES['upl']['name'];
+            $test = array("status"=>"success");
+            if(isset($_POST["jesus"])){
+                $test["prueba"] = $_POST["jesus"];
+            }
             if(move_uploaded_file($_FILES['upl']['tmp_name'], $route)){
-                echo '{"status":"success"}';
+                echo json_encode($test);
                 exit;
             }
         }
         echo '{"status":"error"}';
-        exit;
+        exit;*/
     }
 
     function sec_files(){
         if ($this->input->is_ajax_request()) {
             $data["files"] = $this->input->post();
-            
-            
+            $data["file_list"] = $this->req->get_section(
+                "files",
+                array(
+                    "solicitud_id"=>$data["files"]["solicitud_id"]
+                )
+            );
             $response['result'] = "true";
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
