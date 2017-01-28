@@ -355,6 +355,7 @@ class Solicitud_model extends MY_Model {
             En_secciones::TRADUCCION,
             En_secciones::INFO_EDICION, 
             En_secciones::COMERCIALIZACION, 
+            En_secciones::DESC_FISICA, 
             En_secciones::DESC_FISICA_ELECTRONICA,
             En_secciones::DESC_FISICA_IMPRESA, 
             En_secciones::PAGO_ELECTRONICO, 

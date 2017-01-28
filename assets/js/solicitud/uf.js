@@ -48,7 +48,6 @@ function btn_file(obj){
 		var id = $(obj).data("file");
 		var input = $('<input name="id" type="hidden" value="'+id+'">');
 		$(id).append(input);
-		alert(solicitud)
 	}
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();

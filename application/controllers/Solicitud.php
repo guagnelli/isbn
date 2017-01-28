@@ -341,6 +341,8 @@ class Solicitud extends MY_Controller {
     }
 
     function secciones($solicitud) {
+        //echo $solicitud;
+        $data = array();
         try {
             $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud,FALSE);
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");

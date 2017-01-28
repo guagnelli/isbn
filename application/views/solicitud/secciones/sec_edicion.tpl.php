@@ -93,7 +93,7 @@ if(isset($edicion["id"])){
              name="coedicion" 
              type="checkbox" 
              class="js-switch" 
-             <?php echo $edicion["coedicion"]==1 ? "checked":""?>
+             <?php echo (isset($edicion["coedicion"]) && $edicion["coedicion"])==1 ? "checked":""?>
       />
   </div>
 </div>
