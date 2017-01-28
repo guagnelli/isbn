@@ -27,7 +27,11 @@ if(!isset($descarga)){ ?>
                 <th style="background-color:#e74c3c; color:#ffffff;"><?php echo $string_values['title_name_subcategoria'] ?></th>
                 <th style="background-color:#e74c3c; color:#ffffff;"><?php echo $string_values['title_estado'] ?></th>
                 <th style="background-color:#e74c3c; color:#ffffff;"><?php echo $string_values['title_fecha_validacion'] ?></th>
-                <?php if(!isset($descarga)){ ?><th style="background-color:#e74c3c; color:#ffffff;"><?php echo $string_values['title_ver_detalle'] ?></th><?php } ?>
+                <?php if(!isset($descarga)){ ?>
+                    <th style="background-color:#e74c3c; color:#ffffff;">
+                    <?php echo isset($string_values['title_ver_detalle']) ? $string_values['title_ver_detalle'] : "" ?>                      
+                    </th>
+                <?php } ?>
             </tr>
         </thead >
         <tbody>
