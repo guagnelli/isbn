@@ -44,6 +44,12 @@ function btn_file(obj){
 	$(id).append(input);	
 	var input = $('<input name="option" type="hidden" value="'+type+'">');
 	$(id).append(input);
+	if(type == "remove"){
+		var id = $(obj).data("file");
+		var input = $('<input name="id" type="hidden" value="'+id+'">');
+		$(id).append(input);
+		alert(solicitud)
+	}
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();
 	//alert(form_data);

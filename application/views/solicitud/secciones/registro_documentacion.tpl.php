@@ -38,6 +38,8 @@ echo form_open("solicitud/file/",array(
     	placehorlder="Archivo" />
   </div>
 </div>
+<br />
+<br />
 <div class="form-group">
   <div class="col-md-12 text-center">
     <button id="send_file" 
@@ -46,6 +48,7 @@ echo form_open("solicitud/file/",array(
             data-type="add"
             onclick="btn_file(this)" >
       Subir archivo
+      </button>
   </div>
 </div>
 <div id="div_flist">

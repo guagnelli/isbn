@@ -550,7 +550,7 @@ CREATE TABLE `colaboradores` (
   PRIMARY KEY (`id_colab`),
   KEY `fk_colab_sol` (`solicitud_id`),
   CONSTRAINT `fk_colab_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -559,7 +559,7 @@ CREATE TABLE `colaboradores` (
 
 LOCK TABLES `colaboradores` WRITE;
 /*!40000 ALTER TABLE `colaboradores` DISABLE KEYS */;
-INSERT INTO `colaboradores` VALUES (1,'Miguel González Guagnelli','A',3),(2,'Jesús','C',3),(3,'Eduardo','C',3),(4,'Guillermo Chavez','A',13),(5,'Miguel Guanelli','C',13);
+INSERT INTO `colaboradores` VALUES (1,'Miguel González Guagnelli','A',3),(2,'Jesús','C',3),(3,'Eduardo','C',3),(4,'Guillermo Chavez','A',13),(5,'Miguel Guanelli','C',13),(6,'miguel guagnellli','C',9);
 /*!40000 ALTER TABLE `colaboradores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,7 +581,7 @@ CREATE TABLE `comercializable` (
   PRIMARY KEY (`id`),
   KEY `fk_comersializable_sol` (`solicitud_id`),
   CONSTRAINT `fk_comersializable_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,6 +590,7 @@ CREATE TABLE `comercializable` (
 
 LOCK TABLES `comercializable` WRITE;
 /*!40000 ALTER TABLE `comercializable` DISABLE KEYS */;
+INSERT INTO `comercializable` VALUES (1,1000,100.00,100,10.00,1100,9);
 /*!40000 ALTER TABLE `comercializable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,7 +616,7 @@ CREATE TABLE `desc_electronica` (
   CONSTRAINT `fk_de_medio` FOREIGN KEY (`medio`) REFERENCES `c_medio` (`id`),
   CONSTRAINT `fk_de_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`),
   CONSTRAINT `fk_de_tamanio` FOREIGN KEY (`tamanio`) REFERENCES `c_tamanio` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -624,6 +625,7 @@ CREATE TABLE `desc_electronica` (
 
 LOCK TABLES `desc_electronica` WRITE;
 /*!40000 ALTER TABLE `desc_electronica` DISABLE KEYS */;
+INSERT INTO `desc_electronica` VALUES (2,9,2,3,2);
 /*!40000 ALTER TABLE `desc_electronica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -661,7 +663,7 @@ CREATE TABLE `desc_fisica_impresa` (
   CONSTRAINT `fk_dfi_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`),
   CONSTRAINT `fk_dfi_tint` FOREIGN KEY (`tinta`) REFERENCES `c_tinta` (`id`),
   CONSTRAINT `fk_dfi_tp` FOREIGN KEY (`tipo_papel`) REFERENCES `c_tipo_papel` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -696,7 +698,7 @@ CREATE TABLE `edicion` (
   CONSTRAINT `fk_edicion_city` FOREIGN KEY (`ciudad_id`) REFERENCES `c_ciudad` (`id`),
   CONSTRAINT `fk_edicion_depto` FOREIGN KEY (`depto_id`) REFERENCES `c_departamento` (`id`),
   CONSTRAINT `fk_edicion_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -705,6 +707,7 @@ CREATE TABLE `edicion` (
 
 LOCK TABLES `edicion` WRITE;
 /*!40000 ALTER TABLE `edicion` DISABLE KEYS */;
+INSERT INTO `edicion` VALUES (1,9,123,7,'2017-10-03',6,0,'editor');
 /*!40000 ALTER TABLE `edicion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -725,7 +728,7 @@ CREATE TABLE `epay` (
   PRIMARY KEY (`id`),
   KEY `fk_ep_sol` (`solicitud_id`),
   CONSTRAINT `fk_ep_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -734,7 +737,36 @@ CREATE TABLE `epay` (
 
 LOCK TABLES `epay` WRITE;
 /*!40000 ALTER TABLE `epay` DISABLE KEYS */;
+INSERT INTO `epay` VALUES (1,9,'soy una clave','soy una cadena dependencia','soy una cadena de referencia','0123456789'),(2,9,'soy una clave','soy una cadena dependencia','soy una cadena de referencia','312342134231423'),(3,9,'soy una clave','soy una cadena dependencia','soy una cadena de referencia','312342134231423');
 /*!40000 ALTER TABLE `epay` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `files`
+--
+
+DROP TABLE IF EXISTS `files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) NOT NULL,
+  `nombre_fisico` varchar(255) NOT NULL,
+  `solicitud_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_file_solicitud` (`solicitud_id`),
+  CONSTRAINT `fk_file_solicitud` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `files`
+--
+
+LOCK TABLES `files` WRITE;
+/*!40000 ALTER TABLE `files` DISABLE KEYS */;
+INSERT INTO `files` VALUES (1,'Prueba','9/solicitud_1.pdf',9);
+/*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -946,7 +978,7 @@ CREATE TABLE `sol_idioma` (
   KEY `fk_sol_idioma_idioma` (`idioma`),
   CONSTRAINT `fk_sol_idioma_idioma` FOREIGN KEY (`idioma`) REFERENCES `c_idioma` (`id`),
   CONSTRAINT `fk_sol_idioma_solicitud` FOREIGN KEY (`solicitud`) REFERENCES `solicitud` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -955,7 +987,7 @@ CREATE TABLE `sol_idioma` (
 
 LOCK TABLES `sol_idioma` WRITE;
 /*!40000 ALTER TABLE `sol_idioma` DISABLE KEYS */;
-INSERT INTO `sol_idioma` VALUES (61,1,3),(62,2,3),(63,1,13),(64,3,13);
+INSERT INTO `sol_idioma` VALUES (61,1,3),(62,2,3),(66,3,9),(67,4,9),(63,1,13),(64,3,13);
 /*!40000 ALTER TABLE `sol_idioma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1002,7 +1034,7 @@ CREATE TABLE `solicitud` (
 
 LOCK TABLES `solicitud` WRITE;
 /*!40000 ALTER TABLE `solicitud` DISABLE KEYS */;
-INSERT INTO `solicitud` VALUES (1,'2016-10-01 00:00:00','folio-00001',1,1,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(2,'2016-10-01 00:00:00','folio-00007',2,7,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(3,'2016-10-01 00:00:00','folio-00006',3,5,0,0,1,0,1,1,0,0,0,0,0,1,'I'),(4,'2016-10-01 00:00:00','folio-00005',3,6,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(5,'2016-10-01 00:00:00','folio-00004',2,4,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(6,'2016-10-01 00:00:00','folio-00003',1,3,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(7,'2016-10-01 00:00:00','folio-00002',1,2,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(9,'2016-10-31 03:12:12','folio-0000000013',1,13,0,0,0,0,0,0,0,0,0,0,0,1,'I'),(10,'2016-11-01 18:21:37','folio-0000000014',3,14,0,0,0,0,0,0,0,0,0,0,0,1,'V'),(11,'2016-11-01 18:29:12','folio-0000000015',3,15,0,0,0,0,0,0,0,0,0,0,0,1,'C'),(12,'2016-11-05 16:10:12','folio-0000000016',3,16,0,0,0,0,0,0,0,0,0,0,0,1,'I'),(13,'2016-11-08 20:34:24','folio-0000000017',3,17,0,0,1,0,1,1,0,0,0,0,0,1,'V');
+INSERT INTO `solicitud` VALUES (1,'2016-10-01 00:00:00','folio-00001',1,1,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(2,'2016-10-01 00:00:00','folio-00007',2,7,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(3,'2016-10-01 00:00:00','folio-00006',3,5,0,0,1,0,1,1,0,0,0,0,0,1,'I'),(4,'2016-10-01 00:00:00','folio-00005',3,6,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(5,'2016-10-01 00:00:00','folio-00004',2,4,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(6,'2016-10-01 00:00:00','folio-00003',1,3,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(7,'2016-10-01 00:00:00','folio-00002',1,2,0,0,0,0,0,0,0,0,0,0,0,1,NULL),(9,'2016-10-31 03:12:12','folio-0000000013',1,13,0,0,1,0,1,1,1,1,1,1,0,1,'I'),(10,'2016-11-01 18:21:37','folio-0000000014',3,14,0,0,0,0,0,0,0,0,0,0,0,1,'V'),(11,'2016-11-01 18:29:12','folio-0000000015',3,15,0,0,0,0,0,0,0,0,0,0,0,1,'C'),(12,'2016-11-05 16:10:12','folio-0000000016',3,16,0,0,0,0,0,0,0,0,0,0,0,1,'I'),(13,'2016-11-08 20:34:24','folio-0000000017',3,17,0,0,1,0,1,1,0,0,0,0,0,1,'V');
 /*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1025,7 +1057,7 @@ CREATE TABLE `tema` (
   KEY `fk_tema_sol` (`solicitud_id`),
   CONSTRAINT `fk_tema_sol` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`),
   CONSTRAINT `fk_tema_tc` FOREIGN KEY (`tipo_contenido`) REFERENCES `c_tipo_contenido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1034,7 +1066,7 @@ CREATE TABLE `tema` (
 
 LOCK TABLES `tema` WRITE;
 /*!40000 ALTER TABLE `tema` DISABLE KEYS */;
-INSERT INTO `tema` VALUES (9,'Colection','numero','serie',3,2),(10,'Grandes libros','123','Serie bien escrita',13,1);
+INSERT INTO `tema` VALUES (9,'Colection','numero','serie',3,2),(10,'Grandes libros','123','Serie bien escrita',13,1),(11,'123','123','134123',9,6);
 /*!40000 ALTER TABLE `tema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1061,7 +1093,7 @@ CREATE TABLE `traduccion` (
   CONSTRAINT `fk_translate_idiomaal` FOREIGN KEY (`idioma_al`) REFERENCES `c_idioma` (`id`),
   CONSTRAINT `fk_translate_idiomadel` FOREIGN KEY (`idioma_del`) REFERENCES `c_idioma` (`id`),
   CONSTRAINT `fk_translate_idiomaoriginal` FOREIGN KEY (`idioma_original`) REFERENCES `c_idioma` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1070,7 +1102,7 @@ CREATE TABLE `traduccion` (
 
 LOCK TABLES `traduccion` WRITE;
 /*!40000 ALTER TABLE `traduccion` DISABLE KEYS */;
-INSERT INTO `traduccion` VALUES (4,'Traducción al hebreo',1,3,2,3),(6,'asd',1,1,2,13);
+INSERT INTO `traduccion` VALUES (4,'Traducción al hebreo',1,3,2,3),(6,'asd',1,1,2,13),(7,'Titulo 23',22,9,5,9);
 /*!40000 ALTER TABLE `traduccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1084,7 +1116,7 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `usuario_cve` int(11) NOT NULL AUTO_INCREMENT,
   `usu_nick` varchar(20) NOT NULL,
-  `usu_nombre` varchar(20) NOT NULL,
+  `usu_nombre` varchar(155) NOT NULL,
   `usu_paterno` varchar(20) NOT NULL,
   `usu_materno` varchar(20) NOT NULL,
   `usu_correo` varchar(40) NOT NULL,
@@ -1103,13 +1135,9 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'unam','UNAM','CU','CU','unam@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,1,'2016-07-19 03:40:24',NULL),(2,'miguel','Miguel','G','G','miguel@hotmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,2,'2016-07-19 03:42:59',NULL),(3,'admin','Jes','D','P','jesusz.unam@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,3,'2016-07-19 03:42:59',NULL),(4,'leas','UNAM','ARAGON','ARAGON','cenitluis.pumas@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,4,'2016-10-31 23:54:47',3);
+INSERT INTO `usuario` VALUES (1,'superadmin','Superadmin','','','unam@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,1,'2016-07-19 03:40:24',NULL),(2,'admin','','','','miguel@hotmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,2,'2016-07-19 03:42:59',NULL),(3,'dgaj','Dirección General de Asuntos Jurídicos','','','jesusz.unam@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,3,'2016-07-19 03:42:59',NULL),(4,'filologicas','Instituto de Investigaciones Filológicas','','','cenitluis.pumas@gmail.com','affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686',1,4,'2016-10-31 23:54:47',144);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'isbn'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1120,4 +1148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-16  3:55:07
+-- Dump completed on 2017-01-27 21:04:46
