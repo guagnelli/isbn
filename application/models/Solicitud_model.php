@@ -232,6 +232,7 @@ class Solicitud_model extends MY_Model {
 //                'add_comment_seccion' => 0,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
                 'vista_detalle_solicitud' => 0,
+                'hidden_add_comment' => 0,//Muestra boton de mensajes de comentarios por secciíon
             ),
 //            Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
 //                'rol_permite' => array(E_rol::ENTIDAD),
@@ -259,6 +260,7 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
 //                'vista' => 'editar_registro',
                 'vista' => array(E_rol::ENTIDAD => 'editar_registro', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 0,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -273,6 +275,7 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::Revision_de_correccion => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -287,6 +290,7 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -300,6 +304,7 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
                 'vista_detalle_solicitud' => 0,
                 'vista' => array(E_rol::ENTIDAD => 'editar_registro', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
@@ -314,6 +319,7 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
@@ -328,6 +334,7 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
             Enum_es::Radicado => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -342,6 +349,7 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
         );
         return $reglas_estado;
