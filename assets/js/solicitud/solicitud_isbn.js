@@ -85,6 +85,17 @@ function ver_detalle_solicitud(element) {
     data_ajax_post(site_url + '/solicitud/detalle', null, '#modal_content', formData);
 }
 
+function ver_historial_solicitud(element) {
+    var obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+//    var hist_val_cve = obj.data('histvalcve');
+    var row = obj.data('row');
+    //var hist_solicitudcve = obj.data('histsolicitudcve');
+    //var estado_solicitud = obj.data('estadosolicitudcve');
+    var solicitud_cve = obj.data('solicitudcve');
+    var formData = {solicitud_cve: solicitud_cve};
+    data_ajax_post(site_url + '/solicitud/historial', null, '#modal_content', formData);
+}
+
 function ver_comentarios_seccion(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
 //    var button_obj = $(this); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)

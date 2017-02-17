@@ -83,6 +83,28 @@ class Solicitud_model extends MY_Model {
         return $solicitud;
     }
 
+    function getHistorial($id = null) {
+        if (is_null($id)) {
+            throw new Exception("Identificador no definido", 1);
+        }
+
+        $this->db->join('hist_revision_isbn as h', 'h.solicitud_cve=solicitud.id');
+        $this->db->join('c_estado as e', 'e.id=h.c_estado_id');
+        //solicitud
+        $this->db->where("solicitud.id", $id);
+        $this->db->order_by("h.reg_revision", "asc");        
+        $result = $this->db->get("solicitud");
+
+        //pr($this->db->last_query());
+        if ($result->num_rows() < 1) {
+            throw new Exception("El identificador no se encuentra registrado", 1);
+        }
+        $solicitud = $result->result_array();
+        $result->free_result();
+        //pr($solicitud);
+        return $solicitud;
+    }
+
     function getEntidad($id = null) {
         if (is_null($id)) {
             throw new Exception("Identificador no definido", 1);

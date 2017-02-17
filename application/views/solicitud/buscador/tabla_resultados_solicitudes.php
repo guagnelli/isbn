@@ -96,6 +96,17 @@ echo js("solicitud/secciones.js");
                         . '<span class="glyphicon glyphicon-edit btn-msg"></span> '
                         . '</a>';
 
+                $link_ver_historial = '<a href="#" '
+                        . 'data-solicitudcve ="' . $solicitud_cve . '" '
+                        . 'data-toggle="modal" '
+                        . 'data-target="#modal_censo" '
+                        . 'data-original-title="' . $string_values['link_ver_detalle_solicitud']
+                        . ' title="' . $string_values['link_ver_detalle_solicitud']
+                        . ' onclick="ver_historial_solicitud(this)"> '
+                        . '<span class="glyphicon glyphicon-dashboard btn-msg" '
+                        . '"> '
+                        . '</span></a>';
+
 //               $link_editar = '<a class="" '
 //                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
 //                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
@@ -130,7 +141,7 @@ echo js("solicitud/secciones.js");
                 }
                 echo "<td>" . $val['sub_categoria'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td >" . $link_ver_detalle . $href_solicitud . "</td>";
+                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . "</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "</tr>";
             }

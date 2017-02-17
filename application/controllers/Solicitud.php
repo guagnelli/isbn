@@ -416,6 +416,27 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    function historial() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $this->load->helper('date');
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                $solicitud_cve = intval($this->seguridad->decrypt_base64($datos_post['solicitud_cve']));
+
+                $solicitud_datos['data'] = $this->req->getHistorial($solicitud_cve);
+                $data_detalle = $this->load->view('solicitud/historial', $solicitud_datos, true);
+                $data = array(
+                    'titulo_modal' => null,
+                    'cuerpo_modal' => $data_detalle,
+                    'pie_modal' => null
+                );
+                echo $this->ventana_modal->carga_modal($data);
+            }
+        } else {
+            redirect(site_url());
+        }
+    }
+
     public function enviar_cambio_estado_solicitud() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
