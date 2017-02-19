@@ -57,7 +57,7 @@ function btn(obj){
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();
     //alert(form_data);
-	alert(action);
-	//ajax(action,form_data,'#tab_'+type,'#msg_general');
+	//alert(action);
+	ajax(action,form_data,'#tab_'+type,'#msg_general');
 	//});
 }

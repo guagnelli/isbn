@@ -19,7 +19,7 @@ if(isset($colab["id_colab"])){
     <p class="lead">Colaboradores <?php echo $comentarios; ?></p>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Nombre:</b>
+        <b><span class="required">*</span>Apellido, Nombre:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <input type="text" 
@@ -32,16 +32,34 @@ if(isset($colab["id_colab"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Tipo:</b>
+        <b><span class="required">*</span>Rol:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'tipo',
          'type' => 'dropdown',
-         'options' => array("A"=>"Autor","C"=>"Colaborador"),
+         'options' => $combos["c_tipo"],
          'first' => array('' => "Seleccione una opción"),
          'value' => isset($colab["tipo"]) ? $colab["tipo"]:"",
+         'class' => '',
+         'attributes' => array('class' => '')
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <b><span class="required">*</span>Nacionalidad:</b>
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'nacionalidad',
+         'type' => 'dropdown',
+         'options' => $combos["c_nacionalidad"],
+         'first' => array('' => "Seleccione una opción"),
+         'value' => isset($colab["nacionalidad"]) ? $colab["nacionalidad"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));

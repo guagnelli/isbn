@@ -705,7 +705,7 @@ class Solicitud extends MY_Controller {
                 unset($data["traduccion"]["has_traduction"]);
                 $update = $this->req->update("traduccion", $data["traduccion"], $where);
                 if ($update) {
-                    $response['message'] = "La traducci&oacute;n se ha guardado exitosamente";
+                    $response['message'] = "La traducción se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -794,6 +794,12 @@ class Solicitud extends MY_Controller {
             }
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COLABORADORES])) ? $this->session->userdata('botones_seccion')[En_secciones::COLABORADORES] : ''; //Botones de comentarios para las secciones
+            $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_idioma");
+            $data["combos"]["c_tipo"] = array("A"=>"Autor",
+                                              "C"=>"Colaborador",
+                                              "Ad"=>"Adaptador",
+                                              ""=>"Sin selección");
+
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_colaboradores.tpl.php", $data, true);
             echo json_encode($response);
@@ -841,7 +847,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("edicion", $data["edicion"], $where);
                 if ($update) {
-                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['message'] = "La Información de edición se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";

@@ -75,7 +75,6 @@ if(isset($edicion["id"])){
     <input type="text" class="form-control has-feedback-left" 
            id="fecha_aparicion"
            name="fecha_aparicion"
-           placeholder="Fecha de aparición" 
            aria-describedby="inputSuccess2Status2"
            value = '<?php echo isset($edicion["fecha_aparicion"]) ? $edicion["fecha_aparicion"]:""?>'
            >
@@ -124,4 +123,27 @@ if(isset($edicion["id"])){
 </div>
 <?php
 echo form_close();
+echo js("moment.min.js");
+echo js("daterangepicker.js");
 ?>
+<script type="text/javascript">
+  $("#fecha_aparicion").ready(function(){
+    $('#fecha_aparicion').daterangepicker(
+      {
+        singleDatePicker: true,
+        calender_style: "picker_3",
+        startDate: moment(),
+        locale:{
+          daysOfWeek: ['D', 'L', 'M', 'Mc', 'J', 'V', 'S'],
+          monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+          format: "YYYY-MM-DD",
+          separator: "-",
+        }
+        
+      }, 
+      function(start, end, label) {
+          //console.log(start.toISOString(), end.toISOString(), label);
+          $('#fecha_aparicion').val(start.format('YYYY-MM-DD'));
+        });
+  });
+</script>

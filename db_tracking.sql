@@ -169,3 +169,9 @@ create table files(
 	foreign key(solicitud_id)
 	references solicitud(id) 
 );
+
+alter table colaboradores 
+add column nacionalidad int not null default 1,
+add constraint fk_colab_nac
+foreign key (nacionalidad)
+references c_idioma(id);
