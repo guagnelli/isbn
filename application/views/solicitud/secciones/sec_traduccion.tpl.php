@@ -5,7 +5,6 @@
 if(isset($debug)){
   pr($debug);
 }*/
-
 echo form_open("solicitud/sec_traduccion",array(
     'id'=>'frm_traduccion',
     'class'=>'form-horizontal form-label-left',
@@ -18,18 +17,6 @@ if(isset($traduccion["id"])){
 }
 ?>
 <p class="lead">Traducción <?php echo $comentarios; ?></p>
-<!--div class="form-group">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-	  	<label>
-	      <b>Traducción:</b> 
-	      <input id="has_traduction" 
-	      		 name="has_traduction" 
-	      		 type="checkbox" 
-	      		 class="js-switch" 
-	      		 <?php echo isset($traduccion["has_traduction"]) ? "checked":"" ?> />
-	    </label>
-	</div>
-</div-->
 <div class="item form-group">
 	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
   		<b><span class="required">*</span>Idioma Del:</b>
@@ -105,10 +92,8 @@ if(isset($traduccion["id"])){
             class="btn btn-form" 
             data-type="traduccion"
             onclick="btn(this)" >
-      Guardar tema
+      Guardar traducción
     </button>
   </div>
-</div>
-<?php
-echo form_close();
-?>
+</div>-     
+</form>

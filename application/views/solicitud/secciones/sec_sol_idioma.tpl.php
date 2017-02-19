@@ -57,7 +57,7 @@ echo form_open("solicitud/sec_sol_idioma",array(
             class="btn btn-form" 
             data-type="sol_idioma"
             onclick="btn(this)" >
-      Guardar tema
+      Guardar idioma
     </button>
   </div>
 </div>

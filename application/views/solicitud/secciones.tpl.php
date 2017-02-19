@@ -16,7 +16,8 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <label class="" id="msg_general"></label>
+        <div id="msg_general" role="alert" >
+        </div>
         <p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"]?></p>
         <p><b>Subtítulo:</b> <?php echo $datos["solicitud"]["libro"]["subtitle"]?></p>
         <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"]?></p>

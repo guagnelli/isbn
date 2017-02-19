@@ -638,7 +638,7 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $data["idiomas"] = $this->input->post();
 
-            if (count($data["idiomas"]) == 1) {
+            if (count($data["idiomas"]) == 1) {//load idiomas
                 load:
                 $idiomas = $this->req->get_idiomas($data["idiomas"]["solicitud_id"]);
 
@@ -648,7 +648,7 @@ class Solicitud extends MY_Controller {
                     }
                     //$data["debug"]["idiomas"] = $data["idiomas"]["idiomas"];
                 }
-            } else if (isset($data["idiomas"]["idiomas"])) {
+            } else if (isset($data["idiomas"]["idiomas"])) {//save
                 $lang = explode(",", $data["idiomas"]["idiomas"]);
                 $data["idiomas"]["idiomas"] = $lang = array_filter($lang);
 
@@ -665,6 +665,7 @@ class Solicitud extends MY_Controller {
                         $data["debug"][$id] = $save;
                     }
                 }
+                $response['message'] = "Los idiomas se han guardado exitosamente";
                 goto load;
             }
 //            pr($this->session->userdata('botones_seccion'));
@@ -747,10 +748,17 @@ class Solicitud extends MY_Controller {
     function sec_colaboradores() {
         if ($this->input->is_ajax_request()) {
             $data["debug"]["colab"] = $data["colab"] = $this->input->post();
-            if (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
+            //$response['message'] = "Mi mensaje de colaboradores";
+            if(isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]){
+                unset($data["colab"]["eliminar"]);
+                $this->req->delete('colaboradores', $data["colab"]); 
+                $response['message'] = "La información del colaborador/autor se ha eliminado exitosamente";
+                $response['result'] = "true";
+            }
+            elseif (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
                 //$data["debug"]="load section";
                 $response['result'] = "true";
-            } elseif (isset($data["colab"]["update"])) {
+            } elseif (isset($data["colab"]["update"])) {//update
                 $where = array("solicitud_id" => $data["colab"]["solicitud_id"],
                     "id_colab" => $data["colab"]["id_colab"]);
                 unset($data["colab"]["id_colab"]);
@@ -758,7 +766,7 @@ class Solicitud extends MY_Controller {
                 unset($data["colab"]["update"]);
                 $update = $this->req->update("colaboradores", $data["colab"], $where);
                 if ($update) {
-                    $response['message'] = "La información del colaborador/autor se ha guardado exitosamente";
+                    $response['message'] = "La información del colaborador/autor se ha editado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";

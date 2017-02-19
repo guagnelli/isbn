@@ -25,7 +25,10 @@ if(isset($list_colaboradores)){
            onclick="editar(this)"
            data-id="<?php echo $colaborador["id_colab"]?>"
         >Editar</a>
-        |Eliminar
+        |<a href="#"
+           onclick="eliminar(this)"
+           data-id="<?php echo $colaborador["id_colab"]?>"
+        >Eliminar</a>
       </td>
     </tr>
   <?php 
@@ -38,6 +41,13 @@ if(isset($list_colaboradores)){
     var id_colab = $(obj).data("id");
     var solicitud = $("#sol").val();
     var form = {"id_colab":id_colab,"solicitud_id":solicitud};
+    //alert(id_colab)
+    ajax(site_url+"/solicitud/sec_colaboradores",form,'#tab_colaboradores','#msg_general');
+  }
+  function eliminar(obj){
+    var id_colab = $(obj).data("id");
+    var solicitud = $("#sol").val();
+    var form = {"id_colab":id_colab,"solicitud_id":solicitud,"eliminar":true};
     //alert(id_colab)
     ajax(site_url+"/solicitud/sec_colaboradores",form,'#tab_colaboradores','#msg_general');
   }

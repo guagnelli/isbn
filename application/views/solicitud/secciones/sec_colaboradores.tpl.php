@@ -59,7 +59,12 @@ if(isset($colab["id_colab"])){
         </button>
       </div>
     </div>
-    <?php echo form_close(); ?>
+  </div>
+</div>
+
+<?php echo form_close(); ?>
+<div class="row">
+  <div id="msg_lis" role="alert" >
   </div>
 </div>
 <div class="row">
@@ -74,6 +79,6 @@ $("#div_colab_list").ready(function(){
           "solicitud_id":solicitud,
         },
         "#div_colab_list",
-        "#msg_general");
+        "#msg_list");
 });
 </script>

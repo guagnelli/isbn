@@ -10,14 +10,22 @@ function ajax(action,form_data,div_content,div_msg){
         //alert(response)
         try{
             var resp = $.parseJSON(response);
-            $(div_msg).show();        
-            $(div_msg).text(resp.message);
-            if(resp.result=="true"){
-                $(div_msg).addClass('alert-success');
+            
+            if(resp.message !== undefined){
+                //alert(resp.message)
+                $(div_msg).show(); 
+                //var msg = "<button type='button' class='close' data-dismiss='alert aria-label='Close'><span aria-hidden='true'>×</span></button>";
+                $(div_msg).text(resp.message);
+                $(div_msg).addClass('alert alert-info alert-dismissible fade in');
+                //setTimeout($(div_msg).hide(), 5000);
+            } else if(resp.message===undefined){
+                $(div_msg).hide()
+            }           /*if(resp.result=="true"){
+                
             }else{
-                $(div_msg).addClass('alert-danger');
-            }
-            //setTimeout("$("+div_msg+").hide()", 5000);
+                $(div_msg).addClass('alert-info');
+            }*/
+            
             //recargar_fecha_ultima_actualizacion();//Recarga la fecha de la ultima actualización del modulo perfil
             $(div_content).html(resp.content);
         }catch(e){
@@ -48,7 +56,8 @@ function btn(obj){
 	//data_ajax($(id).attr("action"),id,"#msg_secciones");
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();
-	//alert(form_data);
-	ajax(action,form_data,'#tab_'+type,'#msg_general');
+    //alert(form_data);
+	alert(action);
+	//ajax(action,form_data,'#tab_'+type,'#msg_general');
 	//});
 }

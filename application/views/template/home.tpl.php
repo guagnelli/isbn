@@ -175,7 +175,7 @@
 	            <div class="row">
 	                <div class="col-md-12">
 	                  <div class="copyright text-center">
-	                    <p>Dirección General de Publicaciones y Fomento Editorial, UNAM 2016.<br>Este sitio se visualiza mejor a partir de resoluciones 1024 px con Explorer 11 / Firefox 33.0 / Chrome 38.0</p>
+	                    <p>Dirección General de Publicaciones y Fomento Editorial, UNAM 2017.<br>Este sitio se visualiza mejor a partir de resoluciones 1024 px con Explorer 11 / Firefox 33.0 / Chrome 38.0</p>
 	                  </div>
 	                </div>
 	            </div>
