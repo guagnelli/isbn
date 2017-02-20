@@ -306,34 +306,42 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function registrar() {
+    function registrar($solicitud_id=0) {
 
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
         $id_subcategoria = null;
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
+        if($solicitud_id > 0){
+            $data["solicitud"] = $this->req->getSolicitud($solicitud_id,false);
+        }
+        //pr($data);
         //si tiene datosbusca por id
         if ($this->input->post()) {
             $data["save"] = $this->input->post();
+            
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //AÃ±adir validaciones
-//            pr($post);
-            //$data["save"] = $post;
-
             if ($this->form_validation->run()) {
-                //$data["datos"]["entidad"] = $this->sol->getEntidad($id_entidad);
-                $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
-                $solicitud = $this->req->addSolicitud($data["save"]);
-                if ($solicitud > 0) {
-                    redirect("solicitud/secciones/$solicitud");
+                //pr($data["save"]);
+                if(isset($data["save"]["solicitud_id"])){ //edit
+                    $update = $this->req->editSolicitud($data["save"]);
+                    //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
+                    redirect("solicitud");
+                }else{ //save
+                    $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
+                    $solicitud = $this->req->addSolicitud($data["save"]);
+                    if ($solicitud > 0) {
+                        //redirect("solicitud/secciones/$solicitud");
+                        redirect("solicitud");
+                    }
                 }
-                //pr($data);
             }
         }
-        $data["datos"]["categorias"] = $this->req->listCategoria();
-        $data["datos"]["sub_categorias"] = $this->req->listSubCategoria($id_categoria);
+        $data["combos"]["categorias"] = $this->req->listCategoria();
+        $data["combos"]["sub_categorias"] = $this->req->listSubCategoria();
 
         //Genera reglas de estado 
         $reglas_validacion = $this->req->getReglasEstadosSolicitud();
@@ -348,6 +356,21 @@ class Solicitud extends MY_Controller {
         $this->template->getTemplate();
     }
 
+    function sub_categoria(){
+        if ($this->input->is_ajax_request()) {
+            $categoria = $this->input->post();
+            //pr($categoria);
+            if(isset($categoria["categoria"])){
+                $data["combos"]["sub_categorias"] = $this->req->listSubCategoria($categoria["categoria"]);
+            }
+            $response['content'] = $this->load->view("solicitud/secciones/subcategoria.tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
     function secciones($solicitud) {
         //echo $solicitud;
         $data = array();
@@ -355,7 +378,7 @@ class Solicitud extends MY_Controller {
             $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud, FALSE);
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $data["secciones"] = $this->req->get_sections();
-            $data["files"] = "Mis archivos";
+            //$data["files"] = "Mis archivos";
         } catch (Exception $ex) {
             print ($ex);
         }
@@ -686,10 +709,17 @@ class Solicitud extends MY_Controller {
 
     function sec_traduccion() {
         if ($this->input->is_ajax_request()) {
-            // $data["debug"] = 
             $data["traduccion"] = $this->input->post();
             //load from the begining
-            if (count($data["traduccion"]) == 1) {
+            begining:
+            //pr($data);
+            if(isset($data["traduccion"]["del"])){
+                //pr($data);
+                echo "entra caramba!!!!";
+                unset($data["traduccion"]["del"]);
+                unset($data["traduccion"]["id"]);
+                $response['message'] = "La traducción se ha eliminado ";
+            }elseif (count($data["traduccion"]) == 1) {
                 load:
                 // $data["debug"][0] = 
                 $data["traduccion"] = $this->req->get_section("traduccion", array(
@@ -699,7 +729,7 @@ class Solicitud extends MY_Controller {
                     $data["traduccion"] = $data["traduccion"][0];
                     $data["traduccion"]["has_traduction"] = 1;
                 }
-            } elseif (isset($data["traduccion"]["id"])) {
+            }elseif (isset($data["traduccion"]["id"])) {
                 $where = array("id" => $data["traduccion"]["id"]);
                 unset($data["traduccion"]["id"]);
                 unset($data["traduccion"]["has_traduction"]);
@@ -766,7 +796,7 @@ class Solicitud extends MY_Controller {
                 unset($data["colab"]["update"]);
                 $update = $this->req->update("colaboradores", $data["colab"], $where);
                 if ($update) {
-                    $response['message'] = "La información del colaborador/autor se ha editado exitosamente";
+                    $response['message'] = "La información del colaborador se ha editado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -785,7 +815,7 @@ class Solicitud extends MY_Controller {
                 $save = $this->req->add("colaboradores", $data["colab"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_colaboradores" => 1), array("id" => $data["colab"]["solicitud_id"]));
-                    $response['message'] = "La información del colaborador/autor se ha guardado exitosamente";
+                    $response['message'] = "La información del colaborador se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -889,7 +919,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_pago" => 1), array("id" => $data["epay"]["solicitud_id"])
                     );
-                    $response['message'] = "La información de edición se ha guardado exitosamente";
+                    $response['message'] = "La información del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -904,7 +934,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("epay", $data["epay"], $where);
                 if ($update) {
-                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['message'] = "La información del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -944,7 +974,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_comercializable" => 1), array("id" => $data["comercializable"]["solicitud_id"])
                     );
-                    $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
+                    $response['message'] = "Los datos de Comercialización se han guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -958,7 +988,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("comercializable", $data["comercializable"], $where);
                 if ($update) {
-                    $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
+                    $response['message'] = "La Información de edición se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -982,10 +1012,13 @@ class Solicitud extends MY_Controller {
     function sec__descripcion_fisica() {
         if ($this->input->is_ajax_request()) {
             $data["df"] = $this->input->post();
-            $fields = array("medio", "formato", "tamanio", "id", "solicitud_id");
+            $solicitud_id = $data["df"]["solicitud_id"];
+            //print_r($data["df"]);
+            $fields = array("medio", "formato","tamanio_desc", "tamanio", "id", "solicitud_id");
+            $tabla = array("print" => "desc_fisica_impresa", "digital" => "
+                desc_electronica");
             $tipo = "print";
-            $tabla = array("print" => "desc_fisica_impresa", "digital" => "desc_electronica");
-            if (isset($data["df"]["rad_df"])) {
+            if (isset($data["df"]["rad_df"])) {//salvar
                 $tipo = $data["df"]["rad_df"];
                 unset($data["df"]["rad_df"]);
                 if ($tipo == "digital") {
@@ -1000,74 +1033,32 @@ class Solicitud extends MY_Controller {
                             unset($data["df"][$key]);
                         }
                     }
+                    $data["df"]["solicitud_id"] = $solicitud_id;
                 }
-            }
-            if (count($data["df"]) == 1 && isset($data["df"]["solicitud_id"])) {
-                $df = $this->req->get_section("desc_fisica_impresa", array(
-                    "solicitud_id" => $data["df"]["solicitud_id"]
-                ));
-                if (count($df) > 0) {
-                    $data["df"] = $df[0];
-                    $data["df"]["rad_df"] = "print";
-                } else {
-                    $df = $this->req->get_section("desc_electronica", array(
-                        "solicitud_id" => $data["df"]["solicitud_id"]
-                    ));
-                    if (count($df) > 0) {
-                        $data["df"] = $df[0];
-                        $data["df"]["rad_df"] = "digital";
-                    }
-                }
-                //$data["debug"] = $data["comercializable"];
-                $response['result'] = "true";
-            } elseif (count($data["df"]) > 1 && !isset($data["df"]["id"])) {
-                //save
+                $this->req->delete("desc_fisica_impresa", 
+                                    array("solicitud_id"=>$solicitud_id)); 
+                $this->req->delete("desc_electronica", 
+                                    array("solicitud_id"=>$solicitud_id)); 
                 $save = $this->req->add($tabla[$tipo], $data["df"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
                     );
-                    $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
-                    $response['result'] = "true";
+                    $response['message'] = "La descripción de la obra se ha guardado exitosamente";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
-                }
-            } elseif (count($data["df"]) > 1 && isset($data["df"]["id"])) {
-                //edit
-                $where = array(
-                    "solicitud_id" => $data["df"]["solicitud_id"],
-                    "id" => $data["df"]["id"]
-                );
-
-                $df = $this->req->get_section($tabla[$tipo], array(
-                    "solicitud_id" => $data["df"]["solicitud_id"],
-                    "id" => $data["df"]["id"]
-                ));
-                if (count($df) == 0) {
-                    $this->req->delete(
-                            $tipo == "print" ? "desc_electronica" : "desc_fisica_impresa", $where
-                    );
-                    $save = $this->req->add($tabla[$tipo], $data["df"]);
-                    if ($save) {
-                        $response['message'] = "Los datos de Comercializaci&oacute;n se han guardado exitosamente";
-                        $response['result'] = "true";
-                    } else {
-                        $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
-                    }
-                } else {
-                    $update = $this->req->update($tabla[$tipo], $data["df"], $where);
-                    if ($update) {
-                        $response['message'] = "La Informaci&oacute; de edici&oacute; se ha guardado exitosamente";
-                        $response['result'] = "true";
-                    } else {
-                        $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
-                    }
                 }
             }
-
-
+            foreach ($tabla as $key => $value) {
+                //pr($value);
+                $df = $this->req->get_section($value, array(
+                    "solicitud_id" => $solicitud_id
+                ));
+                if (count($df) === 1) {
+                    $data["df"] = $df[0];
+                    $data["df"]["rad_df"] = $key;
+                    break;
+                }
+            }
 
             //$data["debug"] = $data["df"];
             $data["_descripcion_fisica"] = $data["df"];
@@ -1086,6 +1077,7 @@ class Solicitud extends MY_Controller {
             $data["combos"]["c_formato"] = $this->cg->get_combo_catalogo("c_formato");
             $data["combos"]["c_medio"] = $this->cg->get_combo_catalogo("c_medio");
             $data["combos"]["c_tamanio"] = $this->cg->get_combo_catalogo("c_tamanio");
+            $data["combos"]["c_num_tintas"] = $this->cg->get_combo_catalogo("c_num_tintas");
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_desc_fisica.tpl.php", $data, true);
             echo json_encode($response);

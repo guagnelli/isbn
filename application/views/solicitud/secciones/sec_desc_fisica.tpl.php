@@ -131,6 +131,72 @@ if(isset($_descripcion_fisica["id"])){
          ?>
       </div>
     </div>
+    <div class="form-group">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">
+        <b><span class="required">*</span>N&uacute;mero de P&aacute;ginas:</b>
+      </label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'no_paginas',
+         'type' => 'number',
+         'value' => isset($_descripcion_fisica["no_paginas"]) ? $_descripcion_fisica["no_paginas"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','min'=>'0',)
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">
+        <b><span class="required">*</span>N&uacute;mero de tintas:</b>
+      </label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'num_tintas',
+         'type' => 'dropdown',
+         'options' => $combos["c_num_tintas"],
+         'first' => array('' => "Seleccione una opción"),
+         'value' => isset($_descripcion_fisica["num_tintas"]) ? $_descripcion_fisica["num_tintas"]:"",
+         'class' => '',
+         'attributes' => array('class' => '')
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">
+        <b><span class="required">*</span>Ancho:</b>
+      </label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'ancho',
+         'type' => 'number',
+         'value' => isset($_descripcion_fisica["ancho"]) ? $_descripcion_fisica["ancho"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','min'=>'0',)
+         ));
+         ?> Cm
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">
+        <b><span class="required">*</span>Alto:</b>
+      </label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'alto',
+         'type' => 'number',
+         'value' => isset($_descripcion_fisica["alto"]) ? $_descripcion_fisica["alto"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','min'=>'0',)
+         ));
+         ?>Cm
+      </div>
+    </div>
 </div>
 <div id="div_digital" style="display:none">
 	<div class="form-group">
@@ -176,6 +242,15 @@ if(isset($_descripcion_fisica["id"])){
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
+         'id' => 'tamanio_desc',
+         'type' => 'number',
+         'value' => isset($_descripcion_fisica["tamanio_desc"]) ? $_descripcion_fisica["tamanio_desc"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','min'=>'0','style'=>"width:100px")
+         ));
+         ?>
+        <?php
+        echo $this->form_complete->create_element(array(
          'id' => 'tamanio',
          'type' => 'dropdown',
          'options' => $combos["c_tamanio"],
@@ -187,6 +262,7 @@ if(isset($_descripcion_fisica["id"])){
          ?>
       </div>
     </div>
+
 </div>
 <div class="form-group">
   <div class="col-md-12 text-center">

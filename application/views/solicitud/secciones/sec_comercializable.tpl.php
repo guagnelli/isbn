@@ -37,7 +37,7 @@ if(isset($comercializable["id"])){
 	           placeholder="Ejemplares nacionales" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_nacional"]) ? $comercializable["ejemplares_nacional"]:""?>'
-	           type="number" />
+	           type="number" min="0" />
 	  </div>
 	</div>
 	<div class="item form-group">
@@ -65,7 +65,7 @@ if(isset($comercializable["id"])){
 	           placeholder="Ejemplares externos" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_externa"]) ? $comercializable["ejemplares_externa"]:""?>'
-	           type="number" />
+	           type="number" min="0" />
 	  </div>
 	</div>
 	<div class="item form-group">
@@ -93,7 +93,7 @@ if(isset($comercializable["id"])){
 	           placeholder="Oferta total" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["oferta_total"]) ? $comercializable["oferta_total"]:""?>'
-	           type="number" />
+	           type="number" disabled />
 	  </div>
 	</div>
 	<div class="form-group">
@@ -112,3 +112,31 @@ if(isset($comercializable["id"])){
 <?php
 echo form_close();
 ?>
+<script type="text/javascript">
+	$("#oferta_total").ready(function(){
+		$("#ejemplares_nacional").change(function(){
+			var nac = $("#ejemplares_nacional").val();
+			if(nac < 0){
+				$("#ejemplares_nacional").val(0);
+			}
+			$("#oferta_total").val(suma_ejemplares());
+		});
+		$("#ejemplares_externa").change(function(){
+			var nac = $("#ejemplares_externa").val();
+			if(nac < 0){
+				$("#ejemplares_externa").val(0);
+			}
+			$("#oferta_total").val(suma_ejemplares());
+		});
+	});
+	function suma_ejemplares(){
+		var a = parseInt($("#ejemplares_nacional").val());
+		var b =	parseInt($("#ejemplares_externa").val());
+		
+		total = a+b;
+		if(total < 0){
+			total = 0;
+		}
+		return total;
+	}
+</script>

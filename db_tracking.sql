@@ -175,3 +175,28 @@ add column nacionalidad int not null default 1,
 add constraint fk_colab_nac
 foreign key (nacionalidad)
 references c_idioma(id);
+
+alter table desc_fisica_impresa 
+add constraint uq_solicitud
+unique (solicitud_id);
+
+alter table desc_electronica
+add constraint uq_solicitud
+unique (solicitud_id);
+
+alter table desc_fisica_impresa add column 
+num_tintas int not null default 1;
+
+create table c_num_tintas(
+	id int auto_increment,
+	value varchar(100) not null,
+	primary key(id)
+);
+
+alter table desc_fisica_impresa
+add constraint fk_dfi_nt
+foreign key(num_tintas)
+references c_num_tintas(id);
+
+alter table desc_electronica
+add column tamanio_desc varchar(200);

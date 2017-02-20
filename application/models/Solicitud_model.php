@@ -40,6 +40,16 @@ class Solicitud_model extends MY_Model {
         }
         return false;
     }
+    function editSolicitud($data){
+        echo "salvando";
+        $this->db->select("libro_id");
+        $this->db->where("id",$data["solicitud_id"]);
+        $result = $this->db->get("solicitud"); 
+        $data["libro_id"] = isset($result->result_array()[0]["libro_id"])?$result->result_array()[0]["libro_id"]:0;
+        $this->update("libro",$data["libro"],array("id"=>$data["libro_id"]));
+        $this->update("solicitud",$data["solicitud"],array("id"=>$data["solicitud_id"]));
+        return true;
+    }
 
     function getSolicitud($id = null, $load_secciones = true, $array = true) {
         if (is_null($id)) {
