@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($lista_solicitudes);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();                        ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+<!--<script type='text/javascript' src="<?php // echo base_url();                          ?>assets/js/validacion_docente/validar_censo.js"></script>-->
 
 <!--<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>-->
 
@@ -120,7 +120,10 @@ echo js("solicitud/secciones.js");
                             . 'onclick="editar_sol(this)">'
                             . '</span> '
                             . ' </form>';
-
+                    
+                    $link_editar_titulo = '<a class="" '
+                            . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
+                            . 'target="_blank"><span class="glyphicon glyphicon-superscript btn-msg"></span></a>';
 
 
 //                    $link_editar = '<a href="#" class="button search">
@@ -141,7 +144,7 @@ echo js("solicitud/secciones.js");
                 }
                 echo "<td>" . $val['sub_categoria'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . "</td>";
+                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . $link_editar_titulo . "</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "</tr>";
             }
