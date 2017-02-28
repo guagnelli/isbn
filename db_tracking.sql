@@ -303,7 +303,7 @@ create table c_tipo_colab(
 	id integer not null auto_increment,
 	nombre varchar(255) not null,
 	constraint pk_tipo_colab
-	primary key(id),
+	primary key(id)
 );
 insert into c_tipo_colab(nombre) values
 ('Autor'),

@@ -2952,3 +2952,11 @@ ul.dropdown-menu.dropdown-menu-right {
     cursor: inherit;
     display: block;
 }
+
+.lead {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.4;
+}

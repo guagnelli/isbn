@@ -276,6 +276,8 @@ class Solicitud extends MY_Controller {
                         $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
                         $datosSeccion['solicitud'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
                         $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de sección comentarios
+                        $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
+                        $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
                     case 'editar_registro'://La edición de registro se presenta en la correccion basicamente
@@ -283,6 +285,7 @@ class Solicitud extends MY_Controller {
                         try {
                             $info_solicitud = $this->req->getSolicitud(intval($datos_solicitud['solicitud_cve']));
 //                            pr($info_solicitud);
+                            $data["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                             $data["datos"]["solicitud"] = $info_solicitud;
                             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
                             $data["secciones"] = $this->req->get_sections();
@@ -426,7 +429,10 @@ class Solicitud extends MY_Controller {
                     $datosSeccion['link_editar'] = $boton_editar;
                 }
 //                pr($this->get_datos_detalle_solicitud($solicitud_datos));
+                $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
+                $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
+                
                 $data = array(
                     'titulo_modal' => null,
                     'cuerpo_modal' => $data_detalle,

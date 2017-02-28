@@ -19,62 +19,87 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <p><b><?php echo $string_detalle['title_clas_tematica']; ?></b></p>
-            <ul>    
-                <li><?php echo $string_detalle['li_categoria'] . $solicitud['clasificacion_tematica']['categoria']; ?></li>
-                <li><?php echo $string_detalle['li_sub_categoria'] . $solicitud['clasificacion_tematica']['subcategoria']; ?></li>
-            </ul>
+            <p class="lead">
+                <b>
+                <?php echo $string_detalle['title_clas_tematica']; ?>
+                </b>
+            </p>
+            <address>
+                <b><?php echo $string_detalle['li_categoria']?></b>
+                   <?php echo $solicitud['clasificacion_tematica']['categoria']; ?><br />
+                <b><?php echo $string_detalle['li_sub_categoria']?></b>
+                   <?php echo $solicitud['clasificacion_tematica']['subcategoria']; ?><br />
+            </address>
+
+            <?php if (!empty($solicitud['secciones']['lng'])) { ?>
+                <p class="lead"><b><?php echo $string_detalle['title_idioma']; ?></b> <?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>  
+                    <?php foreach ($solicitud['secciones']['lng'] as $lenguaje) { ?>
+                    <?php echo $lenguaje['nam_idioma']; ?>;
+                    <?php } ?>
+            <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['t'])) { ?>
-                <p><b><?php echo $string_detalle['title_tema']; ?></b> <?php echo $botones_seccion[En_secciones::TEMA]; ?></p> 
-                <ul>    
-                    <li><?php echo $string_detalle['li_coleccion'] . $solicitud['secciones']['t'][0]['coleccion']; ?></li>
-                    <li><?php echo $string_detalle['li_nom_serie_coleccion'] . $solicitud['secciones']['t'][0]['nombre_serie']; ?></li>
-                    <li><?php echo $string_detalle['li_num_coleccion'] . $solicitud['secciones']['t'][0]['no_coleccion']; ?></li>
-                    <li><?php echo $string_detalle['li_tipo_contenido_coleccion'] . $solicitud['secciones']['t'][0]['tipo_contenido']; ?></li>
-                </ul>
+                <p  class="lead"><b><?php echo $string_detalle['title_tema']; ?></b> <?php echo $botones_seccion[En_secciones::TEMA]; ?></p> 
+                <address>
+                    <b><?php echo $string_detalle['li_coleccion']?></b>
+                        <?php echo $solicitud['secciones']['t'][0]['coleccion']; ?><br />
+                    <b><?php echo $string_detalle['li_nom_serie_coleccion']?></b> 
+                        <?php echo $solicitud['secciones']['t'][0]['nombre_serie']; ?><br />
+                    <b><?php echo $string_detalle['li_num_coleccion']?></b>
+                        <?php echo $solicitud['secciones']['t'][0]['no_coleccion']; ?><br />
+                    <b><?php echo $string_detalle['li_tipo_contenido_coleccion']?></b> 
+                        <?php echo $solicitud['secciones']['t'][0]['tipo_contenido']; ?>
+                </address>
+                
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['colab'])) { ?>
-                <?php $tipoColab = $this->config->item('tipo_colab'); ?>
-                <p><b><?php echo $string_detalle['title_colaboradores']; ?></b> <?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
-                <ul>    
-                    <?php foreach ($solicitud['secciones']['colab'] as $colaborador) { ?>
-                        <li><?php echo $string_detalle['li_name_colaborador'] . $colaborador['nombre'] . $string_detalle['li_tipo_colaborador'] . $tipoColab[$colaborador['tipo']]; ?></li>
-                    <?php } ?>
-                </ul>
+                <p class="lead"><b><?php echo $string_detalle['title_colaboradores']; ?></b> <?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
+                <?php foreach ($solicitud['secciones']['colab'] as $colaborador) { ?>
+                    <address>
+                        <b>Nombre:&nbsp;</b><?php echo $colaborador['nombre']; ?><br /> 
+                        <b>Rol:&nbsp;</b><?php echo $tipoColab[$colaborador['tipo']]; ?><br /> 
+                        <b>Nacionalidad:&nbsp;</b><?php echo $c_nacionalidad[$colaborador['nacionalidad']]; ?><br /> 
+                        <b>Seud&oacute;nimo:&nbsp;</b><?php echo $colaborador['seudonimo']?><br />
+                        <b>Correo electr&oacute;nico:&nbsp;</b><?php echo $colaborador['email']?>
+                    </address>
+                <?php } ?>
             <?php } ?>
 
-            <?php if (!empty($solicitud['secciones']['lng'])) { ?>
-                <p><b><?php echo $string_detalle['title_idioma']; ?></b> <?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>
-                <?php // $coma = ''; ?>
-                <ul>    
-                    <?php foreach ($solicitud['secciones']['lng'] as $lenguaje) { ?>
-                        <li><?php echo $lenguaje['nam_idioma']; ?></li>
-                        <?php // $coma = ', '; ?>
-                    <?php } ?>
-                </ul>
-            <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['trns'])) { ?>
-                <p><b><?php echo $string_detalle['title_traduccion']; ?></b> <?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
-                <ul>    
-                    <?php $traduccion = $solicitud['secciones']['trns'][0]; ?>
-                    <li><?php echo $string_detalle['li_title_original_traduccion'] . $traduccion['titulo_original']; ?></li>
-                    <li><?php echo $string_detalle['li_idioma_orig_traduccion'] . $traduccion['ni_orig']; ?></li>
-                    <li><?php echo $string_detalle['li_idioma_del_traduccion'] . $traduccion['ni_del']; ?></li>
-                    <li><?php echo $string_detalle['li_idioma_al_traduccion'] . $traduccion['ni_al']; ?></li>
-                </ul>
+                <p class="lead"><b><?php echo $string_detalle['title_traduccion']; ?></b> <?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
+                <?php $traduccion = $solicitud['secciones']['trns'][0]; ?> 
+                <address>
+                    <b><?php echo $string_detalle['li_title_original_traduccion'];?> </b>
+                        <?php echo $traduccion['titulo_original']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_orig_traduccion']?></b>
+                        <?php echo $traduccion['ni_orig']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_del_traduccion']?></b>
+                        <?php echo $traduccion['ni_del']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_al_traduccion']?></b>
+                        <?php echo $traduccion['ni_al']; ?>
+                </address>    
             <?php } ?>
 
-            <?php if (!empty($solicitud['secciones']['edi'])) { ?>
-                <p><b><?php echo $string_detalle['title_info_edicion']; ?></b></p>
-                <ul>    
-                    <li>No. Edición: Cuarta edición 2014 </li>
-                    <li>Centeno 163-1, colonia Granjas Esmeralda, C.P. 09810, México DF, en el mes de enero 2014 </li>    
-                    <li>Fecha de aparición 2005 </li>
-                    <li>Coedición: SN </li>
-                </ul>
+            <?php if (!empty($solicitud['secciones']['ed'])) { ?>
+                <p class="lead"><b><?php echo $string_detalle['title_info_edicion']; ?></b></p>
+                
+            <?php } ?>
+
+            <?php if (!empty($solicitud['secciones']['cmrc'])) { ?>
+                <p class="lead"><b>Comercializaci&oacute;n</b></p>
+                
+            <?php } ?>
+
+            <?php if (!empty($solicitud['secciones']['df'])) { ?>
+                <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b></p>
+                
+            <?php } ?>
+
+            <?php if (!empty($solicitud['secciones']['epay'])) { ?>
+                <p class="lead"><b>Pago electr&oacute;nico</b></p>
+                
             <?php } ?>
 
             <br>
