@@ -824,11 +824,8 @@ class Solicitud extends MY_Controller {
             }
             //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COLABORADORES])) ? $this->session->userdata('botones_seccion')[En_secciones::COLABORADORES] : ''; //Botones de comentarios para las secciones
-            $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_idioma");
-            $data["combos"]["c_tipo"] = array("A"=>"Autor",
-                                              "C"=>"Colaborador",
-                                              "Ad"=>"Adaptador",
-                                              ""=>"Sin selección");
+            $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
+            $data["combos"]["c_tipo"] = $this->cg->get_combo_catalogo("c_tipo_colab");
 
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_colaboradores.tpl.php", $data, true);
@@ -1072,7 +1069,7 @@ class Solicitud extends MY_Controller {
             $data["combos"]["c_encuadernacion"] = $this->cg->get_combo_catalogo("c_encuadernacion");
             $data["combos"]["c_gramaje"] = $this->cg->get_combo_catalogo("c_gramaje");
             $data["combos"]["c_impresion"] = $this->cg->get_combo_catalogo("c_impresion");
-            $data["combos"]["c_tinta"] = $this->cg->get_combo_catalogo("c_tinta");
+            //$data["combos"]["c_tinta"] = $this->cg->get_combo_catalogo("c_tinta");
             $data["combos"]["c_tipo_papel"] = $this->cg->get_combo_catalogo("c_tipo_papel");
             $data["combos"]["c_formato"] = $this->cg->get_combo_catalogo("c_formato");
             $data["combos"]["c_medio"] = $this->cg->get_combo_catalogo("c_medio");

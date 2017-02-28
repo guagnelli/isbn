@@ -27,7 +27,8 @@ $config['modulos_permisos'] = array(
             'permisos' => array(
                 'solicitud' => array('*'), 
                 'catalogo' => array('*'), 
-                'reporte' => array('*')
+                'reporte' => array('*'),
+                "colaborador" => array('*')
            ), 
            'menu' => array(
                 'Solicitud' => array(
@@ -63,7 +64,8 @@ $config['modulos_permisos'] = array(
         ),
     E_rol::ADMINISTRADOR => array(
         'permisos' => array(
-            'solicitud' => array('*'), 
+            'solicitud' => array('*'),
+            "colaborador" => array('*'),
             'catalogo' => array('*'), 
             'reporte' => array('*')
         ), 

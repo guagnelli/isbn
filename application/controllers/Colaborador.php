@@ -31,11 +31,8 @@ class Colaborador extends MY_Controller {
             $this->load->model('Solicitud_model', 'req');
             $data["list_colaboradores"] = $this->req->get_section("colaboradores",
                 array("solicitud_id"=>$data["solicitud_id"]));
-            $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_idioma");
-            $data["combos"]["c_tipo"] = array("A"=>"Autor",
-                                              "C"=>"Colaborador",
-                                              "Ad"=>"Adaptador",
-                                              ""=>"Sin selección");
+            $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
+            $data["combos"]["c_tipo"] = $this->cg->get_combo_catalogo("c_tipo_colab");
             $response['content'] = $this->load->view("solicitud/secciones/sec_colab_list.tpl.php", $data, true);
             echo json_encode($response);
             return 0;

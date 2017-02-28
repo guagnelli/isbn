@@ -95,24 +95,7 @@ if(isset($_descripcion_fisica["id"])){
          ?>
       </div>
     </div>
-    <div class="form-group">
-      <label class="control-label col-md-4 col-sm-4 col-xs-12">
-        <b><span class="required">*</span>Tipo de tinta:</b>
-      </label>
-      <div class="col-md-8 col-sm-8 col-xs-12">
-        <?php
-        echo $this->form_complete->create_element(array(
-         'id' => 'tinta',
-         'type' => 'dropdown',
-         'options' => $combos["c_tinta"],
-         'first' => array('' => "Seleccione una opción"),
-         'value' => isset($_descripcion_fisica["tinta"]) ? $_descripcion_fisica["tinta"]:"",
-         'class' => '',
-         'attributes' => array('class' => '')
-         ));
-         ?>
-      </div>
-    </div>
+    
     <div class="form-group">
       <label class="control-label col-md-4 col-sm-4 col-xs-12">
         <b><span class="required">*</span>Tipo de papel:</b>

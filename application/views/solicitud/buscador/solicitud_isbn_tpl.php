@@ -100,6 +100,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="panel-body input-group ">
                             <span class="input-group-addon"><?php echo $string_values['lbl_estado_solicitud']; ?></span>
                             <?php
+                            if($this->session->userdata('rol_cve') == 3){
+                                unset($c_estado[1]);
+                            }
                             echo $this->form_complete->create_element(array('id' => 'estado_cve',
                                 'type' => 'dropdown',
                                 'options' => $c_estado,

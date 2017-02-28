@@ -8,10 +8,12 @@ if(isset($list_colaboradores)){
    width="100%">
   <thead>
     <tr>
-      <th width="30%">Nombre</th>
-      <th width="20%">Rol</th>
-      <th width="30%">Nacionalidad</th>
-      <th width="20%">Opciones</th>
+      <th width="20%">Nombre</th>
+      <th width="10%">Rol</th>
+      <th width="20%">Nacionalidad</th>
+      <th width="20%">Seud&oacute;nimo</th>
+      <th width="20%">Correo electr&oacute;nico:</th>
+      <th width="10%">Opciones</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,8 @@ if(isset($list_colaboradores)){
       <td><?php echo $colaborador["nombre"]?></td>
       <td><?php echo $combos["c_tipo"][$colaborador["tipo"]]?></td>
       <td><?php echo $combos["c_nacionalidad"][$colaborador["nacionalidad"]]?></td>
+      <td><?php echo $colaborador["seudonimo"]?></td>
+      <td><?php echo $colaborador["email"]?></td>
       <td>
         <a href="#"
            onclick="editar(this)"

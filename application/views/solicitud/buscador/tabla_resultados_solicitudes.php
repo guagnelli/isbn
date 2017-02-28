@@ -106,7 +106,7 @@ echo js("solicitud/secciones.js");
                         . '<span class="glyphicon glyphicon-dashboard btn-msg" '
                         . '"> '
                         . '</span></a>';
-
+                $link_editar_titulo = isset($link_editar_titulo) ? $link_editar_titulo : '';
 //               $link_editar = '<a class="" '
 //                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
 //                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';

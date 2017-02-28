@@ -16,6 +16,7 @@ function ajax(action,form_data,div_content,div_msg){
                 $(div_msg).show(); 
                 //var msg = "<button type='button' class='close' data-dismiss='alert aria-label='Close'><span aria-hidden='true'>×</span></button>";
                 $(div_msg).text(resp.message);
+                $(div_msg).attr('class', '');
                 $(div_msg).addClass('alert alert-info alert-dismissible fade in');
                 //setTimeout($(div_msg).hide(), 5000);
             } else if(resp.message===undefined){
@@ -57,7 +58,7 @@ function btn(obj){
 	var action = $(id).attr("action");
 	var form_data = $(id).serialize();
     //alert(form_data);
-	//alert(action);
+	alert(action);
 	ajax(action,form_data,'#tab_'+type,'#msg_general');
 	//});
 }

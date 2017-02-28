@@ -200,3 +200,131 @@ references c_num_tintas(id);
 
 alter table desc_electronica
 add column tamanio_desc varchar(200);
+
+create table c_nacionalidad(
+	id integer not null auto_increment,
+	nombre varchar(255) not null,
+	constraint pk_nacionalidad
+	primary key(id)
+);
+INSERT into c_nacionalidad(nombre) values
+('Alemania'),
+('Argelia'),
+('Argentina'),
+('Armenia'),
+('Australia'),
+('Austria'),
+('Bélgica'),
+('Bolivia'),
+('Brasil'),
+('Bulgaria'),
+('Camerún'),
+('Canadá'),
+('Chile'),
+('China'),
+('Colombia'),
+('Congo'),
+('Costa Rica'),
+('Cuba'),
+('Desconocida'),
+('Dinamarca'),
+('Ecuador'),
+('Egipto'),
+('El Salvador'),
+('Emiratos Árabes Unidos'),
+('Eslovenia'),
+('España'),
+('Estados Unidos'),
+('Etiopia'),
+('Federación Rusa'),
+('Filipinas'),
+('Finlandia'),
+('Francia'),
+('Ghana'),
+('Grecia'),
+('Guatemala'),
+('Guyana'),
+('Haití'),
+('Holanda'),
+('Honduras'),
+('Hungría'),
+('India'),
+('Irak'),
+('Irán'),
+('Irlanda'),
+('Israel'),
+('Italia'),
+('Jamaica'),
+('Japón'),
+('Jordania'),
+('Kenia'),
+('Líbano'),
+('Libia'),
+('Lituania'),
+('Macedonia'),
+('Malasia'),
+('Marruecos'),
+('México'),
+('Mozambique'),
+('Myanmar'),
+('Nicaragua'),
+('Nigeria'),
+('Noruega'),
+('Nueva Zelanda'),
+('Panamá'),
+('Paraguay'),
+('Perú'),
+('Polonia'),
+('Portugal'),
+('Puerto Rico'),
+('Reino Unido'),
+('República Checa'),
+('República De Corea'),
+('República Dominicana'),
+('Rumania'),
+('Senegal'),
+('Serbia'),
+('Singapur'),
+('Sudán'),
+('Suecia'),
+('Suiza'),
+('Sur África'),
+('Tailandia'),
+('Tanzania'),
+('Trinidad Y Tobago'),
+('Turquía'),
+('Ucrania'),
+('Uruguay'),
+('Vaticano'),
+('Venezuela'),
+('Vietnam');
+
+create table c_tipo_colab(
+	id integer not null auto_increment,
+	nombre varchar(255) not null,
+	constraint pk_tipo_colab
+	primary key(id),
+);
+insert into c_tipo_colab(nombre) values
+('Autor'),
+('Adaptador'),
+('Compilador'),
+('Director del Libro'),
+('Fotógrafo'),
+('Ilustrador'),
+('Editor Literario'),
+('Traductor'),
+('Coordinador'),
+('Prologuista'),
+('Director de la Colección'),
+('Recopilador'),
+('Director de la obra');
+
+alter table colaboradores drop column tipo;
+alter table colaboradores add column tipo integer default 0;
+update colaboradores set tipo = 1;
+alter table colaboradores add 
+constraint pk_tc_unico
+	unique(nombre,solicitud_id,nacionalidad, tipo);
+alter table colaboradores add column seudonimo varchar(100);
+alter table colaboradores add column email varchar(255);

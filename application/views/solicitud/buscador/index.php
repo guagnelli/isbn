@@ -28,18 +28,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </h1>
                         </div>-->
             <div class="panel-body">
-                <!--<div id="cuerpo_solicitud" class="list-group-item text-center center ">-->
-                <?php if (isset($vista)) { ?>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <!--<div id="cuerpo_solicitud" class="list-group-item text-center center ">-->
+                    <?php if (isset($vista)) { ?>
 
-                    <?php echo $vista; ?>
-                <?php } ?>
-                <!--</div>-->
-                <!--</div>-->
-
+                        <?php echo $vista; ?>
+                    <?php } ?>
+                    <!--</div>-->
+                    <!--</div>-->
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                         <?php if (isset($boton_estado)) { ?>
-                            <a class="btn btn-primary" data-toggle='tab' href='#select_buscador_solicitud_entidad'>Cancelar</a>
+                            <a class="btn btn-primary" data-toggle='tab' href='#select_buscador_solicitud_entidad'>Guardar</a>
 
                             <?php
                             foreach ($boton_estado as $botones) {

@@ -67,6 +67,38 @@ if(isset($colab["id_colab"])){
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <b><span class="required">*</span>Seud&oacute;nimo:</b>
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'seudonimo',
+         'type' => 'text',
+         'value' => isset($colab["seudonimo"]) ? $colab["seudonimo"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','placeholder'=>'Seudónimo')
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <b><span class="required">*</span>Correo electr&oacute;nico:</b>
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'email',
+         'type' => 'text',
+         'value' => isset($colab["email"]) ? $colab["email"]:"",
+         'class' => '',
+         'attributes' => array('class' => '','placeholder'=>'Correo electr&oacute;nico:')
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-md-12 text-center">
         <button id="send_colaboradores" 
                 type="button" 
