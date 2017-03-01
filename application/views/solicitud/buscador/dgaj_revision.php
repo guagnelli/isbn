@@ -2,6 +2,7 @@
 //pr($solicitud);
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
+//pr($solicitud);
 ?>
 <div class="text-left" role="main">
     <div class="">
@@ -21,36 +22,36 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
         <div class="x_content">
             <p class="lead">
                 <b>
-                <?php echo $string_detalle['title_clas_tematica']; ?>
+                    <?php echo $string_detalle['title_clas_tematica']; ?>
                 </b>
             </p>
             <address>
-                <b><?php echo $string_detalle['li_categoria']?></b>
-                   <?php echo $solicitud['clasificacion_tematica']['categoria']; ?><br />
-                <b><?php echo $string_detalle['li_sub_categoria']?></b>
-                   <?php echo $solicitud['clasificacion_tematica']['subcategoria']; ?><br />
+                <b><?php echo $string_detalle['li_categoria'] ?></b>
+                <?php echo $solicitud['clasificacion_tematica']['categoria']; ?><br />
+                <b><?php echo $string_detalle['li_sub_categoria'] ?></b>
+                <?php echo $solicitud['clasificacion_tematica']['subcategoria']; ?><br />
             </address>
 
             <?php if (!empty($solicitud['secciones']['lng'])) { ?>
                 <p class="lead"><b><?php echo $string_detalle['title_idioma']; ?></b> <?php echo $botones_seccion[En_secciones::IDIOMA]; ?></p>  
-                    <?php foreach ($solicitud['secciones']['lng'] as $lenguaje) { ?>
-                    <?php echo $lenguaje['nam_idioma']; ?>;
+                <?php foreach ($solicitud['secciones']['lng'] as $lenguaje) { ?>
+                            <?php echo $lenguaje['nam_idioma']; ?>;
+                        <?php } ?>
                     <?php } ?>
-            <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['t'])) { ?>
                 <p  class="lead"><b><?php echo $string_detalle['title_tema']; ?></b> <?php echo $botones_seccion[En_secciones::TEMA]; ?></p> 
                 <address>
-                    <b><?php echo $string_detalle['li_coleccion']?></b>
-                        <?php echo $solicitud['secciones']['t'][0]['coleccion']; ?><br />
-                    <b><?php echo $string_detalle['li_nom_serie_coleccion']?></b> 
-                        <?php echo $solicitud['secciones']['t'][0]['nombre_serie']; ?><br />
-                    <b><?php echo $string_detalle['li_num_coleccion']?></b>
-                        <?php echo $solicitud['secciones']['t'][0]['no_coleccion']; ?><br />
-                    <b><?php echo $string_detalle['li_tipo_contenido_coleccion']?></b> 
-                        <?php echo $solicitud['secciones']['t'][0]['tipo_contenido']; ?>
+                    <b><?php echo $string_detalle['li_coleccion'] ?></b>
+                    <?php echo $solicitud['secciones']['t'][0]['coleccion']; ?><br />
+                    <b><?php echo $string_detalle['li_nom_serie_coleccion'] ?></b> 
+                    <?php echo $solicitud['secciones']['t'][0]['nombre_serie']; ?><br />
+                    <b><?php echo $string_detalle['li_num_coleccion'] ?></b>
+                    <?php echo $solicitud['secciones']['t'][0]['no_coleccion']; ?><br />
+                    <b><?php echo $string_detalle['li_tipo_contenido_coleccion'] ?></b> 
+                    <?php echo $solicitud['secciones']['t'][0]['tipo_contenido']; ?>
                 </address>
-                
+
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['colab'])) { ?>
@@ -60,8 +61,8 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                         <b>Nombre:&nbsp;</b><?php echo $colaborador['nombre']; ?><br /> 
                         <b>Rol:&nbsp;</b><?php echo $tipoColab[$colaborador['tipo']]; ?><br /> 
                         <b>Nacionalidad:&nbsp;</b><?php echo $c_nacionalidad[$colaborador['nacionalidad']]; ?><br /> 
-                        <b>Seud&oacute;nimo:&nbsp;</b><?php echo $colaborador['seudonimo']?><br />
-                        <b>Correo electr&oacute;nico:&nbsp;</b><?php echo $colaborador['email']?>
+                        <b>Seud&oacute;nimo:&nbsp;</b><?php echo $colaborador['seudonimo'] ?><br />
+                        <b>Correo electr&oacute;nico:&nbsp;</b><?php echo $colaborador['email'] ?>
                     </address>
                 <?php } ?>
             <?php } ?>
@@ -71,35 +72,58 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <p class="lead"><b><?php echo $string_detalle['title_traduccion']; ?></b> <?php echo $botones_seccion[En_secciones::TRADUCCION]; ?></p>
                 <?php $traduccion = $solicitud['secciones']['trns'][0]; ?> 
                 <address>
-                    <b><?php echo $string_detalle['li_title_original_traduccion'];?> </b>
-                        <?php echo $traduccion['titulo_original']; ?><br />
-                    <b><?php echo $string_detalle['li_idioma_orig_traduccion']?></b>
-                        <?php echo $traduccion['ni_orig']; ?><br />
-                    <b><?php echo $string_detalle['li_idioma_del_traduccion']?></b>
-                        <?php echo $traduccion['ni_del']; ?><br />
-                    <b><?php echo $string_detalle['li_idioma_al_traduccion']?></b>
-                        <?php echo $traduccion['ni_al']; ?>
+                    <b><?php echo $string_detalle['li_title_original_traduccion']; ?> </b>
+                    <?php echo $traduccion['titulo_original']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_orig_traduccion'] ?></b>
+                    <?php echo $traduccion['ni_orig']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_del_traduccion'] ?></b>
+                    <?php echo $traduccion['ni_del']; ?><br />
+                    <b><?php echo $string_detalle['li_idioma_al_traduccion'] ?></b>
+                    <?php echo $traduccion['ni_al']; ?>
                 </address>    
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['ed'])) { ?>
+                <?php $ed_ = $solicitud['secciones']['ed'][0]; ?>
                 <p class="lead"><b><?php echo $string_detalle['title_info_edicion']; ?></b></p>
-                
+                <address>
+                    <b>No. Edici&oacute;n:&nbsp;</b><?php echo $ed_['no_edicion']; ?><br /> 
+                    <b>Departamento, provincia o estado:&nbsp;</b><?php echo $ed_['nome_dpto']; ?><br /> 
+                    <b>Ciudad de dici&oacute;n:&nbsp</b><?php echo $ed_['name_ciudad']; ?><br /> 
+                    <b>Fecha de aparici&oacute;n:&nbsp;</b><?php echo $ed_['fecha_aparicion']; ?><br /> 
+                    <b>Coedici&oacute;n:&nbsp;</b><?php echo $ed_['coedicion']; ?><br /> 
+                    <b>Coeditor:&nbsp;</b><?php echo $ed_['coeditor']; ?><br /> 
+                </address>
+
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['cmrc'])) { ?>
+                <?php $cmrc_ = $solicitud['secciones']['cmrc'][0]; ?>
                 <p class="lead"><b>Comercializaci&oacute;n</b></p>
-                
+                <address>
+                    <b>Ejemplares nacionales:&nbsp;</b><?php echo $cmrc_['ejemplares_nacional']; ?><br /> 
+                    <b>Prescio local:&nbsp;</b><?php echo $cmrc_['precio_local']; ?><br /> 
+                    <b>Ejemplares externos:&nbsp;</b><?php echo $cmrc_['ejemplares_externa']; ?><br /> 
+                    <b>Precio a externos:&nbsp;</b><?php echo $cmrc_['precio_externo']; ?><br /> 
+                    <b>Oferta total:&nbsp;</b><?php echo $cmrc_['oferta_total']; ?><br /> 
+                </address>
+
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['df'])) { ?>
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b></p>
-                
+
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['epay'])) { ?>
+                <?php $epay_r = $solicitud['secciones']['epay'][0]; ?>
                 <p class="lead"><b>Pago electr&oacute;nico</b></p>
-                
+                <address>
+                    <b>Clave de pago:&nbsp;</b><?php echo $epay_r['pay_hash']; ?><br /> 
+                    <b>Cadena de dependencia:&nbsp;</b><?php echo $epay_r['cadena_dependencia']; ?><br /> 
+                    <b>Cadena de referencia:&nbsp;</b><?php echo $epay_r['cadena_referencia']; ?><br /> 
+                    <b>N&uacute;mero de operador:&nbsp;</b><?php echo $epay_r['no_operacion'] ?><br />
+                </address>
             <?php } ?>
 
             <br>
