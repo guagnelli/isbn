@@ -111,7 +111,19 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             <?php } ?>
 
             <?php if (!empty($solicitud['secciones']['df'])) { ?>
+                <?php $df_r = $solicitud['secciones']['df'][0]; ?>
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b></p>
+<!--                <address>
+                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>Gramaje:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
+                    <b>Ancho:&nbsp;</b><?php // echo $df_r['']; ?> Cm<br /> 
+                    <b>Alto:&nbsp;</b><?php // echo $df_r['']; ?> Cm<br /> 
+                </address>-->
 
             <?php } ?>
 
