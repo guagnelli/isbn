@@ -25,7 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php echo js("datatables/jquery.dataTables.js"); ?>
 <!-- Inicio informacion personal -->
 
-<?php echo form_open('', array('id' => 'form_busqueda_solicitudes')); ?>
 <div class="list-group">
 
     <div class="list-group-item">
@@ -45,10 +44,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h4><?php echo $title_template; ?> </h4>
                     <br>
                 </div>
+                <?php echo form_open('', array('id' => 'form_busqueda_solicitudes')); ?>
                 <?php if (isset($c_entidad)) { //Si existe entidad, no es ususario entidad  ?> 
                     <!--                    <div class="row">
                                             <div class="col-md-12 col-lg-12 col-sm-12">
-                                                <a class="btn btn-primary" href="<?php // echo site_url();         ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
+                                                <a class="btn btn-primary" href="<?php // echo site_url();              ?>/solicitud/registrar"  target="_blank"><?php echo $string_values['btn_agreagar_solicitud']; ?></a>
                                             </div>
                                         </div>-->
                     <?php // } else { //Si existe entidad, no es ususario entidad  ?> 
@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="panel-body input-group ">
                             <span class="input-group-addon"><?php echo $string_values['lbl_estado_solicitud']; ?></span>
                             <?php
-                            if($this->session->userdata('rol_cve') == 3){
+                            if ($this->session->userdata('rol_cve') == 3) {
                                 unset($c_estado[1]);
                             }
                             echo $this->form_complete->create_element(array('id' => 'estado_cve',

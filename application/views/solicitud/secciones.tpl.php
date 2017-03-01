@@ -4,8 +4,7 @@
 ?>
 <link href="<?php echo asset_url()?>vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 <script src='<?php echo asset_url()?>vendors/switchery/dist/switchery.min.js'></script>
-<!-- page content >
-<form action="entidad_nueva_solicitud.html" method="post" class="form-horizontal form-label-left" novalidate-->
+
   <!---Cuerpo-->
   <div class="col-md-12 col-sm-12 col-xs-12" id="div_secciones">
     <div class="x_panel">
@@ -73,8 +72,7 @@
       </div>
     </div>
   </div> 
-  <!--/form>
-<!-- /page content -->
+
 <?php
 echo js("solicitud/secciones.js");
 ?>
