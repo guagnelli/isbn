@@ -80,13 +80,15 @@ class Solicitud extends MY_Controller {
                 }
                 break;
             case E_rol::DGAJ://Juridico
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $array_catalogos = array(Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
                 //Verifica que se este invocando la carga de algún catálogo y sus permisos
                 if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
                     $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
 //                    pr($data);
                 }
+                $data['c_estado'] = $this->cg->get_combo_catalogo("c_estado", 'id', 'name', array('id>2'));
+                //$data['c_estado'] = dropdown_options($tmp_result, 'id', 'name');
                 break;
             case E_rol::ADMINISTRADOR://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
@@ -108,6 +110,7 @@ class Solicitud extends MY_Controller {
         }
         //Carga catÃ¡logos
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
+        //pr($data);
 
         //Carga datos de usuario 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad
@@ -166,8 +169,8 @@ class Solicitud extends MY_Controller {
     }
 
     private function listado_resultado_unidades($data, $form) {
-        $data['controller'] = 'Solicitud_model';
-        $data['action'] = 'get_buscar_solicitudes';
+        $data['controller'] = 'solicitud';
+        $data['action'] = 'buscador_solicituides';
         $pagination = $this->template->pagination_data($data); //Crear mensaje y links de paginaciÃ³n
         //$pagination = $this->template->pagination_data_buscador_asignar_validador($data); //Crear mensaje y links de paginaciÃ³n
         $links = "<div class='col-sm-5 dataTables_info' style='line-height: 50px;'>" . $pagination['total'] . "</div>

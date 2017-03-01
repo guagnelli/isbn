@@ -171,6 +171,7 @@ class Solicitud_model extends MY_Model {
             case E_rol::ENTIDAD:
                 break;
             case E_rol::DGAJ:
+                $this->db->where('ce.id>=2');
                 break;
         }
         if (is_array($busqueda_text)) {//si es un array lo recorre, ejemplo es la concatenación de nombre, ap y am
