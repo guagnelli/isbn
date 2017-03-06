@@ -26,6 +26,7 @@ $config['modulos_permisos'] = array(
         array(
             'permisos' => array(
                 'solicitud' => array('*'), 
+                'files' => array('*'), 
                 'catalogo' => array('*'), 
                 'reporte' => array('*'),
                 "colaborador" => array('*')
@@ -66,6 +67,7 @@ $config['modulos_permisos'] = array(
         'permisos' => array(
             'solicitud' => array('*'),
             "colaborador" => array('*'),
+            'files' => array('*'), 
             'catalogo' => array('*'), 
             'reporte' => array('*')
         ), 
@@ -103,7 +105,8 @@ $config['modulos_permisos'] = array(
     ),
     E_rol::DGAJ => array(
         'permisos' => array(
-            'solicitud' => array('*')
+            'solicitud' => array('*'),
+            'files' => array('*'), 
         ), 
         'menu' => array(
             'solicitud/index' => 'Solicitud'
@@ -111,7 +114,8 @@ $config['modulos_permisos'] = array(
     ),
     E_rol::ENTIDAD => array(
         'permisos' => array(
-            'solicitud' => array('*'), 
+            'solicitud' => array('*'),
+            'files' => array('*'), 
             "colaborador" => array('*')
         ),
         'menu' => array(

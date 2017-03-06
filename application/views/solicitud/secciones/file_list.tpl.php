@@ -1,26 +1,30 @@
-<?php if(isset($file_list) && count($file_list) > 0){
-pr($file_list);
-?>
 
+<?php if(isset($files) && count($files) > 0){
+//pr($files);
+?>
 <table width="100%">
 	<tr>
-		<th width="70%">Archivo</th>
-		<th width="30%">Opciones</th>
+		<th width="30%">Archivo</th>
+		<th width="50%">Descripci&oacute;n</th>
+		<th width="20%">Opciones</th>
 	</tr>
-	<?php foreach($file_list as $key=>$file){?>
+	<?php foreach($files as $key=>$file){?>
 	<tr>
 		<td>
 			<?php echo $file["nombre"]?>
 		</td>
 		<td>
-			<button id="remove_file" 
+			<?php echo $file["description"]?>
+		</td>
+		<td>
+			<!--button id="remove_file" 
             type="button" 
             class="btn btn-form" 
             data-type="remove"
             data-file="<?php echo $file['id']?>"
-            onclick="btn_file(this)" >
+            onclick="btn_dfile(this)" >
      		Eliminar
-     		</button>
+     		</button-->
 		</td>
 	</tr>
 	<?php }?>

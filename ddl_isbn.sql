@@ -443,6 +443,3 @@ create table hist_revision_isbn(
     foreign key(c_estado_id)
     references c_estado(id)
 );
-
-
-

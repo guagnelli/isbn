@@ -2,8 +2,14 @@ function ajax_files(action,form_data,div_content,div_msg){
 	$.ajax({
         url: action,
         data: form_data,
-        method: 'POST',
+        mimeType: "multipart/form-data",
+        contentType: false,
+        cache: false,
+        processData: false,
+        //dataType: 'JSON',
+        type: 'POST',
         beforeSend: function (xhr) {
+            console.log(form_data);
             $(div_msg).html(create_loader());
         }
     }).done(function (response) {
@@ -34,24 +40,30 @@ function ajax_files(action,form_data,div_content,div_msg){
 }
 
 function btn_file(obj){
-	var type = $(obj).data("type");
-	var id = "#upload";
+	//var type = $(obj).data("type");
+	var id = "#frm_file";
 	var solicitud = $("#sol").val();
-	// alert(id)
-	//alert(solicitud);
-	
-	var input = $('<input name="solicitud_id" type="hidden" value="'+solicitud+'">');
-	$(id).append(input);	
-	var input = $('<input name="option" type="hidden" value="'+type+'">');
-	$(id).append(input);
-	if(type == "remove"){
-		var id = $(obj).data("file");
-		var input = $('<input name="id" type="hidden" value="'+id+'">');
-		$(id).append(input);
-	}
-	var action = $(id).attr("action");
-	var form_data = $(id).serialize();
+    var action = $(id).attr("action");
+    var form_data = new FormData($(id)[0]);
+    form_data.append('solicitud_id', solicitud);
+	//var form_data = $(id).serialize();
+    
 	//alert(form_data);
-	ajax_files(action,form_data,'#div_flist','#msg_general');
+	ajax_files(action,form_data,'#tab_files','#msg_general');
 	//});
+}
+function btn_dfile(obj){
+    var type = $(obj).data("type");
+    var id = "#frm_file";
+    var solicitud = $("#sol").val();
+    // alert(id)
+    //alert(solicitud);
+    
+    var input = $('<input name="file_id" type="hidden" value="'+solicitud+'">');
+    $(id).append(input);
+    var action = $(id).attr("action");
+    var form_data = $(id).serialize();
+    //alert(form_data);
+    ajax_files(action,form_data,'#div_flist','#msg_general');
+    //});
 }

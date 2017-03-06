@@ -328,3 +328,6 @@ constraint pk_tc_unico
 	unique(nombre,solicitud_id,nacionalidad, tipo);
 alter table colaboradores add column seudonimo varchar(100);
 alter table colaboradores add column email varchar(255);
+
+alter table files add column file_type varchar(2) default 'o';
+alter table files add column description text;

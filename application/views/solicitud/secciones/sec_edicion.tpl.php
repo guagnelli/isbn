@@ -146,4 +146,27 @@ echo js("daterangepicker.js");
           $('#fecha_aparicion').val(start.format('YYYY-MM-DD'));
         });
   });
+  $("#coedicion").ready(function(){
+    <?php if($edicion["coedicion"]==1){?>
+      $("#coedicion").prop('checked', true);
+      $("#coeditor").prop('disabled', false);
+    <?php }else{?>
+      $("#coedicion").prop('checked', false);
+      $("#coeditor").prop('disabled', true);
+    <?php }?>
+    $("#coedicion").click(function(){
+      if($("#coedicion").prop("checked")){
+        //alert($("#coedicion").prop("checked"));
+        $("#coeditor").prop('disabled', false);
+      }else{
+        apprise("Esta a punto de eliminar la información del coeditor, ¿desea continuar?",
+                {verify: true},
+                function(){
+                  $("#coeditor").val("");
+                  $("#coeditor").prop('disabled', true);
+                }
+        );
+      }
+    });
+  });
 </script>

@@ -384,7 +384,7 @@ class Solicitud extends MY_Controller {
             $data["datos"]["solicitud"] = $this->req->getSolicitud($solicitud, FALSE);
             $data["combos"]["c_idioma"] = $this->cg->get_combo_catalogo("c_idioma");
             $data["secciones"] = $this->req->get_sections();
-            //$data["files"] = "Mis archivos";
+            $data["files"] = "Mis archivos";
         } catch (Exception $ex) {
             print ($ex);
         }

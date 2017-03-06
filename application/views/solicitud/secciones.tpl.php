@@ -90,12 +90,15 @@ function load_sections(){
         "#msg_general");
   <?php
   }
+  if(isset($files)){?>
+  ajax(site_url+"/files",{
+          "solicitud_id":solicitud,
+        },
+      "#tab_files",
+      "#msg_general");
+  <?php
+  }
   ?>
-  //ajax(site_url+"/solicitud/sec_files",{
-  //        "solicitud_id":solicitud,
-  //      },
-  //      "#tab_files",
-  //      "#msg_general");
 }
 $(document).ready(function (){
     //alert("step one");

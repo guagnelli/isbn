@@ -91,5 +91,12 @@ class Catalogos_generales extends CI_Model {
         //$options[0]="Seleccione una opción";
         return $options;
     }
+
+    public function get_tipo_file(){
+        return array(
+            "o"=>"Otro",
+            "p"=>"Comprobate de pago",
+        );
+    }
    
 }
