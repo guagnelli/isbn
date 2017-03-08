@@ -93,7 +93,7 @@ if(isset($comercializable["id"])){
 	           placeholder="Oferta total" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["oferta_total"]) ? $comercializable["oferta_total"]:""?>'
-	           type="number" disabled />
+	           type="number" />
 	  </div>
 	</div>
 	<div class="form-group">

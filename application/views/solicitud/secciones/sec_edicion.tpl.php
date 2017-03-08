@@ -1,5 +1,6 @@
 <?php 
-echo js('daterangepicker.js');
+  
+//echo js('daterangepicker.js');
 //  pr($tema);
 echo form_open("solicitud/sec_edicion",array(
     'id'=>'frm_edicion',
@@ -123,11 +124,9 @@ if(isset($edicion["id"])){
 </div>
 <?php
 echo form_close();
-echo js("moment.min.js");
-echo js("daterangepicker.js");
 ?>
 <script type="text/javascript">
-  $("#fecha_aparicion").ready(function(){
+  $(document).ready(function(){
     $('#fecha_aparicion').daterangepicker(
       {
         singleDatePicker: true,

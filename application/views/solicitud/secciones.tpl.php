@@ -4,7 +4,9 @@
 ?>
 <link href="<?php echo asset_url()?>vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 <script src='<?php echo asset_url()?>vendors/switchery/dist/switchery.min.js'></script>
-
+<?php echo js("moment.min.js");
+echo js("daterangepicker.js");
+?>
   <!---Cuerpo-->
   <div class="col-md-12 col-sm-12 col-xs-12" id="div_secciones">
     <div class="x_panel">
@@ -34,16 +36,12 @@
             </li>
             <?php
             }
-            if(isset($files)){
             ?>
               <li>
                 <a href="#tab_files" data-toggle="tab">
                 Archivos
                 </a>
               </li>
-            <?php
-            }
-            ?>
           </ul>
         </div>
 
@@ -59,13 +57,10 @@
             </div>
             <?php
             }
-            if(isset($files)){?>
+            ?>
             <div class="tab-pane" id="tab_files">
               <?php echo $files?>
             </div>
-            <?php
-            }
-            ?>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -81,7 +76,13 @@ echo js("solicitud/secciones.js");
 function load_sections(){
 
   var solicitud = $("#sol").val();
-  <?php 
+  
+  ajax(site_url+"/files",{
+        "solicitud_id":solicitud,
+      },
+    "#tab_files",
+    "#msg_general");
+  <?php
   foreach($secciones as $id=>$seccion){?>
     ajax(site_url+"/solicitud/sec_<?php echo $seccion["tbl_seccion"]?>",{
           "solicitud_id":solicitud,
@@ -90,14 +91,7 @@ function load_sections(){
         "#msg_general");
   <?php
   }
-  if(isset($files)){?>
-  ajax(site_url+"/files",{
-          "solicitud_id":solicitud,
-        },
-      "#tab_files",
-      "#msg_general");
-  <?php
-  }
+  
   ?>
 }
 $(document).ready(function (){

@@ -615,6 +615,7 @@ class Solicitud extends MY_Controller {
     function sec_tema() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
+                //$data["debug"] = 
                 $data["tema"] = $this->input->post();
                 //load from the begining
                 if (count($data["tema"]) == 1) {
@@ -623,13 +624,17 @@ class Solicitud extends MY_Controller {
                         $data["tema"] = $tema;
                     }
                 } elseif (isset($data["tema"]["id"])) {//update
+
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
-
-                    $where = array("id" => $data["tema"]["id"]);
+                    $id = $data["tema"]["id"];
                     unset($data["tema"]["id"]);
+
+                    $where = array("id" => $id);
                     $update = $this->req->update("tema", $data["tema"], $where);
+                    $data["tema"]["id"] = $id;
+
                     if ($update) {
                         $response['message'] = "El tema se ha guardado exitosamente";
                         $response['result'] = "true";

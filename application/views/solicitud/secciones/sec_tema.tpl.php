@@ -1,5 +1,7 @@
 <?php 
-//  pr($tema);
+if(isset($debug)){
+  pr($debug);
+}
 echo form_open("solicitud/sec_tema",array(
     'id'=>'frm_tema',
     'class'=>'form-horizontal form-label-left',
