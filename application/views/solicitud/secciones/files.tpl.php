@@ -71,9 +71,7 @@
       	<textarea rows="6" cols="50" 
       			  id="description" 
       			  name="description" 
-      			  class="form-control col-md-7 col-xs-12">
-      		<?php echo isset($file['description'])?$file['description']:''?>
-      	</textarea>
+      			  class="form-control col-md-7 col-xs-12"><?php echo isset($file['description'])?$file['description']:''?></textarea>
       </div>
     </div>
     <div class="form-group">
@@ -99,7 +97,7 @@
 	<div class="col-xs-12 col-md-12 col-sm-12">
 		<div id="progressbox" >
 			<div id="progressbar"></div >
-			<div id="statustxt">0%</div>
+			<div id="statustxt"></div>
 		</div>
 	</div>
 </div>

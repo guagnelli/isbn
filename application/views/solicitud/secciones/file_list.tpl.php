@@ -1,8 +1,15 @@
 
-<?php if(isset($files) && count($files) > 0){
+<?php 
+if(isset($debug)){
+	pr($debug);
+}
+if(isset($files) && count($files) > 0){
 //pr($files);
 ?>
-<table width="100%">
+<table id="datatable-responsive" 
+   class="table table-striped table-bordered dt-responsive nowrap" 
+   cellspacing="0" 
+   width="100%">
 	<tr>
 		<th width="30%">Archivo</th>
 		<th width="50%">Descripci&oacute;n</th>
@@ -17,14 +24,13 @@
 			<?php echo $file["description"]?>
 		</td>
 		<td>
-			<!--button id="remove_file" 
+			<button id="remove_file" 
             type="button" 
             class="btn btn-form" 
-            data-type="remove"
             data-file="<?php echo $file['id']?>"
             onclick="btn_dfile(this)" >
      		Eliminar
-     		</button-->
+     		</button>
 		</td>
 	</tr>
 	<?php }?>

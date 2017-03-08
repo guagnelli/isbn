@@ -1,77 +1,24 @@
-/*function ajax_files(action,form_data,div_content,div_msg){
-	$.ajax({
-        url: action,
-        data: form_data,
-        mimeType: "multipart/form-data",
-        contentType: false,
-        cache: false,
-        processData: false,
-        //dataType: 'JSON',
-        type: 'POST',
-        beforeSend: function (xhr) {
-            console.log(form_data);
-            $(div_msg).html(create_loader());
-        }
-    }).done(function (response) {
-        //alert(response)
-        try{
-            var resp = $.parseJSON(response);
-            $(div_msg).show();        
-            $(div_msg).text(resp.message);
-            if(resp.result=="true"){
-                $(div_msg).addClass('alert-success');
-            }else{
-                $(div_msg).addClass('alert-danger');
+function btn_dfile(obj){
+    var id = "#frm_file";
+    var solicitud = $("#sol").val();
+    var file = $(obj).data("file");
+    var form_data = { "id":file,"solicitud_id":solicitud};
+    var action = site_url+"/files/delete";
+    apprise("Esta a punto de eliminar la información de traducción, ¿desea continuar?", 
+        {verify: true}, 
+        function (btnClick){
+            if(btnClick){
+                ajax(action,form_data,'#div_flist','#msg_general');
             }
-            //setTimeout("$("+div_msg+").hide()", 5000);
-            //recargar_fecha_ultima_actualizacion();//Recarga la fecha de la ultima actualización del modulo perfil
-            $(div_content).html(resp.content);
-        }catch(e){
-            $(div_content).html(response);
-        }
-        
-    }).fail(function (jqXHR, response) {
-        $(div_msg).removeClass('alert-success').addClass('alert-danger');
-        $(div_msg).html('Ocurrió un error durante el proceso, inténtelo más tarde.');
-    })
-    .always(function () {
-        remove_loader();
     });
 }
 
 function btn_file(obj){
-	//var type = $(obj).data("type");
-	var id = "#frm_file";
-	var solicitud = $("#sol").val();
-    var action = $(id).attr("action");
-    var form_data = new FormData($(id)[0]);
-    form_data.append('solicitud_id', solicitud);
-	//var form_data = $(id).serialize();
-    
-	//alert(form_data);
-	ajax_files(action,form_data,'#tab_files','#msg_general');
-	//});
-}
-function btn_dfile(obj){
-    var type = $(obj).data("type");
     var id = "#frm_file";
     var solicitud = $("#sol").val();
-    // alert(id)
-    //alert(solicitud);
-    
-    var input = $('<input name="file_id" type="hidden" value="'+solicitud+'">');
+    var action = $(id).attr("action");
+    var input = $('<input name="solicitud_id" type="hidden" value="'+solicitud+'">');
     $(id).append(input);
-    var action = $(id).attr("action");
-    var form_data = $(id).serialize();
-    //alert(form_data);
-    ajax_files(action,form_data,'#div_flist','#msg_general');
-    //});
-}*/
-
-function btn_file(obj){
-    var id = "#frm_file";
-    var solicitud = $("#sol").val();
-    var action = $(id).attr("action");
     //alert(action);
     var options = { 
         //target:   '#tab_files',   // target element(s) to be updated with server response 
@@ -80,12 +27,7 @@ function btn_file(obj){
         uploadProgress: OnProgress, //upload progress callback 
         resetForm: true        // reset the form after successful submit 
     };
-    $(id).ajaxSubmit(options); 
-    /*$(id).submit(function() { 
-                   
-        // always return false to prevent standard browser submit and page navigation 
-        return false; 
-    });*/
+    $(id).ajaxSubmit(options);
 }
 
 //function after succesful file upload (when server response)
@@ -93,8 +35,14 @@ function afterSuccess(response){
     try{
         var resp = $.parseJSON(response);
         if (resp.content !== undefined) {
-            alert("hello you")
+            //alert("hello you")
             $("#tab_files").html(resp.content);
+        }
+        if (resp.message !== undefined) {
+            //alert("hola mundo");
+            $("#msg_general").show();
+            $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
+            $("#msg_general").text(resp.message);
         }
     }catch(e){
 
@@ -126,9 +74,8 @@ function beforeSubmit(){
             case 'image/png': 
             case 'image/gif': 
             case 'image/jpeg': 
-            case 'image/pjpeg':
+            case 'image/jpg': 
             case 'application/pdf':
-            case 'application/msword':
                 break;
             default:
                 //alert(ftype)
