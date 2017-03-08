@@ -313,7 +313,7 @@ class Solicitud_model extends MY_Model {
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
                 'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
-            Enum_es::Revision_de_correccion => array(
+            Enum_es::Correcciones_atendidas => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(Enum_es::Correccion, Enum_es::Revision_indautor),
                 'is_boton' => 1,
@@ -330,7 +330,7 @@ class Solicitud_model extends MY_Model {
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
-                'estados_transicion' => array(Enum_es::Revision_de_correccion),
+                'estados_transicion' => array(Enum_es::Correcciones_atendidas),
                 'is_boton' => 1,
                 'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
@@ -344,7 +344,7 @@ class Solicitud_model extends MY_Model {
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
-                'estados_transicion' => array(Enum_es::Revisado_indautor),
+                'estados_transicion' => array(Enum_es::Rechazado_indautor, Enum_es::Aceptado_indautor, Enum_es::Correccion),
                 'is_boton' => 1,
                 'titulo_boton' => 'Revisión por indautor',
                 'color_status' => '',
@@ -357,31 +357,33 @@ class Solicitud_model extends MY_Model {
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
                 'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
-            Enum_es::Revisado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
+            Enum_es::Rechazado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
-                'estados_transicion' => array(Enum_es::Correccion, Enum_es::Radicado),
+                'estados_transicion' => array(),
                 'is_boton' => 1,
-                'titulo_boton' => 'Cargar resultado de indautor',
+                'titulo_boton' => 'Rechazado por indautor',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
-                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+//                'add_comment_seccion' => array(),
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
                 'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
             ),
-            Enum_es::Radicado => array(
+            Enum_es::Aceptado_indautor => array(
                 'rol_permite' => array(E_rol::DGAJ),
                 'estados_transicion' => array(),
                 'is_boton' => 1,
-                'titulo_boton' => 'Radicar',
+                'titulo_boton' => 'Aceptado por indautor',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
-                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+//                'add_comment_seccion' => array(),
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),

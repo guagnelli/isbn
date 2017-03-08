@@ -85,7 +85,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
             <?php if (!empty($solicitud['secciones']['ed'])) { ?>
                 <?php $ed_ = $solicitud['secciones']['ed'][0]; ?>
-                <p class="lead"><b><?php echo $string_detalle['title_info_edicion']; ?></b></p>
+                <p class="lead"><b><?php echo $string_detalle['title_info_edicion']; ?></b><?php echo $botones_seccion[En_secciones::INFO_EDICION]; ?></p>
                 <address>
                     <b>No. Edici&oacute;n:&nbsp;</b><?php echo $ed_['no_edicion']; ?><br /> 
                     <b>Departamento, provincia o estado:&nbsp;</b><?php echo $ed_['nome_dpto']; ?><br /> 
@@ -99,7 +99,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
             <?php if (!empty($solicitud['secciones']['cmrc'])) { ?>
                 <?php $cmrc_ = $solicitud['secciones']['cmrc'][0]; ?>
-                <p class="lead"><b>Comercializaci&oacute;n</b></p>
+                <p class="lead"><b>Comercializaci&oacute;n</b><?php echo $botones_seccion[En_secciones::COMERCIALIZACION]; ?></p>
                 <address>
                     <b>Ejemplares nacionales:&nbsp;</b><?php echo $cmrc_['ejemplares_nacional']; ?><br /> 
                     <b>Prescio local:&nbsp;</b><?php echo $cmrc_['precio_local']; ?><br /> 
@@ -112,7 +112,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
             <?php if (!empty($solicitud['secciones']['df'])) { ?>
                 <?php $df_r = $solicitud['secciones']['df'][0]; ?>
-                <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b></p>
+                <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
 <!--                <address>
                     <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
                     <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
@@ -129,7 +129,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
             <?php if (!empty($solicitud['secciones']['epay'])) { ?>
                 <?php $epay_r = $solicitud['secciones']['epay'][0]; ?>
-                <p class="lead"><b>Pago electr&oacute;nico</b></p>
+                <p class="lead"><b>Pago electr&oacute;nico</b><?php echo $botones_seccion[En_secciones::PAGO_ELECTRONICO]; ?></p>
                 <address>
                     <b>Clave de pago:&nbsp;</b><?php echo $epay_r['pay_hash']; ?><br /> 
                     <b>Cadena de dependencia:&nbsp;</b><?php echo $epay_r['cadena_dependencia']; ?><br /> 

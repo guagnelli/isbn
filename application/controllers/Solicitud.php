@@ -111,7 +111,6 @@ class Solicitud extends MY_Controller {
         //Carga catÃ¡logos
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name', Enum_cg::c_categoria => 'nombre'));
         //pr($data);
-
         //Carga datos de usuario 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad
 
@@ -243,7 +242,7 @@ class Solicitud extends MY_Controller {
                 $datosPerfil['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
 
                 //Obtiene las propiedades del estado actual
-                $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']];//
+                $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']]; //
                 //********** Obtiene mensajes por sección
                 //Propiedades de las secciones
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
@@ -266,7 +265,7 @@ class Solicitud extends MY_Controller {
                     }
                 } else {
                     foreach ($secciones as $value) {
-                        $array_comentarios[$value] = '';//Agrega la referencia de los botone de mensajes vacia
+                        $array_comentarios[$value] = ''; //Agrega la referencia de los botone de mensajes vacia
                     }
                 }
 //                pr($array_comentarios);
@@ -312,31 +311,31 @@ class Solicitud extends MY_Controller {
         }
     }
 
-    function registrar($solicitud_id=0) {
+    function registrar($solicitud_id = 0) {
 
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
         $id_subcategoria = null;
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
-        if($solicitud_id > 0){
-            $data["solicitud"] = $this->req->getSolicitud($solicitud_id,false);
+        if ($solicitud_id > 0) {
+            $data["solicitud"] = $this->req->getSolicitud($solicitud_id, false);
         }
         //pr($data);
         //si tiene datosbusca por id
         if ($this->input->post()) {
             $data["save"] = $this->input->post();
-            
+
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //AÃ±adir validaciones
             if ($this->form_validation->run()) {
                 //pr($data["save"]);
-                if(isset($data["save"]["solicitud_id"])){ //edit
+                if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
                     //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
                     redirect("solicitud");
-                }else{ //save
+                } else { //save
                     $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
                     $solicitud = $this->req->addSolicitud($data["save"]);
                     if ($solicitud > 0) {
@@ -362,11 +361,11 @@ class Solicitud extends MY_Controller {
         $this->template->getTemplate();
     }
 
-    function sub_categoria(){
+    function sub_categoria() {
         if ($this->input->is_ajax_request()) {
             $categoria = $this->input->post();
             //pr($categoria);
-            if(isset($categoria["categoria"])){
+            if (isset($categoria["categoria"])) {
                 $data["combos"]["sub_categorias"] = $this->req->listSubCategoria($categoria["categoria"]);
             }
             $response['content'] = $this->load->view("solicitud/secciones/subcategoria.tpl.php", $data, true);
@@ -435,7 +434,7 @@ class Solicitud extends MY_Controller {
                 $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                 $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
-                
+
                 $data = array(
                     'titulo_modal' => null,
                     'cuerpo_modal' => $data_detalle,
@@ -554,7 +553,9 @@ class Solicitud extends MY_Controller {
                 $estado_solisitud = $this->session->userdata('detalle_solicitud')['estado_cve'];
                 $rol_seleccionado = $this->session->userdata('rol_cve');
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud()[$estado_solisitud]; //Obtiene reglas de estado
-                $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
+//                if (isset($reglas_validacion['add_comment_seccion'][$rol_seleccionado])) {
+                    $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
+//                }
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
                 $data_coment['string_values'] = $string_values;
@@ -722,13 +723,13 @@ class Solicitud extends MY_Controller {
             //load from the begining
             begining:
             //pr($data);
-            if(isset($data["traduccion"]["del"])){
+            if (isset($data["traduccion"]["del"])) {
                 //pr($data);
                 echo "entra caramba!!!!";
                 unset($data["traduccion"]["del"]);
                 unset($data["traduccion"]["id"]);
                 $response['message'] = "La traducción se ha eliminado ";
-            }elseif (count($data["traduccion"]) == 1) {
+            } elseif (count($data["traduccion"]) == 1) {
                 load:
                 // $data["debug"][0] = 
                 $data["traduccion"] = $this->req->get_section("traduccion", array(
@@ -738,7 +739,7 @@ class Solicitud extends MY_Controller {
                     $data["traduccion"] = $data["traduccion"][0];
                     $data["traduccion"]["has_traduction"] = 1;
                 }
-            }elseif (isset($data["traduccion"]["id"])) {
+            } elseif (isset($data["traduccion"]["id"])) {
                 $where = array("id" => $data["traduccion"]["id"]);
                 unset($data["traduccion"]["id"]);
                 unset($data["traduccion"]["has_traduction"]);
@@ -788,13 +789,12 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $data["debug"]["colab"] = $data["colab"] = $this->input->post();
             //$response['message'] = "Mi mensaje de colaboradores";
-            if(isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]){
+            if (isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]) {
                 unset($data["colab"]["eliminar"]);
-                $this->req->delete('colaboradores', $data["colab"]); 
+                $this->req->delete('colaboradores', $data["colab"]);
                 $response['message'] = "La información del colaborador/autor se ha eliminado exitosamente";
                 $response['result'] = "true";
-            }
-            elseif (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
+            } elseif (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
                 //$data["debug"]="load section";
                 $response['result'] = "true";
             } elseif (isset($data["colab"]["update"])) {//update
@@ -1020,7 +1020,7 @@ class Solicitud extends MY_Controller {
             $data["df"] = $this->input->post();
             $solicitud_id = $data["df"]["solicitud_id"];
             //print_r($data["df"]);
-            $fields = array("medio", "formato","tamanio_desc", "tamanio", "id", "solicitud_id");
+            $fields = array("medio", "formato", "tamanio_desc", "tamanio", "id", "solicitud_id");
             $tabla = array("print" => "desc_fisica_impresa", "digital" => "
                 desc_electronica");
             $tipo = "print";
@@ -1041,10 +1041,8 @@ class Solicitud extends MY_Controller {
                     }
                     $data["df"]["solicitud_id"] = $solicitud_id;
                 }
-                $this->req->delete("desc_fisica_impresa", 
-                                    array("solicitud_id"=>$solicitud_id)); 
-                $this->req->delete("desc_electronica", 
-                                    array("solicitud_id"=>$solicitud_id)); 
+                $this->req->delete("desc_fisica_impresa", array("solicitud_id" => $solicitud_id));
+                $this->req->delete("desc_electronica", array("solicitud_id" => $solicitud_id));
                 $save = $this->req->add($tabla[$tipo], $data["df"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
