@@ -8,10 +8,10 @@ class Enum_es {
             En_revision = 2,
             Correccion = 3,
             Revision_indautor = 4,
-            Revisado_indautor = 5,
-            Radicado = 6,
-            Revision_de_correccion = 7
-
+            Rechazado_indautor = 5,
+            Aceptado_indautor = 6,
+            Correcciones_atendidas = 7
+            
     ;
     /*
       guardar actuación (evaluaciones)
