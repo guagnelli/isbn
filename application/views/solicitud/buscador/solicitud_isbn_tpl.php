@@ -122,6 +122,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-6">
                         <div class="panel-body input-group ">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_tematica']; ?></span>
+                            <?php
+                            echo $this->form_complete->create_element(array('id' => 'categoria_cve',
+                                'type' => 'dropdown',
+                                'options' => $c_categoria,
+                                'first' => array('' => $string_values['drop_tematica']),
+                                'value' => (isset($subcategoria_cve)) ? $subcategoria_cve : '',
+                                'class' => 'form-control',
+                                'attributes' => array('class' => 'form-control',
+                                    'placeholder' => $string_values['lbl_tematica'],
+                                    'data-toggle' => 'tooltip',
+                                    'data-placement' => 'top',
+                                    'title' => $string_values['lbl_tematica'],
+                                    'onchange' => 'sub_categoria(this); funcion_buscar_solicitudes();'
+                                )
+                            ));
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <div class="panel-body input-group ">
                             <span class="input-group-addon"><?php echo $string_values['lbl_subcategoria']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'sub_categoria_cve',
@@ -215,7 +236,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>    
 
 </div>
-
+<script type="text/javascript">
+function sub_categoria(obj){
+  var categoria_id = $(obj).val();
+  var action = "<?php echo base_url();?>index.php/solicitud/sub_categoria";
+  var form_data = {categoria:categoria_id};
+  //alert(form_data)
+  ajax(action,form_data,'#sub_categoria_cve','#msg_general');
+  //});
+}
+</script>
 
 
 

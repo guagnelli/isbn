@@ -68,7 +68,7 @@ class Solicitud extends MY_Controller {
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
                 $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria);
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria, Enum_cg::c_categoria);
 //                $sub_sistema_id = carga_catalogos_generales(array(Enum_cg::c_entidad), null, array(Enum_cg::c_entidad => array('id' => $datos_usuario['entidad_cve'])), false, null, array(Enum_cg::c_entidad => 'name'));
 //                $array_where = array(Enum_cg::c_subsistema => array('id' => $sub_sistema_id[Enum_cg::c_entidad][0]['subsistema_id']));
 //                pr($array_where);
@@ -80,7 +80,7 @@ class Solicitud extends MY_Controller {
                 }
                 break;
             case E_rol::DGAJ://Juridico
-                $array_catalogos = array(Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $array_catalogos = array(Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
                 //Verifica que se este invocando la carga de algún catálogo y sus permisos
                 if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
@@ -91,7 +91,7 @@ class Solicitud extends MY_Controller {
                 //$data['c_estado'] = dropdown_options($tmp_result, 'id', 'name');
                 break;
             case E_rol::ADMINISTRADOR://Juridico
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
                 //Verifica que se este invocando la carga de algún catálogo y sus permisos
                 if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
@@ -100,7 +100,7 @@ class Solicitud extends MY_Controller {
                 }
                 break;
             case E_rol::SUPERADMINISTRADOR://Juridico
-                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema);
+                $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
                 //Verifica que se este invocando la carga de algún catálogo y sus permisos
                 if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
@@ -109,7 +109,7 @@ class Solicitud extends MY_Controller {
                 }
         }
         //Carga catÃ¡logos
-        $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name'));
+        $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name', Enum_cg::c_categoria => 'nombre'));
         //pr($data);
 
         //Carga datos de usuario 

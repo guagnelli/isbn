@@ -161,6 +161,9 @@ class Solicitud_model extends MY_Model {
         if ($params['entidad_cve'] > 0) {//Filtro de entidad 
             $this->db->where('s.entidad_id', $params['entidad_cve']);
         }
+        if ($params['categoria_cve'] != "") {//Filtro de categoria 
+            $this->db->where('sc.id_categoria', $params['categoria_cve']);
+        }
         if ($params['sub_categoria_cve'] > 0) {//Filtro de categoria 
             $this->db->where('sc.id', $params['sub_categoria_cve']);
         }
@@ -200,7 +203,7 @@ class Solicitud_model extends MY_Model {
         }
         $ejecuta = $this->db->get('hist_revision_isbn hri'); //Prepara la consulta ( aún no la ejecuta)
         $query = $ejecuta->result_array();
-//        pr($this->db->last_query());
+        //pr($this->db->last_query());
 //        $query->free_result();
         $this->db->flush_cache(); //Limpia la cache
         $result['result'] = $query;
