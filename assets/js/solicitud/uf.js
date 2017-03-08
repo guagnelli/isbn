@@ -1,4 +1,4 @@
-function ajax_files(action,form_data,div_content,div_msg){
+/*function ajax_files(action,form_data,div_content,div_msg){
 	$.ajax({
         url: action,
         data: form_data,
@@ -66,4 +66,8 @@ function btn_dfile(obj){
     //alert(form_data);
     ajax_files(action,form_data,'#div_flist','#msg_general');
     //});
-}
+}*/
+
+
+
+

@@ -78,6 +78,11 @@
     </div>
     <div class="form-group">
 	  <div class="col-md-12 text-center">
+	  	<?php echo img("loader.gif",
+	  					array("id"=>"loading-img", 
+	  						  "style"=>"display:none;" ,
+	  						  "alt"=>"Subiendo archivo"));
+	  	?>
 	    <button id="send_file" 
 	            type="button" 
 	            class="btn btn-form" 
@@ -91,10 +96,19 @@
    </div>
 </div>
 <div class="row">
+	<div class="col-xs-12 col-md-12 col-sm-12">
+		<div id="progressbox" >
+			<div id="progressbar"></div >
+			<div id="statustxt">0%</div>
+		</div>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xs-12 col-md-12 col-sm-12" id="div_flist">
 	</div>
 </div>
-<?php echo js("solicitud/uf.js");?>
+<?php echo js("uf/jquery.form.min.js");?>
+<?php echo js("uf/uf.js");?>
 <script type="text/javascript">
 $("#div_flist").ready(function(){
   var solicitud = $("#sol").val();
