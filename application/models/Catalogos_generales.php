@@ -96,6 +96,8 @@ class Catalogos_generales extends CI_Model {
         return array(
             "o"=>"Otro",
             "p"=>"Comprobate de pago",
+            "a"=>"aceptado",
+            "r"=>"rechazado",
         );
     }
    

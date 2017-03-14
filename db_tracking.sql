@@ -331,3 +331,11 @@ alter table colaboradores add column email varchar(255);
 
 alter table files add column file_type varchar(2) default 'o';
 alter table files add column description text;
+
+
+ALTER TABLE hist_revision_isbn ADD id_file INT(11) NULL;
+CREATE INDEX XIF15FILE_ESTADO_SOLICITUD ON hist_revision_isbn (id_file);  /* Se vuelve index el campo */
+ALTER TABLE hist_revision_isbn ADD CONSTRAINT file_id_fk   /* Asigna llave foranía*/
+FOREIGN KEY (id_file) REFERENCES files(id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+

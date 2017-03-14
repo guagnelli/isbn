@@ -2,7 +2,7 @@
 //pr($solicitud);
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
-//pr($solicitud);
+pr($this->session->userdata('detalle_solicitud'));
 ?>
 <div class="text-left" role="main">
     <div class="">

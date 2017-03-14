@@ -11,9 +11,9 @@ if (!defined('BASEPATH'))
  */
 if (!function_exists('pr')) {
 
-    function pr($mix,$string=false) {
-        if($string){
-          return "<pre>".print_r($mix,true)."</pre>";
+    function pr($mix, $string = false) {
+        if ($string) {
+            return "<pre>" . print_r($mix, true) . "</pre>";
         }
         echo "<pre>";
         print_r($mix);
@@ -722,14 +722,25 @@ if (!function_exists('genera_botones_estado_solicitud')) {
                                 $estados_trans['titulo_boton']
                                 . '</button>';
                     } else {
-                        $respuesta_html_botones[] = '<button '
-                                . 'type="button" '
-                                . 'class="btn btn-primary" '
-                                . 'data-estadosolicitudcve ="' . $value_est_trans . '"'
+                        if ($estados_trans['is_comprobante']) {
+                            $respuesta_html_botones[] = '<a href="#" class="btn btn-primary"
+                            data-toggle="modal" data-target="#modal_censo" 
+                            data-estadosolicitudcve ="' . $value_est_trans . '"
+                            data-original-title="Detalle title" 
+                            detalle="" onclick="' . $estados_trans['funcion_demandada'] . '">
+                                ' . $estados_trans['titulo_boton'] .
+                                    '</a>';
+                        } else {
+                            $respuesta_html_botones[] = '<button '
+                                    . 'type="button" '
+                                    . 'class="btn btn-primary" '
+                                    . 'data-estadosolicitudcve ="' . $value_est_trans . '"'
+//                                . 'data-iscomprobante ="' . $estados_trans['is_comprobante'] . '"'
 //                            . 'data-tipotransicion ="' . $tipo_transicion . '"'
-                                . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
-                                $estados_trans['titulo_boton']
-                                . '</button>';
+                                    . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
+                                    $estados_trans['titulo_boton']
+                                    . '</button>';
+                        }
                     }
                 }
             }
@@ -779,11 +790,11 @@ if (!function_exists('get_fecha_local')) {
             case 'es_MX':
 //                setlocale(LC_TIME, 'es_MX.UTF-8');
                 setlocale(LC_TIME, 'es_ES');
-                $fecha = strftime("%a, %d de %B de %Y",  strtotime($date));
+                $fecha = strftime("%a, %d de %B de %Y", strtotime($date));
                 break;
             default :
                 setlocale(LC_TIME, 'es_ES');
-                $fecha = strftime("%a, %d de %B de %Y",  strtotime($date));
+                $fecha = strftime("%a, %d de %B de %Y", strtotime($date));
         }
         return $fecha;
     }
