@@ -146,7 +146,7 @@ echo form_close();
         });
   });
   $("#coedicion").ready(function(){
-    <?php if($edicion["coedicion"]==1){?>
+    <?php if(isset($edicion["coedicion"]) && $edicion["coedicion"]==1){?>
       $("#coedicion").prop('checked', true);
       $("#coeditor").prop('disabled', false);
     <?php }else{?>
