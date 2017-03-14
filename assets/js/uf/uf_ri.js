@@ -1,12 +1,15 @@
 function guardar_estado_comprobante(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
     var estado_solicitud = button_obj.data('estadosolicitudcve');//    var tipo_transicion =obj.data('tipotransicion');
+    var tipo_file = button_obj.data('tipofile');//    var tipo_transicion =obj.data('tipotransicion');
     alert(estado_solicitud);
 
     //Remover contenido de un div 
     var id = "#frm_file_comprobante";
     var input = $('<input name="estado_cve" type="hidden" value="' + estado_solicitud + '">');
+    var input_file = $('<input name="file_type" type="hidden" value="' + tipo_file + '">');
     $(id).append(input);
+    $(id).append(input_file);
     //alert(action);
     var options = {
         //target:   '#tab_files',   // target element(s) to be updated with server response 
@@ -63,6 +66,15 @@ function afterSuccess(response) {
             $("#msg_general").show();
             $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
             $("#msg_general").text(resp.message);
+            $('#modal_censo').modal('toggle');
+            try {
+                funcion_buscar_solicitudes();//Recarga lista de solicitudes
+//                            document.getElementById("regresa_list").accion='onClick';
+                $(document).ready(function () {
+                    $('.botonF1').trigger('click');
+                });
+            } catch (e) {
+            }
         }
     } catch (e) {
 
@@ -80,7 +92,7 @@ function beforeSubmit() {
         if (!$('#archivo').val()) { //check empty input filed
             $("#msg_general").show();
             $("#msg_general").addClass('alert alert-warning alert-dismissible fade in');
-            
+
             $("#msg_general").text("El campo Archivo es obligatorio, por favor seleccione un archivo");
             return false
         }

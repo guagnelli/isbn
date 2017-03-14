@@ -1,7 +1,9 @@
 function cambio_estado(element) {
-    apprise('Confirme que realmente desea continuar', {verify: true}, function (btnClick) {
+    var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+    var text_conff = button_obj.data('text_confirmacion');//    var tipo_transicion =obj.data('tipotransicion');
+
+    apprise(text_conff, {verify: true}, function (btnClick) {
         if (btnClick) {
-            var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
             var estado_solicitud = button_obj.data('estadosolicitudcve');//    var tipo_transicion =obj.data('tipotransicion');
 
 //    var formData = $('#form_validar_docente').serialize();

@@ -10,7 +10,8 @@ class Enum_es {
             Revision_indautor = 4,
             Rechazado_indautor = 5,
             Aceptado_indautor = 6,
-            Correcciones_atendidas = 7
+            Correcciones_atendidas = 7,
+            Comprobado_isbn = 8
             
     ;
     /*

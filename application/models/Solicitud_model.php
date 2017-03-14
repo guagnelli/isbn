@@ -40,14 +40,15 @@ class Solicitud_model extends MY_Model {
         }
         return false;
     }
-    function editSolicitud($data){
+
+    function editSolicitud($data) {
         echo "salvando";
         $this->db->select("libro_id");
-        $this->db->where("id",$data["solicitud_id"]);
-        $result = $this->db->get("solicitud"); 
-        $data["libro_id"] = isset($result->result_array()[0]["libro_id"])?$result->result_array()[0]["libro_id"]:0;
-        $this->update("libro",$data["libro"],array("id"=>$data["libro_id"]));
-        $this->update("solicitud",$data["solicitud"],array("id"=>$data["solicitud_id"]));
+        $this->db->where("id", $data["solicitud_id"]);
+        $result = $this->db->get("solicitud");
+        $data["libro_id"] = isset($result->result_array()[0]["libro_id"]) ? $result->result_array()[0]["libro_id"] : 0;
+        $this->update("libro", $data["libro"], array("id" => $data["libro_id"]));
+        $this->update("solicitud", $data["solicitud"], array("id" => $data["solicitud_id"]));
         return true;
     }
 
@@ -73,19 +74,19 @@ class Solicitud_model extends MY_Model {
         if ($load_secciones) {
             $conf_secciones = $this->config->item('conf_secciones');
             // secciones
-            $this->db->where("estado",1);
+            $this->db->where("estado", 1);
             $secciones = $this->db->get("seccion_solicitud");
             foreach ($secciones->result_array() as $seccion) {
-                if(substr($seccion["tbl_seccion"],0,1) != '_'){
+                if (substr($seccion["tbl_seccion"], 0, 1) != '_') {
                     $sConf = $conf_secciones[$seccion['id']]['select'];
-    //                pr($sConf);
+                    //                pr($sConf);
                     $this->db->select($sConf);
                     $this->db->where($seccion["referencia"], $id);
                     //echo $seccion["tbl_seccion"],",";
                     $result = $this->db->get($seccion["tbl_seccion"]);
                     $solicitud["secciones"][$seccion["cve_seccion"]] = $result->result_array();
                     $result->free_result();
-    //                pr($this->db->last_query());
+                    //                pr($this->db->last_query());
                 }
             }
         }
@@ -102,7 +103,7 @@ class Solicitud_model extends MY_Model {
         $this->db->join('c_estado as e', 'e.id=h.c_estado_id');
         //solicitud
         $this->db->where("solicitud.id", $id);
-        $this->db->order_by("h.reg_revision", "asc");        
+        $this->db->order_by("h.reg_revision", "asc");
         $result = $this->db->get("solicitud");
 
         //pr($this->db->last_query());
@@ -268,9 +269,10 @@ class Solicitud_model extends MY_Model {
 //                'add_comment_seccion' => 0,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
                 'vista_detalle_solicitud' => 0,
-                'hidden_add_comment' => 0,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 0, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
 //            Enum_es::Carga_datos_libro => array(//El docente se encuentra registrando información del libro
 //                'rol_permite' => array(E_rol::ENTIDAD),
@@ -298,9 +300,10 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
 //                'vista' => 'editar_registro',
                 'vista' => array(E_rol::ENTIDAD => 'editar_registro', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 0,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 0, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::En_revision => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -315,9 +318,10 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::Correcciones_atendidas => array(
                 'rol_permite' => array(E_rol::DGAJ),
@@ -332,9 +336,10 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::Correccion => array(
                 'rol_permite' => array(E_rol::ENTIDAD),
@@ -348,9 +353,10 @@ class Solicitud_model extends MY_Model {
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
                 'vista_detalle_solicitud' => 0,
                 'vista' => array(E_rol::ENTIDAD => 'editar_registro', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::Revision_indautor => array(//Imprime el pdf para enviarlo con indautor
                 'rol_permite' => array(E_rol::DGAJ),
@@ -365,9 +371,10 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 0,
                 'name_comprobante' => '',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::Rechazado_indautor => array(//Sube el pdf que regresa indautor, y decide radicarlo o enviarlo a corrección 
                 'rol_permite' => array(E_rol::DGAJ),
@@ -385,13 +392,15 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 1,
+                'tipo_file' => 'r',
                 'name_comprobante' => 'rechazado_indautor',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
             ),
             Enum_es::Aceptado_indautor => array(
                 'rol_permite' => array(E_rol::DGAJ),
-                'estados_transicion' => array(),
+                'estados_transicion' => array(Enum_es::Comprobado_isbn),
                 'is_boton' => 1,
                 'titulo_boton' => 'Aceptado por indautor',
                 'color_status' => '',
@@ -404,9 +413,29 @@ class Solicitud_model extends MY_Model {
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
-                'hidden_add_comment' => 1,//Muestra boton de mensajes de comentarios por secciíon
+                'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 1,
+                'tipo_file' => 'a',
                 'name_comprobante' => 'aceptado_indautor',
+                'text_cambio_estado' => 'Confirme que realmente desea continuar'
+            ),
+            Enum_es::Comprobado_isbn => array(
+                'rol_permite' => array(E_rol::DGAJ),
+                'estados_transicion' => array(),
+                'is_boton' => 1,
+                'titulo_boton' => 'Comprobar',
+                'color_status' => '',
+                'is_editable_solicitud' => 0,
+                'funcion_demandada' => 'cambio_estado(this)',
+//                'add_comment_seccion' => 1,
+                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+//                'add_comment_seccion' => array(),
+                'vista_detalle_solicitud' => 1,
+//                'vista' => 'detalle',
+                'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
+                'hidden_add_comment' => 0, //Muestra boton de mensajes de comentarios por secciíon
+                'is_comprobante' => 0,
+                'text_cambio_estado' => '¿Se a comprobado el isbn?'
             ),
         );
         return $reglas_estado;
@@ -414,16 +443,16 @@ class Solicitud_model extends MY_Model {
 
     function getSeccionesSolicitud() {
         $secciones = array(
-            En_secciones::TEMA, 
-            En_secciones::IDIOMA, 
-            En_secciones::COLABORADORES, 
+            En_secciones::TEMA,
+            En_secciones::IDIOMA,
+            En_secciones::COLABORADORES,
             En_secciones::TRADUCCION,
-            En_secciones::INFO_EDICION, 
-            En_secciones::COMERCIALIZACION, 
-            En_secciones::DESC_FISICA, 
+            En_secciones::INFO_EDICION,
+            En_secciones::COMERCIALIZACION,
+            En_secciones::DESC_FISICA,
             En_secciones::DESC_FISICA_ELECTRONICA,
-            En_secciones::DESC_FISICA_IMPRESA, 
-            En_secciones::PAGO_ELECTRONICO, 
+            En_secciones::DESC_FISICA_IMPRESA,
+            En_secciones::PAGO_ELECTRONICO,
             En_secciones::CODIGO_BARRAS,
             En_secciones::ARCHIVOS
         );

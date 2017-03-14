@@ -722,6 +722,7 @@ if (!function_exists('genera_botones_estado_solicitud')) {
                                 $estados_trans['titulo_boton']
                                 . '</button>';
                     } else {
+                        $text_cambio_estado = $estados_trans['text_cambio_estado'];
                         if ($estados_trans['is_comprobante']) {
                             $respuesta_html_botones[] = '<a href="#" class="btn btn-primary"
                             data-toggle="modal" data-target="#modal_censo" 
@@ -735,8 +736,7 @@ if (!function_exists('genera_botones_estado_solicitud')) {
                                     . 'type="button" '
                                     . 'class="btn btn-primary" '
                                     . 'data-estadosolicitudcve ="' . $value_est_trans . '"'
-//                                . 'data-iscomprobante ="' . $estados_trans['is_comprobante'] . '"'
-//                            . 'data-tipotransicion ="' . $tipo_transicion . '"'
+                                    . 'data-text_confirmacion ="' . $text_cambio_estado . '"'
                                     . 'onclick=' . $estados_trans['funcion_demandada'] . '>' .
                                     $estados_trans['titulo_boton']
                                     . '</button>';

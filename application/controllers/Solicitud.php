@@ -489,7 +489,10 @@ class Solicitud extends MY_Controller {
                     $parametro_hist_actual_mod = array('is_actual' => 0);
                     $condicion_actualizacion = array('id' => $hist_validacion_actual);
                     $parametros_insert_hist_val = array('is_actual' => 1, 'solicitud_cve' => $solicitud_cve, 'c_estado_id' => $estado_transicion_cve);
+//                    pr($parametros_insert_hist_val);
+//                    exit();
                     $result_cam_estado = $this->req->update_insert_estado_solicitud($parametros_insert_hist_val, $parametro_hist_actual_mod, $condicion_actualizacion);
+
                     if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
                         if (isset($estado_ca['mensaje_guardado_correcto'])) {
                             $data['error'] = $string_values[$estado_ca['mensaje_guardado_correcto']]; //
@@ -516,16 +519,17 @@ class Solicitud extends MY_Controller {
     public function guardar_estado_comprobante() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
+
                 $data["file"] = $this->input->post(); //Obtenemos el post o los valores
                 $estado_transicion_cve = intval($this->seguridad->decrypt_base64($data["file"]['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
                 $estado_trans_decodec = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃ³n
                 $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
-                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']);//Obtiene la solicitud
+                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Obtiene la solicitud
                 //Obtiene las reglas de estado 
                 $this->load->model("Files_model", "file"); //Carga el model files_model
                 if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
-                $response["message"] = 'implode($dtuser)';
+//                    $response["message"] = 'implode($dtuser)';
                     $allowed = array('pdf');
                     if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
                         $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extención del archivo
@@ -534,21 +538,32 @@ class Solicitud extends MY_Controller {
                         } else {
                             $date = date("Y.m.d.h.i.s"); //Obtiene la fecha y hora actual
                             $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
-                            $response["message"] = $data["file"];
-
-                            $file_id = $this->file->add_file($data["file"]);
+                            $params_files = $data["file"];
+                            unset($params_files['estado_cve']); //Quita parametro estado
+                            $params_files['solicitud_id'] = $solicitud_cve;
+                            $params_files['nombre'] = $_FILES['archivo']['name'];
+                            $file_id = $this->file->add_file($params_files);
                             //saving data
                             if ($file_id > 0) {
-                                $route = $this->route_base;
-                                $route .= $solicitud_cve . "/";
-                                if (!file_exists($route)) {//Valida existencia del directorio
-                                    mkdir($route, 0775, true);//Crea el directorio
-                                }
+                                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
 
-                                if (move_uploaded_file($_FILES['archivo']['tmp_name'], $route . $data["file"]["nombre_fisico"])) {
-//                                    $response["message"] = "El archivo se ha guardado correctamente";
-                                } else {
-//                                    $response["message"] = "Error al guardar archivo";
+                                $parametro_hist_actual_mod = array('is_actual' => 0);
+                                $condicion_actualizacion = array('id' => $hist_validacion_actual);
+                                $parametros_insert_hist_val = array('is_actual' => 1, 'solicitud_cve' => $solicitud_cve, 'c_estado_id' => $estado_transicion_cve, 'id_file' => $file_id);
+                                $result_cam_estado = $this->req->update_insert_estado_solicitud($parametros_insert_hist_val, $parametro_hist_actual_mod, $condicion_actualizacion);
+
+                                if ($result_cam_estado > 0) {
+                                    $route = $this->config->item('route_base_files');
+                                    $route .= $solicitud_cve . "/";
+                                    if (!file_exists($route)) {//Valida existencia del directorio
+                                        mkdir($route, 0775, true); //Crea el directorio
+                                    }
+
+                                    if (move_uploaded_file($_FILES['archivo']['tmp_name'], $route . $data["file"]["nombre_fisico"])) {
+                                        $response["message"] = "El archivo se ha guardado correctamente";
+                                    } else {
+                                        $response["message"] = "Error al guardar archivo";
+                                    }
                                 }
                             } else {
                                 $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
@@ -579,6 +594,7 @@ class Solicitud extends MY_Controller {
                             . 'type="button" '
                             . 'class="btn btn-primary" '
                             . 'data-estadosolicitudcve ="' . $datos_post['estado_cve'] . '"'
+                            . 'data-tipofile ="' . $estado_ca['tipo_file'] . '"'
                             . 'onclick=' . $estado_ca['funcion_demandada_auxiliar'] . '>' .
                             $estado_ca['titulo_boton']
                             . '</button>';
@@ -591,6 +607,8 @@ class Solicitud extends MY_Controller {
                     'cuerpo_modal' => $data_cuerpo_comprobante,
                     'pie_modal' => $data_pie
                 );
+//                pr($_SERVER);
+//                exit();
                 echo $this->ventana_modal->carga_modal($data);
             }
         }
