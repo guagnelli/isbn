@@ -60,6 +60,17 @@ function cambio_estado(element) {
     });
 }
 
+function ventana_comprobante(element) {
+    var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+    var estado_solicitud = button_obj.data('estadosolicitudcve');//    var tipo_transicion =obj.data('tipotransicion');
+//alert(estado_solicitud);
+
+    //Remover contenido de un div 
+    var obj_post = {estado_cve: estado_solicitud};
+    data_ajax_post(site_url + '/solicitud/ventana_comprobante', null, '#modal_content', obj_post);
+}
+
+
 //$('.comentario').click(function () {
 //    var button_obj = $(this); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
 //    var hist_cve = button_obj.data('histsolicitudcve');
@@ -125,4 +136,5 @@ function  funcion_guardar_comentario(element) {
                 remove_loader();
             });
 }
-;
+
+

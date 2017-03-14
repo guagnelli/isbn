@@ -513,6 +513,89 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    public function guardar_estado_comprobante() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $data["file"] = $this->input->post(); //Obtenemos el post o los valores
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($data["file"]['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+                $estado_trans_decodec = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃ³n
+                $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
+                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']);//Obtiene la solicitud
+                //Obtiene las reglas de estado 
+                $this->load->model("Files_model", "file"); //Carga el model files_model
+                if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
+                $response["message"] = 'implode($dtuser)';
+                    $allowed = array('pdf');
+                    if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
+                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extención del archivo
+                        if (!in_array(strtolower($extension), $allowed)) {//Valida que la extención sea correcta
+                            $response["message"] = "El archivo con extensión '" . $extension . "' no esta permitido";
+                        } else {
+                            $date = date("Y.m.d.h.i.s"); //Obtiene la fecha y hora actual
+                            $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
+                            $response["message"] = $data["file"];
+
+                            $file_id = $this->file->add_file($data["file"]);
+                            //saving data
+                            if ($file_id > 0) {
+                                $route = $this->route_base;
+                                $route .= $solicitud_cve . "/";
+                                if (!file_exists($route)) {//Valida existencia del directorio
+                                    mkdir($route, 0775, true);//Crea el directorio
+                                }
+
+                                if (move_uploaded_file($_FILES['archivo']['tmp_name'], $route . $data["file"]["nombre_fisico"])) {
+//                                    $response["message"] = "El archivo se ha guardado correctamente";
+                                } else {
+//                                    $response["message"] = "Error al guardar archivo";
+                                }
+                            } else {
+                                $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
+                            }
+                        }
+                    }
+                }
+//                pr($estado_transicion_cve);
+//                pr($datos_post);
+                $response['content'] = $this->load->view('solicitud/buscador/carga_comprobante', null, true);
+                echo json_encode($response);
+            }
+        }
+    }
+
+    public function ventana_comprobante() {
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                //Obtiene las reglas de estado 
+                $reglas_validacion = $this->req->getReglasEstadosSolicitud();
+                $estado_ca = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transicion actual
+//                pr($estado_transicion_cve);
+//                pr($this->session->userdata('detalle_solicitud')['solicitud_cve']);
+                if ($estado_ca['is_comprobante']) {
+                    $data['boton_cambio'] = '<button '
+                            . 'type="button" '
+                            . 'class="btn btn-primary" '
+                            . 'data-estadosolicitudcve ="' . $datos_post['estado_cve'] . '"'
+                            . 'onclick=' . $estado_ca['funcion_demandada_auxiliar'] . '>' .
+                            $estado_ca['titulo_boton']
+                            . '</button>';
+                }
+                $data_pie = $this->load->view('solicitud/buscador/pie_modal_comprobante', $data, true);
+                $data_cuerpo_comprobante = $this->load->view('solicitud/buscador/carga_comprobante', null, true);
+
+                $data = array(
+                    'titulo_modal' => 'Envíar a ' . $estado_ca['titulo_boton'],
+                    'cuerpo_modal' => $data_cuerpo_comprobante,
+                    'pie_modal' => $data_pie
+                );
+                echo $this->ventana_modal->carga_modal($data);
+            }
+        }
+    }
+
     public function comentarios_seccion() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
@@ -554,7 +637,7 @@ class Solicitud extends MY_Controller {
                 $rol_seleccionado = $this->session->userdata('rol_cve');
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud()[$estado_solisitud]; //Obtiene reglas de estado
 //                if (isset($reglas_validacion['add_comment_seccion'][$rol_seleccionado])) {
-                    $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
+                $data_coment['add_comment_seccion'] = $reglas_validacion['add_comment_seccion'][$rol_seleccionado];
 //                }
 
                 $data_coment['comentarios_seccion'] = $this->req->get_comentarios_seccion($seccion, $solicitud_cve);
@@ -624,7 +707,6 @@ class Solicitud extends MY_Controller {
                         $data["tema"] = $tema;
                     }
                 } elseif (isset($data["tema"]["id"])) {//update
-
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
