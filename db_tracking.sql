@@ -338,4 +338,10 @@ CREATE INDEX XIF15FILE_ESTADO_SOLICITUD ON hist_revision_isbn (id_file);  /* Se 
 ALTER TABLE hist_revision_isbn ADD CONSTRAINT file_id_fk   /* Asigna llave foranía*/
 FOREIGN KEY (id_file) REFERENCES files(id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
+--14-03-2017
 insert into c_estado (id, name) values (8, 'Comprobar');
+insert into c_estado (id, name) values (9, 'Comprobado');
+alter table colaboradores add 
+column paterno varchar(100);
+alter table colaboradores add
+column materno varchar(100);

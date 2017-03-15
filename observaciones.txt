@@ -1,0 +1,4 @@
+--14-03-2017
+>Pendiente mensajes en clasificación temática y titulo de la obra
+>Separar nombre, apellido paterno, apellido materno
+>Aviso despues de aceptado(solo texto) en el sistema y por correo

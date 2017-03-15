@@ -197,3 +197,4 @@ $config['conf_secciones'] = array(
     En_secciones::PAGO_ELECTRONICO => array('b' => 'epay', 'select' => array()),
     En_secciones::CODIGO_BARRAS => array('b' => 'bc', 'select' => array()),
 );
+$config['route_base_files'] = $_SERVER['DOCUMENT_ROOT'] . '/isbn/assets/js/uf/uploads/';
