@@ -19,7 +19,7 @@ if(isset($colab["id_colab"])){
     <p class="lead">Colaboradores <?php echo $comentarios; ?></p>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Apellido, Nombre:</b>
+        <b><span class="required">*</span>Nombre:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <input type="text" 
@@ -28,6 +28,32 @@ if(isset($colab["id_colab"])){
                id="nombre" 
                name="nombre" 
                value="<?php echo isset($colab['nombre'])?$colab['nombre']:''?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <b><span class="required">*</span>Apellido paterno:</b>
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <input type="text" 
+               class="form-control col-md-7 col-xs-12"
+               placeholder="Apellido paterno del colaborador"
+               id="paterno" 
+               name="paterno" 
+               value="<?php echo isset($colab['paterno'])?$colab['paterno']:''?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+        <b><span class="required">*</span>Apellido materno:</b>
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <input type="text" 
+               class="form-control col-md-7 col-xs-12"
+               placeholder="Apellido materno del colaborador"
+               id="materno" 
+               name="materno" 
+               value="<?php echo isset($colab['materno'])?$colab['materno']:''?>">
       </div>
     </div>
     <div class="form-group">

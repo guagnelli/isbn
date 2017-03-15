@@ -21,7 +21,12 @@ if(isset($list_colaboradores)){
   foreach($list_colaboradores as $colaborador){
   ?>
     <tr>
-      <td><?php echo $colaborador["nombre"]?></td>
+      <td><?php 
+      $nombre = $colaborador["nombre"]." ".$colaborador["paterno"];
+      $nombre .= isset($colaborador["materno"]) ? " ".$colaborador["materno"] : "";
+      echo $nombre; 
+
+      ?></td>
       <td><?php echo $combos["c_tipo"][$colaborador["tipo"]]?></td>
       <td><?php echo $combos["c_nacionalidad"][$colaborador["nacionalidad"]]?></td>
       <td><?php echo $colaborador["seudonimo"]?></td>

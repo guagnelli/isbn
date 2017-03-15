@@ -17,8 +17,13 @@ if(isset($files) && count($files) > 0){
 	</tr>
 	<?php foreach($files as $key=>$file){?>
 	<tr>
-		<td>
-			<?php echo $file["nombre"]?>
+		<td><?php 
+		$uri = asset_url()."js/uf/uploads/".$file["solicitud_id"]."/".$file["nombre_fisico"];
+		echo anchor_popup(
+			$uri, 
+			$file["nombre"], 
+			FALSE);
+		?>
 		</td>
 		<td>
 			<?php echo $file["description"]?>
