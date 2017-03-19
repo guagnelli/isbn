@@ -314,7 +314,6 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar($solicitud_id = 0) {
-
         // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
@@ -335,11 +334,29 @@ class Solicitud extends MY_Controller {
                 //pr($data["save"]);
                 if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
+                    ////////Inicia el envío de correo
+                    $this->load->library('Correo');
+                    $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
+                    $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Edición de obra', 
+                        'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+                        'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
+                        'addCC' => $dgaj)
+                    );
+                    ////////Finaliza el envío de correo
                     //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
                     redirect("solicitud");
                 } else { //save
                     $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
                     $solicitud = $this->req->addSolicitud($data["save"]);
+                    ////////Inicia el envío de correo
+                    $this->load->library('Correo');
+                    $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
+                    $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Alta de obra', 
+                        'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+                        'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
+                        'addCC' => $dgaj)
+                    );
+                    ////////Finaliza el envío de correo
                     if ($solicitud > 0) {
                         //redirect("solicitud/secciones/$solicitud");
                         redirect("solicitud");
@@ -498,6 +515,15 @@ class Solicitud extends MY_Controller {
                     if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
                         if (isset($estado_ca['mensaje_guardado_correcto'])) {
                             $data['error'] = $string_values[$estado_ca['mensaje_guardado_correcto']]; //
+                            ////////Inicia el envío de correo
+                            $this->load->library('Correo');
+                            $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
+                            $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Cambio de estado de obra',
+                                'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+                                'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
+                                'addCC' => $dgaj)
+                            );
+                            ////////Finaliza el envío de correo
                         } else {
                             $data['error'] = $string_values['save_default']; //
                         }

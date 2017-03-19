@@ -645,6 +645,13 @@ class Solicitud_model extends MY_Model {
         return $secciones->result_array();
     }
 
+    function get_usuario($where = array(), $select = '') {
+        $this->db->select($select);
+        $this->db->where($where);
+        $secciones = $this->db->get("usuario");
+        return $secciones->result_array();
+    }
+
 }
 
 ?>

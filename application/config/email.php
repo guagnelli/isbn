@@ -17,7 +17,7 @@ $config['email'] = Array(
     'crypt' => 'tls',
     'username' => "sied.ad.imss@gmail.com",
     'password' => "s13d.4d.1mss",
-    'setFrom' => array('email'=>'sied.ad.imss@gmail.com', 'name'=>'SIPIMSS')
+    'setFrom' => array('email'=>'sied.ad.imss@gmail.com', 'name'=>'ISBN UNAM')
     //'username' => "cenitluis.pumas@gmail.com",
     //'password' => "el#:(vlaluna2vces",
 //    'setFrom' => array('email'=>'cenitluis.pumas@gmail.com', 'name'=>'SIPIMSS')
