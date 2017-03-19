@@ -248,7 +248,6 @@ class Solicitud extends MY_Controller {
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
                 $array_comentarios = array();
                 if ($propEstadoActual['hidden_add_comment']) {
-
                     //Recorre las secciones
                     foreach ($secciones as $value) {
                         $array_comentarios[$value] = '<a href="#"'
@@ -280,6 +279,9 @@ class Solicitud extends MY_Controller {
                         $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de sección comentarios
                         $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                         $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
+                        $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
+                        $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
+                        $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
                     case 'editar_registro'://La edición de registro se presenta en la correccion basicamente
@@ -519,18 +521,24 @@ class Solicitud extends MY_Controller {
     public function guardar_estado_comprobante() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
-
+//                pr($this->input->post());
+//                exit();
                 $data["file"] = $this->input->post(); //Obtenemos el post o los valores
                 $estado_transicion_cve = intval($this->seguridad->decrypt_base64($data["file"]['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
                 $estado_trans_decodec = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃ³n
                 $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
                 $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Obtiene la solicitud
+                if (isset($data["file"]['isbn_libro']) AND empty($data["file"]['isbn_libro'])) {//Valida que llege el isbn del libro, para almacenamienro
+                    $response["message"] = "Debe agregar el ISBN del libro";
+                    $response["error"] = $this->config->item('alert_msg')['WARNING']['class'];
+                    echo json_encode($response);
+                    exit();
+                }
                 //Obtiene las reglas de estado 
-                $this->load->model("Files_model", "file"); //Carga el model files_model
                 if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
 //                    $response["message"] = 'implode($dtuser)';
-                    $allowed = array('pdf');
+                    $allowed = array('png', 'jpeg', 'jpg', 'gif', 'pdf');
                     if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
                         $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extención del archivo
                         if (!in_array(strtolower($extension), $allowed)) {//Valida que la extención sea correcta
@@ -540,11 +548,18 @@ class Solicitud extends MY_Controller {
                             $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
                             $params_files = $data["file"];
                             unset($params_files['estado_cve']); //Quita parametro estado
+                            unset($params_files['isbn_libro']); //Quita parametro estado
                             $params_files['solicitud_id'] = $solicitud_cve;
                             $params_files['nombre'] = $_FILES['archivo']['name'];
-                            $file_id = $this->file->add_file($params_files);
+                            $this->load->model("Files_model", "file"); //Carga el model files_model
+                            if (isset($data["file"]['isbn_libro'])) {//Valida la existencia del isbn 
+                                $file_id = $this->file->add_file_isbn($params_files, array('solicitud' => $solicitud_cve, 'isbn' => $data["file"]['isbn_libro']));
+                            } else {
+                                $file_id = $this->file->add_file($params_files);
+                            }
                             //saving data
                             if ($file_id > 0) {
+
                                 $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
 
                                 $parametro_hist_actual_mod = array('is_actual' => 0);
@@ -578,6 +593,26 @@ class Solicitud extends MY_Controller {
             }
         }
     }
+    
+    public function ver_archivo($identificador = null) {
+        $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button><h4>Archivo incorrecto</h4></div>';
+
+        if (!is_null($identificador)) {
+            $file = decrypt_base64($identificador); ///Decodificar url, evitar hack
+            
+            if (!empty($file)) {
+                $ruta_archivo = $this->config->item('upload_path') . $file;
+                if (file_exists('./assets' . $ruta_archivo)) {
+                    //$main_content = $this->load->view('template/pdfjs/viewer', array('ruta_archivo'=>$ruta_archivo), true);
+                    $this->load->view('template/pdfjs/viewer', array('ruta_archivo' => $ruta_archivo), false);
+                }
+            } else {
+                $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button><h4>' . $this->string_values['general']['archivo_inexistente'] . '</h4></div>';
+            }
+        }
+        //$this->template->setMainContent($main_content);
+        //$this->template->getTemplate();
+    }
 
     public function ventana_comprobante() {
         if ($this->input->is_ajax_request()) {
@@ -600,7 +635,8 @@ class Solicitud extends MY_Controller {
                             . '</button>';
                 }
                 $data_pie = $this->load->view('solicitud/buscador/pie_modal_comprobante', $data, true);
-                $data_cuerpo_comprobante = $this->load->view('solicitud/buscador/carga_comprobante', null, true);
+                $data['estado_actual'] = $estado_ca;
+                $data_cuerpo_comprobante = $this->load->view('solicitud/buscador/carga_comprobante', $data, true);
 
                 $data = array(
                     'titulo_modal' => 'Envíar a ' . $estado_ca['titulo_boton'],
@@ -1316,5 +1352,6 @@ class Solicitud extends MY_Controller {
             redirect("/");
         }
     }
+
 
 }

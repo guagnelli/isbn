@@ -2,7 +2,7 @@
 //pr($solicitud);
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
-pr($this->session->userdata('detalle_solicitud'));
+//pr($this->session->userdata('detalle_solicitud'));
 ?>
 <div class="text-left" role="main">
     <div class="">
@@ -113,17 +113,17 @@ pr($this->session->userdata('detalle_solicitud'));
             <?php if (!empty($solicitud['secciones']['df'])) { ?>
                 <?php $df_r = $solicitud['secciones']['df'][0]; ?>
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
-<!--                <address>
-                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>Gramaje:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r['']; ?><br /> 
-                    <b>Ancho:&nbsp;</b><?php // echo $df_r['']; ?> Cm<br /> 
-                    <b>Alto:&nbsp;</b><?php // echo $df_r['']; ?> Cm<br /> 
-                </address>-->
+                <!--                <address>
+                                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>Gramaje:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
+                                    <b>Ancho:&nbsp;</b><?php // echo $df_r[''];              ?> Cm<br /> 
+                                    <b>Alto:&nbsp;</b><?php // echo $df_r[''];              ?> Cm<br /> 
+                                </address>-->
 
             <?php } ?>
 
@@ -135,6 +135,19 @@ pr($this->session->userdata('detalle_solicitud'));
                     <b>Cadena de dependencia:&nbsp;</b><?php echo $epay_r['cadena_dependencia']; ?><br /> 
                     <b>Cadena de referencia:&nbsp;</b><?php echo $epay_r['cadena_referencia']; ?><br /> 
                     <b>N&uacute;mero de operador:&nbsp;</b><?php echo $epay_r['no_operacion'] ?><br />
+                </address>
+            <?php } ?>
+
+            <?php if (!empty($file_estado)) { ?>
+                <?php // pr($file_estado); ?>
+
+                <p class="lead">
+                    <b>Archivo comprobante <?php echo $array_tipo_comprobante[$file_estado[0]['file_type']] ?>: </b>
+                </p>
+                <address>
+                    <b>Descripci&oacute;n comprobante: <?php echo $file_estado[0]['description']; ?></b>
+                    <?php $this->load->library('seguridad'); ?>
+                    <?php echo '<a href="' . site_url('solicitud/ver_archivo/' . $this->seguridad->encrypt_base64($file_estado[0]['solicitud_id'] . '/' . $file_estado[0]['nombre_fisico'])) . '" target="_blank"><span class="glyphicon glyphicon-search"></span>Ver comprobante ' . $array_tipo_comprobante[$file_estado[0]['file_type']] . '</a>'; ?>
                 </address>
             <?php } ?>
 

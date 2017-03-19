@@ -12,6 +12,34 @@ class Solicitud_model extends MY_Model {
         $this->load->database();
     }
 
+    function get_libro_solicitud($id_solicitud = NULL, $select = array('l.id')) {
+        if (is_null($id_solicitud)) {
+            return array();
+        }
+        $this->db->select($select);
+        $this->db->join('libro l', 'l.id = s.libro_id');
+        $this->db->where('s.id', $id_solicitud);
+        $result = $this->db->get('solicitud s');
+        $querys = $result->result_array();
+        $result->free_result();
+        return $querys;
+    }
+    
+    function get_file_estado_solicitud($id_solicitud = NULL, $select = array('hri.c_estado_id', 'f.*')) {
+        if (is_null($id_solicitud)) {
+            return array();
+        }
+        $this->db->select($select);
+        $this->db->join('hist_revision_isbn hri', 'hri.solicitud_cve = s.id');
+        $this->db->join('files f', 'hri.id_file = f.id');
+        $this->db->where('hri.is_actual', true);
+        $this->db->where('s.id', $id_solicitud);
+        $result = $this->db->get('solicitud s');
+        $querys = $result->result_array();
+        $result->free_result();
+        return $querys;
+    }
+
     function addSolicitud($data) {
         // pr($data);
         $this->db->trans_begin();
@@ -415,6 +443,7 @@ class Solicitud_model extends MY_Model {
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
                 'hidden_add_comment' => 1, //Muestra boton de mensajes de comentarios por secciíon
                 'is_comprobante' => 1,
+                'is_captura_isbn' => 1,
                 'tipo_file' => 'a',
                 'name_comprobante' => 'aceptado_indautor',
                 'text_cambio_estado' => 'Confirme que realmente desea continuar'

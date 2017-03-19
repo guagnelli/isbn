@@ -2,7 +2,7 @@
 //pr($solicitud);
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
-//pr($solicitud);
+//pr($estado_actual);
 ?>
 <div class="text-left" role="main">
     <!---Cuerpo-->
@@ -15,6 +15,30 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
     ));
     ?>
     <div id="msg_general" role="alert" ></div>
+    <?php if (isset($estado_actual['is_captura_isbn'])) { ?>
+        <div class="isbn_panel">
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    <strong>Captura ISBN</strong>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <?php
+                    echo $this->form_complete->create_element(array('id' => 'isbn_libro',
+                        'type' => 'text',
+                        'value' => '',
+                        'attributes' => array(
+                            'class' => 'form-control',
+                            'placeholder' => 'ISBN',
+                            'maxlength' => '4000',
+                            'data-toggle' => 'tooltip',
+                            'data-placement' => 'top',
+                            'title' => 'ISBN')));
+                    ?>
+                    <?php echo form_error_format('comentario_justificacion'); ?>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
     <div class="x_panel">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">

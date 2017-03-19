@@ -62,19 +62,25 @@ function afterSuccess(response) {
             $("#tab_files").html(resp.content);
         }
         if (resp.message !== undefined) {
-            //alert("hola mundo");
-            $("#msg_general").show();
-            $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
-            $("#msg_general").text(resp.message);
-            $('#modal_censo').modal('toggle');
-            try {
-                funcion_buscar_solicitudes();//Recarga lista de solicitudes
+            if (resp.error !== undefined) {
+                $("#msg_general").show();
+                $("#msg_general").addClass('alert alert-' + resp.error + ' alert-dismissible fade in');
+                $("#msg_general").text(resp.message);
+            } else {
+                $("#msg_general").show();
+                $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
+                $("#msg_general").text(resp.message);
+                $('#modal_censo').modal('toggle');
+                try {
+                    funcion_buscar_solicitudes();//Recarga lista de solicitudes
 //                            document.getElementById("regresa_list").accion='onClick';
-                $(document).ready(function () {
-                    $('.botonF1').trigger('click');
-                });
-            } catch (e) {
+                    $(document).ready(function () {
+                        $('.botonF1').trigger('click');
+                    });
+                } catch (e) {
+                }
             }
+            s
         }
     } catch (e) {
 

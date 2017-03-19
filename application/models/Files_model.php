@@ -27,6 +27,31 @@ class Files_model extends CI_Model {
         return FALSE;
     }
 
+    function add_file_isbn($data = null, $data_extra = null) {
+        if (is_null($data)) {
+            return FALSE;
+        }
+        $this->db->trans_begin();
+        $this->db->insert("files", $data);
+        $id = $this->db->insert_id();
+        if ($this->db->affected_rows() > 0) {
+            if (!is_null($data_extra)) {
+                $this->load->model("Solicitud_model", "sm");
+                $id_libro_solicitud = $this->sm->get_libro_solicitud($data_extra['solicitud'], array('l.id'));
+                if (!empty($id_libro_solicitud)) {//Valida que el resultado no sea vacio
+                    $this->db->where('id', $id_libro_solicitud[0]['id']); //Condición del registro
+                    $this->db->update('libro', array('isbn' => $data_extra['isbn'])); //Actualización del registro
+                }
+            }
+
+            $this->db->trans_commit();
+            return $id;
+        }
+
+        $this->db->trans_rollback();
+        return FALSE;
+    }
+
     function file_list($solicitud_id) {
         $this->db->where(array("solicitud_id" => $solicitud_id));
         $resp = $this->db->get("files");

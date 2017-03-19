@@ -18,7 +18,9 @@ $config['modulos_sesion_generales'] = array(
 );
 
 //$config['route_base_files'] = 'C://Bitnami/wappstack5.5.27/apache2/htdocs/isbn/assets/js/uf/uploads/';
-$config['route_base_files'] = $_SERVER['DOCUMENT_ROOT'] . '/isbn/assets/js/uf/uploads/';
+$config['route_proyect'] = '/assets/js/uf/uploads/';
+$config['upload_path'] = '/js/uf/uploads/' ;
+$config['route_base_files'] = $_SERVER['DOCUMENT_ROOT'] . '/isbn/' . $config['route_proyect'];
 /* $config['modulos_permisos'] = array(E_rol::SUPERADMINISTRADOR => array('solicitud' => array('*')), 
   E_rol::ADMINISTRADOR => array('solicitud' => array('*')),
   E_rol::DGAJ => array('solicitud' => array('*')),
@@ -199,4 +201,8 @@ $config['conf_secciones'] = array(
     En_secciones::DESC_FISICA_IMPRESA => array('b' => 'dfi', 'select' => array()),
     En_secciones::PAGO_ELECTRONICO => array('b' => 'epay', 'select' => array()),
     En_secciones::CODIGO_BARRAS => array('b' => 'bc', 'select' => array()),
+);
+$config['tipo_comprobante'] = array(
+    'a'=>'aceptado',
+    'r'=>'rechazado',
 );
