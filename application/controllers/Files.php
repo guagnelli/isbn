@@ -24,7 +24,8 @@ class Files extends MY_Controller {
         $this->load->library('seguridad');
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Solicitud_model", 'req');
-        $this->route_base = "/Applications/mappstack/apache2/htdocs/isbn/assets/js/uf/uploads/";
+        //$this->route_base = "/Applications/mappstack/apache2/htdocs/isbn/assets/js/uf/uploads/";
+        $this->route_base = $this->config->item('route_base_files');
     }
 
     public function index() {

@@ -335,8 +335,8 @@ alter table files add column description text;
 --Leas 12/03/2017 agregar archivo estado y agregar nuevo estado
 ALTER TABLE hist_revision_isbn ADD id_file INT(11) NULL;
 CREATE INDEX XIF15FILE_ESTADO_SOLICITUD ON hist_revision_isbn (id_file);  /* Se vuelve index el campo */
-ALTER TABLE hist_revision_isbn ADD CONSTRAINT file_id_fk   /* Asigna llave foranía*/
-FOREIGN KEY (id_file) REFERENCES files(id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE hist_revision_isbn ADD CONSTRAINT file_id_fk 
+FOREIGN KEY (id_file) REFERENCES files(id) ON DELETE RESTRICT ON UPDATE RESTRICT;  /* Asigna llave foranía*/
 
 --14-03-2017
 insert into c_estado (id, name) values (8, 'Comprobar');
@@ -349,3 +349,9 @@ column materno varchar(100);
 
 ALTER TABLE seccion_solicitud ADD validar_datos_obligatorios boolean default 1; /*Agrega bandera que indica que la seccion es obligatoria */
 update seccion_solicitud set validar_datos_obligatorios = 0 where cve_seccion = 'df';  /* No existe la tabla "_descripcion_fisica" validar tabla */
+
+Alter table edicion add column radicado varchar(100);	
+
+delete from seccion_solicitud where id in (8,10);
+
+alter table desc_electronica add column url varchar(255);

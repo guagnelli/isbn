@@ -46,7 +46,7 @@ class Solicitud_model extends MY_Model {
         $this->db->insert("libro", $data["libro"]);
         if ($this->db->affected_rows() > 0) {
             $data["solicitud"]["libro_id"] = $this->db->insert_id();
-            $data["solicitud"]["folio"] = "folio-" . str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
+            $data["solicitud"]["folio"] = "ISBN-".$data["solicitud"]["sol_tipo_obra"]."-". str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
             $this->db->insert("solicitud", $data["solicitud"]);
             if ($this->db->affected_rows() > 0) {
                 $solicitud_id = $this->db->insert_id();
@@ -117,9 +117,34 @@ class Solicitud_model extends MY_Model {
                     //                pr($this->db->last_query());
                 }
             }
+            $solicitud["secciones"] += $this->getDF($id);
+            $solicitud["secciones"]["files"] = $this->get_section("files", array(
+                "solicitud_id" => $id
+            ));
         }
         //pr($solicitud);
         return $solicitud;
+    }
+
+    function getDF($solicitud_id){
+        $tabla = array("print" => "desc_fisica_impresa", "digital" => "desc_electronica");
+        $data = array();
+        foreach ($tabla as $key => $value) {
+                //pr($value);
+            $df = $this->get_section($value, array(
+                "solicitud_id" => $solicitud_id
+            ));
+            if (count($df) === 1) {
+                $data[$key] = $df[0];
+                //$data["rad_df"] = ;
+                break;
+            }
+        }
+        return $data;
+    }
+
+    function getFileList($solicitud_id){
+
     }
 
     function getHistorial($id = null) {

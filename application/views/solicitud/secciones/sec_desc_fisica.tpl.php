@@ -220,6 +220,22 @@ if(isset($_descripcion_fisica["id"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-4 col-sm-4 col-xs-12">
+        <b><span class="required">*</span>URL:</b>
+      </label>
+      <div class="col-md-8 col-sm-8 col-xs-12">
+        <?php
+        echo $this->form_complete->create_element(array(
+         'id' => 'url',
+         'type' => 'text',
+         'value' => isset($_descripcion_fisica["url"]) ? $_descripcion_fisica["url"]:"",
+         'class' => '',
+         'attributes' => array('class' => '',)
+         ));
+         ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-4 col-sm-4 col-xs-12">
         <b><span class="required">*</span>Tama&ntilde;o:</b>
       </label>
       <div class="col-md-8 col-sm-8 col-xs-12">
@@ -229,7 +245,7 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'number',
          'value' => isset($_descripcion_fisica["tamanio_desc"]) ? $_descripcion_fisica["tamanio_desc"]:"",
          'class' => '',
-         'attributes' => array('class' => '','min'=>'0','style'=>"width:100px")
+         'attributes' => array('class' => 'col-md-4 col-sm-4','min'=>'0','style'=>"width:100px")
          ));
          ?>
         <?php
@@ -240,7 +256,7 @@ if(isset($_descripcion_fisica["id"])){
          'first' => array('' => "Seleccione una opción"),
          'value' => isset($_descripcion_fisica["tamanio"]) ? $_descripcion_fisica["tamanio"]:"",
          'class' => '',
-         'attributes' => array('class' => '')
+         'attributes' => array('class' => 'col-md-4 col-sm-4')
          ));
          ?>
       </div>

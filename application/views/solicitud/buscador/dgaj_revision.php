@@ -3,6 +3,7 @@
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 //pr($this->session->userdata('detalle_solicitud'));
+pr($solicitud);
 ?>
 <div class="text-left" role="main">
     <div class="">
@@ -110,9 +111,9 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
             <?php } ?>
 
-            <?php if (!empty($solicitud['secciones']['df'])) { ?>
-                <?php $df_r = $solicitud['secciones']['df'][0]; ?>
-                <p class="lead"><b>Descripci&oacute;n f&iacute;sica</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
+            <?php if (isset($solicitud['secciones']['print']) && !empty($solicitud['secciones']['print'])) { ?>
+                
+                <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Impresa)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
                 <!--                <address>
                                     <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
                                     <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
@@ -125,7 +126,11 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                                     <b>Alto:&nbsp;</b><?php // echo $df_r[''];              ?> Cm<br /> 
                                 </address>-->
 
-            <?php } ?>
+            <?php }elseif(isset($solicitud['secciones']['digital']) && !empty($solicitud['secciones']['digital'])){
+            ?>
+                <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Electrónica)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
+            <?php
+            } ?>
 
             <?php if (!empty($solicitud['secciones']['epay'])) { ?>
                 <?php $epay_r = $solicitud['secciones']['epay'][0]; ?>
@@ -136,6 +141,11 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                     <b>Cadena de referencia:&nbsp;</b><?php echo $epay_r['cadena_referencia']; ?><br /> 
                     <b>N&uacute;mero de operador:&nbsp;</b><?php echo $epay_r['no_operacion'] ?><br />
                 </address>
+            <?php } ?>
+
+            
+            <?php if (!empty($solicitud['secciones']['files'])) { ?>
+                <p class="lead"><b>Archivos</b></p>
             <?php } ?>
 
             <?php if (!empty($file_estado)) { ?>

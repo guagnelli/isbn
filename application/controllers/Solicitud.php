@@ -63,7 +63,7 @@ class Solicitud extends MY_Controller {
         $rol_sesion = $this->session->userdata('rol_cve');
 //        pr($this->session->userdata());
         $datos_usuario = array();
-        $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda segÃºn el archivo de configuraciÃ³n
+        $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda segÃºn el archivo de configuración
 //        $array_where = NULL;
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
@@ -208,7 +208,7 @@ class Solicitud extends MY_Controller {
      * 
      */
     public function seccion_index() {
-        $this->session->unset_userdata('comentarios_seccion_solitud'); //Limpia comentarios de secciÃ³n
+        $this->session->unset_userdata('comentarios_seccion_solitud'); //Limpia comentarios de sección
         //echo "SOY UN INDEX....";
         if ($this->input->is_ajax_request()) {
             if (!is_null($this->input->post())) {
@@ -243,7 +243,7 @@ class Solicitud extends MY_Controller {
 
                 //Obtiene las propiedades del estado actual
                 $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']]; //
-                //********** Obtiene mensajes por secciÃ³n
+                //********** Obtiene mensajes por sección
                 //Propiedades de las secciones
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
                 $array_comentarios = array();
@@ -276,7 +276,7 @@ class Solicitud extends MY_Controller {
                         $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
                         $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
                         $datosSeccion['solicitud'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
-                        $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de secciÃ³n comentarios
+                        $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de sección comentarios
                         $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                         $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
                         //Archivo relacionado con el estado de solicitud
@@ -286,7 +286,7 @@ class Solicitud extends MY_Controller {
                         //Vista que muestra detalle de la solicituda
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
-                    case 'editar_registro'://La ediciÃ³n de registro se presenta en la correccion basicamente
+                    case 'editar_registro'://La edición de registro se presenta en la correccion basicamente
                         $data = null;
                         try {
                             $info_solicitud = $this->req->getSolicitud(intval($datos_solicitud['solicitud_cve']));
@@ -341,7 +341,7 @@ class Solicitud extends MY_Controller {
                     ////////Inicia el envÃ­o de correo
                     $this->load->library('Correo');
                     $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
-                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: EdiciÃ³n de obra',
+                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Edición de obra',
                         'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
                         'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                         'addCC' => $dgaj)
@@ -440,7 +440,7 @@ class Solicitud extends MY_Controller {
                 $datosSeccion['botones_seccion'] = $array_comentarios;
 
                 $datosSeccion['link_editar'] = '';
-                if (isset($datos_post['is_botones']) and $datos_post['is_botones'] == 1 and $rol_actual == E_rol::ENTIDAD) {//Genera botones para editar la informaciÃ³n de la solicitid 
+                if (isset($datos_post['is_botones']) and $datos_post['is_botones'] == 1 and $rol_actual == E_rol::ENTIDAD) {//Genera botones para editar la información de la solicitid 
 //                        data-dismiss="modal"
                     $boton_editar = '<a class="btn btn-default" data-toggle="tab" href="#select_perfil_solicitud" 
                         data-dismiss="modal"
@@ -581,9 +581,9 @@ class Solicitud extends MY_Controller {
 //                    $response["message"] = 'implode($dtuser)';
                     $allowed = array('png', 'jpeg', 'jpg', 'gif', 'pdf');
                     if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
-                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extenciÃ³n del archivo
-                        if (!in_array(strtolower($extension), $allowed)) {//Valida que la extenciÃ³n sea correcta
-                            $response["message"] = "El archivo con extensiÃ³n '" . $extension . "' no esta permitido";
+                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extención del archivo
+                        if (!in_array(strtolower($extension), $allowed)) {//Valida que la extención sea correcta
+                            $response["message"] = "El archivo con extensión '" . $extension . "' no esta permitido";
                         } else {
                             $date = date("Y.m.d.h.i.s"); //Obtiene la fecha y hora actual
                             $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
@@ -622,7 +622,7 @@ class Solicitud extends MY_Controller {
                                     }
                                 }
                             } else {
-                                $response["message"] = "La informaciÃ³n ingresada es incorrecta, favor de berificarla.";
+                                $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
                             }
                         }
                     }
@@ -834,7 +834,7 @@ class Solicitud extends MY_Controller {
                         $response['result'] = "false";
                     }
                 }
-                //Obtiene icono botÃ³n del comentario ***************
+                //Obtiene icono botón del comentario ***************
                 $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TEMA])) ? $this->session->userdata('botones_seccion')[En_secciones::TEMA] : ''; //Botones de comentarios para las secciones
 //                pr($data['comentarios']);
 //                exit();
@@ -884,7 +884,7 @@ class Solicitud extends MY_Controller {
                 goto load;
             }
 //            pr($this->session->userdata('botones_seccion'));
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::IDIOMA])) ? $this->session->userdata('botones_seccion')[En_secciones::IDIOMA] : ''; //Botones de comentarios para las secciones
             //Fin ***************
             //$response['message'] = 
@@ -910,7 +910,7 @@ class Solicitud extends MY_Controller {
                 echo "entra caramba!!!!";
                 unset($data["traduccion"]["del"]);
                 unset($data["traduccion"]["id"]);
-                $response['message'] = "La traducciÃ³n se ha eliminado ";
+                $response['message'] = "La traducción se ha eliminado ";
             } elseif (count($data["traduccion"]) == 1) {
                 load:
                 // $data["debug"][0] = 
@@ -927,7 +927,7 @@ class Solicitud extends MY_Controller {
                 unset($data["traduccion"]["has_traduction"]);
                 $update = $this->req->update("traduccion", $data["traduccion"], $where);
                 if ($update) {
-                    $response['message'] = "La traducciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La traducción se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -940,7 +940,7 @@ class Solicitud extends MY_Controller {
                 $save = $this->req->add("traduccion", $data["traduccion"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_traduccion" => 1), array("id" => $data["traduccion"]["solicitud_id"]));
-                    $response['message'] = "La secciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La sección se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -950,7 +950,7 @@ class Solicitud extends MY_Controller {
                 goto load;
             }
 
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TRADUCCION])) ? $this->session->userdata('botones_seccion')[En_secciones::TRADUCCION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -974,7 +974,7 @@ class Solicitud extends MY_Controller {
             if (isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]) {
                 unset($data["colab"]["eliminar"]);
                 $this->req->delete('colaboradores', $data["colab"]);
-                $response['message'] = "La informaciÃ³n del colaborador/autor se ha eliminado exitosamente";
+                $response['message'] = "La información del colaborador/autor se ha eliminado exitosamente";
                 $response['result'] = "true";
             } elseif (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
                 //$data["debug"]="load section";
@@ -987,7 +987,7 @@ class Solicitud extends MY_Controller {
                 unset($data["colab"]["update"]);
                 $update = $this->req->update("colaboradores", $data["colab"], $where);
                 if ($update) {
-                    $response['message'] = "La informaciÃ³n del colaborador se ha editado exitosamente";
+                    $response['message'] = "La información del colaborador se ha editado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1006,14 +1006,14 @@ class Solicitud extends MY_Controller {
                 $save = $this->req->add("colaboradores", $data["colab"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_colaboradores" => 1), array("id" => $data["colab"]["solicitud_id"]));
-                    $response['message'] = "La informaciÃ³n del colaborador se ha guardado exitosamente";
+                    $response['message'] = "La información del colaborador se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                     $response['result'] = "false";
                 }
             }
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COLABORADORES])) ? $this->session->userdata('botones_seccion')[En_secciones::COLABORADORES] : ''; //Botones de comentarios para las secciones
             $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
             $data["combos"]["c_tipo"] = $this->cg->get_combo_catalogo("c_tipo_colab");
@@ -1033,10 +1033,11 @@ class Solicitud extends MY_Controller {
             $data["edicion"] = $this->input->post();
 
             if (count($data["edicion"]) == 1 && isset($data["edicion"]["solicitud_id"])) {
+                load:
                 $edicion = $this->req->get_section("edicion", array(
                     "solicitud_id" => $data["edicion"]["solicitud_id"]
                 ));
-                if (count($edicion) > 0) {
+                if (count($edicion)  == 1) {
                     $data["edicion"] = $edicion[0];
                 }
                 $response['result'] = "true";
@@ -1049,8 +1050,9 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_informacion_edicion" => 1), array("id" => $data["edicion"]["solicitud_id"])
                     );
-                    $response['message'] = "La informaciÃ³n de ediciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La información de edición se ha guardado exitosamente";
                     $response['result'] = "true";
+                    goto load;
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                     $response['result'] = "false";
@@ -1065,15 +1067,16 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("edicion", $data["edicion"], $where);
                 if ($update) {
-                    $response['message'] = "La InformaciÃ³n de ediciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La Información de edición se ha guardado exitosamente";
                     $response['result'] = "true";
+                    goto load;
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                     $response['result'] = "false";
                 }
             }
             $response['result'] = "true";
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION])) ? $this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1107,7 +1110,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_pago" => 1), array("id" => $data["epay"]["solicitud_id"])
                     );
-                    $response['message'] = "La informaciÃ³n del pago se ha guardado exitosamente";
+                    $response['message'] = "La información del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1122,7 +1125,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("epay", $data["epay"], $where);
                 if ($update) {
-                    $response['message'] = "La informaciÃ³n del pago se ha guardado exitosamente";
+                    $response['message'] = "La información del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1130,7 +1133,7 @@ class Solicitud extends MY_Controller {
                 }
             }
             $response['result'] = "true";
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO])) ? $this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1162,7 +1165,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_comercializable" => 1), array("id" => $data["comercializable"]["solicitud_id"])
                     );
-                    $response['message'] = "Los datos de ComercializaciÃ³n se han guardado exitosamente";
+                    $response['message'] = "Los datos de Comercialización se han guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1176,7 +1179,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("comercializable", $data["comercializable"], $where);
                 if ($update) {
-                    $response['message'] = "La InformaciÃ³n de ediciÃ³n se ha guardado exitosamente";
+                    $response['message'] = "La Información de edición se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1185,7 +1188,7 @@ class Solicitud extends MY_Controller {
             }
 
 
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION])) ? $this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1202,7 +1205,7 @@ class Solicitud extends MY_Controller {
             $data["df"] = $this->input->post();
             $solicitud_id = $data["df"]["solicitud_id"];
             //print_r($data["df"]);
-            $fields = array("medio", "formato", "tamanio_desc", "tamanio", "id", "solicitud_id");
+            $fields = array("medio", "formato", "tamanio_desc", "tamanio","url", "id", "solicitud_id");
             $tabla = array("print" => "desc_fisica_impresa", "digital" => "
                 desc_electronica");
             $tipo = "print";
@@ -1229,7 +1232,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
                     );
-                    $response['message'] = "La descripciÃ³n de la obra se ha guardado exitosamente";
+                    $response['message'] = "La descripción de la obra se ha guardado exitosamente";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                 }
@@ -1250,7 +1253,7 @@ class Solicitud extends MY_Controller {
             $data["_descripcion_fisica"] = $data["df"];
             unset($data["df"]);
             $response['result'] = "true";
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA])) ? $this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1278,7 +1281,7 @@ class Solicitud extends MY_Controller {
             $data["debug"] = $data["barcode"] = $this->input->post();
 
             $response['result'] = "true";
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS])) ? $this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1354,7 +1357,7 @@ class Solicitud extends MY_Controller {
                     )
             );
             $response['result'] = "true";
-            //Obtiene icono botÃ³n del comentario ***************
+            //Obtiene icono botón del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
             //Fin ***************
             $response['content'] = $this->load->view("solicitud/secciones/registro_documentacion.tpl.php", $data, true);

@@ -85,6 +85,21 @@ if (isset($edicion["id"])) {
 
 <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+        <b><span class="required">*</span>Radicado: </b>
+    </label>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <input id="radicado" 
+               class="form-control col-md-7 col-xs-12"
+               name="radicado" 
+               placeholder="Radicado" 
+               required="required"
+               value = '<?php echo isset($edicion["radicado"]) ? $edicion["radicado"] : ""; ?>'
+               type="text" />
+    </div>
+</div>
+
+<div class="item form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
         <b><span class="required">*</span>Coedición: </b>
     </label>
     <div class="col-md-9 col-sm-9 col-xs-12">
