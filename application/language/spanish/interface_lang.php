@@ -163,6 +163,7 @@ $lang['interface'] = array(
         'save_estado_error' => 'Detalle de la solicitud',
         'save_default' => 'El cambio de estado se efectuo correctamente',
         'save_envio_revision' => 'La solicitud se envió a revisión correctamente',
+        'val_datos_completos_estado' => 'La sección {param} es obligatoria',
     ),
     'solicitud_comentarios_seccion' => array(
         'title_seccion' => 'Comentarios de la seccion: ',

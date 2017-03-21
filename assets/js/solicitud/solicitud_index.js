@@ -19,7 +19,7 @@ function cambio_estado(element) {
                     .done(function (response) {
                         try {
                             var response = $.parseJSON(response);
-                            if (response.result === 1) {
+                            if (response.result == 1) {
                                 $('#mensaje_error_index').html(response.error);
                                 $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + response.tipo_msg);
                                 $('#div_error_index').show();

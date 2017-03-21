@@ -63,7 +63,7 @@ class Solicitud extends MY_Controller {
         $rol_sesion = $this->session->userdata('rol_cve');
 //        pr($this->session->userdata());
         $datos_usuario = array();
-        $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda según el archivo de configuración
+        $tipo_busqueda_definida = $this->config->item('tipo_busqueda'); //Carga el tipo de busqueda segÃºn el archivo de configuraciÃ³n
 //        $array_where = NULL;
         switch ($rol_sesion) {
             case E_rol::ENTIDAD://Entidad
@@ -74,16 +74,16 @@ class Solicitud extends MY_Controller {
 //                pr($array_where);
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 $data['title_template'] = $string_values['title_template_entidad'] . $this->session->userdata('name_entidad');
-                //Verifica que se este invocando la carga de algún catálogo y sus permisos
-                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                //Verifica que se este invocando la carga de algÃºn catÃ¡logo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catÃ¡logo
                     $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
                 }
                 break;
             case E_rol::DGAJ://Juridico
                 $array_catalogos = array(Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
-                //Verifica que se este invocando la carga de algún catálogo y sus permisos
-                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                //Verifica que se este invocando la carga de algÃºn catÃ¡logo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catÃ¡logo
                     $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
 //                    pr($data);
                 }
@@ -93,8 +93,8 @@ class Solicitud extends MY_Controller {
             case E_rol::ADMINISTRADOR://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
-                //Verifica que se este invocando la carga de algún catálogo y sus permisos
-                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                //Verifica que se este invocando la carga de algÃºn catÃ¡logo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catÃ¡logo
                     $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
 //                    pr($data);
                 }
@@ -102,13 +102,13 @@ class Solicitud extends MY_Controller {
             case E_rol::SUPERADMINISTRADOR://Juridico
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_entidad, Enum_cg::c_subcategoria, Enum_cg::c_subsistema, Enum_cg::c_categoria);
                 $data['title_template'] = $string_values['title_template_dgj'] . $this->session->userdata('rol_name');
-                //Verifica que se este invocando la carga de algún catálogo y sus permisos
-                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catálogo
+                //Verifica que se este invocando la carga de algÃºn catÃ¡logo y sus permisos
+                if (isset($tipo_f) and isset($value_f) and isset($tipo_busqueda_definida[$tipo_f]) and in_array($rol_sesion, $tipo_busqueda_definida[$tipo_f]['rol_permite'])) {//Valida la carga de un valor de un catÃ¡logo
                     $data[$tipo_busqueda_definida[$tipo_f]["nom_var"]] = $value_f;
 //                    pr($data);
                 }
         }
-        //Carga catÃ¡logos
+        //Carga catÃƒÂ¡logos
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name', Enum_cg::c_categoria => 'nombre'));
         //pr($data);
         //Carga datos de usuario 
@@ -127,7 +127,7 @@ class Solicitud extends MY_Controller {
      * @param type $current_row
      */
     function buscador_solicituides($current_row = null) {
-        if ($this->input->is_ajax_request()) { //Solo se accede al mÃ©todo a travÃ©s de una peticiÃ³n ajax
+        if ($this->input->is_ajax_request()) { //Solo se accede al mÃƒÂ©todo a travÃƒÂ©s de una peticiÃƒÂ³n ajax
 //            $this->detalle();
 //            exit();
             if (!is_null($this->input->post())) {
@@ -170,8 +170,8 @@ class Solicitud extends MY_Controller {
     private function listado_resultado_unidades($data, $form) {
         $data['controller'] = 'solicitud';
         $data['action'] = 'buscador_solicituides';
-        $pagination = $this->template->pagination_data($data); //Crear mensaje y links de paginaciÃ³n
-        //$pagination = $this->template->pagination_data_buscador_asignar_validador($data); //Crear mensaje y links de paginaciÃ³n
+        $pagination = $this->template->pagination_data($data); //Crear mensaje y links de paginaciÃƒÂ³n
+        //$pagination = $this->template->pagination_data_buscador_asignar_validador($data); //Crear mensaje y links de paginaciÃƒÂ³n
         $links = "<div class='col-sm-5 dataTables_info' style='line-height: 50px;'>" . $pagination['total'] . "</div>
                     <div class='col-sm-7 text-right'>" . $pagination['links'] . "</div>";
         $datos['lista_solicitudes'] = $data['lista_solicitudes'];
@@ -191,7 +191,7 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
 //            if ($this->input->post()) {
 //                $datos_post = $this->input->post(null, TRUE);
-            $this->delete_datos_validado(); //Elimina los datos de empleado validado, si se encuentran los datos almacenados en la variable de sesiÃ³n
+            $this->delete_datos_validado(); //Elimina los datos de empleado validado, si se encuentran los datos almacenados en la variable de sesiÃƒÂ³n
 //            }
         } else {
             redirect(site_url());
@@ -208,7 +208,7 @@ class Solicitud extends MY_Controller {
      * 
      */
     public function seccion_index() {
-        $this->session->unset_userdata('comentarios_seccion_solitud'); //Limpia comentarios de sección
+        $this->session->unset_userdata('comentarios_seccion_solitud'); //Limpia comentarios de secciÃ³n
         //echo "SOY UN INDEX....";
         if ($this->input->is_ajax_request()) {
             if (!is_null($this->input->post())) {
@@ -221,17 +221,17 @@ class Solicitud extends MY_Controller {
 //                pr($rol_seleccionado);
                 $datos_solicitud = array();
                 $datos_solicitud['estado_correccion'] = null;
-                //ValidaciÃ³n general de la validaciÃ³n actual del docente
+                //ValidaciÃƒÂ³n general de la validaciÃƒÂ³n actual del docente
                 if (!empty($datos_post['solicitud_cve'])) {
-                    $datos_solicitud['solicitud_cve'] = $this->seguridad->decrypt_base64($datos_post['solicitud_cve']); //Identificador de la comisiÃ³n
+                    $datos_solicitud['solicitud_cve'] = $this->seguridad->decrypt_base64($datos_post['solicitud_cve']); //Identificador de la comisiÃƒÂ³n
                 }
 
                 if (!empty($datos_post['histsolicitudcve'])) {
-                    $datos_solicitud['histsolicitudcve'] = $this->seguridad->decrypt_base64($datos_post['histsolicitudcve']); //Identificador de la comisiÃ³n
+                    $datos_solicitud['histsolicitudcve'] = $this->seguridad->decrypt_base64($datos_post['histsolicitudcve']); //Identificador de la comisiÃƒÂ³n
                 }
 
                 if (!empty($datos_post['estado_cve'])) {
-                    $datos_solicitud['estado_cve'] = $this->seguridad->decrypt_base64($datos_post['estado_cve']); //Identificador de la comisiÃ³n
+                    $datos_solicitud['estado_cve'] = $this->seguridad->decrypt_base64($datos_post['estado_cve']); //Identificador de la comisiÃƒÂ³n
                 }
                 //Genera reglas de estado 
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
@@ -243,7 +243,7 @@ class Solicitud extends MY_Controller {
 
                 //Obtiene las propiedades del estado actual
                 $propEstadoActual = $reglas_validacion[$parametros_estado['estado_cve']]; //
-                //********** Obtiene mensajes por sección
+                //********** Obtiene mensajes por secciÃ³n
                 //Propiedades de las secciones
                 $secciones = $this->req->getSeccionesSolicitud(); //Obtiene totas las secciones
                 $array_comentarios = array();
@@ -276,15 +276,17 @@ class Solicitud extends MY_Controller {
                         $datosSeccion['hist_cve'] = $datos_solicitud['histsolicitudcve'];
                         $datosSeccion['estado_cve'] = $datos_solicitud['estado_cve'];
                         $datosSeccion['solicitud'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
-                        $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de sección comentarios
+                        $datosSeccion['botones_seccion'] = $array_comentarios; //Iconos de secciÃ³n comentarios
                         $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                         $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
+                        //Archivo relacionado con el estado de solicitud
                         $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
                         $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
                         $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
+                        //Vista que muestra detalle de la solicituda
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
-                    case 'editar_registro'://La edición de registro se presenta en la correccion basicamente
+                    case 'editar_registro'://La ediciÃ³n de registro se presenta en la correccion basicamente
                         $data = null;
                         try {
                             $info_solicitud = $this->req->getSolicitud(intval($datos_solicitud['solicitud_cve']));
@@ -300,11 +302,13 @@ class Solicitud extends MY_Controller {
                         $datosSeccion['botones_seccion'] = $array_comentarios;
                         $this->session->set_userdata('botones_seccion', $array_comentarios); //Guarda los botones de los comentarios de las secciones
                         $datosPerfil['vista'] = $this->load->view('solicitud/secciones.tpl.php', $data, true);
-
                         break;
                 }
+
+//                $pasa_validacion_datos = get_valida_secciones($datos_solicitud['solicitud_cve']);
+//                pr($pasa_validacion_datos);
                 //Carga datos de la solicitud del ISBN
-                $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la informaciÃ³n del usuario al que se va a validar
+                $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la informaciÃƒÂ³n del usuario al que se va a validar
                 echo $this->load->view('solicitud/buscador/index', $datosPerfil, true);
             }
 //            pr($this->session->userdata('datosvalidadoactual'));$datos_empleado_validar
@@ -329,34 +333,34 @@ class Solicitud extends MY_Controller {
 
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
-            $this->form_validation->set_rules($validations); //AÃ±adir validaciones
+            $this->form_validation->set_rules($validations); //AÃƒÂ±adir validaciones
             if ($this->form_validation->run()) {
                 //pr($data["save"]);
                 if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
-                    ////////Inicia el envío de correo
+                    ////////Inicia el envÃ­o de correo
                     $this->load->library('Correo');
-                    $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
-                    $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Edición de obra', 
+                    $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
+                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: EdiciÃ³n de obra',
                         'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
-                        'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
+                        'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                         'addCC' => $dgaj)
                     );
-                    ////////Finaliza el envío de correo
+                    ////////Finaliza el envÃ­o de correo
                     //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
                     redirect("solicitud");
                 } else { //save
                     $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
                     $solicitud = $this->req->addSolicitud($data["save"]);
-                    ////////Inicia el envío de correo
+                    ////////Inicia el envÃ­o de correo
                     $this->load->library('Correo');
-                    $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
-                    $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Alta de obra', 
+                    $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
+                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Alta de obra',
                         'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
-                        'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
+                        'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                         'addCC' => $dgaj)
                     );
-                    ////////Finaliza el envío de correo
+                    ////////Finaliza el envÃ­o de correo
                     if ($solicitud > 0) {
                         //redirect("solicitud/secciones/$solicitud");
                         redirect("solicitud");
@@ -436,7 +440,7 @@ class Solicitud extends MY_Controller {
                 $datosSeccion['botones_seccion'] = $array_comentarios;
 
                 $datosSeccion['link_editar'] = '';
-                if (isset($datos_post['is_botones']) and $datos_post['is_botones'] == 1 and $rol_actual == E_rol::ENTIDAD) {//Genera botones para editar la información de la solicitid 
+                if (isset($datos_post['is_botones']) and $datos_post['is_botones'] == 1 and $rol_actual == E_rol::ENTIDAD) {//Genera botones para editar la informaciÃ³n de la solicitid 
 //                        data-dismiss="modal"
                     $boton_editar = '<a class="btn btn-default" data-toggle="tab" href="#select_perfil_solicitud" 
                         data-dismiss="modal"
@@ -449,6 +453,11 @@ class Solicitud extends MY_Controller {
                         </a>';
                     $datosSeccion['link_editar'] = $boton_editar;
                 }
+                //Archivo relacionado con el estado de solicitud
+                $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
+                $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
+                $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
+                //Fin carga visualizacion archivo
 //                pr($this->get_datos_detalle_solicitud($solicitud_datos));
                 $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                 $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
@@ -495,16 +504,16 @@ class Solicitud extends MY_Controller {
                 $tipo_msg = $this->config->item('alert_msg');
                 $string_values = $this->lang->line('interface')['solicitud_cambio_estado'];
                 $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
-                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_solicitud_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
-                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
-                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_solicitud_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
+                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
+                $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
 //                pr($datos_post);
                 //Obtiene las reglas de estado 
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
-                $estado_ca = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃ³n
-                $pasa_validacion_datos = 1;
+                $estado_ca = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃƒÂ³n
+                $pasa_validacion_datos = get_valida_secciones($solicitud_cve); //Valida que toda la informacion basica se esncuentre registrada
 
-                if ($pasa_validacion_datos == 1) {
+                if ($pasa_validacion_datos['valido'] == 1) {
                     $parametro_hist_actual_mod = array('is_actual' => 0);
                     $condicion_actualizacion = array('id' => $hist_validacion_actual);
                     $parametros_insert_hist_val = array('is_actual' => 1, 'solicitud_cve' => $solicitud_cve, 'c_estado_id' => $estado_transicion_cve);
@@ -515,19 +524,19 @@ class Solicitud extends MY_Controller {
                     if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
                         if (isset($estado_ca['mensaje_guardado_correcto'])) {
                             $data['error'] = $string_values[$estado_ca['mensaje_guardado_correcto']]; //
-                            ////////Inicia el envío de correo
-                            $this->load->library('Correo');
-                            $dgaj = $this->req->get_usuario(array("rol_cve"=>E_rol::DGAJ, "usu_estado"=>1), 'usu_nombre as nombre, usu_correo as correo');
-                            $envio = $this->correo->enviar_correo(array('subject'=>'ISBN - UNAM :: Cambio de estado de obra',
-                                'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
-                                'addAddress' => array(array('correo'=>$this->session->userdata('mail'), 'nombre'=>$this->session->userdata('nombre'))),
-                                'addCC' => $dgaj)
-                            );
-                            ////////Finaliza el envío de correo
                         } else {
                             $data['error'] = $string_values['save_default']; //
                         }
-                        $data['tipo_msg'] = $tipo_msg['SUCCESS']['class']; //Tipo de mensaje de error
+                        ////////Inicia el envÃ­o de correo
+//                        $this->load->library('Correo');
+//                        $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
+//                        $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Cambio de estado de obra',
+//                            'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+//                            'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
+//                            'addCC' => $dgaj)
+//                        );
+                        ////////Finaliza el envÃ­o de correo
+                        $data['tipo_msg'] = $tipo_msg['INFO']['class']; //Tipo de mensaje de error
                         $data['result'] = 1; //Error resultado success
                     } else {//Manda mensaje de error que no se pudo almacenar los datos
                         $data['error'] = $string_values['save_estado_error']; //
@@ -536,7 +545,13 @@ class Solicitud extends MY_Controller {
                     }
                     echo json_encode($data);
                     exit();
-                } else {//Regresar mensaje de que no paso el estado cde la validaciÃ³n
+                } else {//Regresar mensaje de que no paso el estado cde la validaciÃƒÂ³n
+                    $msjtmp = str_replace('{param}', $pasa_validacion_datos['seccion'], $string_values['val_datos_completos_estado']);
+                    $data['error'] = $msjtmp; //
+                    $data['tipo_msg'] = $tipo_msg['WARNING']['class']; //Tipo de mensaje de error
+                    $data['result'] = 0; //Error resultado success
+                    echo json_encode($data);
+                    exit();
                 }
             }
         } else {
@@ -550,9 +565,9 @@ class Solicitud extends MY_Controller {
 //                pr($this->input->post());
 //                exit();
                 $data["file"] = $this->input->post(); //Obtenemos el post o los valores
-                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($data["file"]['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($data["file"]['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
-                $estado_trans_decodec = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃ³n
+                $estado_trans_decodec = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transiciÃƒÂ³n
                 $datos_detalle_solicitud = $this->session->userdata('detalle_solicitud'); //Datos del detalle
                 $solicitud_cve = intval($datos_detalle_solicitud['solicitud_cve']); //Obtiene la solicitud
                 if (isset($data["file"]['isbn_libro']) AND empty($data["file"]['isbn_libro'])) {//Valida que llege el isbn del libro, para almacenamienro
@@ -566,9 +581,9 @@ class Solicitud extends MY_Controller {
 //                    $response["message"] = 'implode($dtuser)';
                     $allowed = array('png', 'jpeg', 'jpg', 'gif', 'pdf');
                     if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
-                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extención del archivo
-                        if (!in_array(strtolower($extension), $allowed)) {//Valida que la extención sea correcta
-                            $response["message"] = "El archivo con extensión '" . $extension . "' no esta permitido";
+                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION); //Obtiene la extenciÃ³n del archivo
+                        if (!in_array(strtolower($extension), $allowed)) {//Valida que la extenciÃ³n sea correcta
+                            $response["message"] = "El archivo con extensiÃ³n '" . $extension . "' no esta permitido";
                         } else {
                             $date = date("Y.m.d.h.i.s"); //Obtiene la fecha y hora actual
                             $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
@@ -586,7 +601,7 @@ class Solicitud extends MY_Controller {
                             //saving data
                             if ($file_id > 0) {
 
-                                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                                $hist_validacion_actual = intval($datos_detalle_solicitud['histsolicitudcve']); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
 
                                 $parametro_hist_actual_mod = array('is_actual' => 0);
                                 $condicion_actualizacion = array('id' => $hist_validacion_actual);
@@ -607,7 +622,7 @@ class Solicitud extends MY_Controller {
                                     }
                                 }
                             } else {
-                                $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
+                                $response["message"] = "La informaciÃ³n ingresada es incorrecta, favor de berificarla.";
                             }
                         }
                     }
@@ -619,13 +634,13 @@ class Solicitud extends MY_Controller {
             }
         }
     }
-    
+
     public function ver_archivo($identificador = null) {
-        $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button><h4>Archivo incorrecto</h4></div>';
+        $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">Ã—</span></button><h4>Archivo incorrecto</h4></div>';
 
         if (!is_null($identificador)) {
             $file = decrypt_base64($identificador); ///Decodificar url, evitar hack
-            
+
             if (!empty($file)) {
                 $ruta_archivo = $this->config->item('upload_path') . $file;
                 if (file_exists('./assets' . $ruta_archivo)) {
@@ -633,7 +648,7 @@ class Solicitud extends MY_Controller {
                     $this->load->view('template/pdfjs/viewer', array('ruta_archivo' => $ruta_archivo), false);
                 }
             } else {
-                $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button><h4>' . $this->string_values['general']['archivo_inexistente'] . '</h4></div>';
+                $html = '<div role="alert" class="alert alert-success" style="padding:25px; margin-bottom:80px;"><button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">Ã—</span></button><h4>' . $this->string_values['general']['archivo_inexistente'] . '</h4></div>';
             }
         }
         //$this->template->setMainContent($main_content);
@@ -644,7 +659,7 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
-                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃ³n el estado
+                $estado_transicion_cve = intval($this->seguridad->decrypt_base64($datos_post['estado_cve'])); //Identifica si es un tipo de validar, enviar a correccion o en revisiÃƒÂ³n el estado
                 //Obtiene las reglas de estado 
                 $reglas_validacion = $this->req->getReglasEstadosSolicitud();
                 $estado_ca = $reglas_validacion[$estado_transicion_cve]; //Reglas del estado de transicion actual
@@ -665,7 +680,7 @@ class Solicitud extends MY_Controller {
                 $data_cuerpo_comprobante = $this->load->view('solicitud/buscador/carga_comprobante', $data, true);
 
                 $data = array(
-                    'titulo_modal' => 'Envíar a ' . $estado_ca['titulo_boton'],
+                    'titulo_modal' => 'EnvÃ­ar a ' . $estado_ca['titulo_boton'],
                     'cuerpo_modal' => $data_cuerpo_comprobante,
                     'pie_modal' => $data_pie
                 );
@@ -819,7 +834,7 @@ class Solicitud extends MY_Controller {
                         $response['result'] = "false";
                     }
                 }
-                //Obtiene icono botón del comentario ***************
+                //Obtiene icono botÃ³n del comentario ***************
                 $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TEMA])) ? $this->session->userdata('botones_seccion')[En_secciones::TEMA] : ''; //Botones de comentarios para las secciones
 //                pr($data['comentarios']);
 //                exit();
@@ -869,7 +884,7 @@ class Solicitud extends MY_Controller {
                 goto load;
             }
 //            pr($this->session->userdata('botones_seccion'));
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::IDIOMA])) ? $this->session->userdata('botones_seccion')[En_secciones::IDIOMA] : ''; //Botones de comentarios para las secciones
             //Fin ***************
             //$response['message'] = 
@@ -895,7 +910,7 @@ class Solicitud extends MY_Controller {
                 echo "entra caramba!!!!";
                 unset($data["traduccion"]["del"]);
                 unset($data["traduccion"]["id"]);
-                $response['message'] = "La traducción se ha eliminado ";
+                $response['message'] = "La traducciÃ³n se ha eliminado ";
             } elseif (count($data["traduccion"]) == 1) {
                 load:
                 // $data["debug"][0] = 
@@ -912,7 +927,7 @@ class Solicitud extends MY_Controller {
                 unset($data["traduccion"]["has_traduction"]);
                 $update = $this->req->update("traduccion", $data["traduccion"], $where);
                 if ($update) {
-                    $response['message'] = "La traducción se ha guardado exitosamente";
+                    $response['message'] = "La traducciÃ³n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -925,7 +940,7 @@ class Solicitud extends MY_Controller {
                 $save = $this->req->add("traduccion", $data["traduccion"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_traduccion" => 1), array("id" => $data["traduccion"]["solicitud_id"]));
-                    $response['message'] = "La sección se ha guardado exitosamente";
+                    $response['message'] = "La secciÃ³n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -935,7 +950,7 @@ class Solicitud extends MY_Controller {
                 goto load;
             }
 
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TRADUCCION])) ? $this->session->userdata('botones_seccion')[En_secciones::TRADUCCION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -959,7 +974,7 @@ class Solicitud extends MY_Controller {
             if (isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]) {
                 unset($data["colab"]["eliminar"]);
                 $this->req->delete('colaboradores', $data["colab"]);
-                $response['message'] = "La información del colaborador/autor se ha eliminado exitosamente";
+                $response['message'] = "La informaciÃ³n del colaborador/autor se ha eliminado exitosamente";
                 $response['result'] = "true";
             } elseif (count($data["colab"]) == 1 && isset($data["colab"]["solicitud_id"])) {
                 //$data["debug"]="load section";
@@ -972,7 +987,7 @@ class Solicitud extends MY_Controller {
                 unset($data["colab"]["update"]);
                 $update = $this->req->update("colaboradores", $data["colab"], $where);
                 if ($update) {
-                    $response['message'] = "La información del colaborador se ha editado exitosamente";
+                    $response['message'] = "La informaciÃ³n del colaborador se ha editado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -991,14 +1006,14 @@ class Solicitud extends MY_Controller {
                 $save = $this->req->add("colaboradores", $data["colab"]);
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_colaboradores" => 1), array("id" => $data["colab"]["solicitud_id"]));
-                    $response['message'] = "La información del colaborador se ha guardado exitosamente";
+                    $response['message'] = "La informaciÃ³n del colaborador se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                     $response['result'] = "false";
                 }
             }
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COLABORADORES])) ? $this->session->userdata('botones_seccion')[En_secciones::COLABORADORES] : ''; //Botones de comentarios para las secciones
             $data["combos"]["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
             $data["combos"]["c_tipo"] = $this->cg->get_combo_catalogo("c_tipo_colab");
@@ -1034,7 +1049,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_informacion_edicion" => 1), array("id" => $data["edicion"]["solicitud_id"])
                     );
-                    $response['message'] = "La información de edición se ha guardado exitosamente";
+                    $response['message'] = "La informaciÃ³n de ediciÃ³n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1050,7 +1065,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("edicion", $data["edicion"], $where);
                 if ($update) {
-                    $response['message'] = "La Información de edición se ha guardado exitosamente";
+                    $response['message'] = "La InformaciÃ³n de ediciÃ³n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1058,7 +1073,7 @@ class Solicitud extends MY_Controller {
                 }
             }
             $response['result'] = "true";
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION])) ? $this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1092,7 +1107,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_pago" => 1), array("id" => $data["epay"]["solicitud_id"])
                     );
-                    $response['message'] = "La información del pago se ha guardado exitosamente";
+                    $response['message'] = "La informaciÃ³n del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1107,7 +1122,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("epay", $data["epay"], $where);
                 if ($update) {
-                    $response['message'] = "La información del pago se ha guardado exitosamente";
+                    $response['message'] = "La informaciÃ³n del pago se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1115,7 +1130,7 @@ class Solicitud extends MY_Controller {
                 }
             }
             $response['result'] = "true";
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO])) ? $this->session->userdata('botones_seccion')[En_secciones::PAGO_ELECTRONICO] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1147,7 +1162,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_comercializable" => 1), array("id" => $data["comercializable"]["solicitud_id"])
                     );
-                    $response['message'] = "Los datos de Comercialización se han guardado exitosamente";
+                    $response['message'] = "Los datos de ComercializaciÃ³n se han guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1161,7 +1176,7 @@ class Solicitud extends MY_Controller {
                 );
                 $update = $this->req->update("comercializable", $data["comercializable"], $where);
                 if ($update) {
-                    $response['message'] = "La Información de edición se ha guardado exitosamente";
+                    $response['message'] = "La InformaciÃ³n de ediciÃ³n se ha guardado exitosamente";
                     $response['result'] = "true";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
@@ -1170,7 +1185,7 @@ class Solicitud extends MY_Controller {
             }
 
 
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION])) ? $this->session->userdata('botones_seccion')[En_secciones::COMERCIALIZACION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1214,7 +1229,7 @@ class Solicitud extends MY_Controller {
                 if ($save) {
                     $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
                     );
-                    $response['message'] = "La descripción de la obra se ha guardado exitosamente";
+                    $response['message'] = "La descripciÃ³n de la obra se ha guardado exitosamente";
                 } else {
                     $response['message'] = "Se ha producido un error, favor de verificarlo";
                 }
@@ -1235,7 +1250,7 @@ class Solicitud extends MY_Controller {
             $data["_descripcion_fisica"] = $data["df"];
             unset($data["df"]);
             $response['result'] = "true";
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA])) ? $this->session->userdata('botones_seccion')[En_secciones::DESC_FISICA] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1263,7 +1278,7 @@ class Solicitud extends MY_Controller {
             $data["debug"] = $data["barcode"] = $this->input->post();
 
             $response['result'] = "true";
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS])) ? $this->session->userdata('botones_seccion')[En_secciones::CODIGO_BARRAS] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
@@ -1339,7 +1354,7 @@ class Solicitud extends MY_Controller {
                     )
             );
             $response['result'] = "true";
-            //Obtiene icono botón del comentario ***************
+            //Obtiene icono botÃ³n del comentario ***************
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
             //Fin ***************
             $response['content'] = $this->load->view("solicitud/secciones/registro_documentacion.tpl.php", $data, true);
@@ -1378,6 +1393,5 @@ class Solicitud extends MY_Controller {
             redirect("/");
         }
     }
-
 
 }

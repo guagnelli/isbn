@@ -24,7 +24,7 @@ class Solicitud_model extends MY_Model {
         $result->free_result();
         return $querys;
     }
-    
+
     function get_file_estado_solicitud($id_solicitud = NULL, $select = array('hri.c_estado_id', 'f.*')) {
         if (is_null($id_solicitud)) {
             return array();
@@ -470,6 +470,24 @@ class Solicitud_model extends MY_Model {
         return $reglas_estado;
     }
 
+    function getValidacionesSeccionesConfig() {
+        $secciones = array(
+            En_secciones::TEMA => array('is_validar' => 1),
+            En_secciones::IDIOMA => array('is_validar' => 0),
+            En_secciones::COLABORADORES => array('is_validar' => 0),
+            En_secciones::TRADUCCION => array('is_validar' => 0),
+            En_secciones::INFO_EDICION => array('is_validar' => 0),
+            En_secciones::COMERCIALIZACION => array('is_validar' => 0),
+            En_secciones::DESC_FISICA => array('is_validar' => 0),
+            En_secciones::DESC_FISICA_ELECTRONICA => array('is_validar' => 0),
+            En_secciones::DESC_FISICA_IMPRESA => array('is_validar' => 0),
+            En_secciones::PAGO_ELECTRONICO => array('is_validar' => 0),
+            En_secciones::CODIGO_BARRAS => array('is_validar' => 0),
+            En_secciones::ARCHIVOS => array('is_validar' => 0),
+        );
+        return$secciones;
+    }
+
     function getSeccionesSolicitud() {
         $secciones = array(
             En_secciones::TEMA,
@@ -639,10 +657,39 @@ class Solicitud_model extends MY_Model {
         return $seccion;
     }
 
-    function get_sections() {
-        $this->db->where("estado", 1);
+    function get_sections($param = array("estado", 1)) {
+        foreach ($param as $key => $value) {
+            $this->db->where($key, $value);
+        }
         $secciones = $this->db->get("seccion_solicitud");
         return $secciones->result_array();
+    }
+
+    /**
+     * 
+     * @param author LEAS
+     * @param fecha 20/03/2017
+     * @param type $solicitud_id Identificador de la solicitud, referencia
+     * @param type $sections_validacion Secciones a validar como obligatorias para cambiar el estado
+     * @return int 0 = alguna sección no paso la validación; 1 = todas las validaciones pasaron la validacion 
+     */
+    function get_valida_sections($solicitud_id = null, $sections_validacion = array()) {
+        if (is_null($solicitud_id)) {//Valida existencia de la solicitud, si es igual a null, no puede validar aceptado
+            return array('valido' => 0, 'seccion'=>'');
+        }
+        if (empty($sections_validacion)) {//Si el array de validación es vacio, no se encuentra como obligatorio la validación de ninguna sección
+            return array('valido' => 1, 'seccion'=>'');
+        }
+
+        foreach ($sections_validacion as $seccion) {
+            $this->db->from($seccion['tbl_seccion'])->where($seccion['referencia'], $solicitud_id);
+            $countAllResult = $this->db->count_all_results();
+            if ($countAllResult < 1) {
+                return array('valido' => 0, 'seccion'=>$seccion['nom_seccion']);
+            }
+        }
+
+        return array('valido' => 1, 'seccion'=>'');
     }
 
     function get_usuario($where = array(), $select = '') {

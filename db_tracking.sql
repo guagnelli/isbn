@@ -346,3 +346,6 @@ alter table colaboradores add
 column paterno varchar(100);
 alter table colaboradores add
 column materno varchar(100);
+
+ALTER TABLE seccion_solicitud ADD validar_datos_obligatorios boolean default 1; /*Agrega bandera que indica que la seccion es obligatoria */
+update seccion_solicitud set validar_datos_obligatorios = 0 where cve_seccion = 'df';  /* No existe la tabla "_descripcion_fisica" validar tabla */

@@ -801,6 +801,19 @@ if (!function_exists('get_fecha_local')) {
 
 }
 
+if (!function_exists('get_valida_secciones')) {
+
+    function get_valida_secciones($solicitud_id) {
+        $CI = get_instance();
+        $CI->load->model('Solicitud_model', 'sm');
+        $secciones = $CI->sm->get_sections(array("validar_datos_obligatorios" => TRUE, "estado" => TRUE));
+        $valido = $CI->sm->get_valida_sections($solicitud_id, $secciones);
+//        pr($valido);
+        return $valido;//Retorna 1 si es valido, retorna 0 si no
+    }
+
+}
+
 
     /* End of file general_helper.php */
     
