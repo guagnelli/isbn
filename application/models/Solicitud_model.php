@@ -557,7 +557,9 @@ class Solicitud_model extends MY_Model {
             En_secciones::DESC_FISICA_IMPRESA,
             En_secciones::PAGO_ELECTRONICO,
             En_secciones::CODIGO_BARRAS,
-            En_secciones::ARCHIVOS
+            En_secciones::ARCHIVOS,
+            En_secciones::TITULO_LIBRO,
+            En_secciones::CLAS_TEMATICA,
         );
         return $secciones;
     }

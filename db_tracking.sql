@@ -356,6 +356,7 @@ delete from seccion_solicitud where id in (8,10);
 
 alter table desc_electronica add column url varchar(255);
 
+
 -----22/marzo/2017
 INSERT INTO usuario
 (usuario_cve, usu_nick, usu_nombre, usu_paterno, usu_materno, usu_correo, usu_contrasenia, usu_estado, rol_cve, usu_fch_registro, entidad_id)
@@ -383,3 +384,10 @@ TRUNCATE observaciones_seccion_solicitud;
 TRUNCATE solicitud; 
 TRUNCATE libro;  
 SET FOREIGN_KEY_CHECKS = 1;
+
+/*Importantes para asignar mensajes leas 22032017 00:48*/
+insert into seccion_solicitud (id, nom_seccion, srt_seccion, cve_seccion,tbl_seccion, referencia, estado, validar_datos_obligatorios)
+values (12, 'Titulo del libro', 12, 'tl', 'libro', 'solicitud_id',0,0),
+(11, 'Archivos', 11, 'fl', 'files', 'solicitud_id',0,0),
+(13, 'Clasificación tematica', 13, 'ct', 'ctema', 'solicitud_id',0,0);
+

@@ -2,7 +2,7 @@ function guardar_estado_comprobante(element) {
     var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
     var estado_solicitud = button_obj.data('estadosolicitudcve');//    var tipo_transicion =obj.data('tipotransicion');
     var tipo_file = button_obj.data('tipofile');//    var tipo_transicion =obj.data('tipotransicion');
-    alert(estado_solicitud);
+//    alert(estado_solicitud);
 
     //Remover contenido de un div 
     var id = "#frm_file_comprobante";

@@ -13,7 +13,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
     <!---Cuerpo-->
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo $string_detalle['title_titulo_libro'] . $solicitud['libro']['title']; ?> 
+            <h2><?php echo $string_detalle['title_titulo_libro'] . $solicitud['libro']['title']; ?> <?php echo $botones_seccion[En_secciones::TITULO_LIBRO]; ?>
                 <?php if (!empty($solicitud['libro']['subtitle'])) { ?>
                     <br><?php echo $string_detalle['title_subtitulo_libro'] . $solicitud['libro']['subtitle']; ?> 
                 <?php } ?>
@@ -26,6 +26,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <b>
                     <?php echo $string_detalle['title_clas_tematica']; ?>
                 </b>
+                <?php echo $botones_seccion[En_secciones::CLAS_TEMATICA]; ?>
             </p>
             <address>
                 <b><?php echo $string_detalle['li_categoria'] ?></b>
