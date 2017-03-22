@@ -355,3 +355,31 @@ Alter table edicion add column radicado varchar(100);
 delete from seccion_solicitud where id in (8,10);
 
 alter table desc_electronica add column url varchar(255);
+
+-----22/marzo/2017
+INSERT INTO usuario
+(usuario_cve, usu_nick, usu_nombre, usu_paterno, usu_materno, usu_correo, usu_contrasenia, usu_estado, rol_cve, usu_fch_registro, entidad_id)
+VALUES(5, 'DGPFE', 'Dirección General de Publicaciones y Fomento Editorial ', ' ', ' ', 'gchavezs@unam.mx
+', 'affd77e05aaae1e7a229c6c4725545fd612bf18dc41cbe6d349084fcf0848f2a261c7272a6200a4255019460550b4393e42d3df10115eaa3ec8bfc57ffc70686', 1, 4, NULL, 155);
+
+update usuario set usu_correo = 'guillermochavezs@gmail.com' where usuario_cve=3;
+
+--limpiar tablas
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE tema;
+TRUNCATE sol_idioma; 
+TRUNCATE colaboradores;
+TRUNCATE traduccion;
+TRUNCATE edicion; 
+TRUNCATE comercializable; 
+TRUNCATE epay; 
+TRUNCATE desc_electronica; 
+TRUNCATE desc_fisica_impresa; 
+TRUNCATE files; 
+
+TRUNCATE hist_revision_isbn; 
+TRUNCATE observaciones_seccion_solicitud; 
+
+TRUNCATE solicitud; 
+TRUNCATE libro;  
+SET FOREIGN_KEY_CHECKS = 1;
