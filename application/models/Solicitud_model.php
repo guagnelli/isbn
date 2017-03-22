@@ -46,7 +46,7 @@ class Solicitud_model extends MY_Model {
         $this->db->insert("libro", $data["libro"]);
         if ($this->db->affected_rows() > 0) {
             $data["solicitud"]["libro_id"] = $this->db->insert_id();
-            $data["solicitud"]["folio"] = "ISBN-".$data["solicitud"]["sol_tipo_obra"]."-". str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
+            $data["solicitud"]["folio"] = "ISBN-" . $data["solicitud"]["sol_tipo_obra"] . "-" . str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
             $this->db->insert("solicitud", $data["solicitud"]);
             if ($this->db->affected_rows() > 0) {
                 $solicitud_id = $this->db->insert_id();
@@ -104,7 +104,9 @@ class Solicitud_model extends MY_Model {
             // secciones
             $this->db->where("estado", 1);
             $secciones = $this->db->get("seccion_solicitud");
-            foreach ($secciones->result_array() as $seccion) {
+            $result_sec_sol = $secciones->result_array();
+//            pr($this->db->last_query());
+            foreach ($result_sec_sol as $seccion) {
                 if (substr($seccion["tbl_seccion"], 0, 1) != '_') {
                     $sConf = $conf_secciones[$seccion['id']]['select'];
                     //                pr($sConf);
@@ -122,11 +124,11 @@ class Solicitud_model extends MY_Model {
                 "solicitud_id" => $id
             ));
         }
-        //pr($solicitud);
+//        pr($solicitud);
         return $solicitud;
     }
 
-    function getDF($solicitud_id){
+    function getDF($solicitud_id) {
         //$tabla = array("print" => "desc_fisica_impresa", "digital" => "desc_electronica");
         $data = array();
 
@@ -135,14 +137,14 @@ class Solicitud_model extends MY_Model {
                 LEFT join c_medio m on(de.medio = m.id)
                 LEFT JOIN c_formato f ON(de.formato = f.id)
                 LEFT JOIN c_tamanio t ON(de.tamanio = t.id)
-                WHERE de.solicitud_id = ".$solicitud_id;
+                WHERE de.solicitud_id = " . $solicitud_id;
         $result = $this->db->query($query);
 
         if ($result->num_rows() === 1) {
             $data["digital"] = $result->result_array();
             $data["digital"] = $data["digital"][0];
             return $data;
-        }else{
+        } else {
             $query = "Select df.nombre desc_fisica, en.nombre encuadernacion, 
                 g.nombre gramaje, i.nombre impresion,
                 nt.nombre num_tintas, tp.nombre tipo_papel,
@@ -154,27 +156,27 @@ class Solicitud_model extends MY_Model {
                 left join c_impresion i ON(fi.impresion = i.id)
                 left join c_num_tintas nt ON(fi.num_tintas = nt.id)
                 left join c_tipo_papel tp ON(fi.tipo_papel = tp.id)
-                WHERE fi.solicitud_id = ".$solicitud_id;
+                WHERE fi.solicitud_id = " . $solicitud_id;
             $result = $this->db->query($query);
             if ($result->num_rows() === 1) {
                 $data["print"] = $result->result_array();
                 $data["print"] = $data["print"][0];
                 return $data;
-            }   
+            }
         }
         //$this->db->select("libro_id");
         /*
-        foreach ($tabla as $key => $value) {
-                //pr($value);
-            $df = $this->get_section($value, array(
-                "solicitud_id" => $solicitud_id
-            ));
-            if (count($df) === 1) {
-                $data[$key] = $df[0];
-                //$data["rad_df"] = ;
-                break;
-            }
-        }*/
+          foreach ($tabla as $key => $value) {
+          //pr($value);
+          $df = $this->get_section($value, array(
+          "solicitud_id" => $solicitud_id
+          ));
+          if (count($df) === 1) {
+          $data[$key] = $df[0];
+          //$data["rad_df"] = ;
+          break;
+          }
+          } */
         return $data;
     }
 
@@ -715,12 +717,14 @@ class Solicitud_model extends MY_Model {
         return $seccion;
     }
 
-    function get_sections($param = array("estado", 1)) {
+    function get_sections($param = array("estado" => 1)) {
         foreach ($param as $key => $value) {
             $this->db->where($key, $value);
         }
         $secciones = $this->db->get("seccion_solicitud");
-        return $secciones->result_array();
+        $r = $secciones->result_array();
+//        pr($this->db->last_query());
+        return $r;
     }
 
     /**
@@ -733,21 +737,21 @@ class Solicitud_model extends MY_Model {
      */
     function get_valida_sections($solicitud_id = null, $sections_validacion = array()) {
         if (is_null($solicitud_id)) {//Valida existencia de la solicitud, si es igual a null, no puede validar aceptado
-            return array('valido' => 0, 'seccion'=>'');
+            return array('valido' => 0, 'seccion' => '');
         }
         if (empty($sections_validacion)) {//Si el array de validación es vacio, no se encuentra como obligatorio la validación de ninguna sección
-            return array('valido' => 1, 'seccion'=>'');
+            return array('valido' => 1, 'seccion' => '');
         }
 
         foreach ($sections_validacion as $seccion) {
             $this->db->from($seccion['tbl_seccion'])->where($seccion['referencia'], $solicitud_id);
             $countAllResult = $this->db->count_all_results();
             if ($countAllResult < 1) {
-                return array('valido' => 0, 'seccion'=>$seccion['nom_seccion']);
+                return array('valido' => 0, 'seccion' => $seccion['nom_seccion']);
             }
         }
 
-        return array('valido' => 1, 'seccion'=>'');
+        return array('valido' => 1, 'seccion' => '');
     }
 
     function get_usuario($where = array(), $select = '') {
