@@ -355,3 +355,9 @@ Alter table edicion add column radicado varchar(100);
 delete from seccion_solicitud where id in (8,10);
 
 alter table desc_electronica add column url varchar(255);
+
+/*Importantes para asignar mensajes leas 22032017 00:48*/
+insert into seccion_solicitud (id, nom_seccion, srt_seccion, cve_seccion,tbl_seccion, referencia, estado, validar_datos_obligatorios)
+values (12, 'Titulo del libro', 12, 'tl', 'libro', 'solicitud_id',0,0),
+(11, 'Archivos', 11, 'fl', 'files', 'solicitud_id',0,0),
+(13, 'Clasificación tematica', 13, 'ct', 'ctema', 'solicitud_id',0,0);

@@ -15,6 +15,8 @@ class En_secciones {
             DESC_FISICA_IMPRESA = 8,
             PAGO_ELECTRONICO = 9,
             CODIGO_BARRAS = 10,
-            ARCHIVOS = 11
+            ARCHIVOS = 11,
+            TITULO_LIBRO = 12,
+            CLAS_TEMATICA = 13
     ;
 }
