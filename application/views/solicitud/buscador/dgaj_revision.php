@@ -112,25 +112,32 @@ pr($solicitud);
             <?php } ?>
 
             <?php if (isset($solicitud['secciones']['print']) && !empty($solicitud['secciones']['print'])) { ?>
-                
+                <?php pr($solicitud['secciones']['print']); ?>
+
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Impresa)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
                 <!--                <address>
-                                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>Gramaje:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r[''];              ?><br /> 
-                                    <b>Ancho:&nbsp;</b><?php // echo $df_r[''];              ?> Cm<br /> 
-                                    <b>Alto:&nbsp;</b><?php // echo $df_r[''];              ?> Cm<br /> 
+                                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>Gramaje:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r[''];                    ?><br /> 
+                                    <b>Ancho:&nbsp;</b><?php // echo $df_r[''];                    ?> Cm<br /> 
+                                    <b>Alto:&nbsp;</b><?php // echo $df_r[''];                    ?> Cm<br /> 
                                 </address>-->
 
-            <?php }elseif(isset($solicitud['secciones']['digital']) && !empty($solicitud['secciones']['digital'])){
-            ?>
+            <?php } elseif (isset($solicitud['secciones']['digital']) && !empty($solicitud['secciones']['digital'])) {
+                ?>
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Electrónica)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
-            <?php
-            } ?>
+                <address>
+                    <b>Clave de pago:&nbsp;</b><?php echo $epay_r['pay_hash']; ?><br /> 
+                    <b>Cadena de dependencia:&nbsp;</b><?php echo $epay_r['cadena_dependencia']; ?><br /> 
+                    <b>Cadena de referencia:&nbsp;</b><?php echo $epay_r['cadena_referencia']; ?><br /> 
+                    <b>N&uacute;mero de operador:&nbsp;</b><?php echo $epay_r['no_operacion'] ?><br />
+                </address>
+            <?php }
+            ?>
 
             <?php if (!empty($solicitud['secciones']['epay'])) { ?>
                 <?php $epay_r = $solicitud['secciones']['epay'][0]; ?>
@@ -143,23 +150,30 @@ pr($solicitud);
                 </address>
             <?php } ?>
 
-            
+
             <?php if (!empty($solicitud['secciones']['files'])) { ?>
                 <p class="lead"><b>Archivos</b></p>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                        <?php $data_seccion['files'] = $solicitud['secciones']['files']; ?>
+                        <?php $data_seccion['enable_options'] = FALSE; ?>
+                        <?php echo $this->load->view('solicitud/secciones/file_list.tpl.php', $data_seccion, true); ?>
+                    </div>
+                </div>
             <?php } ?>
 
-            <?php if (!empty($file_estado)) { ?>
-                <?php // pr($file_estado); ?>
+            <?php // if (!empty($file_estado)) { ?>
+            <?php // pr($file_estado); ?>
 
-                <p class="lead">
-                    <b>Archivo comprobante <?php echo $array_tipo_comprobante[$file_estado[0]['file_type']] ?>: </b>
-                </p>
-                <address>
-                    <b>Descripci&oacute;n comprobante: <?php echo $file_estado[0]['description']; ?></b>
-                    <?php $this->load->library('seguridad'); ?>
-                    <?php echo '<a href="' . site_url('solicitud/ver_archivo/' . $this->seguridad->encrypt_base64($file_estado[0]['solicitud_id'] . '/' . $file_estado[0]['nombre_fisico'])) . '" target="_blank"><span class="glyphicon glyphicon-search"></span>Ver comprobante ' . $array_tipo_comprobante[$file_estado[0]['file_type']] . '</a>'; ?>
-                </address>
-            <?php } ?>
+<!--                <p class="lead">
+                    <b>Archivo comprobante <?php // echo $array_tipo_comprobante[$file_estado[0]['file_type']]  ?>: </b>
+                </p>-->
+            <!--<address>-->
+                <!--<b>Descripci&oacute;n comprobante: <?php // echo $file_estado[0]['description'];  ?></b>-->
+            <?php // $this->load->library('seguridad'); ?>
+            <?php // echo '<a href="' . site_url('solicitud/ver_archivo/' . $this->seguridad->encrypt_base64($file_estado[0]['solicitud_id'] . '/' . $file_estado[0]['nombre_fisico'])) . '" target="_blank"><span class="glyphicon glyphicon-search"></span>Ver comprobante ' . $array_tipo_comprobante[$file_estado[0]['file_type']] . '</a>'; ?>
+            <!--</address>-->
+            <?php // } ?>
 
             <br>
             <?php if (isset($link_editar)) { ?>

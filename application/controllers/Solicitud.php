@@ -280,9 +280,9 @@ class Solicitud extends MY_Controller {
                         $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                         $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
                         //Archivo relacionado con el estado de solicitud
-                        $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
-                        $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
-                        $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
+//                        $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
+//                        $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
+//                        $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
                         //Vista que muestra detalle de la solicituda
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
@@ -454,9 +454,9 @@ class Solicitud extends MY_Controller {
                     $datosSeccion['link_editar'] = $boton_editar;
                 }
                 //Archivo relacionado con el estado de solicitud
-                $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
-                $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
-                $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
+//                $datosSeccion['file'] = $this->req->getSolicitud($datosSeccion['solicitud_cve']);
+//                $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
+//                $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
                 //Fin carga visualizacion archivo
 //                pr($this->get_datos_detalle_solicitud($solicitud_datos));
                 $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
