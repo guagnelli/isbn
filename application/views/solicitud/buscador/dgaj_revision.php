@@ -4,6 +4,7 @@ $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 //pr($this->session->userdata('detalle_solicitud'));
 //pr($solicitud);
+
 ?>
 <div class="text-left" role="main">
     <div class="">
@@ -112,20 +113,28 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             <?php } ?>
 
             <?php if (isset($solicitud['secciones']['print']) && !empty($solicitud['secciones']['print'])) { ?>
-                <?php pr($solicitud['secciones']['print']); ?>
 
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Impresa)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
-                <!--                <address>
-                                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>Encuadernac&iacute;n:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>Gramaje:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>Tipo de impresi&oacute;n:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>Tipo de papel:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>N&uacute;mero tintas:&nbsp;</b><?php // echo $df_r[''];                      ?><br /> 
-                                    <b>Ancho:&nbsp;</b><?php // echo $df_r[''];                      ?> Cm<br /> 
-                                    <b>Alto:&nbsp;</b><?php // echo $df_r[''];                      ?> Cm<br /> 
-                                </address>-->
+                <address>
+                    <b>Descripci&oacute;n f&iacute;sica:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['desc_fisica'];?><br /> 
+                    <b>Encuadernac&iacute;n:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['encuadernacion'];?><br /> 
+                    <b>Gramaje:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['gramaje'];?><br /> 
+                    <b>Tipo de impresi&oacute;n:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['impresion'];?><br /> 
+                    <b>Tipo de papel:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['tipo_papel'];?><br /> 
+                    <b>N&uacute;mero de p&aacute;ginas:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['no_paginas'];?><br /> 
+                    <b>N&uacute;mero tintas:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['num_tintas'];?><br /> 
+                    <b>Ancho:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['ancho'];?> cm<br /> 
+                    <b>Alto:&nbsp;</b>
+                        <?php echo $solicitud['secciones']['print']['alto'];?> cm<br /> 
+                </address>
 
             <?php } elseif (isset($solicitud['secciones']['digital']) && !empty($solicitud['secciones']['digital'])) { ?>
                 <p class="lead"><b>Descripci&oacute;n f&iacute;sica (Electrónica)</b><?php echo $botones_seccion[En_secciones::DESC_FISICA]; ?></p>
@@ -133,8 +142,8 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <address>
                     <b>Medio:&nbsp; </b><?php echo $digital_df['medio']; ?><br /> 
                     <b>Formato: </b><?php echo $digital_df['formato']; ?><br /> 
-                    <b>Tamaño: </b><?php echo $digital_df['tamanio'] . ' ' . $digital_df['tamanio_desc']; ?><br /> 
-                    <b>URL: </b><?php echo $digital_df['url'] ?><br />
+                    <b>Tamaño: </b><?php echo $digital_df['tamanio_desc']. ' ' .$digital_df['tamanio']; ?><br /> 
+                    <b>URL: </b><a href='<?php echo $digital_df['url'] ?>'><?php echo $digital_df['url'] ?></a><br />
                 </address>
             <?php }
             ?>

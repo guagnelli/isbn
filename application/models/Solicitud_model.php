@@ -70,7 +70,7 @@ class Solicitud_model extends MY_Model {
     }
 
     function editSolicitud($data) {
-        echo "salvando";
+        //echo "salvando";
         $this->db->select("libro_id");
         $this->db->where("id", $data["solicitud_id"]);
         $result = $this->db->get("solicitud");
@@ -127,8 +127,43 @@ class Solicitud_model extends MY_Model {
     }
 
     function getDF($solicitud_id){
-        $tabla = array("print" => "desc_fisica_impresa", "digital" => "desc_electronica");
+        //$tabla = array("print" => "desc_fisica_impresa", "digital" => "desc_electronica");
         $data = array();
+
+        $query = "select m.nombre medio, t.nombre tamanio, f.nombre formato, de.tamanio_desc, de.url
+                from desc_electronica de 
+                LEFT join c_medio m on(de.medio = m.id)
+                LEFT JOIN c_formato f ON(de.formato = f.id)
+                LEFT JOIN c_tamanio t ON(de.tamanio = t.id)
+                WHERE de.solicitud_id = ".$solicitud_id;
+        $result = $this->db->query($query);
+
+        if ($result->num_rows() === 1) {
+            $data["digital"] = $result->result_array();
+            $data["digital"] = $data["digital"][0];
+            return $data;
+        }else{
+            $query = "Select df.nombre desc_fisica, en.nombre encuadernacion, 
+                g.nombre gramaje, i.nombre impresion,
+                nt.nombre num_tintas, tp.nombre tipo_papel,
+                fi.no_paginas, fi.ancho, fi.alto
+                from desc_fisica_impresa fi 
+                left join c_desc_fisica df ON(fi.desc_fisica = df.id)
+                left join c_encuadernacion en ON(fi.encuadernacion = en.id)
+                left join c_gramaje g ON(fi.gramaje = g.id)
+                left join c_impresion i ON(fi.impresion = i.id)
+                left join c_num_tintas nt ON(fi.num_tintas = nt.id)
+                left join c_tipo_papel tp ON(fi.tipo_papel = tp.id)
+                WHERE fi.solicitud_id = ".$solicitud_id;
+            $result = $this->db->query($query);
+            if ($result->num_rows() === 1) {
+                $data["print"] = $result->result_array();
+                $data["print"] = $data["print"][0];
+                return $data;
+            }   
+        }
+        //$this->db->select("libro_id");
+        /*
         foreach ($tabla as $key => $value) {
                 //pr($value);
             $df = $this->get_section($value, array(
@@ -139,12 +174,8 @@ class Solicitud_model extends MY_Model {
                 //$data["rad_df"] = ;
                 break;
             }
-        }
+        }*/
         return $data;
-    }
-
-    function getFileList($solicitud_id){
-
     }
 
     function getHistorial($id = null) {
