@@ -162,7 +162,8 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
 
             <?php if (!empty($solicitud['secciones']['files'])) { ?>
-                <p class="lead"><b>Archivos</b></p>
+                <p class="lead"><b>Archivos</b> <?php echo $botones_seccion[En_secciones::ARCHIVOS]; ?></p>
+                <br>
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12 text-center">
                         <?php $data_seccion['files'] = $solicitud['secciones']['files']; ?>

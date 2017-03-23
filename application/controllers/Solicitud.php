@@ -308,6 +308,7 @@ class Solicitud extends MY_Controller {
 //                $pasa_validacion_datos = get_valida_secciones($datos_solicitud['solicitud_cve']);
 //                pr($pasa_validacion_datos);
                 //Carga datos de la solicitud del ISBN
+//                pr($this->session->userdata('botones_seccion'));
                 $this->session->set_userdata('detalle_solicitud', $datos_solicitud); //Asigna la informaciÃƒÂ³n del usuario al que se va a validar
                 echo $this->load->view('solicitud/buscador/index', $datosPerfil, true);
             }
@@ -681,6 +682,7 @@ class Solicitud extends MY_Controller {
     }
 
     public function ventana_comprobante() {
+        
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores

@@ -1,11 +1,13 @@
+<?php $comentarios = (!is_null($this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS])) ? $this->session->userdata('botones_seccion')[En_secciones::ARCHIVOS] : ''; //Botones de comentarios para las secciones
+?>
 <div class="row">
   <div class="col-xs-12 col-md-12 col-sm-12">
-    <p class="lead">Archivos <?php echo isset($comentarios)? $comentarios: ''; ?></p>
+    <p class="lead">Archivos <?php echo $comentarios; ?></p>
     <?php
     if(isset($debug)){
     	pr($debug);
     } 
-
+    
 	echo form_open_multipart("files/index",array(
 	    'id'=>'frm_file',
 	    'name'=>'frm_file',
