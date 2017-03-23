@@ -163,9 +163,13 @@ echo form_close();
     <?php if(isset($edicion["coedicion"]) && $edicion["coedicion"]==1){?>
       $("#coedicion").prop('checked', true);
       $("#coeditor").prop('disabled', false);
+      $("#radicado").prop('checked', true);
+      $("#radicado").prop('disabled', false);
     <?php }else{?>
       $("#coedicion").prop('checked', false);
       $("#coeditor").prop('disabled', true);
+      $("#radicado").prop('checked', false);
+      $("#radicado").prop('disabled', true);
     <?php }?>
     $("#coedicion").click(function(){
       if($("#coedicion").prop("checked")){
