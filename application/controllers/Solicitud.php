@@ -415,6 +415,31 @@ class Solicitud extends MY_Controller {
         $this->template->getTemplate();
     }
 
+    function ver_archivos() {
+
+        if ($this->input->is_ajax_request()) {
+            if ($this->input->post()) {
+                $data_post = $this->input->post();
+                $solicitud_cve = intval($this->seguridad->decrypt_base64($data_post['solicitud_cve']));
+                $data_files['files'] = $this->req->get_section("files", array(
+                    "solicitud_id" => $solicitud_cve
+                ));
+                $data_files['enable_options'] = FALSE;
+                $data_detalle = $this->load->view('solicitud/secciones/file_list.tpl.php', $data_files, true);
+                $data_pie_cerrar = $this->load->view('solicitud/buscador/pie_modal_cerrar.php', null, true);
+
+                $data = array(
+                    'titulo_modal' => 'Deliberación',
+                    'cuerpo_modal' => $data_detalle,
+                    'pie_modal' => $data_pie_cerrar
+                );
+                echo $this->ventana_modal->carga_modal($data);
+            }
+        } else {
+            redirect(site_url());
+        }
+    }
+
     function detalle() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
@@ -1037,7 +1062,7 @@ class Solicitud extends MY_Controller {
                 $edicion = $this->req->get_section("edicion", array(
                     "solicitud_id" => $data["edicion"]["solicitud_id"]
                 ));
-                if (count($edicion)  == 1) {
+                if (count($edicion) == 1) {
                     $data["edicion"] = $edicion[0];
                 }
                 $response['result'] = "true";
@@ -1205,7 +1230,7 @@ class Solicitud extends MY_Controller {
             $data["df"] = $this->input->post();
             $solicitud_id = $data["df"]["solicitud_id"];
             //print_r($data["df"]);
-            $fields = array("medio", "formato", "tamanio_desc", "tamanio","url", "id", "solicitud_id");
+            $fields = array("medio", "formato", "tamanio_desc", "tamanio", "url", "id", "solicitud_id");
             $tabla = array("print" => "desc_fisica_impresa", "digital" => "
                 desc_electronica");
             $tipo = "print";

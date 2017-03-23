@@ -68,6 +68,20 @@ function funcion_ver_solicitud_entidad(element) {
     var obj_post = {histsolicitudcve: histsolicitudcve, solicitud_cve: solicitud_cve, estado_cve: estado_solicitud};
     data_ajax_post(site_url + '/solicitud/seccion_index', null, '#select_perfil_solicitud', obj_post);
 }
+/**
+ * Carga el valor de 
+ * @param {type} element
+ * @returns {undefined}
+ */
+function funcion_ver_files(element) {
+    var button_obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+    var solicitud_cve = button_obj.data('solicitudcve');
+    
+    //Remover contenido de un div 
+    $('#select_perfil_solicitud').empty();
+    var obj_post = {solicitud_cve: solicitud_cve};
+    data_ajax_post(site_url + '/solicitud/ver_archivos', null, '#modal_content', obj_post);
+}
 function funcion_cerrar_vista_solicitud(element) {
 //    alert('jsahjhdadas');
     $('#select_perfil_validar').empty();

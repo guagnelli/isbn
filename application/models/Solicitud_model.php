@@ -231,7 +231,8 @@ class Solicitud_model extends MY_Model {
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
             'DATE_FORMAT(hri.reg_revision,"%d-%m-%Y %r" ) "fecha_ultima_revision"', 'cent.name "name_entidad"',
-            'hri.c_estado_id "estado_cve"', 'sc.nombre "sub_categoria"'
+            'hri.c_estado_id "estado_cve"', 'sc.nombre "sub_categoria"',
+            '(select count(*) from files where files.solicitud_id = s.id) count_files',
         );
         $this->db->start_cache();/**         * *************Inicio cache  *************** */
 //        $this->db->from('cdepartamento as dp');
@@ -290,7 +291,7 @@ class Solicitud_model extends MY_Model {
         }
         $ejecuta = $this->db->get('hist_revision_isbn hri'); //Prepara la consulta ( aún no la ejecuta)
         $query = $ejecuta->result_array();
-        //pr($this->db->last_query());
+//        pr($this->db->last_query());
 //        $query->free_result();
         $this->db->flush_cache(); //Limpia la cache
         $result['result'] = $query;

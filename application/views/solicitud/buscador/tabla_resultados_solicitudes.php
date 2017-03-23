@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //pr($rol_cve);
 //pr($reglas_estados);
 ?>
-<!--<script type='text/javascript' src="<?php // echo base_url();                           ?>assets/js/validacion_docente/validar_censo.js"></script>-->
+<!--<script type='text/javascript' src="<?php // echo base_url();                             ?>assets/js/validacion_docente/validar_censo.js"></script>-->
 
 <!--<script type='text/javascript' src="<?php echo base_url(); ?>assets/js/solicitud/solicitud_isbn.js"></script>-->
 
@@ -108,12 +108,26 @@ echo js("solicitud/secciones.js");
                         . '<span class="glyphicon glyphicon-dashboard btn-msg" '
                         . '"> '
                         . '</span></a>';
+
 //                $link_editar_titulo = isset($link_editar_titulo) ? $link_editar_titulo : '';
 //               $link_editar = '<a class="" '
 //                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
 //                       . 'target="_blank"><span class="glyphicon glyphicon-edit btn-msg"></span></a>';
                 $link_editar = '';
                 $link_editar_titulo = '';
+                $link_ver_archivos = '';
+                if ($val['count_files'] > 0) {
+                    $link_ver_archivos = '<a href="#" '
+                            . 'data-solicitudcve ="' . $solicitud_cve . '" '
+                            . 'data-toggle="modal" '
+                            . 'data-target="#modal_censo" '
+                            . 'data-original-title="' . $string_values['link_ver_archivos']
+                            . ' title="' . $string_values['link_ver_archivos']
+                            . ' onclick="funcion_ver_files(this)"> '
+                            . '<span class="glyphicon glyphicon-file btn-msg" '
+                            . '"> '
+                            . '</span></a>';
+                }
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
                     $link_editar = '<form method="post" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
                             . '<input type="hidden" id="solicitud" name="solicitud" value="' . $val['solicitud_cve'] . '" /> '
@@ -149,7 +163,7 @@ echo js("solicitud/secciones.js");
                 }
                 echo "<td>" . $val['sub_categoria'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . $link_editar_titulo . "</td>";
+                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . $link_editar_titulo . $link_ver_archivos . "</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "</tr>";
             }

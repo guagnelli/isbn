@@ -121,6 +121,7 @@ $lang['interface'] = array(
         'title_subcategoria' => 'Sub categoría',
         'link_ver_detalle_solicitud' => 'Detalle',
         'link_ver_solicitud' => 'Ver solicitud',
+        'link_ver_archivos' => 'Deliberación',
     ),
     'perfil' => array(
         'title_perfil' => 'Perfil',
