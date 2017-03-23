@@ -1,3 +1,4 @@
+<?php //pr($solicitud);?>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -91,6 +92,27 @@
                    value="V" /> Volumen 
 
                 </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                        <b><span class="required">*</span>Folio de la colección completa a la que pertenece este volúmen:</b> 
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <?php
+                      echo $this->form_complete->create_element(array(
+                       'id' => 'solicitud[folio_coleccion]',
+                       'type' => 'text',
+                       'value' => isset($solicitud["folio_coleccion"]) ? $solicitud["folio_coleccion"]:"",
+                       'class' => 'form-control col-md-7 col-xs-12',
+                       'attributes' => array(
+                          'class' => '',
+                          'min'=>'0',
+                          'placeholder'=>'Folio de la colección completa',
+                          )
+                       ));
+                       ?>        
+                       <?php echo form_error_format('libro[title]'); ?>
+                    </div>
+                </div>
                 <p class="lead">Clasificación temática</p>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -147,8 +169,12 @@
         </div>
     </div>
 </div> 
-<?php echo js("solicitud/secciones.js");?>
+<?php echo js("solicitud/secciones.js");
+//(isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen")
+?>
+
 <script type="text/javascript">
+ 
 function sub_categoria(obj){
   var categoria_id = $(obj).val();
   var action = "<?php echo base_url();?>index.php/solicitud/sub_categoria";

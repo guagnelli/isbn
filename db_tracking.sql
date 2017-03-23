@@ -358,6 +358,11 @@ alter table desc_electronica add column url varchar(255);
 
 
 -----22/marzo/2017
+
+INSERT INTO isbn.c_entidad
+(name, code, subsistema_id)
+VALUES('Dirección General de Publicaciones y Fomento Editorial', 'DGPE', 2);
+
 INSERT INTO usuario
 (usuario_cve, usu_nick, usu_nombre, usu_paterno, usu_materno, usu_correo, usu_contrasenia, usu_estado, rol_cve, usu_fch_registro, entidad_id)
 VALUES(5, 'DGPFE', 'Dirección General de Publicaciones y Fomento Editorial ', ' ', ' ', 'gchavezs@unam.mx
@@ -391,3 +396,9 @@ values (12, 'Titulo del libro', 12, 'tl', 'libro', 'solicitud_id',0,0),
 (11, 'Archivos', 11, 'fl', 'files', 'solicitud_id',0,0),
 (13, 'Clasificación tematica', 13, 'ct', 'ctema', 'solicitud_id',0,0);
 
+
+alter table colaboradores drop foreign key fk_colab_nac;
+alter table colaboradores add constraint fk_colab_nac 
+foreign key (nacionalidad) references c_nacionalidad(id);
+
+alter table solicitud add column folio_coleccion varchar(50);
