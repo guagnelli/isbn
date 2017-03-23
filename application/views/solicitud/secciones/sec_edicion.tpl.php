@@ -175,6 +175,7 @@ echo form_close();
       if($("#coedicion").prop("checked")){
         //alert($("#coedicion").prop("checked"));
         $("#coeditor").prop('disabled', false);
+        $("#radicado").prop('disabled', false);
       }else{
         apprise("Esta a punto de eliminar la información del coeditor y radicado, ¿desea continuar?",
                 {verify: true},
