@@ -3,6 +3,8 @@
 //pr($datos);
 $comentarios_titulo_libro = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TITULO_LIBRO])) ? $this->session->userdata('botones_seccion')[En_secciones::TITULO_LIBRO] : ''; //Botones de comentarios para las secciones
 $comentarios_clas_tematica = (!is_null($this->session->userdata('botones_seccion')[En_secciones::CLAS_TEMATICA])) ? $this->session->userdata('botones_seccion')[En_secciones::CLAS_TEMATICA] : ''; //Botones de comentarios para las secciones
+$this->lang->load('interface', 'spanish');
+$string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 ?>
 <link href="<?php echo asset_url() ?>vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 <script src='<?php echo asset_url() ?>vendors/switchery/dist/switchery.min.js'></script>
@@ -27,8 +29,17 @@ echo js("daterangepicker.js");
             <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"] ?></p>
             <?php if (isset($datos["solicitud"]["clasificacion_tematica"]) and ! empty($datos["solicitud"]["clasificacion_tematica"])) { ?>
                 <br>
-                <p><b>Clasificación temática:</b> <?php echo $datos["solicitud"]["clasificacion_tematica"]["categoria"] ?> <?php echo $comentarios_clas_tematica; ?></p>
-                <p><b>Sub categoría:</b> <?php echo $datos["solicitud"]["clasificacion_tematica"]["subcategoria"] ?></p>
+                <p ><b>Clasificación temática:</b> 
+                <?php echo $comentarios_clas_tematica; ?>
+                </p>
+                <p>
+                <address>
+
+                    <b><?php echo $string_detalle['li_categoria'] ?></b>
+                    <?php echo $datos["solicitud"]["clasificacion_tematica"]["categoria"] ?><br />
+                    <b><?php echo $string_detalle['li_sub_categoria'] ?></b>
+                    <?php echo $datos["solicitud"]["clasificacion_tematica"]["subcategoria"] ?><br />
+                </address>
             <?php } ?>
             <br>
 
