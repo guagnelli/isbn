@@ -447,7 +447,9 @@ a:hover, a:focus {
   margin-bottom: 0; }
 
 .navbar-header {
-  background: #34495E; }
+  background: #21517a;
+  border-radius: 0px 0px 8px 8px;
+}
 
 .navbar-right {
   margin-right: 0; }
@@ -697,9 +699,21 @@ a:hover, a:focus {
   padding: 4px 6px; }
 
 footer {
-  background: #fff;
+  /*style="background-color:#CCC; padding:20px; 0px;"*/
+  background: #0080cd;
   padding: 15px 20px;
-  display: block; }
+  display: block; 
+  height: 139px;
+  color: #FFF;
+}
+.copyright{
+  text-align: center;
+  font-weight: 300;
+  margin: 0 auto;
+  width: 60%;
+  border-bottom: 1px solid #ddd;
+  padding: 3px 0;
+}
 
 .nav-sm footer {
   margin-left: 70px; }
@@ -848,7 +862,9 @@ h2 {
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
   opacity: 1;
-  transition: all .2s ease; }
+  transition: all .2s ease; 
+  border-radius: 12px;
+}
 
 .x_title {
   border-bottom: 1px solid #007CCB;
@@ -1928,7 +1944,7 @@ button,
   border: 1px solid #EFEFEF; }
 
 .input-group {
-  margin-bottom: 10px; }
+  margin-bottom: 10px; }nav
 
 .ln_solid {
   border-top: 1px solid #e5e5e5;
@@ -1949,7 +1965,7 @@ span.section {
   border-bottom: 1px solid #e5e5e5; }
 
 .form-control {
-  border-radius: 0;
+  border-radius: 6px;
   width: 100%; }
 
 .form-horizontal .control-label {
@@ -4204,10 +4220,6 @@ ul.notifications {
 
 /** /Dropzone.js **/
 
-
-.main-header {
-    padding: 15px 0 15px;
-}
 .img-responsive{
   margin: none;
 }
@@ -4230,4 +4242,40 @@ ul.notifications {
 .btn-msg:hover{
   color:#007CCB;
   font-size:20px; 
+}
+
+.main-header {
+  padding: 15px 0 15px;
+  /*height: 184px;*/
+  background-color: #fff!important;
+  background: url(../img/back_apoyo.png) no-repeat;
+}
+
+.logo-isbn{
+  height: 100px;
+  text-align: right;
+  padding-top: 35px;
+}
+
+table.dataTable {
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+table.dataTable.no-footer {
+    border-bottom: none;
+}
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #999 !important;
+}
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: bold;
+    font-weight: normal;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0px solid #999 !important;
 }

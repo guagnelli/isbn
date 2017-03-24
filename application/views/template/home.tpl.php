@@ -66,45 +66,46 @@
 		<![endif]-->
 	</head>
 	<body class="nav-md">
-		<div class="main-header" style="background: url('<?php echo asset_url(); ?>img/fondo_header.jpg');">
-	     	<div class="container">
+		
+	     	<div class="container main-header">
 	      		<div class="row">
 	      			<!-- logo Starts -->
 			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
-			        <div class="col-lg-1 col-sm-2 col-xs-3">
+			        <div class="col-lg-3 col-sm-4 col-xs-6">
 			            <a href="http://www.unam.mx/" target="_blank" class="">
 			              	<?php 
 			              	$image_properties = array(
 							        'class' => 'img-responsive'
 							);
-			              	echo img("unam_white.png",$image_properties); 
+			              	echo img("escudo_unam.png",$image_properties); 
 			              	?>
 			            </a>
-			        </div>
-			      	<!-- logo Ends -->
-			      	<!-- Logo Starts -->
-			        <div class="col-lg-2 col-sm-2 col-xs-3 ">
-			            <a href="#" title="Inicio">
-			                <?php 
-			                echo img('isbn_white.png',$image_properties); 
+			            <a href="http://www.libros.unam.mx" title="Libros UNAM">
+			                <?php
+			                echo img('logo_libros.png',$image_properties); 
 			                ?>
 			            </a>
 			        </div>
-			        <div class="col-lg-5 col-sm-5 col-xs-5 text-right">
+			      	<!-- logo Ends -->
+			      	<!-- Logo Starts>
+			        <div class="col-lg-2 col-sm-2 col-xs-3 ">
+			            
+			        </div-->
+			        <div class="col-lg-5 col-sm-5 col-xs-5 logo-isbn">
 				        <div>
-				            <a href="http://www.libros.unam.mx" title="Libros UNAM">
-				                <?php
-				                echo img('libros_white.png'); 
-
-				                ?>
-				            </a>
+				        	<a href="#" title="Inicio">
+			                <?php 
+			                $image_properties["class"]="";
+			                echo img('logo_isbn.png',$image_properties); 
+			                ?>
+			            </a>
 				        </div>
 			        </div>
 			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
 		        </div>
 		        <!-- seccion buscadores Starts -->					        
 	    	</div>
-	    </div>
+	    
 	    <div class="container body">
       		<div class="main_container">
 				<!--navbar principal-->
@@ -170,12 +171,21 @@
 		<!-- Termina la ventana modal llamada modal_censo -->
 
 		<div class="clearfix"> </div>
-		<footer style="background-color:#CCC; padding:20px; 0px;">
+		<footer >
 	        <div class="container">
 	            <div class="row">
 	                <div class="col-md-12">
 	                  <div class="copyright text-center">
-	                    <p>Dirección General de Publicaciones y Fomento Editorial, UNAM 2017.<br>Este sitio se visualiza mejor a partir de resoluciones 1024 px con Explorer 11 / Firefox 33.0 / Chrome 38.0</p>
+	                    <p>Dirección General de Publicaciones y Fomento Editorial, UNAM 2017.</p>
+	                  </div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-md-12">
+	                  <div class="text-center">
+	                  	<?php
+		                echo img('firma_footer.png'); 
+		                ?>
 	                  </div>
 	                </div>
 	            </div>
