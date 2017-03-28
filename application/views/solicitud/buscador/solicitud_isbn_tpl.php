@@ -148,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             echo $this->form_complete->create_element(array('id' => 'sub_categoria_cve',
                                 'type' => 'dropdown',
                                 'options' => $c_subcategoria,
-                                'first' => array('' => $string_values['drop_subcategoria']),
+                                'first' => array('0' => $string_values['drop_subcategoria']),
                                 'value' => (isset($subcategoria_cve)) ? $subcategoria_cve : '',
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
@@ -156,6 +156,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
                                     'title' => $string_values['lbl_subcategoria'],
+                                    'onchange' => 'funcion_buscar_solicitudes()'
+                                )
+                            ));
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <div class="panel-body input-group ">
+                            <span class="input-group-addon"><?php echo $string_values['lbl_tipoobra']; ?></span>
+                            <?php
+                            echo $this->form_complete->create_element(array('id' => 'sol_tipo_obra',
+                                'type' => 'dropdown',
+                                'options' => $c_tipoobra,
+                                'first' => array('' => $string_values['drop_tipoobra']),
+                                'value' => (isset($ipo_obra)) ? $tipo_obra : '',
+                                'class' => 'form-control',
+                                'attributes' => array('class' => 'form-control',
+                                    'placeholder' => $string_values['lbl_tipoobra'],
+                                    'data-toggle' => 'tooltip',
+                                    'data-placement' => 'top',
+                                    'title' => $string_values['lbl_tipoobra'],
                                     'onchange' => 'funcion_buscar_solicitudes()'
                                 )
                             ));

@@ -38,7 +38,9 @@ echo js("solicitud/secciones.js");
         <thead>
             <tr class="bg-red">
                 <th  style="color:#ffffff"><?php echo $string_values['title_folio']; ?></th>
+                <th  style="color:#ffffff"><?php echo $string_values['title_tipoobra']; ?></th>
                 <th style="color:#ffffff" ><?php echo $string_values['title_estado']; ?></th>
+                <th style="color:#ffffff"><?php echo $string_values['title_coleccion']; ?></th>
                 <th style="color:#ffffff"><?php echo $string_values['title_isbn_libro']; ?></th>
                 <th style="color:#ffffff"><?php echo $string_values['title_libro']; ?></th>
                 <?php if ($rol_cve != E_rol::ENTIDAD) { ?>
@@ -155,7 +157,9 @@ echo js("solicitud/secciones.js");
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";
+                echo "<td >" . $c_tipoobra[$val['sol_tipo_obra']] . "</td>";
                 echo "<td>" . $val['name_estado'] . "</td>";
+                echo "<td>" . $val['coleccion'] . "</td>";
                 echo "<td>" . $val['isbn_libro'] . "</td>";
                 echo "<td>" . $val['titulo_libro'] . "</td>";
                 if ($rol_cve != E_rol::ENTIDAD) {

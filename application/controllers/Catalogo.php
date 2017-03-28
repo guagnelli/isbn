@@ -511,6 +511,35 @@ class Catalogo extends MY_Controller {
         $this->template->getTemplate();
     }
 
+    public function usuario(){
+        $this->load->library('grocery_CRUD');
+        $crud = new grocery_CRUD();
+
+        $crud->set_table('usuario');
+            //->set_subject('Tipo de papel')
+            //->columns('id','nombre')
+            //->display_as('nombre','Nombre');
+        
+        //$crud->field_type("usu_contrasenia","password");
+        $crud->callback_before_insert(array($this,'encrypt_password_callback'));
+        $crud->callback_before_update(array($this,'encrypt_password_callback'));
+        //$crud->callback_edit_field('usu_contrasenia',array($this,'decrypt_password_callback'));
+        //$crud->set_relation('id','c_subsistema','name');
+        $crud->set_relation('entidad_id','c_entidad','name');
+
+        //$crud->callback_edit_field('nombre',array($this,'edit_est_estado_nombre'));
+        $crud->unset_delete(); //Remover la acción borrar
+        //$crud->unset_add();
+        
+        $main_content = $crud->render();
+        $this->template->setMainContent($this->load->view('catalogo/plantilla.php', $main_content, TRUE));
+        $this->template->getTemplate();
+    }
+
+    function encrypt_password_callback($post_array){
+        $post_array['usu_contrasenia'] = hash('sha512', $post_array['usu_contrasenia']);
+        return $post_array;
+    }
 
     /*function edit_est_estado_nombre($value, $primary_key)
     {

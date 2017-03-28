@@ -13,6 +13,7 @@ class Solicitud extends MY_Controller {
     /**
      * Class Constructor
      */
+    public $tipo_obra;
     function __construct() {
         parent::__construct();
         $this->load->library('form_complete');
@@ -22,6 +23,7 @@ class Solicitud extends MY_Controller {
         $this->load->library('seguridad');
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Solicitud_model", 'req');
+        $this->tipo_obra = array("V"=>"Volúmen","C"=>"Completa","I"=>"Independiente");
     }
 
     private function limpia_varsesion() {
@@ -112,6 +114,7 @@ class Solicitud extends MY_Controller {
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name', Enum_cg::c_categoria => 'nombre'));
         //pr($data);
         //Carga datos de usuario 
+        $data["c_tipoobra"] = $this->tipo_obra; 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad
 
         $main_contet = $this->load->view('solicitud/buscador/solicitud_isbn_tpl', $data, true);
@@ -178,6 +181,7 @@ class Solicitud extends MY_Controller {
         $datos['string_values'] = $data['string_values'];
         $datos['reglas_estados'] = $data['reglas_estados'];
         $datos['rol_cve'] = $data['rol_cve'];
+        $datos["c_tipoobra"] = $this->tipo_obra;
         echo $links . $this->load->view('solicitud/buscador/tabla_resultados_solicitudes', $datos, TRUE) . $links . '
                 <script>
                 $("ul.pagination li a").click(function(event){

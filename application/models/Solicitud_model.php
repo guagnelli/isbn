@@ -228,7 +228,7 @@ class Solicitud_model extends MY_Model {
             'sub_titulo_obra' => 'lb.subtitle',
         );
         $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
-        $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"',
+        $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"','s.folio_coleccion "coleccion"','s.sol_tipo_obra',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
             'DATE_FORMAT(hri.reg_revision,"%d-%m-%Y %r" ) "fecha_ultima_revision"', 'cent.name "name_entidad"',
             'hri.c_estado_id "estado_cve"', 'sc.nombre "sub_categoria"',
@@ -243,6 +243,7 @@ class Solicitud_model extends MY_Model {
         $this->db->join('c_subcategoria sc', 'sc.id = s.id_subcategoria', 'left');
         //where que son obligatorios
         $this->db->where('hri.is_actual', 1); //último estado
+        //pr($params);
         if ($params['estado_cve'] > 0) {//Filtro de estado 
             $this->db->where('hri.c_estado_id', $params['estado_cve']);
         }
@@ -257,6 +258,9 @@ class Solicitud_model extends MY_Model {
         }
         if (isset($params['sub_sistema_cve']) and $params['sub_sistema_cve'] > 0) {//Filtro subsistema 
             $this->db->where('cent.subsistema_id', $params['sub_sistema_cve']);
+        }
+        if (isset($params['sol_tipo_obra']) and in_array($params['sol_tipo_obra'], array("V","I","C"))) {//Filtro subsistema 
+            $this->db->where('s.sol_tipo_obra', $params['sol_tipo_obra']);
         }
         switch ($params['rol_seleccionado']) {
             case E_rol::ENTIDAD:
