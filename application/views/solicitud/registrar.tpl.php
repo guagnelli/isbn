@@ -84,6 +84,7 @@
                    ?> 
                    value="C" /> Completa 
                   <input type="radio" 
+                   id="volumen"
                    class="flat" 
                    name="solicitud[sol_tipo_obra]"
                    <?php
@@ -104,7 +105,7 @@
                        'value' => isset($solicitud["folio_coleccion"]) ? $solicitud["folio_coleccion"]:"",
                        'class' => 'form-control col-md-7 col-xs-12',
                        'attributes' => array(
-                          'class' => '',
+                          'class' => 'folio_coleccion',
                           'min'=>'0',
                           'placeholder'=>'Folio de la colección completa',
                           )
@@ -161,7 +162,7 @@
                 <div class="form-group">
                   <div class="col-md-6 col-md-offset-3">
                     <button id="send" type="submit" class="btn" onclick="retrun false;" >Realizar solicitud</button>
-                    <button type="button" class="btn btn-primary" onclick="window.close()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
                   </div>
                 </div>
                 <?php echo form_close(); ?>
@@ -174,7 +175,35 @@
 ?>
 
 <script type="text/javascript">
- 
+$("#solicitud[folio_coleccion]").ready(function(){
+ // alert("error");
+  <?php
+  if(isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen"){
+  ?>
+  $(".folio_coleccion").prop('disabled', false);
+  <?php
+  }
+  else{
+    ?>
+    $(".folio_coleccion").prop('disabled', true);
+    <?php
+  }
+  ?>
+  $("input[name^='solicitud\[sol_tipo_obra\]']").change(function(){
+    //alert($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val())
+    if($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val() == "V"){
+      $(".folio_coleccion").prop('disabled', false);
+    }else{
+      apprise("Esta a punto de eliminar la información del coeditor y radicado, ¿desea continuar?",
+          {verify: true},
+          function(){
+            $(".folio_coleccion").val("");
+            $(".folio_coleccion").prop('disabled', true);
+          }
+        );
+    }
+  });
+});
 function sub_categoria(obj){
   var categoria_id = $(obj).val();
   var action = "<?php echo base_url();?>index.php/solicitud/sub_categoria";
