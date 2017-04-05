@@ -13,6 +13,7 @@ class Solicitud extends MY_Controller {
     /**
      * Class Constructor
      */
+    public $tipo_obra;
     function __construct() {
         parent::__construct();
         $this->load->library('form_complete');
@@ -22,6 +23,7 @@ class Solicitud extends MY_Controller {
         $this->load->library('seguridad');
         $this->load->model('Catalogos_generales', 'cg');
         $this->load->model("Solicitud_model", 'req');
+        $this->tipo_obra = array("V"=>"Volúmen","C"=>"Completa","I"=>"Independiente");
     }
 
     private function limpia_varsesion() {
@@ -112,6 +114,7 @@ class Solicitud extends MY_Controller {
         $data = carga_catalogos_generales($array_catalogos, $data, null, TRUE, NULL, array(enum_cg::c_estado => 'id', Enum_cg::c_entidad => 'name', Enum_cg::c_subcategoria => 'nombre', Enum_cg::c_subsistema => 'name', Enum_cg::c_categoria => 'nombre'));
         //pr($data);
         //Carga datos de usuario 
+        $data["c_tipoobra"] = $this->tipo_obra; 
         $this->session->set_userdata('datos_usuario', $datos_usuario); //entidad
 
         $main_contet = $this->load->view('solicitud/buscador/solicitud_isbn_tpl', $data, true);
@@ -178,6 +181,7 @@ class Solicitud extends MY_Controller {
         $datos['string_values'] = $data['string_values'];
         $datos['reglas_estados'] = $data['reglas_estados'];
         $datos['rol_cve'] = $data['rol_cve'];
+        $datos["c_tipoobra"] = $this->tipo_obra;
         echo $links . $this->load->view('solicitud/buscador/tabla_resultados_solicitudes', $datos, TRUE) . $links . '
                 <script>
                 $("ul.pagination li a").click(function(event){
@@ -319,8 +323,7 @@ class Solicitud extends MY_Controller {
     }
 
     function registrar($solicitud_id = 0) {
-        // pr($this->session->userdata());
-        $this->load->helper('date');
+        // pr($this->session->userdata());    
         $id_entidad = $this->session->userdata("entidad_id"); //from session
         $id_categoria = null;
         $id_subcategoria = null;
@@ -340,34 +343,30 @@ class Solicitud extends MY_Controller {
                 //pr($data["save"]);
                 if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
-                    ////////Inicia el envío de correo
+                    ////////Inicia el envÃ­o de correo
                     $this->load->library('Correo');
                     $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
-                    $solicitud_datos['solicitud'] = $this->req->getSolicitud($data['save']['solicitud_id']);
-                    $solicitud_datos['historial'] = $this->req->getHistorial($data['save']['solicitud_id']);
-                    $envio = $this->correo->enviar_correo(array('subject' => 'Notificación de actividad en el Sistema ISBN-UNAM',
-                        'body' => $this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE),
+                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Edición de obra',
+                        'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
                         'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                         'addCC' => $dgaj)
                     );
-                    ////////Finaliza el envío de correo
+                    ////////Finaliza el envÃ­o de correo
                     //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
                     redirect("solicitud");
                 } else { //save
                     $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
                     $solicitud = $this->req->addSolicitud($data["save"]);
+                    ////////Inicia el envÃ­o de correo
+                    $this->load->library('Correo');
+                    $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
+                    $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Alta de obra',
+                        'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+                        'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
+                        'addCC' => $dgaj)
+                    );
+                    ////////Finaliza el envÃ­o de correo
                     if ($solicitud > 0) {
-                        ////////Inicia el envío de correo
-                        $this->load->library('Correo');
-                        $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
-                        $solicitud_datos['solicitud'] = $this->req->getSolicitud($solicitud);
-                        $solicitud_datos['historial'] = $this->req->getHistorial($solicitud);
-                        $envio = $this->correo->enviar_correo(array('subject' => 'Notificación de actividad en el Sistema ISBN-UNAM',
-                            'body' => $this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE),
-                            'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
-                            'addCC' => $dgaj)
-                        );
-                        ////////Finaliza el envío de correo
                         //redirect("solicitud/secciones/$solicitud");
                         redirect("solicitud");
                     }
@@ -548,8 +547,8 @@ class Solicitud extends MY_Controller {
                     $parametro_hist_actual_mod = array('is_actual' => 0);
                     $condicion_actualizacion = array('id' => $hist_validacion_actual);
                     $parametros_insert_hist_val = array('is_actual' => 1, 'solicitud_cve' => $solicitud_cve, 'c_estado_id' => $estado_transicion_cve);
-                    //pr($parametros_insert_hist_val);
-                    //exit();
+//                    pr($parametros_insert_hist_val);
+//                    exit();
                     $result_cam_estado = $this->req->update_insert_estado_solicitud($parametros_insert_hist_val, $parametro_hist_actual_mod, $condicion_actualizacion);
 
                     if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
@@ -558,19 +557,15 @@ class Solicitud extends MY_Controller {
                         } else {
                             $data['error'] = $string_values['save_default']; //
                         }
-                        ////////Inicia el envío de correo
-                        $this->load->library('Correo');
-                        $this->load->helper('date');
-                        $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
-                        $solicitud_datos['solicitud'] = $this->req->getSolicitud($solicitud_cve);
-                        $solicitud_datos['historial'] = $this->req->getHistorial($solicitud_cve);
-                        $envio = $this->correo->enviar_correo(array('subject' => 'Notificación de actividad en el Sistema ISBN-UNAM',
-                            'body' => $this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE),
-                            'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
-                            'addCC' => $dgaj)
-                        );
-                        //pr($this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE));
-                        ////////Finaliza el envío de correo
+                        ////////Inicia el envÃ­o de correo
+//                        $this->load->library('Correo');
+//                        $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
+//                        $envio = $this->correo->enviar_correo(array('subject' => 'ISBN - UNAM :: Cambio de estado de obra',
+//                            'body' => $this->load->view('solicitud/correo/plantilla.php', null, TRUE),
+//                            'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
+//                            'addCC' => $dgaj)
+//                        );
+                        ////////Finaliza el envÃ­o de correo
                         $data['tipo_msg'] = $tipo_msg['INFO']['class']; //Tipo de mensaje de error
                         $data['result'] = 1; //Error resultado success
                     } else {//Manda mensaje de error que no se pudo almacenar los datos
