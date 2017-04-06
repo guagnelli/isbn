@@ -831,6 +831,7 @@ class Solicitud extends MY_Controller {
             if ($this->input->post()) {
                 //$data["debug"] = 
                 $data["tema"] = $this->input->post();
+                //pr($data);
                 //load from the begining
                 if (count($data["tema"]) == 1) {
                     $tema = $this->req->get_tema($data["tema"]["solicitud_id"]);
@@ -844,31 +845,37 @@ class Solicitud extends MY_Controller {
                     $id = $data["tema"]["id"];
                     unset($data["tema"]["id"]);
 
-                    $where = array("id" => $id);
-                    $update = $this->req->update("tema", $data["tema"], $where);
-                    $data["tema"]["id"] = $id;
+                    if ($this->form_validation->run() == TRUE){
+                        $where = array("id" => $id);
+                        $update = $this->req->update("tema", $data["tema"], $where);
+                        $data["tema"]["id"] = $id;
 
-                    if ($update) {
-                        $response['message'] = "El tema se ha guardado exitosamente";
-                        $response['result'] = "true";
-                    } else {
-                        $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
+                        if ($update) {
+                            $response['message'] = "El tema se ha guardado exitosamente";
+                            $response['result'] = "true";
+                        } else {
+                            $response['message'] = "Se ha producido un error, favor de verificarlo";
+                            $response['result'] = "false";
+                        }
                     }
                 } else {
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
-
-                    $save = $this->req->add("tema", $data["tema"]);
-                    if ($save) {
-                        $update = $this->req->update("solicitud", array("has_tema" => 1), array("id" => $data["tema"]["solicitud_id"]));
-                        $response['message'] = "El tema se ha guardado exitosamente";
-                        $response['result'] = "true";
-                    } else {
-                        $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
-                    }
+                    //pr($validations);
+                    if ($this->form_validation->run() == TRUE){
+                        $save = $this->req->add("tema", $data["tema"]);
+                        if ($save) {
+                            $update = $this->req->update("solicitud", array("has_tema" => 1), array("id" => $data["tema"]["solicitud_id"]));
+                            $response['message'] = "El tema se ha guardado exitosamente";
+                            $response['result'] = "true";
+                        } else {
+                            $response['message'] = "Se ha producido un error, favor de verificarlo";
+                            $response['result'] = "false";
+                        }
+                    }/* else {
+                        pr(validation_errors());
+                    }*/
                 }
                 //Obtiene icono botón del comentario ***************
                 $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TEMA])) ? $this->session->userdata('botones_seccion')[En_secciones::TEMA] : ''; //Botones de comentarios para las secciones

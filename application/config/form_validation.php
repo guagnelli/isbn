@@ -67,23 +67,23 @@ $config["form_perfil"] = array(
 );
 $config["sol_sec_tema"] = array(
     array(
-        'field' => 'tema[coleccion]',
+        'field' => 'coleccion',
         'label' => 'Colección',
-        'rules' => 'requiered',
+        'rules' => 'required',
         'errors' => array(
             'requiered' => "El campo %s es obligatorio"
         )
     ),
     array(
-        'field' => 'tema[no_coleccion]',
+        'field' => 'no_coleccion',
         'label' => 'No. de colección',
-        'rules' => 'requiered',
+        'rules' => 'required',
         'errors' => array(
             'requiered' => "El campo %s es obligatorio"
         )
     ),
     array(
-        'field' => 'tema[tipo_contenido]',
+        'field' => 'tipo_contenido',
         'label' => 'Tipo de contenido',
         'rules' => 'greater_than[0]',
         'errors' => array(
@@ -91,19 +91,19 @@ $config["sol_sec_tema"] = array(
         )
     ),
     array(
-        'field' => 'tema[nombre_serie]',
+        'field' => 'nombre_serie',
         'label' => 'Colección',
-        'rules' => 'requiered',
+        'rules' => 'required',
         'errors' => array(
             'greater_than' => "El campo %s es obligatorio"
         )
-    ),
-    $config["comentario_jus"] = array(
+    )
+);
+$config["comentario_jus"] = array(
         array(
             'field' => 'comentario_justificacion',
             'label' => 'observacion',
             'rules' => 'trim|required'
-        ),
     ),
 );
 
