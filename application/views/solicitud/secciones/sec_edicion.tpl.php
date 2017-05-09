@@ -31,6 +31,7 @@ if (isset($edicion["id"])) {
                required="required"
                value = '<?php echo isset($edicion["no_edicion"]) ? $edicion["no_edicion"] : ""; ?>'
                type="text" />
+        <?php echo form_error('no_edicion'); ?>
     </div>
 </div>
 <div class="item form-group">
@@ -48,6 +49,7 @@ if (isset($edicion["id"])) {
             'attributes' => array('class' => '')
         ));
         ?> 
+        <?php echo form_error('depto_id'); ?>
     </div>
 </div>
 <div class="item form-group">
@@ -65,6 +67,7 @@ if (isset($edicion["id"])) {
             'attributes' => array('class' => '')
         ));
         ?>
+        <?php echo form_error('ciudad_id'); ?>
     </div>
 </div>
 <div class="item xdisplay_inputx form-group has-feedback">
@@ -80,6 +83,7 @@ if (isset($edicion["id"])) {
                >
         <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
         <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+        <?php echo form_error('fecha_aparicion'); ?>
     </div>
 </div>
 
@@ -94,6 +98,7 @@ if (isset($edicion["id"])) {
                class="js-switch" 
                <?php echo (isset($edicion["coedicion"]) && $edicion["coedicion"]) == 1 ? "checked" : ""; ?>
                />
+        <?php echo form_error('coedicion'); ?>
     </div>
 </div>
 <div class="item form-group">
@@ -108,6 +113,7 @@ if (isset($edicion["id"])) {
                required="required" 
                value = '<?php echo isset($edicion["coeditor"]) ? $edicion["coeditor"] : "" ?>'
                type="text">
+        <?php echo form_error('coeditor'); ?>
     </div>
 </div>
 <div class="item form-group">
@@ -122,6 +128,7 @@ if (isset($edicion["id"])) {
                required="required"
                value = '<?php echo isset($edicion["radicado"]) ? $edicion["radicado"] : ""; ?>'
                type="text" />
+        <?php echo form_error('radicado'); ?>
     </div>
 </div>
 <div class="form-group">
@@ -160,7 +167,7 @@ echo form_close();
       });
   });
   $("#coedicion").ready(function(){
-    <?php if(isset($edicion["coedicion"]) && $edicion["coedicion"]==1){?>
+    <?php if(isset($edicion["coedicion"]) && ($edicion["coedicion"]==1 || $edicion["coedicion"]=='on')){?>
       $("#coedicion").prop('checked', true);
       $("#coeditor").prop('disabled', false);
       $("#radicado").prop('checked', true);

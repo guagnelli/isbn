@@ -28,6 +28,7 @@ if(isset($colab["id_colab"])){
                id="nombre" 
                name="nombre" 
                value="<?php echo isset($colab['nombre'])?$colab['nombre']:''?>">
+        <?php echo form_error('nombre'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -41,6 +42,7 @@ if(isset($colab["id_colab"])){
                id="paterno" 
                name="paterno" 
                value="<?php echo isset($colab['paterno'])?$colab['paterno']:''?>">
+      <?php echo form_error('paterno'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -54,6 +56,7 @@ if(isset($colab["id_colab"])){
                id="materno" 
                name="materno" 
                value="<?php echo isset($colab['materno'])?$colab['materno']:''?>">
+        <?php echo form_error('materno'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -72,6 +75,7 @@ if(isset($colab["id_colab"])){
          'attributes' => array('class' => '')
          ));
          ?>
+        <?php echo form_error('tipo'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -90,6 +94,7 @@ if(isset($colab["id_colab"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('nacionalidad'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -106,6 +111,7 @@ if(isset($colab["id_colab"])){
          'attributes' => array('class' => '','placeholder'=>'Seudónimo')
          ));
          ?>
+         <?php echo form_error('seudonimo'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -122,6 +128,7 @@ if(isset($colab["id_colab"])){
          'attributes' => array('class' => '','placeholder'=>'Correo electr&oacute;nico:')
          ));
          ?>
+        <?php echo form_error('email'); ?>
       </div>
     </div>
     <div class="form-group">

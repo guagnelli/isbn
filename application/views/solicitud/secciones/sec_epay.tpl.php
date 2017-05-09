@@ -35,6 +35,7 @@ if (isset($epay["id"])) {
                     'attributes' => array('placeholder' => 'Clave de pago')
                 ));
                 ?>
+                <?php echo form_error('pay_hash'); ?>
             </div>
         </div>
         <div class="form-group">
@@ -51,6 +52,7 @@ if (isset($epay["id"])) {
                     'attributes' => array('placeholder' => 'cadena_dependencia')
                 ));
                 ?>
+                <?php echo form_error('cadena_dependencia'); ?>
             </div>
         </div>
         <div class="form-group">
@@ -67,6 +69,7 @@ if (isset($epay["id"])) {
                     'attributes' => array('placeholder' => 'cadena_referencia')
                 ));
                 ?>
+                <?php echo form_error('cadena_referencia'); ?>
             </div>
         </div>
         <div class="form-group">
@@ -83,6 +86,7 @@ if (isset($epay["id"])) {
                     'attributes' => array('placeholder' => 'N&uacute;mero de operaci&oacute;n')
                 ));
                 ?>
+                <?php echo form_error('no_operacion'); ?>
             </div>
         </div>
         <div class="form-group">

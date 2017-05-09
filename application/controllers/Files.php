@@ -33,40 +33,46 @@ class Files extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $data["file"] = $this->input->post();
 
-            $this->load->model("Files_model", "file");
-            if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
-                //savefile
-                $allowed = array('png', 'jpeg', 'jpg', 'gif', 'pdf');
-                if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
-                    //$data["file"]["_file"] = $_FILES;
+            $this->config->load('form_validation'); //Cargar archivo con validaciones
+            $validations = $this->config->item('sec_archivo'); //Obtener validaciones de archivo 
+            $this->form_validation->set_rules($validations);
 
-                    $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION);
-                    if (!in_array(strtolower($extension), $allowed)) {
-                        $response["message"] = "El archivo con extensión '" . $extension . "' no esta permitido";
-                    } else {
-                        $date = date("Y.m.d.h.i.s");
-                        $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
+            if ($this->input->post() AND $this->form_validation->run() == TRUE){
+                $this->load->model("Files_model", "file");
+                if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
+                    //savefile
+                    $allowed = array('png', 'jpeg', 'jpg', 'gif', 'pdf');
+                    if (isset($_FILES["archivo"]) && $_FILES['archivo']['error'] == 0) {
+                        //$data["file"]["_file"] = $_FILES;
 
-                        $file_id = $this->file->add_file($data["file"]);
-                        //saving data
-                        if ($file_id > 0) {
-                            $route = $this->route_base;
-                            $route .= $data["file"]["solicitud_id"] . "/";
-                            if (!file_exists($route)) {
-                                mkdir($route, 0775, true);
-                            }
-
-                            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $route . $data["file"]["nombre_fisico"])) {
-                                $response["message"] = "El archivo se ha guardado correctamente";
-                            } else {
-                                $response["message"] = "Error al guardar archivo";
-                            }
+                        $extension = pathinfo($_FILES['archivo']['name'], PATHINFO_EXTENSION);
+                        if (!in_array(strtolower($extension), $allowed)) {
+                            $response["message"] = "El archivo con extensión '" . $extension . "' no esta permitido";
                         } else {
-                            $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
+                            $date = date("Y.m.d.h.i.s");
+                            $data["file"]["nombre_fisico"] = $data["file"]["file_type"] . "_" . $date . "." . $extension;
+
+                            $file_id = $this->file->add_file($data["file"]);
+                            //saving data
+                            if ($file_id > 0) {
+                                $route = $this->route_base;
+                                $route .= $data["file"]["solicitud_id"] . "/";
+                                if (!file_exists($route)) {
+                                    mkdir($route, 0775, true);
+                                }
+
+                                if (move_uploaded_file($_FILES['archivo']['tmp_name'], $route . $data["file"]["nombre_fisico"])) {
+                                    $response["message"] = "El archivo se ha guardado correctamente";
+                                } else {
+                                    $response["message"] = "Error al guardar archivo";
+                                }
+                            } else {
+                                $response["message"] = "La información ingresada es incorrecta, favor de berificarla.";
+                            }
                         }
                     }
+                    //saveregister
                 }
-                //saveregister
             }
             //$data["debug"] = $data["file"];
             $data["combos"]["c_tipo_file"] = $this->cg->get_tipo_file();

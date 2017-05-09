@@ -47,6 +47,7 @@ echo form_open("solicitud/sec_sol_idioma",array(
             }
           ?>
     </select>
+    <?php echo form_error('drop_idiomas'); ?>
     <input type="hidden" id="idiomas" name="idiomas" value="">
   </div>
 </div>

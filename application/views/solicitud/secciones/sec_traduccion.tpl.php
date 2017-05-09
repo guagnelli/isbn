@@ -1,3 +1,9 @@
+<?php echo form_open("solicitud/sec_traduccion", array(
+    'id' => 'frm_traduccion',
+    'class' => 'form-horizontal form-label-left',
+    'method' => 'post'
+));
+//pr($traduccion); ?>
 <p class="lead">Traducción <?php echo $comentarios; ?></p>
 <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -8,7 +14,7 @@
                name="traduccion" 
                type="checkbox" 
                class="js-switch" 
-               <?php echo isset($traduccion["id"]) ? "checked" : ""; ?>
+               <?php echo (isset($traduccion["id"]) || isset($traduccion["traduccion"])) ? "checked" : ""; ?>
                />
     </div>
 </div>
@@ -20,11 +26,6 @@
     if (isset($debug)) {
         pr($debug);
     }
-    echo form_open("solicitud/sec_traduccion", array(
-        'id' => 'frm_traduccion',
-        'class' => 'form-horizontal form-label-left',
-        'method' => 'post'
-    ));
     if (isset($traduccion["id"])) {
         ?>
         <input type="hidden" name="id" value="<?php echo $traduccion["id"]; ?>">
@@ -46,6 +47,7 @@
                 'attributes' => array('class' => '')
             ));
             ?>
+            <?php echo form_error('idioma_del'); ?>
         </div>
     </div>
     <div class="item form-group">
@@ -63,6 +65,7 @@
                 'attributes' => array('class' => '')
             ));
             ?>
+            <?php echo form_error('idioma_al'); ?>
         </div>
     </div>
     <div class="item form-group">
@@ -80,6 +83,7 @@
                 'attributes' => array('class' => '')
             ));
             ?>
+            <?php echo form_error('idioma_original'); ?>
         </div>
     </div>
     <div class="item form-group">
@@ -97,6 +101,7 @@
                    type="text"
                    value="<?php echo isset($traduccion["titulo_original"]) ? $traduccion["titulo_original"] : "" ?>"
                    >
+            <?php echo form_error('titulo_original'); ?>
         </div>
     </div>
     <div class="form-group">
@@ -110,8 +115,8 @@
             </button>
         </div>
     </div>
-    <?php echo form_close(); ?> 
 </div>
+<?php echo form_close(); ?> 
 <script type="text/javascript">
 <?php
 echo "var base_url = '" . base_url() . "';";
@@ -126,6 +131,9 @@ if (isset($traduccion["id"])) {
             $("#div_traduccion").hide()
     <?php }
 ?>
+        if($("#traduccion").prop("checked")==true){
+            $("#div_traduccion").show('slow');
+        }
     });
 </script>
 <?php echo js("solicitud/traduccion.js"); ?>

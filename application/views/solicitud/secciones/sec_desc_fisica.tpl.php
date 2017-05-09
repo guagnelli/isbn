@@ -20,6 +20,7 @@ if(isset($_descripcion_fisica["id"])){
 	<div class="col-md-12 col-sm-12 col-xs-12">
 	    Impresa &nbsp;<input name="rad_df" type="radio" id="print" value="print" checked>
 	    | &nbsp; Electr&oacute;nica &nbsp; <input name="rad_df" type="radio" id="digital" value="digital" >
+      <?php echo form_error('rad_df'); ?>
 	</div>
 </div>
 <div id="div_print">
@@ -39,6 +40,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('desc_fisica'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -57,6 +59,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('encuadernacion'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -75,6 +78,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('gramaje'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -93,6 +97,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('impresion'); ?>
       </div>
     </div>
     
@@ -112,6 +117,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('tipo_papel'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -128,6 +134,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '','min'=>'0',)
          ));
          ?>
+         <?php echo form_error('no_paginas'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -146,6 +153,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('num_tintas'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -162,6 +170,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '','min'=>'0',)
          ));
          ?> Cm
+         <?php echo form_error('ancho'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -178,6 +187,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '','min'=>'0',)
          ));
          ?>Cm
+         <?php echo form_error('alto'); ?>
       </div>
     </div>
 </div>
@@ -198,6 +208,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('formato'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -216,6 +227,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('medio'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -232,6 +244,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '',)
          ));
          ?>
+         <?php echo form_error('url'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -248,6 +261,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => 'col-md-4 col-sm-4','min'=>'0','style'=>"width:100px")
          ));
          ?>
+         <?php echo form_error('tamanio_desc'); ?>
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'tamanio',
@@ -259,6 +273,7 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => 'col-md-4 col-sm-4')
          ));
          ?>
+         <?php echo form_error('tamanio'); ?>
       </div>
     </div>
 

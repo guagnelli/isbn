@@ -26,6 +26,7 @@
                id="nombre" 
                name="nombre" 
                value="<?php echo isset($file['nombre'])?$file['nombre']:''?>">
+        <?php echo form_error('nombre'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -45,6 +46,7 @@
                 'minlength'=>10
         )));
       	?>
+        <?php echo form_error('archivo'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -63,6 +65,7 @@
          'attributes' => array('class' => '')
          ));
          ?>
+         <?php echo form_error('file_type'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -74,6 +77,7 @@
       			  id="description" 
       			  name="description" 
       			  class="form-control col-md-7 col-xs-12"><?php echo isset($file['description'])?$file['description']:''?></textarea>
+        <?php echo form_error('description'); ?>
       </div>
     </div>
     <div class="form-group">

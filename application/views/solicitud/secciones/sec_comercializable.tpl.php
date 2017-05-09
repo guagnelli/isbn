@@ -38,6 +38,7 @@ if(isset($comercializable["id"])){
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_nacional"]) ? $comercializable["ejemplares_nacional"]:""?>'
 	           type="number" min="0" />
+	    <?php echo form_error('ejemplares_nacional'); ?>
 	  </div>
 	</div>
 	<div class="item form-group">
@@ -52,6 +53,7 @@ if(isset($comercializable["id"])){
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_local"]) ? $comercializable["precio_local"]:""?>'
 	           type="number" />
+	    <?php echo form_error('precio_local'); ?>
 	  </div>
 	</div>
   	<div class="item form-group">
@@ -66,6 +68,7 @@ if(isset($comercializable["id"])){
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_externa"]) ? $comercializable["ejemplares_externa"]:""?>'
 	           type="number" min="0" />
+	    <?php echo form_error('ejemplares_externa'); ?>
 	  </div>
 	</div>
 	<div class="item form-group">
@@ -80,6 +83,7 @@ if(isset($comercializable["id"])){
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_externo"]) ? $comercializable["precio_externo"]:""?>'
 	           type="number" />
+	    <?php echo form_error('precio_externo'); ?>
 	  </div>
 	</div>
 	<div class="item form-group">
@@ -94,6 +98,7 @@ if(isset($comercializable["id"])){
 	           required="required"
 	           value = '<?php echo isset($comercializable["oferta_total"]) ? $comercializable["oferta_total"]:""?>'
 	           type="number" />
+	    <?php echo form_error('oferta_total'); ?>
 	  </div>
 	</div>
 	<div class="form-group">

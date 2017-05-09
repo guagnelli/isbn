@@ -914,20 +914,26 @@ class Solicitud extends MY_Controller {
                 $lang = explode(",", $data["idiomas"]["idiomas"]);
                 $data["idiomas"]["idiomas"] = $lang = array_filter($lang);
 
-                //remover registros
-                $this->req->delete("sol_idioma", array("solicitud" => $data["idiomas"]["solicitud_id"]));
-                //registrar idiomas
-                foreach ($lang as $id => $row) {
-                    $save = array(
-                        "idioma" => $row,
-                        "solicitud" => $data["idiomas"]["solicitud_id"]
-                    );
-                    //$data["debug"]["idioma_".$id] = $this->req->add("sol_idioma",$save,TRUE);
-                    if (!$this->req->add("sol_idioma", $save, TRUE)) {
-                        $data["debug"][$id] = $save;
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_sol_idioma'); //Obtener validaciones de archivo 
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    //remover registros
+                    $this->req->delete("sol_idioma", array("solicitud" => $data["idiomas"]["solicitud_id"]));
+                    //registrar idiomas
+                    foreach ($lang as $id => $row) {
+                        $save = array(
+                            "idioma" => $row,
+                            "solicitud" => $data["idiomas"]["solicitud_id"]
+                        );
+                        //$data["debug"]["idioma_".$id] = $this->req->add("sol_idioma",$save,TRUE);
+                        if (!$this->req->add("sol_idioma", $save, TRUE)) {
+                            $data["debug"][$id] = $save;
+                        }
                     }
+                    $response['message'] = "Los idiomas se han guardado exitosamente";
                 }
-                $response['message'] = "Los idiomas se han guardado exitosamente";
                 goto load;
             }
 //            pr($this->session->userdata('botones_seccion'));
@@ -948,13 +954,13 @@ class Solicitud extends MY_Controller {
 
     function sec_traduccion() {
         if ($this->input->is_ajax_request()) {
-            $data["traduccion"] = $this->input->post();
+            $data["traduccion"] = $this->input->post(null, TRUE);
             //load from the begining
             begining:
             //pr($data);
             if (isset($data["traduccion"]["del"])) {
                 //pr($data);
-                echo "entra caramba!!!!";
+                    ///echo "entra caramba!!!!";
                 unset($data["traduccion"]["del"]);
                 unset($data["traduccion"]["id"]);
                 $response['message'] = "La traducción se ha eliminado ";
@@ -969,32 +975,44 @@ class Solicitud extends MY_Controller {
                     $data["traduccion"]["has_traduction"] = 1;
                 }
             } elseif (isset($data["traduccion"]["id"])) {
-                $where = array("id" => $data["traduccion"]["id"]);
-                unset($data["traduccion"]["id"]);
-                unset($data["traduccion"]["has_traduction"]);
-                $update = $this->req->update("traduccion", $data["traduccion"], $where);
-                if ($update) {
-                    $response['message'] = "La traducción se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_traduccion'); //Obtener validaciones de archivo 
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    $where = array("id" => $data["traduccion"]["id"]);
+                    unset($data["traduccion"]["id"]);
+                    unset($data["traduccion"]["has_traduction"]);
+                    $update = $this->req->update("traduccion", $data["traduccion"], $where);
+                    if ($update) {
+                        $response['message'] = "La traducción se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                    //$data["debug"][1]="update;";
                 }
-                //$data["debug"][1]="update;";
                 goto load;
             } else {
-                unset($data["traduccion"]["has_traduction"]);
-                $save = $this->req->add("traduccion", $data["traduccion"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_traduccion" => 1), array("id" => $data["traduccion"]["solicitud_id"]));
-                    $response['message'] = "La sección se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_traduccion'); //Obtener validaciones de archivo 
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    unset($data["traduccion"]["has_traduction"]);
+                    $save = $this->req->add("traduccion", $data["traduccion"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_traduccion" => 1), array("id" => $data["traduccion"]["solicitud_id"]));
+                        $response['message'] = "La sección se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                    //$data["debug"][2]="new brand";
+                    goto load;
                 }
-                //$data["debug"][2]="new brand";
-                goto load;
             }
 
             //Obtiene icono botón del comentario ***************
@@ -1027,18 +1045,24 @@ class Solicitud extends MY_Controller {
                 //$data["debug"]="load section";
                 $response['result'] = "true";
             } elseif (isset($data["colab"]["update"])) {//update
-                $where = array("solicitud_id" => $data["colab"]["solicitud_id"],
-                    "id_colab" => $data["colab"]["id_colab"]);
-                unset($data["colab"]["id_colab"]);
-                unset($data["colab"]["solicitud_id"]);
-                unset($data["colab"]["update"]);
-                $update = $this->req->update("colaboradores", $data["colab"], $where);
-                if ($update) {
-                    $response['message'] = "La información del colaborador se ha editado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_colaboradores'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    $where = array("solicitud_id" => $data["colab"]["solicitud_id"],
+                        "id_colab" => $data["colab"]["id_colab"]);
+                    unset($data["colab"]["id_colab"]);
+                    unset($data["colab"]["solicitud_id"]);
+                    unset($data["colab"]["update"]);
+                    $update = $this->req->update("colaboradores", $data["colab"], $where);
+                    if ($update) {
+                        $response['message'] = "La información del colaborador se ha editado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             } elseif (isset($data["colab"]["id_colab"])) {
                 $data["colab"] = $this->req->get_section("colaboradores", array("solicitud_id" => $data["colab"]["solicitud_id"],
@@ -1050,14 +1074,20 @@ class Solicitud extends MY_Controller {
                 }
             } else {
                 //$data["debug"]="save";
-                $save = $this->req->add("colaboradores", $data["colab"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_colaboradores" => 1), array("id" => $data["colab"]["solicitud_id"]));
-                    $response['message'] = "La información del colaborador se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_colaboradores'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    $save = $this->req->add("colaboradores", $data["colab"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_colaboradores" => 1), array("id" => $data["colab"]["solicitud_id"]));
+                        $response['message'] = "La información del colaborador se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             }
             //Obtiene icono botón del comentario ***************
@@ -1089,37 +1119,49 @@ class Solicitud extends MY_Controller {
                 }
                 $response['result'] = "true";
             } elseif (count($data["edicion"]) > 1 && !isset($data["edicion"]["id"])) {
-                if (isset($data["edicion"]["coedicion"])) {
-                    $data["edicion"]["coedicion"] = 1;
-                }
-                //save
-                $save = $this->req->add("edicion", $data["edicion"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_informacion_edicion" => 1), array("id" => $data["edicion"]["solicitud_id"])
-                    );
-                    $response['message'] = "La información de edición se ha guardado exitosamente";
-                    $response['result'] = "true";
-                    goto load;
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    if (isset($data["edicion"]["coedicion"])) {
+                        $data["edicion"]["coedicion"] = 1;
+                    }
+                    //save
+                    $save = $this->req->add("edicion", $data["edicion"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_informacion_edicion" => 1), array("id" => $data["edicion"]["solicitud_id"])
+                        );
+                        $response['message'] = "La información de edición se ha guardado exitosamente";
+                        $response['result'] = "true";
+                        goto load;
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             } elseif (count($data["edicion"]) > 1 && isset($data["edicion"]["id"])) {
-                //edit
-                $data["edicion"]["coedicion"] = isset($data["edicion"]["coedicion"]) ? 1 : 0;
-                //$data["debug"] = $data["edicion"];
-                $where = array(
-                    "solicitud_id" => $data["edicion"]["solicitud_id"],
-                    "id" => $data["edicion"]["id"]
-                );
-                $update = $this->req->update("edicion", $data["edicion"], $where);
-                if ($update) {
-                    $response['message'] = "La Información de edición se ha guardado exitosamente";
-                    $response['result'] = "true";
-                    goto load;
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    //edit
+                    $data["edicion"]["coedicion"] = isset($data["edicion"]["coedicion"]) ? 1 : 0;
+                    //$data["debug"] = $data["edicion"];
+                    $where = array(
+                        "solicitud_id" => $data["edicion"]["solicitud_id"],
+                        "id" => $data["edicion"]["id"]
+                    );
+                    $update = $this->req->update("edicion", $data["edicion"], $where);
+                    if ($update) {
+                        $response['message'] = "La Información de edición se ha guardado exitosamente";
+                        $response['result'] = "true";
+                        goto load;
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             }
             $response['result'] = "true";
@@ -1152,31 +1194,43 @@ class Solicitud extends MY_Controller {
                 $response['result'] = "true";
             } elseif (count($data["epay"]) > 1 && !isset($data["epay"]["id"])) {
                 //save
-                //$data["debug"] = $data["epay"];
-                $save = $this->req->add("epay", $data["epay"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_pago" => 1), array("id" => $data["epay"]["solicitud_id"])
-                    );
-                    $response['message'] = "La información del pago se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_epay'); //Obtener validaciones de archivo 
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    //$data["debug"] = $data["epay"];
+                    $save = $this->req->add("epay", $data["epay"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_pago" => 1), array("id" => $data["epay"]["solicitud_id"])
+                        );
+                        $response['message'] = "La información del pago se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             } elseif (count($data["epay"]) > 1 && isset($data["epay"]["id"])) {
                 //edit
-                //$data["debug"] = $data["epay"];
-                $where = array(
-                    "solicitud_id" => $data["epay"]["solicitud_id"],
-                    "id" => $data["epay"]["id"]
-                );
-                $update = $this->req->update("epay", $data["epay"], $where);
-                if ($update) {
-                    $response['message'] = "La información del pago se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_epay'); //Obtener validaciones de archivo 
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    //$data["debug"] = $data["epay"];
+                    $where = array(
+                        "solicitud_id" => $data["epay"]["solicitud_id"],
+                        "id" => $data["epay"]["id"]
+                    );
+                    $update = $this->req->update("epay", $data["epay"], $where);
+                    if ($update) {
+                        $response['message'] = "La información del pago se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             }
             $response['result'] = "true";
@@ -1206,32 +1260,42 @@ class Solicitud extends MY_Controller {
                 //$data["debug"] = $data["comercializable"];
                 $response['result'] = "true";
             } elseif (count($data["comercializable"]) > 1 && !isset($data["comercializable"]["id"])) {
-                //save
-
-                $save = $this->req->add("comercializable", $data["comercializable"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_comercializable" => 1), array("id" => $data["comercializable"]["solicitud_id"])
-                    );
-                    $response['message'] = "Los datos de Comercialización se han guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_comercializable'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+                if ($this->form_validation->run() == TRUE){
+                    //save
+                    $save = $this->req->add("comercializable", $data["comercializable"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_comercializable" => 1), array("id" => $data["comercializable"]["solicitud_id"])
+                        );
+                        $response['message'] = "Los datos de Comercialización se han guardado exitosamente";
+                        $response['result'] = "true";   
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
                 }
             } elseif (count($data["comercializable"]) > 1 && isset($data["comercializable"]["id"])) {
-                //edit
-                $where = array(
-                    "solicitud_id" => $data["comercializable"]["solicitud_id"],
-                    "id" => $data["comercializable"]["id"]
-                );
-                $update = $this->req->update("comercializable", $data["comercializable"], $where);
-                if ($update) {
-                    $response['message'] = "La Información de edición se ha guardado exitosamente";
-                    $response['result'] = "true";
-                } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
-                    $response['result'] = "false";
-                }
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                $validations = $this->config->item('sec_comercializable'); //Obtener validaciones de archivo
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    //edit
+                    $where = array(
+                        "solicitud_id" => $data["comercializable"]["solicitud_id"],
+                        "id" => $data["comercializable"]["id"]
+                    );
+                    $update = $this->req->update("comercializable", $data["comercializable"], $where);
+                    if ($update) {
+                        $response['message'] = "La Información de comercialización se ha guardado exitosamente";
+                        $response['result'] = "true";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                        $response['result'] = "false";
+                    }
+                }//pr(validation_errors());
             }
 
 
@@ -1257,31 +1321,41 @@ class Solicitud extends MY_Controller {
                 desc_electronica");
             $tipo = "print";
             if (isset($data["df"]["rad_df"])) {//salvar
-                $tipo = $data["df"]["rad_df"];
-                unset($data["df"]["rad_df"]);
-                if ($tipo == "digital") {
-                    foreach ($data["df"] as $key => $field) {
-                        if (!in_array($key, $fields)) {
-                            unset($data["df"][$key]);
-                        }
-                    }
-                } elseif ($tipo == "print") {
-                    foreach ($data["df"] as $key => $field) {
-                        if (in_array($key, $fields)) {
-                            unset($data["df"][$key]);
-                        }
-                    }
-                    $data["df"]["solicitud_id"] = $solicitud_id;
-                }
-                $this->req->delete("desc_fisica_impresa", array("solicitud_id" => $solicitud_id));
-                $this->req->delete("desc_electronica", array("solicitud_id" => $solicitud_id));
-                $save = $this->req->add($tabla[$tipo], $data["df"]);
-                if ($save) {
-                    $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
-                    );
-                    $response['message'] = "La descripción de la obra se ha guardado exitosamente";
+                $this->config->load('form_validation'); //Cargar archivo con validaciones
+                if($data["df"]["rad_df"]=='print'){
+                    $validations = $this->config->item('sec__descripcion_fisica_impresa'); //Obtener validaciones de archivo
                 } else {
-                    $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    $validations = $this->config->item('sec__descripcion_fisica_electronica'); //Obtener validaciones de archivo
+                }
+                $this->form_validation->set_rules($validations);
+
+                if ($this->form_validation->run() == TRUE){
+                    $tipo = $data["df"]["rad_df"];
+                    unset($data["df"]["rad_df"]);
+                    if ($tipo == "digital") {
+                        foreach ($data["df"] as $key => $field) {
+                            if (!in_array($key, $fields)) {
+                                unset($data["df"][$key]);
+                            }
+                        }
+                    } elseif ($tipo == "print") {
+                        foreach ($data["df"] as $key => $field) {
+                            if (in_array($key, $fields)) {
+                                unset($data["df"][$key]);
+                            }
+                        }
+                        $data["df"]["solicitud_id"] = $solicitud_id;
+                    }
+                    $this->req->delete("desc_fisica_impresa", array("solicitud_id" => $solicitud_id));
+                    $this->req->delete("desc_electronica", array("solicitud_id" => $solicitud_id));
+                    $save = $this->req->add($tabla[$tipo], $data["df"]);
+                    if ($save) {
+                        $update = $this->req->update("solicitud", array("has_desc_fisica" => 1), array("id" => $data["df"]["solicitud_id"])
+                        );
+                        $response['message'] = "La descripción de la obra se ha guardado exitosamente";
+                    } else {
+                        $response['message'] = "Se ha producido un error, favor de verificarlo";
+                    }
                 }
             }
             foreach ($tabla as $key => $value) {
