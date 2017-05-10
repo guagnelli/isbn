@@ -737,7 +737,9 @@ class Solicitud extends MY_Controller {
     public function comentarios_seccion() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
+
                 $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+                // pr($datos_post);
                 $this->lang->load('interface', 'spanish');
 //                $tipo_msg = $this->config->item('alert_msg');
                 $string_values = $this->lang->line('interface')['solicitud_comentarios_seccion'];
@@ -747,7 +749,7 @@ class Solicitud extends MY_Controller {
                 $this->config->load('form_validation'); //Cargar archivo con validaciones
                 $validations = $this->config->item('comentario_jus');
                 $this->form_validation->set_rules($validations);
-                if ($this->form_validation->run()) {
+                 if (isset($datos_post['comentario_justificacion'])) {
                     //Obtiene datos del historial
                     $hist_cve = $this->seguridad->decrypt_base64($datos_post['hist_cve']);
 
@@ -764,7 +766,10 @@ class Solicitud extends MY_Controller {
                     }
                     echo json_encode($data);
                     exit();
-                }
+                 }
+                 else{
+                    // echo "error";
+                 }
                 //Obtiene datos de la solicitud
                 $array_solicitud = $this->req->get_datos_grales_solicitud($seccion, $solicitud_cve);
                 $data_coment['hist_sol'] = $datos_post['hist_cve'];

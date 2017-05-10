@@ -395,10 +395,5 @@ $config["sec_archivo"] = array(
     )
 );
 $config["comentario_jus"] = array(
-        array(
-            'field' => 'no_paginas',
-            'label' => 'Número de páginas',
-            'rules' => 'trim|required'
-    ),
 );
 
