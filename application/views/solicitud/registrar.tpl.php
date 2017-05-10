@@ -204,13 +204,14 @@ $("#solicitud[folio_coleccion]").ready(function(){
     if($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val() == "V"){
       $(".folio_coleccion").prop('disabled', false);
     }else{
-      apprise("Esta a punto de eliminar la información Folio de la colección completa, ¿desea continuar?",
+      $(".folio_coleccion").val("");
+      $(".folio_coleccion").prop('disabled', true);
+      /*apprise("Esta a punto de eliminar la información Folio de la colección completa, ¿desea continuar?",
           {verify: true},
           function(){
-            $(".folio_coleccion").val("");
-            $(".folio_coleccion").prop('disabled', true);
+            
           }
-        );
+        );*/
     }
   });
 });
