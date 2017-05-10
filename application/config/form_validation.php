@@ -384,11 +384,6 @@ $config["sec_archivo"] = array(
         'rules' => 'required|alpha_numeric_spaces'
     ),
     array(
-        'field' => 'archivo',
-        'label' => 'Archivo',
-        'rules' => 'required'
-    ),
-    array(
         'field' => 'file_type',
         'label' => 'Tipo',
         'rules' => 'required'

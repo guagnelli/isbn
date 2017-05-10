@@ -43,7 +43,9 @@
                 'style'=>'width:100%; ',
                 'autocomplete'=>'off',
                 'maxlength'=>13,
-                'minlength'=>10
+                'minlength'=>10,
+                "required"=>"required",
+                "oninvalid"=>"this.setCustomValidity('Debe seleccionar un archivo para continuar')"
         )));
       	?>
         <?php echo form_error('archivo'); ?>
