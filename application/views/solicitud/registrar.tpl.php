@@ -75,14 +75,17 @@
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Independiente")?"checked":"";
                    ?> 
-                   required /> Independiente
+                   required = "required"
+                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')" /> Independiente
                   <input type="radio" 
                    class="flat" 
                    name="solicitud[sol_tipo_obra]"
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Completa")?"checked":"";
                    ?> 
-                   value="C" /> Completa 
+                   value="C" 
+                   required = "required"
+                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')"/> Completa 
                   <input type="radio" 
                    id="volumen"
                    class="flat" 
@@ -90,8 +93,10 @@
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen")?"checked":"";
                    ?> 
-                   value="V" /> Volumen 
-
+                   value="V" 
+                   required = "required"
+                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')"/> Volumen 
+                   <br><?php echo form_error_format('solicitud[sol_tipo_obra]'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -111,7 +116,6 @@
                           )
                        ));
                        ?>        
-                       <?php echo form_error_format('libro[title]'); ?>
                     </div>
                 </div>
                 <p class="lead">Clasificación temática</p>
@@ -125,10 +129,13 @@
                        'id' => 'solicitud_categoria',
                        'type' => 'dropdown',
                        'options' => dropdown_options($combos["categorias"], "id", "nombre"),
-                       'first' => array('' => "Seleccione una opción"),
+                       // 'first' => array('0' => "Seleccione una opción"),
                        'value' => isset($solicitud["clasificacion_tematica"]["id_categoria"]) ? $solicitud["clasificacion_tematica"]["id_categoria"]:"",
                        'class' => '',
-                       'attributes' => array('onchange' => 'sub_categoria(this)')
+                       'attributes' => array('onchange' => 'sub_categoria(this)',
+                          "required"=>"required",
+                          "oninvalid"=>"this.setCustomValidity('Debe seleccionar una  Categoría')"
+                        )
                        ));
                        ?>
                         <span class="error">
@@ -149,7 +156,10 @@
                        'first' => array('' => "Seleccione una opción"),
                        'value' => isset($solicitud["clasificacion_tematica"]["id_subcategoria"]) ? $solicitud["clasificacion_tematica"]["id_subcategoria"]:"",
                        'class' => '',
-                       'attributes' => array('class' => '')
+                       'attributes' => array('class' => '',
+                          "required"=>"required",
+                          "oninvalid"=>"this.setCustomValidity('Debe seleccionar una Subcategoría')"
+                        )
                        ));
                        ?>
                         
@@ -194,7 +204,7 @@ $("#solicitud[folio_coleccion]").ready(function(){
     if($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val() == "V"){
       $(".folio_coleccion").prop('disabled', false);
     }else{
-      apprise("Esta a punto de eliminar la información del coeditor y radicado, ¿desea continuar?",
+      apprise("Esta a punto de eliminar la información Folio de la colección completa, ¿desea continuar?",
           {verify: true},
           function(){
             $(".folio_coleccion").val("");

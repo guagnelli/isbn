@@ -341,6 +341,7 @@ class Solicitud extends MY_Controller {
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
             $this->form_validation->set_rules($validations); //AÃƒÂ±adir validaciones
             if ($this->form_validation->run()) {
+                // echo "ok";
                 //pr($data["save"]);
                 if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
@@ -376,6 +377,8 @@ class Solicitud extends MY_Controller {
                         redirect("solicitud");
                     }
                 }
+            }else{
+                // pr(validation_errors());
             }
         }
         $data["combos"]["categorias"] = $this->req->listCategoria();
@@ -877,9 +880,9 @@ class Solicitud extends MY_Controller {
                             $response['message'] = "Se ha producido un error, favor de verificarlo";
                             $response['result'] = "false";
                         }
-                    }/* else {
-                        pr(validation_errors());
-                    }*/
+                    } else {
+                        // pr(validation_errors());
+                    }
                 }
                 //Obtiene icono botón del comentario ***************
                 $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TEMA])) ? $this->session->userdata('botones_seccion')[En_secciones::TEMA] : ''; //Botones de comentarios para las secciones

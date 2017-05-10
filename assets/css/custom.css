@@ -2070,11 +2070,11 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
   color: #FFF;
   border-radius: 3px 4px 4px 3px;
   background-color: #CE5454;
-  max-width: 170px;
+  /*max-width: 170px;*/
   white-space: pre;
   position: relative;
   left: -15px;
-  opacity: 0;
+  /*opacity: 0;*/
   z-index: 1;
   transition: 0.15s ease-out; }
 

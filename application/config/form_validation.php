@@ -27,21 +27,10 @@ $config["solicitud"] = array(
         'rules' => 'required'
     ),
     array(
-        'field' => 'solicitud_categoria',
-        'label' => 'Categoría',
-        'rules' => 'greater_than[0]',
-        'errors' => array(
-            'greater_than' => "El campo %s es obligatorio"
-        )
+        'field' => "solicitud[sol_tipo_obra]",
+        'label' => 'Tipo de obra',
+        'rules' => 'required',
     ),
-    /*array(
-        'field' => 'solicitud[id_subcategoria]',
-        'label' => 'Sub categoría',
-        'rules' => 'greater_than[0]',
-        'errors' => array(
-            'greater_than' => "El campo %s es obligatorio"
-        )
-    ),*/
 );
 $config["form_perfil"] = array(
     array(
