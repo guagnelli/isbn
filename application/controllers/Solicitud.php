@@ -959,6 +959,7 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $data["traduccion"] = $this->input->post(null, TRUE);
             //load from the begining
+            unset($data["traduccion"]["traduccion"]);
             begining:
             //pr($data);
             if (isset($data["traduccion"]["del"])) {
@@ -996,6 +997,9 @@ class Solicitud extends MY_Controller {
                     }
                     //$data["debug"][1]="update;";
                 }
+                // else{
+                //     pr(validation_errors());
+                // }
                 goto load;
             } else {
                 $this->config->load('form_validation'); //Cargar archivo con validaciones
@@ -1005,6 +1009,7 @@ class Solicitud extends MY_Controller {
                 if ($this->form_validation->run() == TRUE){
                     unset($data["traduccion"]["has_traduction"]);
                     $save = $this->req->add("traduccion", $data["traduccion"]);
+                    //pr($save);
                     if ($save) {
                         $update = $this->req->update("solicitud", array("has_traduccion" => 1), array("id" => $data["traduccion"]["solicitud_id"]));
                         $response['message'] = "La sección se ha guardado exitosamente";
@@ -1016,6 +1021,9 @@ class Solicitud extends MY_Controller {
                     //$data["debug"][2]="new brand";
                     goto load;
                 }
+                // else{
+                //     pr(validation_errors());
+                // }
             }
 
             //Obtiene icono botón del comentario ***************
