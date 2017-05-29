@@ -63,20 +63,17 @@ if(isset($tema["id"])){
     <b><span class="required">*</span>Tipo de contenido:</b>
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
-     <select name="tipo_contenido" 
-             id="tipo_contenido" 
-             class="form-control" required>
-      <?php 
-        $selected = "";
-        foreach ($combos["tipo_contenido"] as $key => $value) {
-          if($key==$tema["tipo_contenido"]){
-            $selected = "selected";
-          }
-          echo "<option value='$key' $selected>$value</option>";
-          $selected = "";
-        }
-      ?>
-    </select>
+    <?php
+      echo $this->form_complete->create_element(array(
+       'id' => 'tipo_contenido',
+       'type' => 'dropdown',
+       'options' => $combos["tipo_contenido"],
+       'first' => array('5' => "Libros Universitarios"),
+       'value' => isset($tema["tipo_contenido"]) ? $tema["tipo_contenido"]:"",
+       'class' => '',
+       'attributes' => array('class' => 'form-control',"requiered"=>"required")
+       ));
+    ?>
   </div>
   <?php echo form_error('tipo_contenido'); ?>
 </div>

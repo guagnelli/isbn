@@ -288,6 +288,7 @@ class Solicitud extends MY_Controller {
 //                        $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
 //                        $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
                         //Vista que muestra detalle de la solicituda
+                        $datosSeccion["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
                     case 'editar_registro'://La edición de registro se presenta en la correccion basicamente
@@ -392,6 +393,11 @@ class Solicitud extends MY_Controller {
         $data['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
 //        pr($data['boton_estado']);
 
+        if ($this->input->is_ajax_request()) {
+            $response['content'] = $this->load->view('solicitud/registrar.tpl.php', $data);
+            echo json_encode($response);
+            return;
+        }
         $main_contet = $this->load->view('solicitud/registrar.tpl.php', $data, true);
         $this->template->setMainContent($main_contet);
         $this->template->getTemplate();
@@ -499,6 +505,7 @@ class Solicitud extends MY_Controller {
 //                pr($this->get_datos_detalle_solicitud($solicitud_datos));
                 $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                 $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
+                $datosSeccion["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
 
                 $data = array(

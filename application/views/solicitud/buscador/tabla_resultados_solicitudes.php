@@ -139,12 +139,12 @@ echo js("solicitud/secciones.js");
                             . 'onclick="editar_sol(this)">'
                             . '</span> '
                             . ' </form>';
-                    if (isset($reglas_estados[$val['estado_cve']]['vista'][$rol_cve]) and $reglas_estados[$val['estado_cve']]['vista'][$rol_cve] == 'editar_registro') {
+                   /* if (isset($reglas_estados[$val['estado_cve']]['vista'][$rol_cve]) and $reglas_estados[$val['estado_cve']]['vista'][$rol_cve] == 'editar_registro') {
 
                         $link_editar_titulo = '<a class="" '
                                 . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
                                 . 'target="_blank"><span class="glyphicon glyphicon-superscript btn-msg"></span></a>';
-                    }
+                    }*/
 
 
 //                    $link_editar = '<a href="#" class="button search">

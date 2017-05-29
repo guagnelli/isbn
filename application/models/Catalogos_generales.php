@@ -92,13 +92,18 @@ class Catalogos_generales extends CI_Model {
         return $options;
     }
 
-    public function get_tipo_file(){
-        return array(
+    public function get_tipo_file($registro=false){
+        $files = array(
             "o"=>"Otro",
             "p"=>"Comprobate de pago",
             "a"=>"aceptado",
             "r"=>"rechazado",
         );
+        if($registro){
+            unset($files["a"]);
+            unset($files["r"]);
+        }
+        return $files;
     }
    
 }

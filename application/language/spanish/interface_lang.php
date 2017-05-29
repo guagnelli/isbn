@@ -139,8 +139,9 @@ $lang['interface'] = array(
     ),
     'solicitud_detalle' => array(
         'title_detalle_gral' => 'Dirección General de Asuntos Jurídicos',
-        'title_titulo_libro' => 'Detalle del libro: ',
+        'title_titulo_libro' => 'Título del libro: ',
         'title_subtitulo_libro' => 'Sub titulo del libro: ',
+        'title_tipo_obra' => 'Tipo de obra: ',
         'lbl_titulo_seccion' => 'Detalle de la solicitud',
         'add_ver_comment' => 'Agregar comentario',
         'title_clas_tematica' => 'Clasificación temática: ',

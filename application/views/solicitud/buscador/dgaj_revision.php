@@ -14,8 +14,13 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo $string_detalle['title_titulo_libro'] . $solicitud['libro']['title']; ?> <?php echo $botones_seccion[En_secciones::TITULO_LIBRO]; ?>
+                
                 <?php if (!empty($solicitud['libro']['subtitle'])) { ?>
                     <br><?php echo $string_detalle['title_subtitulo_libro'] . $solicitud['libro']['subtitle']; ?> 
+                <?php } ?>
+
+                <?php if (!empty($solicitud['sol_tipo_obra'])) { ?>
+                    <br><?php echo $string_detalle['title_tipo_obra'] . $solicitud['sol_tipo_obra']; ?> 
                 <?php } ?>
             </h2>
             <ul class="nav navbar-right panel_toolbox"></ul>
@@ -61,7 +66,13 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <p class="lead"><b><?php echo $string_detalle['title_colaboradores']; ?></b> <?php echo $botones_seccion[En_secciones::COLABORADORES]; ?></p>
                 <?php foreach ($solicitud['secciones']['colab'] as $colaborador) { ?>
                     <address>
-                        <b>Nombre:&nbsp;</b><?php echo $colaborador['nombre']; ?><br /> 
+                        <b>Nombre:&nbsp;</b><?php 
+                            $name = isset($colaborador["nombre"]) ? $colaborador["nombre"]."&nbsp;" : "";
+                            $name .= isset($colaborador["paterno"]) ? $colaborador["paterno"]."&nbsp;" : "";
+                            $name .= isset($colaborador["materno"]) ? $colaborador["materno"] : ""; 
+
+                            echo $name;
+                        ?><br /> 
                         <b>Rol:&nbsp;</b><?php echo $tipoColab[$colaborador['tipo']]; ?><br /> 
                         <b>Nacionalidad:&nbsp;</b><?php echo $c_nacionalidad[$colaborador['nacionalidad']]; ?><br /> 
                         <b>Seud&oacute;nimo:&nbsp;</b><?php echo $colaborador['seudonimo'] ?><br />
@@ -167,7 +178,9 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12 text-center">
                         <?php $data_seccion['files'] = $solicitud['secciones']['files']; ?>
-                        <?php $data_seccion['enable_options'] = FALSE; ?>
+                        <?php $data_seccion['enable_options'] = FALSE; 
+                        $datos_eccion["c_tipo_file"] = $c_tipo_file;
+                        ?>
                         <?php echo $this->load->view('solicitud/secciones/file_list.tpl.php', $data_seccion, true); ?>
                     </div>
                 </div>

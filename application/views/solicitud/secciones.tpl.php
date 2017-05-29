@@ -47,6 +47,11 @@ echo js("daterangepicker.js");
                 <!-- required for floating -->
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tabs-left">
+                    <li class="">
+                        <a href="#tab_obra" data-toggle="tab">
+                            Información de la Obra
+                        </a>
+                    </li>
                     <?php
                     foreach ($secciones as $id => $seccion) {
                         ?>
@@ -70,6 +75,9 @@ echo js("daterangepicker.js");
                 <!-- Tab panes -->
                 <div class="tab-content" id="tab_sections">
                     <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id'] ?>">
+                    <div class="tab-pane" id="tab_obra">
+                        <?php echo $files ?>
+                    </div>
                     <?php
                     foreach ($secciones as $id => $seccion) {
                         ?>
@@ -103,6 +111,11 @@ echo js("solicitud/secciones.js");
         },
                 "#tab_files",
                 "#msg_general");
+        ajax(site_url + "/solicitud/registrar/"+solicitud,{
+            "solicitud_id": solicitud,
+        },
+                "#tab_obra",
+                "#msg_general");
 <?php foreach ($secciones as $id => $seccion) { ?>
             ajax(site_url + "/solicitud/sec_<?php echo $seccion["tbl_seccion"] ?>", {
                 "solicitud_id": solicitud,
@@ -116,5 +129,8 @@ echo js("solicitud/secciones.js");
     $(document).ready(function () {
         //alert("step one");
         load_sections();
+        $("#tab_obra").ready(function(){
+            $("#tab_obra").css("active");
+        });
     });
 </script>

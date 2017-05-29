@@ -16,7 +16,8 @@ if (isset($files) && count($files) > 0) {
            cellspacing="0" 
            width="100%">
         <tr>
-            <th width="30%">Archivo</th>
+            <th width="15%">Archivo</th>
+            <th width="15%">Tipo de archivo</th>
             <th width="50%">Descripci&oacute;n</th>
             <?php if ($enable_options) { ?>
                 <th width="20%">Opciones</th>
@@ -29,6 +30,11 @@ if (isset($files) && count($files) > 0) {
                     echo anchor_popup(
                             $uri, $file["nombre"], FALSE);
                     ?>
+                </td>
+                <td>
+                <?php
+                echo $c_tipo_file[$file["file_type"]];
+                ?>
                 </td>
                 <td>
                     <?php echo $file["description"] ?>
