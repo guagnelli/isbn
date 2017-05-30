@@ -40,7 +40,7 @@
                           )
                        ));
                        ?>        
-                       <?php echo form_error_format('libro[title]'); ?>
+                       <?php //echo form_error_format('libro[title]'); ?>
                     </div>
                 </div>
                 <div class="item form-group">
@@ -96,7 +96,7 @@
                    value="V" 
                    required = "required"
                    oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')"/> Volumen 
-                   <br><?php echo form_error_format('solicitud[sol_tipo_obra]'); ?>
+                   <br><?php //echo form_error_format('solicitud[sol_tipo_obra]'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -116,6 +116,27 @@
                           )
                        ));
                        ?>        
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                        <b><span class="required">*</span>Reseña:</b> 
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <?php
+                      echo $this->form_complete->create_element(array(
+                       'id' => 'libro[resenia]',
+                       'type' => 'textarea',
+                       'value' => isset($solicitud["libro"]["resenia"]) ? $solicitud["libro"]["resenia"]:"",
+                       'class' => 'form-control col-md-7 col-xs-12',
+                       'attributes' => array(
+                          'class' => '',
+                          'min'=>'0',
+                          'placeholder'=>'Reseña de la obra',
+                          )
+                       ));
+                       ?>        
+                       <?php echo form_error_format('libro[resenia]'); ?>
                     </div>
                 </div>
                 <p class="lead">Clasificación temática</p>
