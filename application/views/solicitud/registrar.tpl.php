@@ -171,7 +171,17 @@
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-md-offset-3">
+                    <?php if(isset($solicitud["id"])){
+                    ?>
+                    <button id="send" type="submit" class="btn" onclick="retrun false;" >Guardar cambio</button>
+                    <?php
+                    }else{
+                    ?>
                     <button id="send" type="submit" class="btn" onclick="retrun false;" >Realizar solicitud</button>
+                    <?php
+                    }
+                    ?>
+                    
                     <button type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
                   </div>
                 </div>
