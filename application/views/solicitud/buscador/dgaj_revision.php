@@ -27,6 +27,14 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+            <?php if (!empty($solicitud['libro']['resenia'])) { ?>
+                <p class="lead">
+                    <?php echo "<b>".$string_detalle['libro_resenia']."</b>";?>
+                </p>
+                <address>
+                <?php echo $solicitud['libro']['resenia']; ?> 
+                </address>
+            <?php } ?>
             <p class="lead">
                 <b>
                     <?php echo $string_detalle['title_clas_tematica']; ?>
