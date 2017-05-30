@@ -25,7 +25,8 @@
                placeholder="Nombre del archivo"
                id="nombre" 
                name="nombre" 
-               value="<?php echo isset($file['nombre'])?$file['nombre']:''?>">
+               value="<?php echo isset($file['nombre'])?$file['nombre']:''?>"
+               required="required">
         <?php echo form_error('nombre'); ?>
       </div>
     </div>
