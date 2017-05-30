@@ -506,7 +506,7 @@ class Solicitud extends MY_Controller {
 //                pr($this->get_datos_detalle_solicitud($solicitud_datos));
                 $datosSeccion["tipoColab"] = $this->cg->get_combo_catalogo("c_tipo_colab");
                 $datosSeccion["c_nacionalidad"] = $this->cg->get_combo_catalogo("c_nacionalidad");
-                $datosSeccion["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);
+                $datosSeccion["c_tipo_file"] = $this->cg->get_tipo_file();
                 $data_detalle = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
 
                 $data = array(
