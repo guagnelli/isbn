@@ -444,7 +444,7 @@ class Solicitud extends MY_Controller {
                     "solicitud_id" => $solicitud_cve
                 ));
                 $data_files['enable_options'] = FALSE;
-                $data_files["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);
+                $data_files["c_tipo_file"] = $this->cg->get_tipo_file();
                 $data_detalle = $this->load->view('solicitud/secciones/file_list.tpl.php', $data_files, true);
                 $data_pie_cerrar = $this->load->view('solicitud/buscador/pie_modal_cerrar.php', null, true);
 
