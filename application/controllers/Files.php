@@ -93,7 +93,7 @@ class Files extends MY_Controller {
             $this->load->model("Files_model", "file");
             $data["combos"]["c_tipo_file"] = $this->cg->get_tipo_file();
             $data["files"] = $this->file->file_list($data["post"]["solicitud_id"]);
-            $data["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);
+            $data["c_tipo_file"] = $this->cg->get_tipo_file();
             $response['content'] = $this->load->view("solicitud/secciones/file_list.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
