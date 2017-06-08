@@ -16,7 +16,7 @@ if(isset($tema["id"])){
 <p class="lead">Tema <?php echo $comentarios; ?></p>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>Colección: </b>
+    <b>Colección: </b>
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
     <input id="coleccion" 
@@ -38,7 +38,7 @@ if(isset($tema["id"])){
 </div>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>No. de colección: </b>
+    <b>No. de colección: </b>
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
     <input id="no_coleccion" 
@@ -79,7 +79,7 @@ if(isset($tema["id"])){
 </div>
 <div class="item form-group">
   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-    <b><span class="required">*</span>Nombre de la serie: </b>
+    <b>Nombre de la serie: </b>
   </label>
   <div class="col-md-6 col-sm-6 col-xs-12">
     <input id="nombre_serie" 

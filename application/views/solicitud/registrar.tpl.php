@@ -1,7 +1,10 @@
-<?php //pr($solicitud);?>
+<?php //pr($solicitud);
+echo $class = $is_ajax ? "":'class="x_panel"';
+
+?>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
+        <div <?php echo $class;?> >
             <div class="x_title">
                 <h2>Información de la solicitud<small></small></h2>
                 <ul class="nav navbar-right panel_toolbox">
@@ -133,6 +136,8 @@
                           'class' => '',
                           'min'=>'0',
                           'placeholder'=>'Reseña de la obra',
+                          "required"=>"required",
+                          'oninvalid="this.setCustomValidity(\'Debe ingresar la reseña de la obra\')"' =>""
                           )
                        ));
                        ?>        

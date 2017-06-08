@@ -73,6 +73,7 @@ class Files extends MY_Controller {
                     }
                     //saveregister
                 }
+                unset($data["file"]);
             }
             //$data["debug"] = $data["file"];
             $data["combos"]["c_tipo_file"] = $this->cg->get_tipo_file(TRUE);

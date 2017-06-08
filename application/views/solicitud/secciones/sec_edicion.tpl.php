@@ -7,7 +7,7 @@ echo form_open("solicitud/sec_edicion", array(
     'method' => 'post'
 ));
 if (isset($debug)) {
-//  pr($debug);
+ // pr($debug);
 }
 
 if (isset($edicion["id"])) {
@@ -89,7 +89,7 @@ if (isset($edicion["id"])) {
 
 <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-        <b><span class="required">*</span>Coedición: </b>
+        <b>Coedición: </b>
     </label>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <input id="coedicion" 

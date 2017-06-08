@@ -73,7 +73,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Descripci&oacute;n:</b>
+        <b>Descripci&oacute;n:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
       	<textarea rows="6" cols="50" 

@@ -37,9 +37,9 @@ function ajax(action, form_data, div_content, div_msg) {
         $(div_msg).removeClass('alert-success').addClass('alert-danger');
         $(div_msg).html('Ocurrió un error durante el proceso, inténtelo más tarde.');
     })
-            .always(function () {
-                remove_loader();
-            });
+    .always(function () {
+        remove_loader();
+    });
 }
 
 function btn(obj) {

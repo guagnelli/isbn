@@ -392,8 +392,9 @@ class Solicitud extends MY_Controller {
         $parametros_estado['estado_cve'] = Enum_es::__default; //Estado inicial para enviar una solicitud
         $data['boton_estado'] = genera_botones_estado_solicitud($parametros_estado);
 //        pr($data['boton_estado']);
-
+        $data["is_ajax"] = 0;
         if ($this->input->is_ajax_request()) {
+            $data["is_ajax"] = 1;
             $response['content'] = $this->load->view('solicitud/registrar.tpl.php', $data);
             echo json_encode($response);
             return;
@@ -1059,6 +1060,7 @@ class Solicitud extends MY_Controller {
     function sec_colaboradores() {
         if ($this->input->is_ajax_request()) {
             $data["debug"]["colab"] = $data["colab"] = $this->input->post();
+            colab:
             //$response['message'] = "Mi mensaje de colaboradores";
             if (isset($data["colab"]["eliminar"]) && $data["colab"]["eliminar"]) {
                 unset($data["colab"]["eliminar"]);
@@ -1069,12 +1071,13 @@ class Solicitud extends MY_Controller {
                 //$data["debug"]="load section";
                 $response['result'] = "true";
             } elseif (isset($data["colab"]["update"])) {//update
+                $solicitud = $data["colab"]["solicitud_id"];
                 $this->config->load('form_validation'); //Cargar archivo con validaciones
                 $validations = $this->config->item('sec_colaboradores'); //Obtener validaciones de archivo
                 $this->form_validation->set_rules($validations);
 
                 if ($this->form_validation->run() == TRUE){
-                    $where = array("solicitud_id" => $data["colab"]["solicitud_id"],
+                    $where = array("solicitud_id" => $solicitud,
                         "id_colab" => $data["colab"]["id_colab"]);
                     unset($data["colab"]["id_colab"]);
                     unset($data["colab"]["solicitud_id"]);
@@ -1083,12 +1086,17 @@ class Solicitud extends MY_Controller {
                     if ($update) {
                         $response['message'] = "La información del colaborador se ha editado exitosamente";
                         $response['result'] = "true";
+                        
                     } else {
                         $response['message'] = "Se ha producido un error, favor de verificarlo";
                         $response['result'] = "false";
                     }
+                    $data["colab"] = array("solicitud_id" => $solicitud);
+                    $data["debug"]["colab"] = $data["colab"];
+                    $data["debug"]["test"] = "update";
+                    goto colab;  
                 }
-            } elseif (isset($data["colab"]["id_colab"])) {
+            }elseif (isset($data["colab"]["id_colab"])) {
                 $data["colab"] = $this->req->get_section("colaboradores", array("solicitud_id" => $data["colab"]["solicitud_id"],
                     "id_colab" => $data["colab"]["id_colab"]
                         )
@@ -1112,6 +1120,10 @@ class Solicitud extends MY_Controller {
                         $response['message'] = "Se ha producido un error, favor de verificarlo";
                         $response['result'] = "false";
                     }
+                    $data["colab"] = array("solicitud_id" => $solicitud);
+                    $data["debug"]["colab"] = $data["colab"];
+                    $data["debug"]["test"] = "update";
+                    goto colab;  
                 }
             }
             //Obtiene icono botón del comentario ***************
@@ -1133,6 +1145,19 @@ class Solicitud extends MY_Controller {
             //$data["debug"] = 
             $data["edicion"] = $this->input->post();
 
+            $this->config->load('form_validation'); //Cargar archivo con validaciones
+            $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
+            if (isset($data["edicion"]["coedicion"])) {
+                $data["edicion"]["coedicion"] = 1;
+                $validations = array_merge($validations["normal"],$validations["coedicion"]); //Obtener validaciones opcionales
+                //$data["debug"]["test"]="ON";
+            }else{
+                $validations = $validations["normal"];                
+            }
+            // $data["debug"]["data"] = $data;
+            // $data["debug"]["validaciones"] = $validations;
+            $this->form_validation->set_rules($validations);
+
             if (count($data["edicion"]) == 1 && isset($data["edicion"]["solicitud_id"])) {
                 load:
                 $edicion = $this->req->get_section("edicion", array(
@@ -1143,14 +1168,12 @@ class Solicitud extends MY_Controller {
                 }
                 $response['result'] = "true";
             } elseif (count($data["edicion"]) > 1 && !isset($data["edicion"]["id"])) {
-                $this->config->load('form_validation'); //Cargar archivo con validaciones
-                $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
-                $this->form_validation->set_rules($validations);
+                // $this->config->load('form_validation'); //Cargar archivo con validaciones
+                // $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
+                // $this->form_validation->set_rules($validations);
 
                 if ($this->form_validation->run() == TRUE){
-                    if (isset($data["edicion"]["coedicion"])) {
-                        $data["edicion"]["coedicion"] = 1;
-                    }
+                    
                     //save
                     $save = $this->req->add("edicion", $data["edicion"]);
                     if ($save) {
@@ -1165,9 +1188,7 @@ class Solicitud extends MY_Controller {
                     }
                 }
             } elseif (count($data["edicion"]) > 1 && isset($data["edicion"]["id"])) {
-                $this->config->load('form_validation'); //Cargar archivo con validaciones
-                $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
-                $this->form_validation->set_rules($validations);
+                
 
                 if ($this->form_validation->run() == TRUE){
                     //edit

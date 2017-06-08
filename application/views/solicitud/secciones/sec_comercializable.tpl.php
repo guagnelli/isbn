@@ -28,7 +28,7 @@ if(isset($comercializable["id"])){
 <div id="div_comercializable">
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b><span class="required">*</span>Ejemplares nacionales: </b>
+	      <b>Ejemplares nacionales: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="ejemplares_nacional" 
@@ -43,7 +43,7 @@ if(isset($comercializable["id"])){
 	</div>
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b><span class="required">*</span>Precio local: </b>
+	      <b>Precio local: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="precio_local" 
@@ -58,7 +58,7 @@ if(isset($comercializable["id"])){
 	</div>
   	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b><span class="required">*</span>Ejemplares externos: </b>
+	      <b>Ejemplares externos: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="ejemplares_externa" 
@@ -73,7 +73,7 @@ if(isset($comercializable["id"])){
 	</div>
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b><span class="required">*</span>Precio a externos: </b>
+	      <b>Precio a externos: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="precio_externo" 
@@ -88,7 +88,7 @@ if(isset($comercializable["id"])){
 	</div>
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b><span class="required">*</span>Oferta total: </b>
+	      <b>Oferta total: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="oferta_total" 

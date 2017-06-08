@@ -117,36 +117,22 @@ $config['sec_colaboradores'] = array(
         )*/
     ),
     array(
-        'field' => 'materno',
-        'label' => 'Materno',
-        'rules' => '',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
         'field' => 'tipo',
         'label' => 'Rol',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
+        'rules' => 'required|greater_than[0]',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'greater_than' => "El campo %s es obligatorio",
+        )
     ),
     array(
         'field' => 'nacionalidad',
         'label' => 'Nacionalidad',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
-        'field' => 'seudonimo',
-        'label' => 'Seudónimo',
-        'rules' => 'alpha_numeric_spaces',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
+        'rules' => 'required|greater_than[0]',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'greater_than' => "El campo %s es obligatorio",
+        )
     ),
     array(
         'field' => 'email',
@@ -192,62 +178,58 @@ $config['sec_traduccion'] = array(
     ),
 );
 $config['sec_edicion'] = array(
-    array(
-        'field' => 'no_edicion',
-        'label' => 'No. edición',
-        'rules' => 'required|integer',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
+    "normal"=>array(
+        array(
+            'field' => 'no_edicion',
+            'label' => 'No. edición',
+            'rules' => 'required|integer',
+            /*'errors' => array(
+                'required' => "El campo %s es obligatorio"
+            )*/
+        ),
+        array(
+            'field' => 'depto_id',
+            'label' => 'Departamento, provincia o estado',
+            'rules' => 'required',
+            /*'errors' => array(
+                'required' => "El campo %s es obligatorio"
+            )*/
+        ),
+        array(
+            'field' => 'ciudad_id',
+            'label' => 'Ciudad de edición',
+            'rules' => 'required',
+            /*'errors' => array(
+                'required' => "El campo %s es obligatorio"
+            )*/
+        ),
+        array(
+            'field' => 'fecha_aparicion',
+            'label' => 'Fecha de aparición',
+            'rules' => 'required',
+            /*'errors' => array(
+                'required' => "El campo %s es obligatorio"
+            )*/
+        ),
     ),
-    array(
-        'field' => 'depto_id',
-        'label' => 'Departamento, provincia o estado',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
-        'field' => 'ciudad_id',
-        'label' => 'Ciudad de edición',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
-        'field' => 'fecha_aparicion',
-        'label' => 'Fecha de aparición',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
-        'field' => 'coedicion',
-        'label' => 'Coedición',
-        'rules' => '',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
-    array(
+    "coedicion"=>array(
+        array(
         'field' => 'coeditor',
         'label' => 'Coeditor',
-        'rules' => '',
+        'rules' => 'required',
         /*'errors' => array(
             'required' => "El campo %s es obligatorio"
         )*/
-    ),
-    array(
-        'field' => 'radicado',
-        'label' => 'No. de radicado de la coedición',
-        'rules' => 'integer',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
+        ),
+        array(
+            'field' => 'radicado',
+            'label' => 'No. de radicado de la coedición',
+            'rules' => 'required|integer',
+            /*'errors' => array(
+                'required' => "El campo %s es obligatorio"
+            )*/
+        ),
+    )  
 );
 $config["sec_comercializable"] = array(
     array(
@@ -383,16 +365,12 @@ $config["sec_archivo"] = array(
         'label' => 'Nombre del archivo',
         'rules' => 'required|alpha_numeric_spaces'
     ),
+
     array(
         'field' => 'file_type',
         'label' => 'Tipo',
         'rules' => 'required'
     ),
-    array(
-        'field' => 'description',
-        'label' => 'Descripción',
-        'rules' => ''
-    )
 );
 $config["comentario_jus"] = array(
 );

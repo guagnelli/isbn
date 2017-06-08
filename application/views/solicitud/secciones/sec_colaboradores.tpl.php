@@ -1,7 +1,10 @@
 <?php
-if(isset($debug)){
-  //pr($debug);
-}
+/*if(isset($debug)){
+  pr($debug);
+}if(isset($colab)){
+  
+  pr($colab);
+}*/
 echo form_open("solicitud/sec_colaboradores",array(
     'id'=>'frm_colaboradores',
     'class'=>'form-horizontal form-label-left',
@@ -47,7 +50,7 @@ if(isset($colab["id_colab"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Apellido materno:</b>
+        <b>Apellido materno:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <input type="text" 
@@ -65,17 +68,27 @@ if(isset($colab["id_colab"])){
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <?php
+        $tipo = isset($colab["tipo"]) ? $colab["tipo"]:"";
         echo $this->form_complete->create_element(array(
          'id' => 'tipo',
          'type' => 'dropdown',
          'options' => $combos["c_tipo"],
-         'first' => array('' => "Seleccione una opción"),
-         'value' => isset($colab["tipo"]) ? $colab["tipo"]:"",
+         'first' => array('0' => "Seleccione una opción"),
+         'value' => $tipo,
          'class' => '',
          'attributes' => array('class' => '')
          ));
+        /*
+        <script type="text/javascript">
+           
+            $("#tipo").ready(function(){
+              $("#tipo").val("<?php echo $tipo?>");
+            });
+         </script>
+        */
          ?>
-        <?php echo form_error('tipo'); ?>
+        <?php 
+        echo form_error('tipo'); ?>
       </div>
     </div>
     <div class="form-group">
@@ -89,7 +102,7 @@ if(isset($colab["id_colab"])){
          'type' => 'dropdown',
          'options' => $combos["c_nacionalidad"],
          'first' => array('' => "Seleccione una opción"),
-         'value' => isset($colab["nacionalidad"]) ? $colab["nacionalidad"]:"",
+         'value' => isset($colab) &&isset( $colab["nacionalidad"]) ? $colab["nacionalidad"]:"",
          'class' => '',
          'attributes' => array('class' => '')
          ));
@@ -99,7 +112,7 @@ if(isset($colab["id_colab"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Seud&oacute;nimo:</b>
+        <b>Seud&oacute;nimo:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <?php
@@ -123,7 +136,7 @@ if(isset($colab["id_colab"])){
         echo $this->form_complete->create_element(array(
          'id' => 'email',
          'type' => 'text',
-         'value' => isset($colab["email"]) ? $colab["email"]:"",
+         'value' => isset($colab["email"]) ? $colab["email"]:' ',
          'class' => '',
          'attributes' => array('class' => '','placeholder'=>'Correo electr&oacute;nico:')
          ));
