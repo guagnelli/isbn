@@ -29,7 +29,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
-                       'id' => 'libro[title]',
+                       'id' => 'title',
                        'type' => 'text',
                        'value' => isset($solicitud["libro"]["title"]) ? $solicitud["libro"]["title"]:"",
                        'class' => 'form-control col-md-7 col-xs-12',
@@ -37,12 +37,11 @@ $class = $is_ajax ? "":'class="x_panel"';
                           'class' => '',
                           'min'=>'0',
                           'placeholder'=>'Título de la obra',
-                          "required"=>"required",
-                          "oninvalid"=>"this.setCustomValidity('Debe ingresar el título de la obra')"
+                          
                           )
                        ));
                        ?>        
-                       <?php //echo form_error_format('libro[title]'); ?>
+                       <?php echo form_error_format('title'); ?>
                     </div>
                 </div>
                 <div class="item form-group">
@@ -52,7 +51,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
-                       'id' => 'libro[subtitle]',
+                       'id' => 'subtitle',
                        'type' => 'text',
                        'value' => isset($solicitud["libro"]["subtitle"]) ? $solicitud["libro"]["subtitle"]:"",
                        'class' => 'form-control col-md-7 col-xs-12',
@@ -72,33 +71,30 @@ $class = $is_ajax ? "":'class="x_panel"';
                   </label>
                   <input type="radio" 
                    class="flat" 
-                   name="solicitud[sol_tipo_obra]"
+                   name="sol_tipo_obra"
                    value="I" 
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Independiente")?"checked":"";
                    ?> 
-                   required = "required"
-                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')" /> Independiente
+                   /> Independiente
                   <input type="radio" 
                    class="flat" 
-                   name="solicitud[sol_tipo_obra]"
+                   name="sol_tipo_obra"
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Completa")?"checked":"";
                    ?> 
                    value="C" 
-                   required = "required"
-                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')"/> Completa 
+                   /> Completa 
                   <input type="radio" 
                    id="volumen"
                    class="flat" 
-                   name="solicitud[sol_tipo_obra]"
+                   name="sol_tipo_obra"
                    <?php
                     echo (isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen")?"checked":"";
                    ?> 
                    value="V" 
-                   required = "required"
-                   oninvalid ="this.setCustomValidity('Debe seleccionar una Opción')"/> Volumen 
-                   <br><?php //echo form_error_format('solicitud[sol_tipo_obra]'); ?>
+                   /> Volumen 
+                   <br><?php echo form_error_format('sol_tipo_obra'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -107,7 +103,8 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
-                       'id' => 'solicitud[folio_coleccion]',
+                       'id' => 'folio_coleccion',
+                       // 'id' => 'solicitud[folio_coleccion]',
                        'type' => 'text',
                        'value' => isset($solicitud["folio_coleccion"]) ? $solicitud["folio_coleccion"]:"",
                        'class' => 'form-control col-md-7 col-xs-12',
@@ -119,6 +116,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                        ));
                        ?>        
                     </div>
+                    <br><?php echo form_error_format('folio_coleccion'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -127,7 +125,8 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
-                       'id' => 'libro[resenia]',
+                       // 'id' => 'libro[resenia]',
+                       'id' => 'resenia',
                        'type' => 'textarea',
                        'value' => isset($solicitud["libro"]["resenia"]) ? $solicitud["libro"]["resenia"]:"",
                        'class' => 'form-control col-md-7 col-xs-12',
@@ -135,12 +134,11 @@ $class = $is_ajax ? "":'class="x_panel"';
                           'class' => '',
                           'min'=>'0',
                           'placeholder'=>'Reseña de la obra',
-                          "required"=>"required",
-                          'oninvalid="this.setCustomValidity(\'Debe ingresar la reseña de la obra\')"' =>""
+                          
                           )
                        ));
                        ?>        
-                       <?php echo form_error_format('libro[resenia]'); ?>
+                       <?php echo form_error_format('resenia'); ?>
                     </div>
                 </div>
                 <p class="lead">Clasificación temática</p>
@@ -158,14 +156,13 @@ $class = $is_ajax ? "":'class="x_panel"';
                        'value' => isset($solicitud["clasificacion_tematica"]["id_categoria"]) ? $solicitud["clasificacion_tematica"]["id_categoria"]:"",
                        'class' => '',
                        'attributes' => array('onchange' => 'sub_categoria(this)',
-                          "required"=>"required",
-                          "oninvalid"=>"this.setCustomValidity('Debe seleccionar una  Categoría')"
+                          
                         )
                        ));
                        ?>
-                        <span class="error">
-                            <?php echo form_error("solicitud_categoria"); ?>
-                        </span>
+                        
+                      <?php echo form_error_format("solicitud_categoria"); ?>
+                        
                     </div>
                 </div>
                 <div class="item form-group">
@@ -175,23 +172,19 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <div class="col-md-6 col-sm-6 col-xs-12" id="div_subcategoria">
                     <?php
                       echo $this->form_complete->create_element(array(
-                       'id' => 'solicitud[id_subcategoria]',
+                       'id' => 'id_subcategoria',
+                       // 'id' => 'solicitud[id_subcategoria]',
                        'type' => 'dropdown',
                        'options' => dropdown_options($combos["sub_categorias"], "id", "nombre"),
                        'first' => array('' => "Seleccione una opción"),
                        'value' => isset($solicitud["clasificacion_tematica"]["id_subcategoria"]) ? $solicitud["clasificacion_tematica"]["id_subcategoria"]:"",
                        'class' => '',
-                       'attributes' => array('class' => '',
-                          "required"=>"required",
-                          "oninvalid"=>"this.setCustomValidity('Debe seleccionar una Subcategoría')"
-                        )
+                       
                        ));
                        ?>
-                        
+                        <?php echo form_error_format("id_subcategoria"); ?>
                     </div>
-                    <span class="error">
-                      <?php echo form_error("solicitud[id_subcategoria]"); ?>
-                    </span>
+                    
                 </div>
                 <div class="ln_solid"></div>
                 <div class="form-group">
@@ -207,7 +200,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     }
                     ?>
                     
-                    <button type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
+                    <button id="submit" type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
                   </div>
                 </div>
                 <?php echo form_close(); ?>
@@ -220,7 +213,10 @@ $class = $is_ajax ? "":'class="x_panel"';
 ?>
 
 <script type="text/javascript">
-$("#solicitud[folio_coleccion]").ready(function(){
+$( "#submit" ).click(function( event ) {
+  event.preventDefault();
+});
+$("#folio_coleccion").ready(function(){
  // alert("error");
   <?php
   if(isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen"){
@@ -234,9 +230,9 @@ $("#solicitud[folio_coleccion]").ready(function(){
     <?php
   }
   ?>
-  $("input[name^='solicitud\[sol_tipo_obra\]']").change(function(){
+  $("input[name^='sol_tipo_obra']").change(function(){
     //alert($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val())
-    if($("input[name^='solicitud\[sol_tipo_obra\]']:checked").val() == "V"){
+    if($("input[name^='sol_tipo_obra']:checked").val() == "V"){
       $(".folio_coleccion").prop('disabled', false);
     }else{
       $(".folio_coleccion").val("");

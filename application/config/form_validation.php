@@ -22,16 +22,57 @@ $config['inicio_sesion'] = array(
 );
 $config["solicitud"] = array(
     array(
-        'field' => 'libro[title]',
+        'field' => 'title',
         'label' => 'Título de la obra',
-        'rules' => 'required'
+        'rules' => 'required',
+        /*'errors' => array(
+            'required' => "El campo %s es obligatorio"
+        )*/
     ),
     array(
-        'field' => "solicitud[sol_tipo_obra]",
+        'field' => "sol_tipo_obra",
         'label' => 'Tipo de obra',
         'rules' => 'required',
+        /*'errors' => array(
+            'required' => "El campo %s es obligatorio"
+        )*/
     ),
+    array(
+        'field' => "resenia",
+        'label' => 'Reseña',
+        'rules' => 'required',
+        /*'errors' => array(
+            'required' => "El campo %s es obligatorio"
+        )*/
+    ),
+    array(
+        'field' => "solicitud_categoria",
+        'label' => 'Temática principal',
+        'rules' => 'required|greater_than[0]',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'greater_than' => "El campo %s es obligatorio",
+        )
+    ),
+    array(
+        'field' => "id_subcategoria",
+        'label' => 'Sub categoría',
+        'rules' => 'required|greater_than[0]',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'greater_than' => "El campo %s es obligatorio",
+        )
+    ),
+    
 );
+$config["sol_folio"] = array(
+        'field' => "folio_coleccion",
+        'label' => 'Tipo de obra',
+        'rules' => 'required',
+        /*'errors' => array(
+            'required' => "El campo %s es obligatorio"
+        )*/
+    );
 $config["form_perfil"] = array(
     array(
         'field' => 'nombre',

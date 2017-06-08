@@ -12,6 +12,40 @@ class Solicitud_model extends MY_Model {
         $this->load->database();
     }
 
+    protected function format($tmp){
+        pr($tmp);
+        $data = array();
+        if(isset($tmp["title"])){
+            $data["libro"]["title"] = $tmp["title"];
+        }
+        if(isset($tmp["subtitle"])){
+            $data["libro"]["subtitle"] = $tmp["subtitle"];
+        }
+        if(isset($tmp["resenia"])){
+            $data["libro"]["resenia"] = $tmp["resenia"];
+        }
+        if(isset($tmp["solicitud"]["solicitud_id"])){
+            $data["solicitud"]["solicitud_id"] = $tmp["solicitud"]["solicitud_id"];
+        }
+        if(isset($tmp["solicitud_id"])){
+            // $data["solicitud"]["solicitud_id"] = $tmp["solicitud_id"];
+            $data["solicitud_id"] = $tmp["solicitud_id"];
+        }
+        if(isset($tmp["solicitud"]["entidad_id"])){
+            $data["solicitud"]["entidad_id"] = $tmp["solicitud"]["entidad_id"];
+        }
+        if(isset($tmp["sol_tipo_obra"])){
+            $data["solicitud"]["sol_tipo_obra"] = $tmp["sol_tipo_obra"];
+        }
+        if(isset($tmp["folio_coleccion"])){
+            $data["solicitud"]["folio_coleccion"] = $tmp["folio_coleccion"];
+        }
+        if(isset($tmp["id_subcategoria"])){
+            $data["solicitud"]["id_subcategoria"] = $tmp["id_subcategoria"];
+        }
+        return $data;
+    }
+
     function get_libro_solicitud($id_solicitud = NULL, $select = array('l.id')) {
         if (is_null($id_solicitud)) {
             return array();
@@ -41,12 +75,15 @@ class Solicitud_model extends MY_Model {
     }
 
     function addSolicitud($data) {
-        // pr($data);
+        
+        $data = $this->format($data);
+        //pr($data);
         $this->db->trans_begin();
         $this->db->insert("libro", $data["libro"]);
         if ($this->db->affected_rows() > 0) {
             $data["solicitud"]["libro_id"] = $this->db->insert_id();
             $data["solicitud"]["folio"] = "ISBN-" . $data["solicitud"]["sol_tipo_obra"] . "-" . str_pad($this->db->insert_id(), 10, 0, STR_PAD_LEFT);
+            // pr($data);
             $this->db->insert("solicitud", $data["solicitud"]);
             if ($this->db->affected_rows() > 0) {
                 $solicitud_id = $this->db->insert_id();
@@ -70,7 +107,10 @@ class Solicitud_model extends MY_Model {
     }
 
     function editSolicitud($data) {
-        //echo "salvando";
+        // pr($data);
+        $data = $this->format($data);
+        pr($data);
+        // exit;
         $this->db->select("libro_id");
         $this->db->where("id", $data["solicitud_id"]);
         $result = $this->db->get("solicitud");

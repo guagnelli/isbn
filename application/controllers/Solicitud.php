@@ -340,6 +340,10 @@ class Solicitud extends MY_Controller {
 
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 
+            if(isset($data["save"]["folio_coleccion"])){
+                array_push($validations, $this->config->item('sol_folio'));
+            }
+            // pr($validations);
             $this->form_validation->set_rules($validations); //AÃƒÂ±adir validaciones
             if ($this->form_validation->run()) {
                 // echo "ok";
