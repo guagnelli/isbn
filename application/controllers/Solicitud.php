@@ -1109,6 +1109,7 @@ class Solicitud extends MY_Controller {
                     $data["colab"] = $data["colab"][0];
                 }
             } else {
+                $solicitud = $data["colab"]["solicitud_id"];
                 //$data["debug"]="save";
                 $this->config->load('form_validation'); //Cargar archivo con validaciones
                 $validations = $this->config->item('sec_colaboradores'); //Obtener validaciones de archivo
