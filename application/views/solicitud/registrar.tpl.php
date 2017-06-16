@@ -1,4 +1,6 @@
-<?php //pr($solicitud);
+<?php 
+//pr($solicitud);
+//pr($debug);
 $class = $is_ajax ? "":'class="x_panel"';
 ?>
 <div class="row">

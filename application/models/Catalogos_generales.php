@@ -95,7 +95,7 @@ class Catalogos_generales extends CI_Model {
     public function get_tipo_file($registro=false){
         $files = array(
             "p"=>"Comprobate de pago",
-            "l"=>"Libro",
+            "fb"=>"Portada",
             "o"=>"Otro",
             "a"=>"aceptado",
             "r"=>"rechazado",

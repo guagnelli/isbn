@@ -335,8 +335,8 @@ class Solicitud extends MY_Controller {
         }
         //pr($data);
         //si tiene datosbusca por id
-        if ($this->input->post()) {
-            $data["save"] = $this->input->post();
+        if ($this->input->post() && count($this->input->post())>1) {
+            $data["debug"] = $data["save"] = $this->input->post();
 
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('solicitud'); //Obtener validaciones de archivo 

@@ -178,7 +178,7 @@ $config['sec_colaboradores'] = array(
     array(
         'field' => 'email',
         'label' => 'Correo electrónico',
-        'rules' => 'required|valid_email',
+        'rules' => 'required',
         /*'errors' => array(
             'required' => "El campo %s es obligatorio"
         )*/
