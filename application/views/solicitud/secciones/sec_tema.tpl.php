@@ -113,4 +113,12 @@ if(isset($tema["id"])){
 <?php
 echo form_close();
 ?>
-<script type="text/javascript">//btn();</script>
+<script type="text/javascript">
+  $(".only-numbers").keypress(function( event ){
+    alert(event.key);
+    var num = event.key;
+    if(!$.isNumeric( num )){
+        return;
+    }
+  });
+</script>

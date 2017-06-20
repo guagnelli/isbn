@@ -96,22 +96,23 @@ $config["form_perfil"] = array(
     )
 );
 $config["sol_sec_tema"] = array(
-    array(
+    /*array(
         'field' => 'coleccion',
         'label' => 'Colección',
         'rules' => '',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
-    ),
+        'errors' => array(
+            '' => "El campo %s es obligatorio"
+        )
+    ),*/
     array(
         'field' => 'no_coleccion',
         'label' => 'No. de colección',
-        'rules' => 'integer|max_length[13]',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio",
-            //'required' => "El campo %s es obligatorio"
-        )*/
+        'rules' => 'numeric|min_length[10]|max_length[13]',
+        'errors' => array(
+            'numeric' => "El %s debe ser numérico",
+            'min_length' => "El %s debe tener por lo menos 10 y máximo 13 dígitos",
+            'max_length' => "El %s debe tener por lo menos 10 y máximo 13 dígitos"
+        )
     ),
     array(
         'field' => 'tipo_contenido',
@@ -124,7 +125,7 @@ $config["sol_sec_tema"] = array(
     array(
         'field' => 'nombre_serie',
         'label' => 'Nombre de la serie',
-        'rules' => 'alpha_numeric_spaces',
+        //'rules' => '',
         /*'errors' => array(
             //'required' => "El campo %s es obligatorio"
         )*/
@@ -178,10 +179,11 @@ $config['sec_colaboradores'] = array(
     array(
         'field' => 'email',
         'label' => 'Correo electrónico',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
+        'rules' => 'required|valida_correo_electronico',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'valida_correo_electronico' => "El %s debe ser valido"
+        )
     )
 );
 $config['sec_traduccion'] = array(
@@ -362,11 +364,11 @@ $config["sec__descripcion_fisica_electronica"] = array(
         'label' => 'Medio',
         'rules' => 'required'
     ),
-    array(
+    /*array(
         'field' => 'url',
         'label' => 'URL',
         'rules' => 'required'
-    ),
+    ),*/
     array(
         'field' => 'tamanio_desc',
         'label' => 'Tamaño',

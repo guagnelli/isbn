@@ -406,3 +406,6 @@ alter table solicitud add column folio_coleccion varchar(50);
 --mayo 29
 update  seccion_solicitud set validar_datos_obligatorios = 0 where id=4;
 alter table libro add column resenia text null;
+
+--19 de junio de 2017
+insert into c_estado (id, name) values (8, 'Comprobado');

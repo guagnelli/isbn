@@ -32,12 +32,15 @@ if(isset($comercializable["id"])){
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="ejemplares_nacional" 
-	           class="form-control col-md-8 col-xs-12" 
+	           class="form-control col-md-8 col-xs-12 only-numbers" 
 	           name="ejemplares_nacional" 
 	           placeholder="Ejemplares nacionales" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_nacional"]) ? $comercializable["ejemplares_nacional"]:""?>'
-	           type="number" min="0" />
+	           type="number" min="0"
+	           onkeydown="key_press(event)"
+	           onkeypress="key_press(event)"
+	            />
 	    <?php echo form_error('ejemplares_nacional'); ?>
 	  </div>
 	</div>

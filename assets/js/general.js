@@ -268,5 +268,20 @@ function callbackIniDataTables(idTabla) {
                 }
         );
     }
+}
 
+// $(".only-numbers").ready(function(){
+//     alert("ready");
+    //$(".only-numbers").keypress(function( event ){
+function key_press(event){
+    var regInteger = /^\d+$/;
+    var entero = regInteger.test( event.key );
+    //alert(event.key);
+    if(entero || event.key == 'Backspace' || event.key == 'Tab'){
+        return ;
+    }
+    else{
+        event.preventDefault();
+        //return false;
+    }    
 }
