@@ -95,51 +95,80 @@ function beforeSubmit() {
 
     //check whether browser fully supports all File API
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+        var isbn = $("#tipo").val();
+        //alert(isbn)
+        if(isbn == "Aceptar" ){
+            if (!$('#isbn_libro').val()) { //check empty input filed
+                $("#msg_general").show();
+                $("#msg_general").addClass('alert alert-warning alert-dismissible fade in');
+
+                $("#msg_general").text("El campo ISBN es obligatorio, por favor Ingreselo");
+                return false;
+            }else{
+                var isbn = $('#isbn_libro').val();
+                if(isbn.length != 13){
+                    $("#msg_general").show();
+                    $("#msg_general").addClass('alert alert-warning alert-dismissible fade in');
+
+                    $("#msg_general").text("El campo ISBN debe contener 13 caracteres, por favor verifíquelo");
+                    return false;
+                }
+            }
+        }  
+
         if (!$('#archivo').val()) { //check empty input filed
             $("#msg_general").show();
             $("#msg_general").addClass('alert alert-warning alert-dismissible fade in');
 
             $("#msg_general").text("El campo Archivo es obligatorio, por favor seleccione un archivo");
-            return false
+            return false;
         }
 
-        var fsize = $('#archivo')[0].files[0].size; //get file size
-        var ftype = $('#archivo')[0].files[0].type; // get file type
+        
+        var conf = confirm("Esta a punto de "+isbn+" la solicitud, ¿desea continuar?");
+        if(conf){
+            var fsize = $('#archivo')[0].files[0].size; //get file size
+            var ftype = $('#archivo')[0].files[0].type; // get file type
 
 
-        //allow file types 
-        switch (ftype)
-        {
-            case 'image/png':
-            case 'image/gif':
-            case 'image/jpeg':
-            case 'image/jpg':
-            case 'application/pdf':
-                break;
-            default:
-                //alert(ftype)
+            //allow file types 
+            switch (ftype)
+            {
+                case 'image/png':
+                case 'image/gif':
+                case 'image/jpeg':
+                case 'image/jpg':
+                case 'application/pdf':
+                    break;
+                default:
+                    //alert(ftype)
+                    $("#msg_general").show();
+                    $("#msg_general").text("El archivo con extensión '" + ftype + "' no esta permitido");
+                    $("#msg_general").attr('class', '');
+                    $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
+                    return false
+            }
+
+            //Allowed file size is less than 5 MB (1048576)
+            if (fsize > 5242880) {
                 $("#msg_general").show();
                 $("#msg_general").text("El archivo con extensión '" + ftype + "' no esta permitido");
                 $("#msg_general").attr('class', '');
                 $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
+                $("#msg_general").text("El tamaño del archivo es de " + bytesToSize(fsize) + ", superior al máximo de 5MB");
                 return false
-        }
+            }
 
-        //Allowed file size is less than 5 MB (1048576)
-        if (fsize > 5242880) {
-            $("#msg_general").show();
-            $("#msg_general").text("El archivo con extensión '" + ftype + "' no esta permitido");
+            $('#send_file').hide(); //hide submit button
+            $('#loading-img').show(); //hide submit button
+            $("#msg_general").text("");
             $("#msg_general").attr('class', '');
-            $("#msg_general").addClass('alert alert-info alert-dismissible fade in');
-            $("#msg_general").text("El tamaño del archivo es de " + bytesToSize(fsize) + ", superior al máximo de 5MB");
-            return false
+            $("#msg_general").hide();
+        }else{
+            return false;
         }
 
-        $('#send_file').hide(); //hide submit button
-        $('#loading-img').show(); //hide submit button
-        $("#msg_general").text("");
-        $("#msg_general").attr('class', '');
-        $("#msg_general").hide();
+            
     } else
     {
         //Output error to older unsupported browsers that doesn't support HTML5 File API

@@ -1,3 +1,5 @@
+<?php echo js("uf/jquery.form.min.js"); ?>
+<?php echo js("uf/uf_ri.js"); ?>
 <?php
 //pr($solicitud);
 $this->lang->load('interface', 'spanish');
@@ -11,15 +13,18 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
         'id' => 'frm_file_comprobante',
         'name' => 'frm_file',
         'class' => 'form-horizontal form-label-left',
-        'method' => 'post'
+        'method' => 'post',
     ));
     ?>
     <div id="msg_general" role="alert" ></div>
-    <?php if (isset($estado_actual['is_captura_isbn'])) { ?>
+    <?php if (isset($estado_actual['is_captura_isbn'])) { 
+
+    ?>
+        <input type="hidden" value="Aceptar" id="tipo" />
         <div class="isbn_panel">
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                    <strong>Captura ISBN</strong>
+                    <strong>*Captura ISBN</strong>
                 </label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     <?php
@@ -38,7 +43,11 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 </div>
             </div>
         </div>
-    <?php } ?>
+    <?php }else{
+    ?>
+        <input type="hidden" value="Rechazar" id="tipo" />
+    <?php
+    }?>
     <div class="x_panel">
         <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -86,5 +95,3 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 <?php echo form_close(); ?>
 
 </div>
-<?php echo js("uf/jquery.form.min.js"); ?>
-<?php echo js("uf/uf_ri.js"); ?>

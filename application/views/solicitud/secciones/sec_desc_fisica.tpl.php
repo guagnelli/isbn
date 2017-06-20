@@ -131,7 +131,10 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'number',
          'value' => isset($_descripcion_fisica["no_paginas"]) ? $_descripcion_fisica["no_paginas"]:"",
          'class' => '',
-         'attributes' => array('class' => '','min'=>'0',)
+         'attributes' => array('class' => '',
+                               'min'=>'0',
+                               'onkeydown="key_press(event)"'=>'',
+                               'onkeypress="key_press(event)"'=>'')
          ));
          ?>
          <?php echo form_error('no_paginas'); ?>
@@ -167,7 +170,10 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'number',
          'value' => isset($_descripcion_fisica["ancho"]) ? $_descripcion_fisica["ancho"]:"",
          'class' => '',
-         'attributes' => array('class' => '','min'=>'0',)
+         'attributes' => array('class' => '',
+                               'min'=>'0',
+                               'onkeydown="key_press(event)"'=>'',
+                               'onkeypress="key_press(event)"'=>'')
          ));
          ?> Cm
          <?php echo form_error('ancho'); ?>
@@ -184,7 +190,10 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'number',
          'value' => isset($_descripcion_fisica["alto"]) ? $_descripcion_fisica["alto"]:"",
          'class' => '',
-         'attributes' => array('class' => '','min'=>'0',)
+         'attributes' => array('class' => '',
+                                'min'=>'0',
+                               'onkeydown="key_press(event)"'=>'',
+                               'onkeypress="key_press(event)"'=>'')
          ));
          ?>Cm
          <?php echo form_error('alto'); ?>
@@ -232,7 +241,7 @@ if(isset($_descripcion_fisica["id"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-4 col-sm-4 col-xs-12">
-        <b><span class="required">*</span>URL:</b>
+        <b>URL:</b>
       </label>
       <div class="col-md-8 col-sm-8 col-xs-12">
         <?php
@@ -258,7 +267,10 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'number',
          'value' => isset($_descripcion_fisica["tamanio_desc"]) ? $_descripcion_fisica["tamanio_desc"]:"",
          'class' => '',
-         'attributes' => array('class' => 'col-md-4 col-sm-4','min'=>'0','style'=>"width:100px")
+         'attributes' => array('class' => 'col-md-4 col-sm-4',
+                               'min'=>'0','style'=>"width:100px",
+                               'onkeydown="key_press(event)"'=>'',
+                               'onkeypress="key_press(event)"'=>'')
          ));
          ?>
          <?php echo form_error('tamanio_desc'); ?>

@@ -736,7 +736,7 @@ class Solicitud extends MY_Controller {
                 $data_cuerpo_comprobante = $this->load->view('solicitud/buscador/carga_comprobante', $data, true);
 
                 $data = array(
-                    'titulo_modal' => 'EnvÃ­ar a ' . $estado_ca['titulo_boton'],
+                    'titulo_modal' => $estado_ca['titulo_boton'],
                     'cuerpo_modal' => $data_cuerpo_comprobante,
                     'pie_modal' => $data_pie
                 );
