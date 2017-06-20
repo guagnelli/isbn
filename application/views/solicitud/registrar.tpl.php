@@ -43,7 +43,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                           )
                        ));
                        ?>        
-                       <?php echo form_error_format('title'); ?>
+                       <?php echo form_error('title'); ?>
                     </div>
                 </div>
                 <div class="item form-group">
@@ -96,7 +96,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                    ?> 
                    value="V" 
                    /> Volumen 
-                   <br><?php echo form_error_format('sol_tipo_obra'); ?>
+                   <br><?php echo form_error('sol_tipo_obra'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -118,7 +118,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                        ));
                        ?>        
                     </div>
-                    <br><?php echo form_error_format('folio_coleccion'); ?>
+                    <br><?php echo form_error('folio_coleccion'); ?>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
@@ -140,7 +140,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                           )
                        ));
                        ?>        
-                       <?php echo form_error_format('resenia'); ?>
+                       <?php echo form_error('resenia'); ?>
                     </div>
                 </div>
                 <p class="lead">Clasificación temática</p>
@@ -163,7 +163,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                        ));
                        ?>
                         
-                      <?php echo form_error_format("solicitud_categoria"); ?>
+                      <?php echo form_error("solicitud_categoria"); ?>
                         
                     </div>
                 </div>
@@ -184,7 +184,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                        
                        ));
                        ?>
-                        <?php echo form_error_format("id_subcategoria"); ?>
+                        <?php echo form_error("id_subcategoria"); ?>
                     </div>
                     
                 </div>
