@@ -854,7 +854,7 @@ class Solicitud extends MY_Controller {
     function sec_tema() {
         if ($this->input->is_ajax_request()) {
             if ($this->input->post()) {
-                $data["debug"] = "post";
+                //$data["debug"] = "post";
                 $data["tema"] = $this->input->post();
                 //pr($data);
                 //load from the begining
@@ -866,7 +866,7 @@ class Solicitud extends MY_Controller {
                         $data["debug"] = "post geted topic";
                     }
                 } elseif (isset($data["tema"]["id"])) {//update
-                    $data["debug"] = "update";
+                    //data["debug"] = "update";
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
