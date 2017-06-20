@@ -863,7 +863,7 @@ class Solicitud extends MY_Controller {
                     $tema = $this->req->get_tema($data["tema"]["solicitud_id"]);
                     if (is_array($tema)) {
                         $data["tema"] = $tema;
-                        $data["debug"] = "post geted topic";
+                        //$data["debug"] = "post geted topic";
                     }
                 } elseif (isset($data["tema"]["id"])) {//update
                     //data["debug"] = "update";
@@ -1160,7 +1160,8 @@ class Solicitud extends MY_Controller {
                 $validations = array_merge($validations["normal"],$validations["coedicion"]); //Obtener validaciones opcionales
                 //$data["debug"]["test"]="ON";
             }else{
-                $validations = $validations["normal"];                
+                $validations = $validations["normal"];
+                    
             }
             // $data["debug"]["data"] = $data;
             // $data["debug"]["validaciones"] = $validations;
@@ -1184,6 +1185,9 @@ class Solicitud extends MY_Controller {
                     
                     //save
                     $save = $this->req->add("edicion", $data["edicion"]);
+                    if(!isset($save["edicion"])){
+
+                    }
                     if ($save) {
                         $update = $this->req->update("solicitud", array("has_informacion_edicion" => 1), array("id" => $data["edicion"]["solicitud_id"])
                         );
@@ -1206,15 +1210,21 @@ class Solicitud extends MY_Controller {
                         "solicitud_id" => $data["edicion"]["solicitud_id"],
                         "id" => $data["edicion"]["id"]
                     );
-                    $update = $this->req->update("edicion", $data["edicion"], $where);
-                    if ($update) {
-                        $response['message'] = "La Información de edición se ha guardado exitosamente";
-                        $response['result'] = "true";
-                        goto load;
-                    } else {
-                        $response['message'] = "Se ha producido un error, favor de verificarlo";
-                        $response['result'] = "false";
+                    if ($data["edicion"]["coedicion"] == 0){
+                             
+                        $data["edicion"]["coeditor"] = ' ';       
+                        $data["edicion"]["radicado"] = null;  
                     }
+                         
+                        $update = $this->req->update("edicion", $data["edicion"], $where);
+                        if ($update) {
+                            $response['message'] = "La Información de edición se ha guardado exitosamente";
+                            $response['result'] = "true";
+                            goto load;
+                        } else {
+                            $response['message'] = "Se ha producido un error, favor de verificarlo";
+                            $response['result'] = "false";
+                        }
                 }
             }
             $response['result'] = "true";

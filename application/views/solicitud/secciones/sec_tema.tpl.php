@@ -54,7 +54,9 @@ if(isset($tema["id"])){
       value="<?php echo $tema["no_coleccion"];?>"
       <?php
       }?>
-      type="text">
+      type="number"
+      onkeydown="key_press(event)"
+      onkeypress="key_press(event)">
   </div>
   <?php echo form_error('no_coleccion'); ?>
 </div>

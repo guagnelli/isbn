@@ -92,7 +92,7 @@ $config["form_perfil"] = array(
     array(
         'field' => 'correo',
         'label' => 'Correo',
-        'rules' => 'trim|required|max_length[40]|valid_email'
+        'rules' => 'trim|required|max_length[40]|valida_correo_electronico'
     )
 );
 $config["sol_sec_tema"] = array(

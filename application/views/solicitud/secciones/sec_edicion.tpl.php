@@ -30,7 +30,9 @@ if (isset($edicion["id"])) {
                placeholder="No. Edición" 
                required="required"
                value = '<?php echo isset($edicion["no_edicion"]) ? $edicion["no_edicion"] : ""; ?>'
-               type="text" />
+               type="number"
+               onkeydown="key_press(event)"
+                onkeypress="key_press(event)" />
         <?php echo form_error('no_edicion'); ?>
     </div>
 </div>
@@ -127,7 +129,9 @@ if (isset($edicion["id"])) {
                placeholder="Radicado" 
                required="required"
                value = '<?php echo isset($edicion["radicado"]) ? $edicion["radicado"] : ""; ?>'
-               type="text" />
+               type="number"
+               onkeydown="key_press(event)"
+             onkeypress="key_press(event)" />
         <?php echo form_error('radicado'); ?>
     </div>
 </div>

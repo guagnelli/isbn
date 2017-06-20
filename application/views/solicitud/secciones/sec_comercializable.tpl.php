@@ -55,7 +55,9 @@ if(isset($comercializable["id"])){
 	           placeholder="Precio local" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_local"]) ? $comercializable["precio_local"]:""?>'
-	           type="number" />
+	           type="number"
+	           onkeydown="key_press(event)"
+	           onkeypress="key_press(event)" />
 	    <?php echo form_error('precio_local'); ?>
 	  </div>
 	</div>
@@ -70,7 +72,9 @@ if(isset($comercializable["id"])){
 	           placeholder="Ejemplares externos" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["ejemplares_externa"]) ? $comercializable["ejemplares_externa"]:""?>'
-	           type="number" min="0" />
+	           type="number" min="0"
+	           onkeydown="key_press(event)"
+	           onkeypress="key_press(event)" />
 	    <?php echo form_error('ejemplares_externa'); ?>
 	  </div>
 	</div>
@@ -85,7 +89,10 @@ if(isset($comercializable["id"])){
 	           placeholder="Precio a externos" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_externo"]) ? $comercializable["precio_externo"]:""?>'
-	           type="number" />
+	           type="number"
+	           onkeydown="key_press(event)"
+	           onkeypress="key_press(event)"
+	            />
 	    <?php echo form_error('precio_externo'); ?>
 	  </div>
 	</div>
@@ -100,7 +107,9 @@ if(isset($comercializable["id"])){
 	           placeholder="Oferta total" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["oferta_total"]) ? $comercializable["oferta_total"]:""?>'
-	           type="number" />
+	           type="number"
+	           onkeydown="key_press(event)"
+	           onkeypress="key_press(event)" />
 	    <?php echo form_error('oferta_total'); ?>
 	  </div>
 	</div>
