@@ -28,7 +28,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Título de la obra:</b> 
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
                        'id' => 'title',
@@ -50,7 +50,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b>Subtítulo: </b>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
                        'id' => 'subtitle',
@@ -102,7 +102,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Folio de la colección completa a la que pertenece este volúmen:</b> 
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
                        'id' => 'folio_coleccion',
@@ -124,7 +124,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Reseña:</b> 
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
                        // 'id' => 'libro[resenia]',
@@ -148,7 +148,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Temática principal: </b>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
                       echo $this->form_complete->create_element(array(
                        'id' => 'solicitud_categoria',
@@ -171,7 +171,7 @@ $class = $is_ajax ? "":'class="x_panel"';
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Sub-categoría:</b>
                     </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12" id="div_subcategoria">
+                    <div class="col-md-9 col-sm-9 col-xs-12" id="div_subcategoria">
                     <?php
                       echo $this->form_complete->create_element(array(
                        'id' => 'id_subcategoria',
