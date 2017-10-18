@@ -129,14 +129,14 @@ if(isset($colab["id_colab"])){
     </div>
     <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
-        <b><span class="required">*</span>Correo electr&oacute;nico:</b>
+        <b>Correo electr&oacute;nico:</b>
       </label>
       <div class="col-md-9 col-sm-9 col-xs-12">
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'email',
          'type' => 'text',
-         'value' => isset($colab["email"]) ? $colab["email"]:' ',
+         'value' => isset($colab["email"]) ? $colab["email"]:'',
          'class' => '',
          'attributes' => array('class' => '','placeholder'=>'Correo electr&oacute;nico:')
          ));

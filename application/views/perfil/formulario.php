@@ -21,14 +21,14 @@
             <div id="select_buscador_solicitud_entidad" class="tab-pane fade active in">
                 <div class="row">
                     <br>
-                    <h4><?php echo $string_values['title_perfil']; ?> </h4>
+                    <h4><?php echo $string_values['title_perfil'].$dato_usuario['usu_nombre']; ?> </h4>
                     <br>
                 </div>
                 <div class="row">
                     <?php if(isset($msg) && !is_null($msg)){ echo $msg; } //Imprimir mensaje ?>
                     <div id="mensaje"></div>
                 </div>
-                <div class="row">
+                <!--div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
                             <span class="input-group-addon">* <?php echo $string_values['lbl_nombre']; ?>: </span>
@@ -46,21 +46,21 @@
                         </div>
                         <?php echo form_error_format('nombre'); ?>
                     </div>
-                </div>
+                </div-->
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon">* <?php echo $string_values['lbl_paterno']; ?></span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_nombre']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'apaterno',
                                 'type' => 'text',
                                 'value' => $dato_usuario['usu_paterno'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
-                                    'placeholder' => $string_values['lbl_paterno'],
+                                    'placeholder' => $string_values['lbl_nombre'],
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
-                                    'title' => $string_values['lbl_paterno'])));
+                                    'title' => $string_values['lbl_nombre'])));
                             ?>
                         </div>
                         <?php echo form_error_format('apaterno'); ?>
@@ -69,17 +69,17 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="panel-body input-group ">
-                            <span class="input-group-addon">* <?php echo $string_values['lbl_materno']; ?></span>
+                            <span class="input-group-addon">* <?php echo $string_values['lbl_paterno']; ?></span>
                             <?php
                             echo $this->form_complete->create_element(array('id' => 'amaterno',
                                 'type' => 'text',
                                 'value' => $dato_usuario['usu_materno'],
                                 'class' => 'form-control',
                                 'attributes' => array('class' => 'form-control',
-                                    'placeholder' => $string_values['lbl_materno'],
+                                    'placeholder' => $string_values['lbl_paterno'],
                                     'data-toggle' => 'tooltip',
                                     'data-placement' => 'top',
-                                    'title' => $string_values['lbl_materno'])));
+                                    'title' => $string_values['lbl_paterno'])));
                             ?>
                         </div>
                         <?php echo form_error_format('amaterno'); ?>

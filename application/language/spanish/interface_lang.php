@@ -128,9 +128,9 @@ $lang['interface'] = array(
         'link_ver_archivos' => 'Deliberación',
     ),
     'perfil' => array(
-        'title_perfil' => 'Perfil',
+        'title_perfil' => 'Informaci&oacute; del responable en: &nbsp;',
         'lbl_nombre' => 'Nombre',
-        'lbl_paterno' => 'Apellido paterno',
+        'lbl_paterno' => 'Apellidos',
         'lbl_materno' => 'Apellido materno',
         'lbl_correo' => 'Correo electrónico',
         'lbl_contrasenia' => 'Contraseña',

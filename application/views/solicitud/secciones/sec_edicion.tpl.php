@@ -38,7 +38,7 @@ if (isset($edicion["id"])) {
 </div>
 <div class="item form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-        <b><span class="required">*</span>Departamento, provincia o estado: </b>
+        <b><span class="required">*</span>Estado: </b>
     </label>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <?php

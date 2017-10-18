@@ -173,7 +173,8 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '',
                                'min'=>'0',
                                'onkeydown="key_press(event)"'=>'',
-                               'onkeypress="key_press(event)"'=>'')
+                               'onkeypress="key_press(event)"'=>'',
+                               'step'=>'.01',)
          ));
          ?> Cm
          <?php echo form_error('ancho'); ?>
@@ -193,7 +194,8 @@ if(isset($_descripcion_fisica["id"])){
          'attributes' => array('class' => '',
                                 'min'=>'0',
                                'onkeydown="key_press(event)"'=>'',
-                               'onkeypress="key_press(event)"'=>'')
+                               'onkeypress="key_press(event)"'=>'',
+                               'step'=>'.01')
          ));
          ?>Cm
          <?php echo form_error('alto'); ?>

@@ -38,28 +38,25 @@ class Perfil extends CI_Controller {
             
             $this->form_validation->set_rules($this->config->item('form_perfil')); //Agregar validaciones
 
-            if(!empty($datos_formulario['contrasenia']) && !empty($datos_formulario['confirmacion'])) { //Añadir opción en caso de ser edición y exista información en campo de contraseñia
-                //$this->form_validation->set_rules('contrasenia','Contraseña','callback_valid_pass|max_length[30]|min_length[8]');
+            if(!empty($datos_formulario['contrasenia']) && !empty($datos_formulario['confirmacion'])) { 
+            //Añadir opción en caso de ser edición y exista información en campo de contraseñia
                 $this->form_validation->set_rules('contrasenia','Contraseña','alpha_numeric|max_length[30]|min_length[8]');
                 $this->form_validation->set_rules('confirmacion','Confirmar contraseña','matches[contrasenia]');
             }
+
             if($this->form_validation->run() == TRUE){ //Validar datos
                 $usu_vo = $this->usuario_vo($datos_formulario);
-
                 if(!empty($datos_formulario['contrasenia'])) { //Añadir opción en caso de ser edición y exista información en campo de contraseñia
                     $usu_vo->usu_contrasenia = hash('sha512', $datos_formulario['contrasenia']); //aplica algoritmo de seguridad
                 }
-                //$usu_vo->usu_contrasenia = contrasenia_formato($usu_vo->USU_MATRICULA, $usu_vo->USU_CONTRASENIA);
-                /*unset($usu_vo->USU_MATRICULA); //Se elimina matrícula porque no se actualiza en una edición
-                if(empty($usu_vo->USU_CONTRASENIA)){ //Se elimina contraseña de objeto si se envía vacía
-                    unset($usu_vo->USU_CONTRASENIA);
-                }*/
 
-                $resultado = $this->perfil->update_usuario($usuario_id, $usu_vo); //Actualización de información
+               $resultado = $this->perfil->update_usuario($usuario_id, $usu_vo); //Actualización de información
                 if($resultado['result']===true){ //Almacenar en sesión
                     $this->session->set_userdata(array('nombre'=>$datos_formulario['nombre'], 'apaterno'=>$datos_formulario['apaterno'], 'amaterno'=>$datos_formulario['amaterno'], 'mail'=>$datos_formulario['correo'])); ///Si es correcto iniciamos sesión
                 }
-                $data['msg'] = imprimir_resultado($resultado); ///Muestra mensaje
+                $data['msg'] = imprimir_resultado($resultado); ///Muestra mensaje*/
+                redirect('solicitud');
+                //pr($datos_formulario);
             }/* else {
                 pr(validation_errors());
             }*/
@@ -74,7 +71,7 @@ class Perfil extends CI_Controller {
     private function usuario_vo($usuario=array()){
         $result = new Usuario_dao;
         //$result->usu_nick = (isset($usuario['matricula']) && !empty($usuario['matricula'])) ? $usuario['matricula'] : NULL;
-        $result->usu_nombre = (isset($usuario['nombre']) && !empty($usuario['nombre'])) ? $usuario['nombre'] : NULL;
+        //$result->usu_nombre = (isset($usuario['nombre']) && !empty($usuario['nombre'])) ? $usuario['nombre'] : NULL;
         $result->usu_paterno = (isset($usuario['apaterno']) && !empty($usuario['apaterno'])) ? $usuario['apaterno'] : NULL;
         $result->usu_materno = (isset($usuario['amaterno']) && !empty($usuario['amaterno'])) ? $usuario['amaterno'] : NULL;
         $result->usu_correo = (isset($usuario['correo']) && !empty($usuario['correo'])) ? $usuario['correo'] : NULL;
@@ -87,7 +84,7 @@ class Perfil extends CI_Controller {
 class Usuario_dao {
     //public $usuario_cve;
     //public $usu_nick;
-    public $usu_nombre;
+    //public $usu_nombre;
     public $usu_paterno;
     public $usu_materno;
     public $usu_correo;

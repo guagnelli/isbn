@@ -54,7 +54,7 @@ $tipo_admin_config = $this->config->item('rol_admin'); //Identificador de admini
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="' . site_url('perfil') . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . " " . $this->session->userdata("apaterno") . " " . $this->session->userdata("amaterno") . '</a>
+                <a class="navbar-brand" href="' . site_url('perfil') . '"><span class="glyphicon glyphicon-user"></span> ' . $this->session->userdata("nombre") . '</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="navbar-form navbar-left" role="search"><div class="form-group">

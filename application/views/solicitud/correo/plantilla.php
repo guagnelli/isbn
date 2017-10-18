@@ -1,5 +1,5 @@
-<p>Se le informa que se ha realizado una actualización en la solicitud con folio 
-	<?php echo $solicitud['folio']; ?> correspondiente al título "<?php echo $solicitud['libro']['title']; ?>"
+<p>Se le informa que se ha realizado una actualizaci&oacute;n en la solicitud con folio 
+	<?php echo $solicitud['folio']; ?> correspondiente al t&iacute;tulo "<?php echo $solicitud['libro']['title']; ?>"
 	por lo que se le recomienda dar continuidad a los procedimientos requeridos.</p>
 <br>
 <p>Historial de actualizaciones:</p>
@@ -22,4 +22,4 @@
 </table>
 <br>
 <p>Atte.</p>
-<p>Administración del Sistema ISBN-UNAM</p>
+<p>Administraci&iacute;n del Sistema ISBN-UNAM</p>

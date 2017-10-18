@@ -74,19 +74,19 @@ $config["sol_folio"] = array(
         )*/
     );
 $config["form_perfil"] = array(
-    array(
+    /*array(
         'field' => 'nombre',
+        'label' => 'Nombre',
+        'rules' => 'trim|required|max_length[20]'
+    ),*/
+    array(
+        'field' => 'apaterno',
         'label' => 'Nombre',
         'rules' => 'trim|required|max_length[20]'
     ),
     array(
-        'field' => 'apaterno',
-        'label' => 'Apellido paterno',
-        'rules' => 'trim|required|max_length[20]'
-    ),
-    array(
         'field' => 'amaterno',
-        'label' => 'Apellido materno',
+        'label' => 'Apellidos',
         'rules' => 'trim|required|max_length[20]'
     ),
     array(
@@ -179,10 +179,9 @@ $config['sec_colaboradores'] = array(
     array(
         'field' => 'email',
         'label' => 'Correo electrónico',
-        'rules' => 'required|valida_correo_electronico',
+        'rules' => 'valida_correo_electronico',
         'errors' => array(
-            'required' => "El campo %s es obligatorio",
-            'valida_correo_electronico' => "El %s debe ser valido"
+            'valida_correo_electronico' => "El %s debe ser valido, por favor verifíquelo"
         )
     )
 );
@@ -278,7 +277,7 @@ $config["sec_comercializable"] = array(
     array(
         'field' => 'ejemplares_nacional',
         'label' => 'Ejemplares nacionales',
-        'rules' => 'is_natural_no_zero'
+        'rules' => 'is_natural'
     ),
     array(
         'field' => 'precio_local',
@@ -288,7 +287,7 @@ $config["sec_comercializable"] = array(
     array(
         'field' => 'ejemplares_externa',
         'label' => 'Ejemplares externo',
-        'rules' => 'is_natural_no_zero'
+        'rules' => 'is_natural'
     ),
     array(
         'field' => 'precio_externo',
