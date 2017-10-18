@@ -22,4 +22,4 @@
 </table>
 <br>
 <p>Atte.</p>
-<p>Administraci&iacute;n del Sistema ISBN-UNAM</p>
+<p>Administraci&oacute;n del Sistema ISBN-UNAM</p>
