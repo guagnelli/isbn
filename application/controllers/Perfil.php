@@ -52,7 +52,7 @@ class Perfil extends CI_Controller {
 
                $resultado = $this->perfil->update_usuario($usuario_id, $usu_vo); //Actualización de información
                 if($resultado['result']===true){ //Almacenar en sesión
-                    $this->session->set_userdata(array('nombre'=>$datos_formulario['nombre'], 'apaterno'=>$datos_formulario['apaterno'], 'amaterno'=>$datos_formulario['amaterno'], 'mail'=>$datos_formulario['correo'])); ///Si es correcto iniciamos sesión
+                    $this->session->set_userdata(array('apaterno'=>$datos_formulario['apaterno'], 'amaterno'=>$datos_formulario['amaterno'], 'mail'=>$datos_formulario['correo'])); ///Si es correcto iniciamos sesión
                 }
                 $data['msg'] = imprimir_resultado($resultado); ///Muestra mensaje*/
                 redirect('solicitud');
