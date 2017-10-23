@@ -355,7 +355,7 @@ class Solicitud extends MY_Controller {
                     $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
                     $solicitud_datos['solicitud'] = $this->req->getSolicitud($data['save']['solicitud_id']);
                     $solicitud_datos['historial'] = $this->req->getHistorial($data['save']['solicitud_id']);
-                    $envio = $this->correo->enviar_correo(array('subject' => 'Notificación de actividad en el Sistema ISBN-UNAM',
+                    $envio = $this->correo->enviar_correo(array('subject' => html_entity_decode('Notificación de actividad en el Sistema ISBN-UNAM'),
                         'body' => $this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE),
                         'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                         'addCC' => $dgaj)
