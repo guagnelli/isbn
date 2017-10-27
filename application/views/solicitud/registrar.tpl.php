@@ -2,6 +2,7 @@
 //pr($solicitud);
 //pr($debug);
 $class = $is_ajax ? "":'class="x_panel"';
+$action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
 ?>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -14,10 +15,10 @@ $class = $is_ajax ? "":'class="x_panel"';
             </div>
             <div class="x_content">
                 <?php
-                $action = "solicitud/registrar";
                 echo form_open($action, array(
                     'class' => 'form-horizontal form-label-left',
                     'method' => 'post',
+                    "id"=>"solicitud",
                 ));
                 if(isset($solicitud["id"])){
                   echo "<input type='hidden' value='".$solicitud["id"]."' name='solicitud_id'  />"; 
@@ -193,16 +194,17 @@ $class = $is_ajax ? "":'class="x_panel"';
                   <div class="col-md-6 col-md-offset-3">
                     <?php if(isset($solicitud["id"])){
                     ?>
-                    <button id="send" type="submit" class="btn" onclick="retrun false;" >Guardar cambio</button>
+                    <button id="edit" type="button" class="btn" onclick="return false;" >Guardar cambio</button>
                     <?php
                     }else{
                     ?>
-                    <button id="send" type="submit" class="btn" onclick="retrun false;" >Realizar solicitud</button>
+                    <button id="send" type="submit" class="btn" onclick="return false;" >Realizar solicitud</button>
+                    <button id="submit" type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
                     <?php
                     }
                     ?>
                     
-                    <button id="submit" type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
+                    
                   </div>
                 </div>
                 <?php echo form_close(); ?>
@@ -210,7 +212,8 @@ $class = $is_ajax ? "":'class="x_panel"';
         </div>
     </div>
 </div> 
-<?php echo js("solicitud/secciones.js");
+<?php 
+//echo js("solicitud/secciones.js");
 //(isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen")
 ?>
 
@@ -218,6 +221,14 @@ $class = $is_ajax ? "":'class="x_panel"';
 $( "#submit" ).click(function( event ) {
   event.preventDefault();
 });
+
+//edicion
+$( "#edit" ).click(function( event ) {
+  var action = $("#solicitud").attr("action");
+  var data = $("#solicitud").serialize();
+  ajax(action,data,'#tab_obra','#msg_general2');
+});
+
 $("#folio_coleccion").ready(function(){
  // alert("error");
   <?php

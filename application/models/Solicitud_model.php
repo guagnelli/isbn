@@ -13,7 +13,7 @@ class Solicitud_model extends MY_Model {
     }
 
     protected function format($tmp){
-        pr($tmp);
+        //pr($tmp);
         $data = array();
         if(isset($tmp["title"])){
             $data["libro"]["title"] = $tmp["title"];
@@ -109,7 +109,7 @@ class Solicitud_model extends MY_Model {
     function editSolicitud($data) {
         // pr($data);
         $data = $this->format($data);
-        pr($data);
+        //pr($data);
         // exit;
         $this->db->select("libro_id");
         $this->db->where("id", $data["solicitud_id"]);

@@ -22,8 +22,8 @@ echo js("daterangepicker.js");
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div id="msg_general" role="alert" >
-            </div>
+            <div id="msg_general" role="alert" ></div>
+            <div id="msg_general2" role="alert" >prueba</div>
             <p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"] ?> <?php echo $comentarios_titulo_libro; ?></p>
             <p><b>Subtítulo:</b> <?php echo $datos["solicitud"]["libro"]["subtitle"] ?></p>
             <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"] ?></p>
@@ -76,7 +76,7 @@ echo js("daterangepicker.js");
                 <div class="tab-content" id="tab_sections">
                     <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id'] ?>">
                     <div class="tab-pane" id="tab_obra">
-                        <?php echo $files ?>
+                        <?php //echo $files ?>
                     </div>
                     <?php
                     foreach ($secciones as $id => $seccion) {
@@ -111,11 +111,13 @@ echo js("solicitud/secciones.js");
         },
                 "#tab_files",
                 "#msg_general");
-        ajax(site_url + "/solicitud/registrar/"+solicitud,{
+
+        ajax(site_url + "/solicitud/registrar/",{
             "solicitud_id": solicitud,
         },
                 "#tab_obra",
-                "#msg_general");
+                "#msg_general2");
+
 <?php foreach ($secciones as $id => $seccion) { ?>
             ajax(site_url + "/solicitud/sec_<?php echo $seccion["tbl_seccion"] ?>", {
                 "solicitud_id": solicitud,

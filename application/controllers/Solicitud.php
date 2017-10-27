@@ -327,10 +327,11 @@ class Solicitud extends MY_Controller {
         // pr($this->session->userdata());
         $this->load->helper('date');
         $id_entidad = $this->session->userdata("entidad_id"); //from session
-        $id_categoria = null;
-        $id_subcategoria = null;
         $rol_seleccionado = $this->session->userdata('rol_cve'); //Rol seleccionado de la pantalla de roles
         if ($solicitud_id > 0) {
+            $data["solicitud"] = $this->req->getSolicitud($solicitud_id, false);
+        }elseif($this->input->post("solicitud_id",TRUE)){
+            $solicitud_id = $this->input->post("solicitud_id",TRUE);
             $data["solicitud"] = $this->req->getSolicitud($solicitud_id, false);
         }
         //pr($data);
@@ -348,8 +349,11 @@ class Solicitud extends MY_Controller {
             if ($this->form_validation->run()) {
                 // echo "ok";
                 //pr($data["save"]);
+
+                ////edicion
                 if (isset($data["save"]["solicitud_id"])) { //edit
                     $update = $this->req->editSolicitud($data["save"]);
+                    $data["solicitud"] = $this->req->getSolicitud($solicitud_id, false);
                     ////////Inicia el envío de correo
                     $this->load->library('Correo');
                     $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
@@ -362,7 +366,7 @@ class Solicitud extends MY_Controller {
                     );
                     ////////Finaliza el envío de correo
                     //redirect("solicitud/registrar/".$data["save"]["solicitud_id"]);
-                    redirect("solicitud");
+                    $response['message'] = "La infromación de la Obra se ha actualizado exitosamente";
                 } else { //save
                     $data["save"]["solicitud"]["entidad_id"] = $id_entidad;
                     $solicitud = $this->req->addSolicitud($data["save"]);
@@ -382,8 +386,6 @@ class Solicitud extends MY_Controller {
                         redirect("solicitud");
                     }
                 }
-            }else{
-                // pr(validation_errors());
             }
         }
         $data["combos"]["categorias"] = $this->req->listCategoria();
@@ -399,7 +401,7 @@ class Solicitud extends MY_Controller {
         $data["is_ajax"] = 0;
         if ($this->input->is_ajax_request()) {
             $data["is_ajax"] = 1;
-            $response['content'] = $this->load->view('solicitud/registrar.tpl.php', $data);
+            $response['content'] = $this->load->view('solicitud/registrar.tpl.php', $data,true);
             echo json_encode($response);
             return;
         }

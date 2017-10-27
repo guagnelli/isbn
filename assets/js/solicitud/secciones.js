@@ -7,14 +7,19 @@ function ajax(action, form_data, div_content, div_msg) {
             $(div_msg).html(create_loader());
         }
     }).done(function (response) {
-        //alert(response)
+        
         try {
             var resp = $.parseJSON(response);
-
-            if (resp.message !== undefined) {
-                //alert(resp.message)
+            
+            if(div_msg == '#msg_general2'){
+                alert(div_msg)
+                alert(resp.message)
+            }
+            if (resp.message !== undefined ) {
+                
                 $(div_msg).show();
                 //var msg = "<button type='button' class='close' data-dismiss='alert aria-label='Close'><span aria-hidden='true'>×</span></button>";
+                alert(resp.message)
                 $(div_msg).text(resp.message);
                 $(div_msg).attr('class', '');
                 $(div_msg).addClass('alert alert-info alert-dismissible fade in');

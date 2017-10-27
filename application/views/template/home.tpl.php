@@ -64,9 +64,15 @@
 		<!--[if lt IE 9]>
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
+		<script type="text/javascript">
+        window.history.forward();
+        function noBack()
+        {
+            window.history.forward();
+        }
+		</script>
 	</head>
-	<body class="nav-md">
-		
+	<body class="nav-md" onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">		
 	     	<div class="container main-header">
 	      		<div class="row">
 	      			<!-- logo Starts -->
