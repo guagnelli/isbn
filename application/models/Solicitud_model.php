@@ -220,17 +220,26 @@ class Solicitud_model extends MY_Model {
         return $data;
     }
 
-    function getHistorial($id = null) {
+    function getHistorial($id = null,$is_actual =FALSE,$select = null) {
         if (is_null($id)) {
             throw new Exception("Identificador no definido", 1);
         }
-
-        $this->db->join('hist_revision_isbn as h', 'h.solicitud_cve=solicitud.id');
-        $this->db->join('c_estado as e', 'e.id=h.c_estado_id');
+        $this->db->from("solicitud as s");
+        $this->db->join('hist_revision_isbn as h', 'h.solicitud_cve=s.id');
+        $this->db->join('c_estado as e', 'e.id = h.c_estado_id');
+        
+        if(!is_null($select)){
+            $this->db->select($select);
+        }
         //solicitud
-        $this->db->where("solicitud.id", $id);
+        $this->db->where("s.id", $id);
+        if($is_actual){
+            $this->db->where("h.is_actual",1);
+        }
         $this->db->order_by("h.reg_revision", "asc");
-        $result = $this->db->get("solicitud");
+        $result = $this->db->get();
+        //echo $this->db->last_query();
+
 
         //pr($this->db->last_query());
         if ($result->num_rows() < 1) {
@@ -284,6 +293,7 @@ class Solicitud_model extends MY_Model {
         //where que son obligatorios
         $this->db->where('hri.is_actual', 1); //último estado
         //pr($params);
+        
         if ($params['estado_cve'] > 0) {//Filtro de estado 
             $this->db->where('hri.c_estado_id', $params['estado_cve']);
         }

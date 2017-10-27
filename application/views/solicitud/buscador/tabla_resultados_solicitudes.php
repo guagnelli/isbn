@@ -54,7 +54,7 @@ echo js("solicitud/secciones.js");
         <tbody>
             <?php
             foreach ($lista_solicitudes as $key_ai => $val) {
-//                pr($val);
+               //pr($val);
 //                pr($val['hist_validacion_cve']);
                 $solicitud_cve = $this->seguridad->encrypt_base64($val['solicitud_cve']);
                 $hist_solicitud = $this->seguridad->encrypt_base64(intval($val['hist_solicitud']));

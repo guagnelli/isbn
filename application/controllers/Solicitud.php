@@ -146,7 +146,7 @@ class Solicitud extends MY_Controller {
                 $filtros['current_row'] = (isset($current_row) && !empty($current_row)) ? $current_row : 0;
 
                 $resutlado = $this->req->get_buscar_solicitudes($filtros);
-//                pr($resutlado['result']);
+//                pr($resutlado);
 //                exit();
 
                 $data['rol_cve'] = $rol_cve;
@@ -376,14 +376,14 @@ class Solicitud extends MY_Controller {
                         $dgaj = $this->req->get_usuario(array("rol_cve" => E_rol::DGAJ, "usu_estado" => 1), 'usu_nombre as nombre, usu_correo as correo');
                         $solicitud_datos['solicitud'] = $this->req->getSolicitud($solicitud);
                         $solicitud_datos['historial'] = $this->req->getHistorial($solicitud);
-                        $envio = $this->correo->enviar_correo(array('subject' => utf8_decode('Notificación de actividad en el Sistema ISBN-UNAM'),
+                        /*$envio = $this->correo->enviar_correo(array('subject' => utf8_decode('Notificación de actividad en el Sistema ISBN-UNAM'),
                             'body' => $this->load->view('solicitud/correo/plantilla.php', $solicitud_datos, TRUE),
                             'addAddress' => array(array('correo' => $this->session->userdata('mail'), 'nombre' => $this->session->userdata('nombre'))),
                             'addCC' => $dgaj)
-                        );
+                        );*/
                         ////////Finaliza el envío de correo
-                        //redirect("solicitud/secciones/$solicitud");
-                        redirect("solicitud");
+                        //redirect("solicitud/transitorio/$solicitud");
+                        $this->transitorio($solicitud);
                     }
                 }
             }
@@ -409,9 +409,18 @@ class Solicitud extends MY_Controller {
         $this->template->setMainContent($main_contet);
         $this->template->getTemplate();
     }
+    function transitorio($solicitud = 0){
+        //echo "$solicitud";
+        $resultado["registro"] = $this->req->getHistorial($solicitud,array("h.is_actual"=>1),"s.id solicitud_id, h.id historico_id");
+        $resultado["registro"]= $resultado["registro"][0];
+        //pr($resultado);
+        $main_contet = $this->load->view('solicitud/secciones/transitorio_tpl.php', $resultado, true);
+        $this->template->setMainContent($main_contet);
+        $this->template->getTemplate();
+        return;
+    }
 
     function sub_categoria() {
-        if ($this->input->is_ajax_request()) {
             $categoria = $this->input->post();
             //pr($categoria);
             if (isset($categoria["categoria"])) {
@@ -420,9 +429,6 @@ class Solicitud extends MY_Controller {
             $response['content'] = $this->load->view("solicitud/secciones/subcategoria.tpl.php", $data, true);
             echo json_encode($response);
             return 0;
-        } else {
-            redirect("/");
-        }
     }
 
     function secciones($solicitud) {

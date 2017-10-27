@@ -11,10 +11,10 @@ function ajax(action, form_data, div_content, div_msg) {
         try {
             var resp = $.parseJSON(response);
             
-            if(div_msg == '#msg_general2'){
+            /*if(div_msg == '#msg_general2'){
                 alert(div_msg)
                 alert(resp.message)
-            }
+            }*/
             if (resp.message !== undefined ) {
                 
                 $(div_msg).show();

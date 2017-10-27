@@ -198,7 +198,7 @@ $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
                     <?php
                     }else{
                     ?>
-                    <button id="send" type="submit" class="btn" onclick="return false;" >Realizar solicitud</button>
+                    <button id="send" type="submit" class="btn" onclick="" >Realizar solicitud</button>
                     <button id="submit" type="button" class="btn btn-primary" onclick="window.location='<?php echo site_url('solicitud/index'); ?>'">Cancelar</button>
                     <?php
                     }
@@ -213,7 +213,7 @@ $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
     </div>
 </div> 
 <?php 
-//echo js("solicitud/secciones.js");
+echo js("solicitud/secciones.js");
 //(isset($solicitud["sol_tipo_obra"])&&$solicitud["sol_tipo_obra"] =="Volumen")
 ?>
 
