@@ -1160,7 +1160,7 @@ class Solicitud extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             //$data["debug"] = 
             $data["edicion"] = $this->input->post();
-
+            $depto = 0;
             $this->config->load('form_validation'); //Cargar archivo con validaciones
             $validations = $this->config->item('sec_edicion'); //Obtener validaciones de archivo
             if (isset($data["edicion"]["coedicion"])) {
@@ -1240,8 +1240,9 @@ class Solicitud extends MY_Controller {
             $data['comentarios'] = (!is_null($this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION])) ? $this->session->userdata('botones_seccion')[En_secciones::INFO_EDICION] : ''; //Botones de comentarios para las secciones
             //Fin ***************
 
-            $data["combos"]["c_ciudad"] = $this->cg->get_combo_catalogo("c_ciudad");
+            
             $data["combos"]["c_departamento"] = $this->cg->get_combo_catalogo("c_departamento");
+            //$data["combos"]["c_ciudad"] = $this->cg->get_combo_catalogo("c_ciudad");
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_edicion.tpl.php", $data, true);
             echo json_encode($response);
@@ -1516,28 +1517,6 @@ class Solicitud extends MY_Controller {
         }
         echo json_encode($response);
         return 0;
-
-        /*
-          $allowed = array('png', 'jpg', 'gif','zip');
-
-          if(isset($_FILES["upl"]) && $_FILES['upl']['error'] == 0){
-          $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
-          if(!in_array(strtolower($extension), $allowed)){
-          echo '{"status":"error"}';
-          exit;
-          }
-          $route = "/Applications/mappstack/apache2/htdocs/isbn/assets/uf/uploads/".$_FILES['upl']['name'];
-          $test = array("status"=>"success");
-          if(isset($_POST["jesus"])){
-          $test["prueba"] = $_POST["jesus"];
-          }
-          if(move_uploaded_file($_FILES['upl']['tmp_name'], $route)){
-          echo json_encode($test);
-          exit;
-          }
-          }
-          echo '{"status":"error"}';
-          exit; */
     }
 
     function sec_files() {
@@ -1582,6 +1561,27 @@ class Solicitud extends MY_Controller {
 
 
             $response['content'] = $this->load->view("solicitud/secciones/sec_" . $data['seccion']['seccion_id'] . ".tpl.php", $data, true);
+            echo json_encode($response);
+            return 0;
+        } else {
+            redirect("/");
+        }
+    }
+
+    function get_ciudad(){
+        //pr($this->input->post());
+        $federativa = $this->input->post("depto_id");
+        $ciudad = $this->input->post("ciudad_id");
+
+        if ($this->input->is_ajax_request()) {
+        //if (TRUE) {
+            $data["combos"]["c_ciudad"] = $this->cg->get_combo_catalogo("c_ciudad","id","nombre",array("estado"=>$federativa),"nombre");
+            if(!is_null($ciudad)){
+                $data["edicion"]["ciudad_id"] = $ciudad;
+            }
+            //$data["combos"]["c_ciudad"] = $this->cg->get_combo_catalogo("c_ciudad");
+
+            $response['content'] = $this->load->view("solicitud/secciones/sec_combo_ciudades.tpl.php", $data,true);
             echo json_encode($response);
             return 0;
         } else {

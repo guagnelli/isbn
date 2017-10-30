@@ -58,18 +58,8 @@ if (isset($edicion["id"])) {
     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
         <b><span class="required">*</span>Ciudad de edición:</b>
     </label>
-    <div class="col-md-8 col-sm-8 col-xs-12">
-        <?php
-        echo $this->form_complete->create_element(array('id' => 'ciudad_id',
-            'type' => 'dropdown',
-            'options' => $combos["c_ciudad"],
-            'first' => array('' => "Seleccione una opción"),
-            'value' => isset($edicion["ciudad_id"]) ? $edicion["ciudad_id"] : "",
-            'class' => '',
-            'attributes' => array('class' => '')
-        ));
-        ?>
-        <?php echo form_error('ciudad_id'); ?>
+    <div class="col-md-8 col-sm-8 col-xs-12" id="div_ciudad">
+        
     </div>
 </div>
 <div class="item xdisplay_inputx form-group has-feedback">
@@ -199,5 +189,24 @@ echo form_close();
         );
       }
     });
+  });
+  $("#depto_id").click(function(){
+    var estado = $("#depto_id").val();
+    ajax(site_url + "/solicitud/get_ciudad/",{
+            "depto_id": estado
+        },
+        "#div_ciudad",
+        "#msg_general2");
+  });
+
+  $("#div_ciudad").ready(function(){
+    var estado = <?php echo isset($edicion["depto_id"]) ? $edicion["depto_id"] : ""; ?>;
+    var ciudad = <?php echo isset($edicion["ciudad_id"]) ? $edicion["ciudad_id"] : ""; ?>;
+    ajax(site_url + "/solicitud/get_ciudad/",{
+            "depto_id": estado,
+            "ciudad_id":ciudad
+        },
+        "#div_ciudad",
+        "#msg_general2");
   });
 </script>
