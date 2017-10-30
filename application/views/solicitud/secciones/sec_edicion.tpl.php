@@ -59,7 +59,6 @@ if (isset($edicion["id"])) {
         <b><span class="required">*</span>Ciudad de edición:</b>
     </label>
     <div class="col-md-8 col-sm-8 col-xs-12" id="div_ciudad">
-        
     </div>
 </div>
 <div class="item xdisplay_inputx form-group has-feedback">
@@ -200,8 +199,8 @@ echo form_close();
   });
 
   $("#div_ciudad").ready(function(){
-    var estado = <?php echo isset($edicion["depto_id"]) ? $edicion["depto_id"] : ""; ?>;
-    var ciudad = <?php echo isset($edicion["ciudad_id"]) ? $edicion["ciudad_id"] : ""; ?>;
+    var estado = <?php echo isset($edicion["depto_id"]) ? $edicion["depto_id"] : 0; ?>;
+    var ciudad = <?php echo isset($edicion["ciudad_id"]) ? $edicion["ciudad_id"] : 0; ?>;
     ajax(site_url + "/solicitud/get_ciudad/",{
             "depto_id": estado,
             "ciudad_id":ciudad
