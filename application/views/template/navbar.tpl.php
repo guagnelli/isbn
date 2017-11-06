@@ -69,7 +69,12 @@ $tipo_admin_config = $this->config->item('rol_admin'); //Identificador de admini
                     }
                     echo "</ul></li>";
                 } else {
-                    echo '<li><a href="'.site_url($key_menu).'" ><span class="glyphicon glyphicon-list"></span> '.$menu.'</a></li>';
+                    if($menu == "Nueva solicitud"){
+                        echo '<li><a href="'.site_url($key_menu).'" ><span class="fa fa-plus-circle"></span> '.$menu.'</a></li>';
+                    }else{
+                        echo '<li><a href="'.site_url($key_menu).'" ><span class="glyphicon glyphicon-list"></span> '.$menu.'</a></li>';
+                    }
+                    
                 }
             } ?>
             <li><a href="<?php echo site_url('login/cerrar_session'); ?>"  ><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>

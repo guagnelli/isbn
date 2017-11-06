@@ -120,4 +120,20 @@ function ver_comentarios_seccion(element) {
     data_ajax_post(site_url + '/solicitud/comentarios_seccion', null, '#modal_content', obj);
 }
 
-    
+ function cancelar_solicitud(element) {
+    apprise("Esta a punto de cancelar la solicitud de ISBN, ¿Desea continuar?", {verify: true}, function (btnClick) {
+        if(btnClick){
+             var obj = $(element); //Convierte a objeto todos los elementos del this que llegan del componente html (button en esté caso)
+    //      var hist_val_cve = obj.data('histvalcve');
+            var row = obj.data('row');
+            //var hist_solicitudcve = obj.data('histsolicitudcve');
+            var estado_solicitud = obj.data('estadosolicitudcve');
+            var solicitud_cve = obj.data('solicitudcve');
+            var formData = {solicitud_cve: solicitud_cve, estado_solicitud: estado_solicitud, is_botones: 1};
+            data_ajax_post(site_url + '/solicitud/cancelar', null, '#modal_content', formData);
+        }
+        
+        
+    });
+   
+}   

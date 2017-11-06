@@ -816,6 +816,33 @@ class Solicitud_model extends MY_Model {
         return $secciones->result_array();
     }
 
+    function cancel($solicitud_id = 0){
+        if($solicitud_id == 0){
+            return false;
+        }
+        
+        $this->db->query("DELETE FROM barcode where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM colaboradores where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM comercializable where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM files where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM edicion where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM epay where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM tema where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM traduccion where solicitud_id = $solicitud_id");
+        $this->db->query("DELETE FROM sol_idioma where solicitud = $solicitud_id");
+        $this->db->query("DELETE FROM hist_revision_isbn where solicitud_cve = $solicitud_id");
+        $query = $this->db->query("SELECT libro_id FROM solicitud where id = $solicitud_id");
+        $solicitud = $query->result_array();
+        //pr($solicitud);
+        if(count($solicitud) < 1){
+            return false;
+        }
+        $libro_id = $solicitud[0]["libro_id"];
+        $this->db->query("DELETE FROM solicitud where id = $solicitud_id");
+        $this->db->query("DELETE FROM libro where id = $libro_id");
+        return true;
+    }
+
 }
 
 ?>

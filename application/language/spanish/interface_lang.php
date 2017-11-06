@@ -126,6 +126,7 @@ $lang['interface'] = array(
         'link_ver_detalle_solicitud' => 'Detalle',
         'link_ver_solicitud' => 'Ver solicitud',
         'link_ver_archivos' => 'Deliberación',
+        'link_cancelar' => 'Cancelar',
     ),
     'perfil' => array(
         'title_perfil' => 'Informaci&oacute; del responable en: &nbsp;',

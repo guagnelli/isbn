@@ -1589,4 +1589,17 @@ class Solicitud extends MY_Controller {
         }
     }
 
+    function cancelar($solicitud_id = 0){
+        if ($this->input->post()) {
+            $datos_post = $this->input->post(null, true); //Obtenemos el post o los valores
+            $solicitud_cve = intval($this->seguridad->decrypt_base64($datos_post['solicitud_cve']));
+            //$hist_cve = intval($this->seguridad->decrypt_base64($datos_post['hist_solicitudcve']));
+            $rol_actual = $this->session->userdata('rol_cve'); //Rol seleccionado actual
+            
+            $this->req->cancel($solicitud_cve); 
+            echo "<script> location.reload();</script>";
+        } 
+        
+    }
+
 }

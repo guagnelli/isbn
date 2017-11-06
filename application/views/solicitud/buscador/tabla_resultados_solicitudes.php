@@ -111,6 +111,16 @@ echo js("solicitud/secciones.js");
                         . '"> '
                         . '</span></a>';
 
+                $link_cancelar = '<a href="#" '
+                        . 'data-solicitudcve ="' . $solicitud_cve . '" '
+                        . 'data-target="#modal_censo" '
+                        . 'data-original-title="' . $string_values['link_cancelar']
+                        . ' title="'  . $string_values['link_cancelar']
+                        . ' onclick="cancelar_solicitud(this)"> '
+                        . '<span class="fa fa-minus-circle btn-msg" '
+                        . '"> '
+                        . '</span></a>';
+
 //                $link_editar_titulo = isset($link_editar_titulo) ? $link_editar_titulo : '';
 //               $link_editar = '<a class="" '
 //                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
@@ -139,21 +149,7 @@ echo js("solicitud/secciones.js");
                             . 'onclick="editar_sol(this)">'
                             . '</span> '
                             . ' </form>';
-                   /* if (isset($reglas_estados[$val['estado_cve']]['vista'][$rol_cve]) and $reglas_estados[$val['estado_cve']]['vista'][$rol_cve] == 'editar_registro') {
-
-                        $link_editar_titulo = '<a class="" '
-                                . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
-                                . 'target="_blank"><span class="glyphicon glyphicon-superscript btn-msg"></span></a>';
-                    }*/
-
-
-//                    $link_editar = '<a href="#" class="button search">
-//                                        <span class="spanclass"></span>
-//                                        <input class="expand" name="searchString" type="text">
-//                                        <span id="searchButton" class="search icon-small open-btn"></span>
-//                                    </a>';
                 }
-//                            . '<input class = "btn btn-primary" type = "submit" value = "" name = "btn_' . $key_ai . '">'
 
                 echo "<tr id='id_row_" . $key_ai . "' data-keyrow=" . $key_ai . ">";
                 echo "<td >" . $val['folio_libro'] . "</td>";
@@ -167,7 +163,7 @@ echo js("solicitud/secciones.js");
                 }
                 echo "<td>" . $val['sub_categoria'] . "</td>";
                 echo "<td>" . $val['fecha_ultima_revision'] . "</td>";
-                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . $link_editar_titulo . $link_ver_archivos . "</td>";
+                echo "<td >" . $link_ver_detalle . $href_solicitud . $link_ver_historial . $link_editar_titulo . $link_ver_archivos . $link_cancelar."</td>";
 //                echo "<td  " . $link_ver_solicitud . "><a data-toggle='tab' href='#select_perfil_solicitud'> " . $string_values['link_ver_solicitud'] . " </a></td>";
                 echo "</tr>";
             }
