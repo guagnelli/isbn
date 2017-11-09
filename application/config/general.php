@@ -121,7 +121,8 @@ $config['modulos_permisos'] = array(
         'permisos' => array(
             'solicitud' => array('*'),
             'files' => array('*'),
-            "colaborador" => array('*')
+            "colaborador" => array('*'),
+            "search"=>array('*')
         ),
         'menu' => array(
             'dashboard' => 'Reportes',

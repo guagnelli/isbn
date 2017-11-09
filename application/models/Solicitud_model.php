@@ -276,7 +276,11 @@ class Solicitud_model extends MY_Model {
             'titulo_obra' => 'lb.title',
             'sub_titulo_obra' => 'lb.subtitle',
         );
-        $busqueda_text = $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
+        $busqueda_text =  'titulo_obra'; //busqueda en texto por
+        if(isset($params['menu_busqueda'])){
+            $busqueda_text =  $arra_buscar_por[$params['menu_busqueda']]; //busqueda en texto por
+        }
+        
         $select = array('s.id "solicitud_cve"', 'hri.id "hist_solicitud"', 'ce.name "name_estado"', 's.folio "folio_libro"','s.folio_coleccion "coleccion"','s.sol_tipo_obra',
             's.date_created "fecha_solicitud"', 'lb.title "titulo_libro"', 'lb.isbn "isbn_libro"',
             'DATE_FORMAT(hri.reg_revision,"%d-%m-%Y %r" ) "fecha_ultima_revision"', 'cent.name "name_entidad"',
@@ -294,16 +298,16 @@ class Solicitud_model extends MY_Model {
         $this->db->where('hri.is_actual', 1); //último estado
         //pr($params);
         
-        if ($params['estado_cve'] > 0) {//Filtro de estado 
+        if ($params['estado_cve'] && $params['estado_cve'] > 0) {//Filtro de estado 
             $this->db->where('hri.c_estado_id', $params['estado_cve']);
         }
-        if ($params['entidad_cve'] > 0) {//Filtro de entidad 
+        if (isset($params['entidad_cve']) && $params['entidad_cve'] > 0) {//Filtro de entidad 
             $this->db->where('s.entidad_id', $params['entidad_cve']);
         }
-        if ($params['categoria_cve'] != "") {//Filtro de categoria 
+        if (isset($params['categoria_cve']) && $params['categoria_cve'] != "") {//Filtro de categoria 
             $this->db->where('sc.id_categoria', $params['categoria_cve']);
         }
-        if ($params['sub_categoria_cve'] > 0) {//Filtro de categoria 
+        if (isset($params['sub_categoria_cve']) && $params['sub_categoria_cve'] > 0) {//Filtro de categoria 
             $this->db->where('sc.id', $params['sub_categoria_cve']);
         }
         if (isset($params['sub_sistema_cve']) and $params['sub_sistema_cve'] > 0) {//Filtro subsistema 
@@ -312,6 +316,13 @@ class Solicitud_model extends MY_Model {
         if (isset($params['sol_tipo_obra']) and in_array($params['sol_tipo_obra'], array("V","I","C"))) {//Filtro subsistema 
             $this->db->where('s.sol_tipo_obra', $params['sol_tipo_obra']);
         }
+        if(isset($params['periodo'])){
+            if(!is_null($params['periodo']['inicio'])){
+                $this->db->where('date(hri.reg_revision) >=', $params['periodo']['inicio']);
+            }
+            $this->db->where('date(hri.reg_revision) <=', 'CURRENT_DATE');
+        }
+
         switch ($params['rol_seleccionado']) {
             case E_rol::ENTIDAD:
                 break;
@@ -319,13 +330,16 @@ class Solicitud_model extends MY_Model {
                 $this->db->where('ce.id>=2');
                 break;
         }
-        if (is_array($busqueda_text)) {//si es un array lo recorre, ejemplo es la concatenación de nombre, ap y am
-            foreach ($busqueda_text as $value) {
-                $this->db->or_like($value, $params['buscador_solicitudes']);
+        if(isset($params['buscador_solicitudes'])){
+            if (is_array($busqueda_text)) {//si es un array lo recorre, ejemplo es la concatenación de nombre, ap y am
+                foreach ($busqueda_text as $value) {
+                    $this->db->or_like($value, $params['buscador_solicitudes']);
+                }
+            } else {//pone un like para buscar
+                $this->db->like($busqueda_text, $params['buscador_solicitudes']);
             }
-        } else {//pone un like para buscar
-            $this->db->like($busqueda_text, $params['buscador_solicitudes']);
         }
+        
         $this->db->stop_cache(); //************************************Fin cache
         //Cuenta la cantidad de registros
         $num_rows = $this->db->query($this->db->select('count(*) as total')->get_compiled_select('hist_revision_isbn hri'))->result();
