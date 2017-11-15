@@ -71,9 +71,7 @@ class Solicitud extends MY_Controller {
             case E_rol::ENTIDAD://Entidad
                 $datos_usuario['entidad_cve'] = $this->session->userdata('entidad_id');
                 $array_catalogos = array(Enum_cg::c_estado, Enum_cg::c_subcategoria, Enum_cg::c_categoria);
-//                $sub_sistema_id = carga_catalogos_generales(array(Enum_cg::c_entidad), null, array(Enum_cg::c_entidad => array('id' => $datos_usuario['entidad_cve'])), false, null, array(Enum_cg::c_entidad => 'name'));
-//                $array_where = array(Enum_cg::c_subsistema => array('id' => $sub_sistema_id[Enum_cg::c_entidad][0]['subsistema_id']));
-//                pr($array_where);
+//                
                 $datos_usuario['mostrar_agrgar_solicitud'] = 1;
                 $data['title_template'] = $string_values['title_template_entidad'] . $this->session->userdata('name_entidad');
                 //Verifica que se este invocando la carga de algÃºn catÃ¡logo y sus permisos
