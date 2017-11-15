@@ -229,7 +229,7 @@ $( "#submit" ).click(function( event ) {
 $( "#edit" ).click(function( event ) {
   var action = $("#solicitud").attr("action");
   var data = $("#solicitud").serialize();
-  ajax(action,data,'#tab_obra','#msg_general2');
+  ajax(action,data,'#tab_obra','#msg_general');
 });
 
 $("#folio_coleccion").ready(function(){
