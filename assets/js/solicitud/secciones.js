@@ -19,7 +19,7 @@ function ajax(action, form_data, div_content, div_msg) {
                 
                 $(div_msg).show();
                 //var msg = "<button type='button' class='close' data-dismiss='alert aria-label='Close'><span aria-hidden='true'>×</span></button>";
-                alert(resp.message)
+                //alert(resp.message)
                 $(div_msg).text(resp.message);
                 $(div_msg).attr('class', '');
                 $(div_msg).addClass('alert alert-info alert-dismissible fade in');
