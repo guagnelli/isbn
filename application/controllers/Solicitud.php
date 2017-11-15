@@ -382,6 +382,7 @@ class Solicitud extends MY_Controller {
                         ////////Finaliza el envío de correo
                         //redirect("solicitud/transitorio/$solicitud");
                         $this->transitorio($solicitud);
+                        return;
                     }
                 }
             }
