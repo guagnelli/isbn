@@ -23,7 +23,7 @@ function ajax(action, form_data, div_content, div_msg) {
                 $(div_msg).text(resp.message);
                 $(div_msg).attr('class', '');
                 $(div_msg).addClass('alert alert-info alert-dismissible fade in');
-                //setTimeout($(div_msg).hide(), 5000);
+                setTimeout($(div_msg).hide(), 10000);
             } else if (resp.message === undefined) {
                 $(div_msg).hide()
             }           /*if(resp.result=="true"){
