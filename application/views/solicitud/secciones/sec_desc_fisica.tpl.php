@@ -167,14 +167,13 @@ if(isset($_descripcion_fisica["id"])){
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'ancho',
-         'type' => 'number',
+         'type' => 'text',
          'value' => isset($_descripcion_fisica["ancho"]) ? $_descripcion_fisica["ancho"]:"",
          'class' => '',
-         'attributes' => array('class' => '',
-                               'min'=>'0',
-                               'onkeydown="key_press(event)"'=>'',
-                               'onkeypress="key_press(event)"'=>'',
-                               'step'=>'.01',)
+         'attributes' => array('class' => 'allownumericwithdecimal',
+                                
+                                //"style"=>"display:bloq;"
+                               )
          ));
          ?> Cm
          <?php echo form_error('ancho'); ?>
@@ -188,14 +187,10 @@ if(isset($_descripcion_fisica["id"])){
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'alto',
-         'type' => 'number',
+         'type' => 'text',
          'value' => isset($_descripcion_fisica["alto"]) ? $_descripcion_fisica["alto"]:"",
          'class' => '',
-         'attributes' => array('class' => '',
-                                'min'=>'0',
-                               'onkeydown="key_press(event)"'=>'',
-                               'onkeypress="key_press(event)"'=>'',
-                               'step'=>'.01')
+         'attributes' => array('class' => 'allownumericwithdecimal',)
          ));
          ?>Cm
          <?php echo form_error('alto'); ?>
