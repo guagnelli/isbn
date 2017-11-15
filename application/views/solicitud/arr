@@ -1,0 +1,274 @@
+//"solicitud"=>
+array(
+	"fecha_solicitud"=>array(
+		"label"=>"Fecha de solicitud",
+		"value"=>,
+		"table"=>"solicitud",
+		"field"=>"date_created",
+	),
+	"folio"=>array(
+		"label"=>"Folio de la solicitud",
+		"value"=>,
+		"table"=>"solicitud",
+		"field"=>"folio",
+	),
+	"sol_tipo_obra"=>array(
+		"label"=>"Tipo de obra",
+		"value"=>,
+		"table"=>"solicitud",
+		"field"=>"sol_tipo_obra",
+	),
+	"folio_coleccion"=>array(
+		"label"=>"Folio de la colección completa a la que pertenece este volúmen",
+		"value"=>,
+		"table"=>"solicitud",
+		"field"=>"folio_coleccion",
+	),
+
+	"clasificacion_tematica"=>array(
+		"subcategoria"=>array(
+			"label"=>"Sub-categoria",
+			"value"=>,
+			"table"=>"c_subcategoria",
+			"field"=>"nombre",
+		),
+		"tematica"=>array(
+			"label"=>"Temática personal",
+			"value"=>,
+			"table"=>"c_categoria",
+			"field"=>"nombre",
+		),
+	),
+
+	"entidad"=>array(
+		"entidad"=>array(
+			"label"=>"Entidad",
+			"value"=>,
+			"table"=>"c_entidad",
+			"field"=>"name",
+		),
+		"subsistema"=>array(
+			"label"=>"Subsistema",
+			"value"=>,
+			"table"=>"c_subsistema",
+			"field"=>"name",
+		),
+	),
+
+	"libro"=>array(
+		"titulo"=>array(
+			"label"=>"Título de la obra",
+			"value"=>,
+			"table"=>"libro",
+			"field"=>"title",
+		),
+		"subtitulo"=>array(
+			"label"=>"Subtitulo",
+			"value"=>,
+			"table"=>"libro",
+			"field"=>"subtitulo",
+		),
+		"isbn"=>array(
+			"label"=>"ISBN",
+			"value"=>,
+			"table"=>"libro",
+			"field"=>"isbn",
+		),
+		"resenia"=>array(
+			"label"=>"Reseña",
+			"value"=>,
+			"table"=>"libro",
+			"field"=>"resenia",
+		),
+		"folio_coleccion"=>array(
+			"label"=>"Folio de la colección completa a la que pertenece este volúmen",
+			"value"=>,
+			"table"=>"solicitud",
+			"field"=>"folio_coleccion",
+		),
+	),
+
+	"tema"=>array(
+		"coleccion"=>array(
+			"label"=>"Colección",
+			"value"=>,
+			"table"=>"tema",
+			"field"=>"coleccion",
+		),
+		"no_coleccion"=>array(
+			"label"=>"No. de colección",
+			"value"=>,
+			"table"=>"tema",
+			"field"=>"no_coleccion",
+		),
+		"tipo_contenido"=>array(
+			"label"=>"Tipo de contenido",
+			"value"=>,
+			"table"=>"tema",
+			"field"=>"tipo_contenido",
+		),
+		"nombre_serie"=>array(
+			"label"=>"Nombre de la serie",
+			"value"=>,
+			"table"=>"tema",
+			"field"=>"nombre_serie",
+		),
+	),
+
+	"idiomas"=>array(
+		"label"=>"Idioma",
+		"value"=>,
+		"table"=>"c_idioma",
+		"field"=>"nombre",
+	),
+
+	"colaboradores"=>array(
+		"nombre"=>array(
+			"label"=>"Nombre",
+			"value"=>,
+			"table"=>"colaboradores",
+			"field"=>"nombre",
+		),
+		"paterno"=>array(
+			"label"=>"Apellido paterno",
+			"value"=>,
+			"table"=>"colaboradores",
+			"field"=>"paterno",
+		),
+		"materno"=>array(
+			"label"=>"Apellido materno",
+			"value"=>,
+			"table"=>"colaboradores",
+			"field"=>"materno",
+		),
+		"nacionalidad"=>array(
+			"label"=>"Nacionalidad",
+			"value"=>,
+			"table"=>"c_nacionalidad",
+			"field"=>"nombre",
+		),
+		"rol"=>array(
+			"label"=>"Rol",
+			"value"=>,
+			"table"=>"c_tipo_colab",
+			"field"=>"nombre",
+		),
+		"seudonimo"=>array(
+			"label"=>"Seudónimo",
+			"value"=>,
+			"table"=>"colaboradores",
+			"field"=>"seudonimo",
+		),
+		"mail"=>array(
+			"label"=>"Correo electrónico",
+			"value"=>,
+			"table"=>"colaboradores",
+			"field"=>"email",
+		),
+	),
+
+	"traduccion"=>array(
+		"titulo_original"=>array(
+			"label"=>"Título en el idioma original",
+			"value"=>,
+			"table"=>"traduccion",
+			"field"=>"titulo_original",
+		),
+		"idioma_del"=>array(
+			"label"=>"Idioma Del",
+			"value"=>,
+			"table"=>"traduccion",
+			"field"=>"idioma_del",
+		),
+		"idioma_al"=>array(
+			"label"=>"Idioma Al",
+			"value"=>,
+			"table"=>"traduccion",
+			"field"=>"idioma_al",
+		),
+		"idioma_original"=>array(
+			"label"=>"Idioma Original",
+			"value"=>,
+			"table"=>"traduccion",
+			"field"=>"idioma_original",
+		),
+	),
+
+	"edicion"=>array(
+		"no_edicion"=>array(
+			"label"=>"No. de edición",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"no_edicion",
+		),
+		"fecha_aparicion"=>array(
+			"label"=>"Fecha de aparición",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"fecha_aparicion",
+		),
+		"estado"=>array(
+			"label"=>"Estado",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"depto_id",
+		),
+		"ciudad"=>array(
+			"label"=>"Ciudad de edición",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"ciudad_id",
+		),
+		"coedicion"=>array(
+			"label"=>"Coedición",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"coedicion",
+		),
+		"coeditor"=>array(
+			"label"=>"Coeditor",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"coeditor",
+		),
+		"radicado"=>array(
+			"label"=>"Radicado",
+			"value"=>,
+			"table"=>"edicion",
+			"field"=>"radicado",
+		),
+	),
+
+	"comercializacion"=>array(
+		"ej_nacional"=>array(
+			"label"=>"Ejemplares nacionales",
+			"value"=>,
+			"table"=>"comercializable",
+			"field"=>"ejemplares_nacional",
+		),
+		"p_local"=>array(
+			"label"=>"Precio local",
+			"value"=>,
+			"table"=>"comercializable",
+			"field"=>"precio_local",
+		),
+		"ej_externa"=>array(
+			"label"=>"Ejemplares externos",
+			"value"=>,
+			"table"=>"comercializable",
+			"field"=>"ejemplares_externa",
+		),
+		"p_externo"=>array(
+			"label"=>"precios externos",
+			"value"=>,
+			"table"=>"comercializable",
+			"field"=>"precio_externo",
+		),
+		"of_local"=>array(
+			"label"=>"Oferta total",
+			"value"=>,
+			"table"=>"comercializable",
+			"field"=>"oferta_local",
+		),
+	),
+)

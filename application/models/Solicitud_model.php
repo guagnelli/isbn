@@ -204,19 +204,6 @@ class Solicitud_model extends MY_Model {
                 return $data;
             }
         }
-        //$this->db->select("libro_id");
-        /*
-          foreach ($tabla as $key => $value) {
-          //pr($value);
-          $df = $this->get_section($value, array(
-          "solicitud_id" => $solicitud_id
-          ));
-          if (count($df) === 1) {
-          $data[$key] = $df[0];
-          //$data["rad_df"] = ;
-          break;
-          }
-          } */
         return $data;
     }
 
@@ -361,6 +348,7 @@ class Solicitud_model extends MY_Model {
         $query = $ejecuta->result_array();
 //        pr($this->db->last_query());
 //        $query->free_result();
+        //echo $this->db->last_query();
         $this->db->flush_cache(); //Limpia la cache
         $result['result'] = $query;
         $result['total'] = $num_rows[0]->total;
@@ -786,9 +774,14 @@ class Solicitud_model extends MY_Model {
         return $seccion;
     }
 
-    function get_sections($param = array("estado" => 1)) {
-        foreach ($param as $key => $value) {
-            $this->db->where($key, $value);
+    function get_sections($param = array("estado" => 1),$id_in=array()) {
+        if(!is_null($param)){
+            foreach ($param as $key => $value) {
+                $this->db->where($key, $value);
+            }
+        }
+        if(!empty($id_in)){
+            $this->db->where_in('id',$id_in);
         }
         $secciones = $this->db->get("seccion_solicitud");
         $r = $secciones->result_array();
@@ -855,6 +848,68 @@ class Solicitud_model extends MY_Model {
         $this->db->query("DELETE FROM solicitud where id = $solicitud_id");
         $this->db->query("DELETE FROM libro where id = $libro_id");
         return true;
+    }
+
+    function get_sections_ext(){
+        $this->db->select("nom_seccion label, id cve");    
+        $this->db->where("id between 1 and 6");
+        $secciones = $this->db->get("seccion_solicitud");
+        return $secciones->result_array();
+    }
+
+    function get_solicitudes($params = null){
+        //pr($params);
+        //obtenemos las secciones
+        $conf_secciones = $this->config->item('conf_secciones');
+
+        //obtenemos las solicitudes
+        //filtros
+
+        if(isset($params["id_subcategoria"]) && !empty($params["id_subcategoria"])){
+            $this->db->where("id_subcat",$params["id_subcategoria"]);
+        }
+
+        if(isset($params["filtros"]["sol_tipo_obra"]) && !empty($params["filtros"]["sol_tipo_obra"])){
+            $this->db->where("sol_tipo_obra",$params["filtros"]["sol_tipo_obra"]);
+        }
+
+        if(isset($params["filtros"]["init"]) && !empty($params["filtros"]["init"])){
+            $this->db->where("date_ BETWEEN '".$params["filtros"]["init"]."' and CURRENT_DATE");
+        }
+
+        $result = $this->db->get("v_solicitud");
+        $solicitudes = $result->result_array();
+        //pr($solicitudes);
+
+        $secciones = array();
+        //obtenemos secciones
+        if(isset($params["all"])){
+            $secciones = $this->get_sections(null, array(1,2,3,4,5,6));
+        }elseif(isset($params["seccion"]) && is_array($params["seccion"])){
+            $secciones = $this->get_sections(null, array_keys($params["seccion"]));
+        }
+
+        //recorremos los resultados
+        foreach($solicitudes as $key=>$solicitud){
+            //pr($solicitud);
+            foreach ($secciones as $seccion){
+                $sConf = $conf_secciones[$seccion['id']]['select'];
+                //pr($sConf);
+                $this->db->select($sConf);
+                $this->db->where($seccion["referencia"], $solicitud["solicitud_cve"]);
+                $result = $this->db->get($seccion["tbl_seccion"]);
+                
+                $solicitudes[$key]["secciones"][$seccion["nom_seccion"]] = $result->result_array();
+                $result->free_result();
+            }
+            if (isset($params["df"]) || isset($params["all"])) {
+                $solicitudes[$key]["secciones"] += $this->getDF($solicitud["solicitud_cve"]);
+            }
+        }
+        //pr($solicitudes);
+        if(isset($params["generar"])){
+            echo json_encode($solicitudes);
+        }
     }
 
 }

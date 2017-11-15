@@ -871,10 +871,11 @@ class Solicitud extends MY_Controller {
                     $tema = $this->req->get_tema($data["tema"]["solicitud_id"]);
                     if (is_array($tema)) {
                         $data["tema"] = $tema;
+                        //$data["debug"] = $tema;
                         //$data["debug"] = "post geted topic";
                     }
                 } elseif (isset($data["tema"]["id"])) {//update
-                    //data["debug"] = "update";
+                    //$data["debug"] = $data["tema"];
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
                     $validations = $this->config->item('sol_sec_tema'); //Obtener validaciones de archivo 
                     $this->form_validation->set_rules($validations);
@@ -892,7 +893,9 @@ class Solicitud extends MY_Controller {
                         } else {
                             $response['message'] = "Se ha producido un error, favor de verificarlo";
                             $response['result'] = "false";
-                        }
+                        }  
+                    }else{
+                        $data["tema"]["id"] = $id;
                     }
                 } else {
                     $this->config->load('form_validation'); //Cargar archivo con validaciones
