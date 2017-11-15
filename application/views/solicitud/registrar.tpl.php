@@ -3,12 +3,15 @@
 //pr($debug);
 $class = $is_ajax ? "":'class="x_panel"';
 $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
+$titulo_header = $is_ajax ? "<p class='lead'>Información de la solicitud</p>" : "<h2>Información de la solicitud<small></small></h2>";
+$comentarios_titulo_libro = (!is_null($this->session->userdata('botones_seccion')[En_secciones::TITULO_LIBRO])) ? $this->session->userdata('botones_seccion')[En_secciones::TITULO_LIBRO] : ''; //Botones de comentarios para las secciones
+$comentarios_clas_tematica = (!is_null($this->session->userdata('botones_seccion')[En_secciones::CLAS_TEMATICA])) ? $this->session->userdata('botones_seccion')[En_secciones::CLAS_TEMATICA] : ''; //Botones de comentarios para las secciones
 ?>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div <?php echo $class;?> >
-            <div class="x_title">
-                <h2>Información de la solicitud<small></small></h2>
+            <div class='<?php $class = $is_ajax ? "":'class="x_title"';?>'>
+                <?php echo $titulo_header; ?>
                 <ul class="nav navbar-right panel_toolbox">
                 </ul>
                 <div class="clearfix"></div>
@@ -43,7 +46,7 @@ $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
                           
                           )
                        ));
-                       ?>        
+                       ?><?php echo $comentarios_titulo_libro; ?>      
                        <?php echo form_error('title'); ?>
                     </div>
                 </div>
@@ -163,7 +166,7 @@ $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
                         )
                        ));
                        ?>
-                        
+                       <?php echo $comentarios_clas_tematica; ?>
                       <?php echo form_error("solicitud_categoria"); ?>
                         
                     </div>

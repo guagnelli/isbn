@@ -342,6 +342,9 @@ class Solicitud extends MY_Controller {
             if(isset($data["save"]["folio_coleccion"])){
                 array_push($validations, $this->config->item('sol_folio'));
             }
+
+            
+
             // pr($validations);
             $this->form_validation->set_rules($validations); //AÃƒÂ±adir validaciones
             if ($this->form_validation->run()) {

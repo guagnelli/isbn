@@ -24,7 +24,7 @@ echo js("daterangepicker.js");
         <div class="x_content">
             <div id="msg_general" role="alert" ></div>
             <div id="msg_general2" role="alert" >prueba</div>
-            <p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"] ?> <?php echo $comentarios_titulo_libro; ?></p>
+            <!--p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"] ?> <?php echo $comentarios_titulo_libro; ?></p>
             <p><b>Subtítulo:</b> <?php echo $datos["solicitud"]["libro"]["subtitle"] ?></p>
             <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"] ?></p>
             <?php if (isset($datos["solicitud"]["clasificacion_tematica"]) and ! empty($datos["solicitud"]["clasificacion_tematica"])) { ?>
@@ -41,7 +41,7 @@ echo js("daterangepicker.js");
                     <?php echo $datos["solicitud"]["clasificacion_tematica"]["subcategoria"] ?><br />
                 </address>
             <?php } ?>
-            <br>
+            <br-->
 
             <div class="col-xs-3">
                 <!-- required for floating -->
@@ -75,7 +75,7 @@ echo js("daterangepicker.js");
                 <!-- Tab panes -->
                 <div class="tab-content" id="tab_sections">
                     <input type="hidden" id="sol" value="<?php echo $datos['solicitud']['id'] ?>">
-                    <div class="tab-pane" id="tab_obra">
+                    <div class="tab-pane active" id="tab_obra">
                         <?php //echo $files ?>
                     </div>
                     <?php
