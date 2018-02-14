@@ -170,7 +170,7 @@ if(isset($_descripcion_fisica["id"])){
          'type' => 'text',
          'value' => isset($_descripcion_fisica["ancho"]) ? $_descripcion_fisica["ancho"]:"",
          'class' => '',
-         'attributes' => array('class' => 'allownumericwithdecimal',
+         'attributes' => array('class' => 'º',
                                 
                                 //"style"=>"display:bloq;"
                                )
@@ -261,13 +261,11 @@ if(isset($_descripcion_fisica["id"])){
         <?php
         echo $this->form_complete->create_element(array(
          'id' => 'tamanio_desc',
-         'type' => 'number',
+         'type' => 'text',
          'value' => isset($_descripcion_fisica["tamanio_desc"]) ? $_descripcion_fisica["tamanio_desc"]:"",
-         'class' => '',
-         'attributes' => array('class' => 'col-md-4 col-sm-4',
+         'attributes' => array('class' => 'col-md-4 col-sm-4 allownumericwithdecimal',
                                'min'=>'0','style'=>"width:100px",
-                               'onkeydown="key_press(event)"'=>'',
-                               'onkeypress="key_press(event)"'=>'')
+                                )
          ));
          ?>
          <?php echo form_error('tamanio_desc'); ?>

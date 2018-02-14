@@ -146,6 +146,7 @@ echo form_close();
           singleDatePicker: true,
           calender_style: "picker_3",
           startDate: moment(),
+          minDate: moment(),
           locale: {
               daysOfWeek: ['D', 'L', 'M', 'Mc', 'J', 'V', 'S'],
               monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -189,7 +190,7 @@ echo form_close();
       }
     });
   });
-  $("#depto_id").click(function(){
+  $("#depto_id").change(function(){
     var estado = $("#depto_id").val();
     ajax(site_url + "/solicitud/get_ciudad/",{
             "depto_id": estado

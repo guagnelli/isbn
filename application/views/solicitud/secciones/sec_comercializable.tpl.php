@@ -50,14 +50,12 @@ if(isset($comercializable["id"])){
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="precio_local" 
-	           class="form-control col-md-8 col-xs-12" 
+	           class="form-control col-md-8 col-xs-12 allownumericwithdecimal" 
 	           name="precio_local" 
 	           placeholder="Precio local" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_local"]) ? $comercializable["precio_local"]:""?>'
-	           type="number"
-	           onkeydown="key_press(event)"
-	           onkeypress="key_press(event)" />
+	           type="text" />
 	    <?php echo form_error('precio_local'); ?>
 	  </div>
 	</div>
@@ -84,14 +82,12 @@ if(isset($comercializable["id"])){
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
 	    <input id="precio_externo" 
-	           class="form-control col-md-8 col-xs-12" 
+	           class="form-control col-md-8 col-xs-12 allownumericwithdecimal" 
 	           name="precio_externo" 
 	           placeholder="Precio a externos" 
 	           required="required"
 	           value = '<?php echo isset($comercializable["precio_externo"]) ? $comercializable["precio_externo"]:""?>'
-	           type="number"
-	           onkeydown="key_press(event)"
-	           onkeypress="key_press(event)"
+	           type="text"
 	            />
 	    <?php echo form_error('precio_externo'); ?>
 	  </div>
@@ -130,6 +126,9 @@ if(isset($comercializable["id"])){
 echo form_close();
 ?>
 <script type="text/javascript">
+	 $(".allownumericwithdecimal").on("keypress keyup blur",function (event) {
+ 		$(this).val($(this).val().replace(/[^0-9\.]/g,''));
+	});
 	$("#oferta_total").ready(function(){
 		$("#ejemplares_nacional").change(function(){
 			var nac = $("#ejemplares_nacional").val();
