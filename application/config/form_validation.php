@@ -24,10 +24,11 @@ $config["solicitud"] = array(
     array(
         'field' => 'title',
         'label' => 'Título de la obra',
-        'rules' => 'required',
-        /*'errors' => array(
-            'required' => "El campo %s es obligatorio"
-        )*/
+        'rules' => 'required|is_unique[libro.title]',
+        'errors' => array(
+            'required' => "El campo %s es obligatorio",
+            'is_unique' => "Ese título ya se encuentra registrado",
+        )
     ),
     array(
         'field' => "sol_tipo_obra",
@@ -405,7 +406,7 @@ $config["sec_archivo"] = array(
     array(
         'field' => 'nombre',
         'label' => 'Nombre del archivo',
-        'rules' => 'required|alpha_numeric_spaces'
+        'rules' => 'required'
     ),
 
     array(

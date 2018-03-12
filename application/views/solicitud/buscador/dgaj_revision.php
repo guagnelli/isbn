@@ -65,7 +65,11 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                     <b><?php echo $string_detalle['li_num_coleccion'] ?></b>
                     <?php echo $solicitud['secciones']['t'][0]['no_coleccion']; ?><br />
                     <b><?php echo $string_detalle['li_tipo_contenido_coleccion'] ?></b> 
-                    <?php echo $solicitud['secciones']['t'][0]['tipo_contenido']; ?>
+                    <?php 
+                    $tipo_cont = $solicitud['secciones']['t'][0]['tipo_contenido']; 
+                    echo $c_tipo_contenido[$tipo_cont];
+                        
+                    ?>
                 </address>
 
             <?php } ?>
@@ -124,7 +128,7 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                 <p class="lead"><b>Comercializaci&oacute;n</b><?php echo $botones_seccion[En_secciones::COMERCIALIZACION]; ?></p>
                 <address>
                     <b>Ejemplares nacionales:&nbsp;</b><?php echo $cmrc_['ejemplares_nacional']; ?><br /> 
-                    <b>Prescio local:&nbsp;</b><?php echo $cmrc_['precio_local']; ?><br /> 
+                    <b>Precio local:&nbsp;</b><?php echo $cmrc_['precio_local']; ?><br /> 
                     <b>Ejemplares externos:&nbsp;</b><?php echo $cmrc_['ejemplares_externa']; ?><br /> 
                     <b>Precio a externos:&nbsp;</b><?php echo $cmrc_['precio_externo']; ?><br /> 
                     <b>Oferta total:&nbsp;</b><?php echo $cmrc_['oferta_total']; ?><br /> 

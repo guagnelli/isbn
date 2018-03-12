@@ -28,6 +28,18 @@ if(isset($comercializable["id"])){
 <div id="div_comercializable">
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
+	      <b>Deshabilitar precios: </b>
+	  </label>
+	  <div class="col-md-8 col-sm-8 col-xs-12">
+	  		<input id="has_price" 
+               name="has_price" 
+               type="checkbox" 
+               class="js-switch" 
+               />
+	  </div>
+	</div>
+	<div class="item form-group">
+	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
 	      <b>Ejemplares nacionales: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">
@@ -126,6 +138,17 @@ if(isset($comercializable["id"])){
 echo form_close();
 ?>
 <script type="text/javascript">
+	$("#has_price").click(function(){
+		if($("#has_price").prop("checked")){
+			$("#precio_local").val(0.0);
+			$("#precio_local").prop("disabled",true);
+			$("#precio_externo").val(0.0);
+			$("#precio_externo").prop("disabled",true);
+		}else{
+			$("#precio_local").prop("disabled",false);
+			$("#precio_externo").prop("disabled",false);
+		}
+	});
 	 $(".allownumericwithdecimal").on("keypress keyup blur",function (event) {
  		$(this).val($(this).val().replace(/[^0-9\.]/g,''));
 	});

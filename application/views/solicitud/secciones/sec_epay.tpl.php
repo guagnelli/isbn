@@ -23,7 +23,7 @@ if (isset($epay["id"])) {
         <p class="lead">Informaci&oacute;n de pago <?php echo $comentarios; ?></p>
         <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                <b><span class="required">*</span>Clave de pago:</b>
+                <b><span class="required">*</span>Llave de pago:</b>
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 <?php
@@ -57,7 +57,7 @@ if (isset($epay["id"])) {
         </div>
         <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                <b><span class="required">*</span>Referencia:</b>
+                <b><span class="required">*</span>Clave de referencia:</b>
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
                 <?php

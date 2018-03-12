@@ -410,3 +410,5 @@ alter table libro add column resenia text null;
 --19 de junio de 2017
 insert into c_estado (id, name) values (8, 'Comprobado');
 alter table tema add constraint uq_solicitud unique(solicitud_id);
+
+alter table comercializable add column has_price varchar(5);
