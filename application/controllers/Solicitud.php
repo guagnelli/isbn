@@ -286,7 +286,7 @@ class Solicitud extends MY_Controller {
 //                        $datosSeccion['file_estado'] = $this->req->get_file_estado_solicitud($datosSeccion['solicitud_cve']);
 //                        $datosSeccion['array_tipo_comprobante'] = $this->config->item('tipo_comprobante');
                         //Vista que muestra detalle de la solicituda
-                        $datosSeccion["combos"]["tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido", "id", "nombre", null, "nombre asc");
+                        $datosSeccion["c_tipo_contenido"] = $this->cg->get_combo_catalogo("c_tipo_contenido", "id", "nombre", null, "nombre asc");
                         $datosSeccion["c_tipo_file"] = $this->cg->get_tipo_file(FALSE);
                         $datosPerfil['vista'] = $this->load->view('solicitud/buscador/dgaj_revision', $datosSeccion, true);
                         break;
