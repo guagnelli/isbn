@@ -83,7 +83,7 @@ class Solicitud_model extends MY_Model {
     function addSolicitud($data) {
         
         $data = $this->format($data);
-        pr($data);
+        // pr($data);
         $this->db->trans_begin();
         $this->db->insert("libro", $data["libro"]);
         if ($this->db->affected_rows() > 0) {
