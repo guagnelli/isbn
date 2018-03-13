@@ -412,3 +412,6 @@ insert into c_estado (id, name) values (8, 'Comprobado');
 alter table tema add constraint uq_solicitud unique(solicitud_id);
 
 alter table comercializable add column has_price varchar(5);
+
+alter table solicitud add column isbn_coleccion varchar(18);
+alter table solicitud add column titulo_coleccion varchar(255);

@@ -43,6 +43,12 @@ class Solicitud_model extends MY_Model {
         if(isset($tmp["id_subcategoria"])){
             $data["solicitud"]["id_subcategoria"] = $tmp["id_subcategoria"];
         }
+        if(isset($tmp["isbn_coleccion"])){
+            $data["solicitud"]["isbn_coleccion"] = $tmp["isbn_coleccion"];
+        }
+        if(isset($tmp["titulo_coleccion"])){
+            $data["solicitud"]["titulo_coleccion"] = $tmp["titulo_coleccion"];
+        }
         return $data;
     }
 
@@ -77,7 +83,7 @@ class Solicitud_model extends MY_Model {
     function addSolicitud($data) {
         
         $data = $this->format($data);
-        //pr($data);
+        pr($data);
         $this->db->trans_begin();
         $this->db->insert("libro", $data["libro"]);
         if ($this->db->affected_rows() > 0) {
@@ -107,7 +113,7 @@ class Solicitud_model extends MY_Model {
     }
 
     function editSolicitud($data) {
-        // pr($data);
+        //pr($data);
         $data = $this->format($data);
         //pr($data);
         // exit;

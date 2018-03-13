@@ -346,7 +346,11 @@ class Solicitud extends MY_Controller {
 
             
 
+            if (isset($data["save"]["solicitud_id"])) {
+                $validations[0]["rules"] = "required";
+            }
             // pr($validations);
+
             $this->form_validation->set_rules($validations); //AÃƒÂ±adir validaciones
             if ($this->form_validation->run()) {
                 // echo "ok";

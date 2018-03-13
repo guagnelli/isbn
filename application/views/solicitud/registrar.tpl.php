@@ -1,6 +1,6 @@
 <?php 
 //pr($solicitud);
-//pr($debug);
+// pr($debug);
 $class = $is_ajax ? "":'class="x_panel"';
 $action = $is_ajax ? "solicitud/registrar" : "solicitud/registrar";
 $titulo_header = $is_ajax ? "<p class='lead'>Información de la solicitud</p>" : "<h2>Información de la solicitud<small></small></h2>";
@@ -117,12 +117,54 @@ $comentarios_clas_tematica = (!is_null($this->session->userdata('botones_seccion
                        'attributes' => array(
                           'class' => 'folio_coleccion',
                           'min'=>'0',
-                          'placeholder'=>'Folio de la colección completa',
+                          'placeholder'=>'Folio de la colecci&oacute;n completa',
                           )
                        ));
                        ?>        
                     </div>
                     <br><?php echo form_error('folio_coleccion'); ?>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                        <b>ISBN de la Colecci&oacute;n:</b> 
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <?php
+                      echo $this->form_complete->create_element(array(
+                       'id' => 'isbn_coleccion',
+                       // 'id' => 'solicitud[folio_coleccion]',
+                       'type' => 'text',
+                       'value' => isset($solicitud["isbn_coleccion"]) ? $solicitud["isbn_coleccion"]:"",
+                       'class' => 'form-control col-md-7 col-xs-12',
+                       'attributes' => array(
+                          'class' => 'folio_coleccion',
+                          'min'=>'0',
+                          'placeholder'=>'ISBN de la colecci&oacute;n completa',
+                          )
+                       ));
+                       ?>     
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                        <b>T&iacute;tulo de la colecci&oacute;n:</b> 
+                    </label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                      <?php
+                      echo $this->form_complete->create_element(array(
+                       'id' => 'titulo_coleccion',
+                       // 'id' => 'solicitud[folio_coleccion]',
+                       'type' => 'text',
+                       'value' => isset($solicitud["titulo_coleccion"]) ? $solicitud["titulo_coleccion"]:"",
+                       'class' => 'form-control col-md-7 col-xs-12',
+                       'attributes' => array(
+                          'class' => 'folio_coleccion',
+                          'min'=>'0',
+                          'placeholder'=>'T&iacute;tulo de la colecci&oacute;n completa',
+                          )
+                       ));
+                       ?>     
+                    </div>
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">

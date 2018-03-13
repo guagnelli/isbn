@@ -3,12 +3,17 @@
 $this->lang->load('interface', 'spanish');
 $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 //pr($this->session->userdata('detalle_solicitud'));
-//pr($solicitud);
+// pr($solicitud);
 
 ?>
 <div class="text-left" role="main">
     <div class="">
-        <h3><?php echo $string_detalle['title_detalle_gral']; ?></h3>
+        <h3>
+        <?php 
+        // echo $string_detalle['title_detalle_gral']; 
+        echo $solicitud["entidad"]["nombre"];
+        ?>    
+        </h3>
     </div>
     <!---Cuerpo-->
     <div class="x_panel">
@@ -21,6 +26,15 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
 
                 <?php if (!empty($solicitud['sol_tipo_obra'])) { ?>
                     <br><?php echo $string_detalle['title_tipo_obra'] . $solicitud['sol_tipo_obra']; ?> 
+                <?php } ?>
+                <?php if (!empty($solicitud['folio_coleccion'])) { ?>
+                    <br>Folio de la colecci&oacute;n completa a la que pertenece este vol&uacute;men: <?php echo $solicitud['folio_coleccion']; ?> 
+                <?php } ?>
+                <?php if (!empty($solicitud['isbn_coleccion'])) { ?>
+                    <br>ISBN de la colecci&oacute;n: <?php echo $solicitud['isbn_coleccion']; ?> 
+                <?php } ?>
+                <?php if (!empty($solicitud['titulo_coleccion'])) { ?>
+                    <br>T&iacute;tulo de la colecci&oacute;n: <?php echo $solicitud['titulo_coleccion']; ?> 
                 <?php } ?>
             </h2>
             <ul class="nav navbar-right panel_toolbox"></ul>
@@ -117,8 +131,14 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                     <b>Departamento, provincia o estado:&nbsp;</b><?php echo $ed_['nome_dpto']; ?><br /> 
                     <b>Ciudad de dici&oacute;n:&nbsp</b><?php echo $ed_['name_ciudad']; ?><br /> 
                     <b>Fecha de aparici&oacute;n:&nbsp;</b><?php echo $ed_['fecha_aparicion']; ?><br /> 
-                    <b>Coedici&oacute;n:&nbsp;</b><?php echo $ed_['coedicion']; ?><br /> 
+                    <b>Coedici&oacute;n:&nbsp;</b><?php echo $ed_['coedicion'] == 1 ? "S&iacute;" : "No"; ?><br /> 
+                    <?php 
+                    if($ed_['coedicion'] == 1){
+                    ?>
                     <b>Coeditor:&nbsp;</b><?php echo $ed_['coeditor']; ?><br /> 
+                    <?php 
+                    }
+                    ?>
                 </address>
 
             <?php } ?>
