@@ -1,0 +1,1 @@
+alter table libro add column folio_indautor varchar(50) null;
