@@ -42,6 +42,26 @@ $string_detalle = $this->lang->line('interface')['solicitud_detalle'];
                     <?php echo form_error_format('comentario_justificacion'); ?>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                    <strong>*Captura Folío</strong>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <?php
+                    echo $this->form_complete->create_element(array('id' => 'folio_indautor',
+                        'type' => 'text',
+                        'value' => '',
+                        'attributes' => array(
+                            'class' => 'form-control',
+                            'placeholder' => 'Folío',
+                            'maxlength' => '50',
+                            'data-toggle' => 'tooltip',
+                            'data-placement' => 'top',
+                            'title' => 'Folío')));
+                    ?>
+                    <?php echo form_error_format('folio_indautor'); ?>
+                </div>
+            </div>
         </div>
     <?php }else{
     ?>

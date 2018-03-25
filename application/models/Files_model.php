@@ -40,7 +40,7 @@ class Files_model extends CI_Model {
                 $id_libro_solicitud = $this->sm->get_libro_solicitud($data_extra['solicitud'], array('l.id'));
                 if (!empty($id_libro_solicitud)) {//Valida que el resultado no sea vacio
                     $this->db->where('id', $id_libro_solicitud[0]['id']); //Condición del registro
-                    $this->db->update('libro', array('isbn' => $data_extra['isbn'])); //Actualización del registro
+                    $this->db->update('libro', array('isbn' => $data_extra['isbn'], 'folio_indautor'=>$data_extra['folio_indautor'])); //Actualización del registro
                 }
             }
 

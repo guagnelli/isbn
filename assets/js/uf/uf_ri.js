@@ -3,7 +3,6 @@ function guardar_estado_comprobante(element) {
     var estado_solicitud = button_obj.data('estadosolicitudcve');//    var tipo_transicion =obj.data('tipotransicion');
     var tipo_file = button_obj.data('tipofile');//    var tipo_transicion =obj.data('tipotransicion');
 //    alert(estado_solicitud);
-
     //Remover contenido de un div 
     var id = "#frm_file_comprobante";
     var input = $('<input name="estado_cve" type="hidden" value="' + estado_solicitud + '">');
@@ -80,7 +79,6 @@ function afterSuccess(response) {
                 } catch (e) {
                 }
             }
-            s
         }
     } catch (e) {
 
@@ -104,6 +102,13 @@ function beforeSubmit() {
 
                 $("#msg_general").text("El campo ISBN es obligatorio, por favor Ingreselo");
                 return false;
+            }else if(!$('#folio_indautor').val()){
+                $("#msg_general").show();
+                $("#msg_general").addClass('alert alert-warning alert-dismissible fade in');
+
+                $("#msg_general").text("El campo Folío es obligatorio, por favor Ingreselo");
+                return false;
+                
             }else{
                 var isbn = $('#isbn_libro').val();
                 if(isbn.length != 13){

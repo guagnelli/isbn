@@ -647,6 +647,12 @@ class Solicitud extends MY_Controller {
                     echo json_encode($response);
                     exit();
                 }
+                if (isset($data["file"]['folio_indautor']) AND empty($data["file"]['folio_indautor'])) {//Valida que llege el isbn del libro, para almacenamienro
+                    $response["message"] = "Debe agregar el Folío del libro";
+                    $response["error"] = $this->config->item('alert_msg')['WARNING']['class'];
+                    echo json_encode($response);
+                    exit();
+                }
                 //Obtiene las reglas de estado 
                 if (count($data["file"]) > 1 && isset($_FILES["archivo"])) {
 //                    $response["message"] = 'implode($dtuser)';
@@ -661,11 +667,12 @@ class Solicitud extends MY_Controller {
                             $params_files = $data["file"];
                             unset($params_files['estado_cve']); //Quita parametro estado
                             unset($params_files['isbn_libro']); //Quita parametro estado
+                            unset($params_files['folio_indautor']); //Quita parametro estado
                             $params_files['solicitud_id'] = $solicitud_cve;
                             $params_files['nombre'] = $_FILES['archivo']['name'];
                             $this->load->model("Files_model", "file"); //Carga el model files_model
                             if (isset($data["file"]['isbn_libro'])) {//Valida la existencia del isbn 
-                                $file_id = $this->file->add_file_isbn($params_files, array('solicitud' => $solicitud_cve, 'isbn' => $data["file"]['isbn_libro']));
+                                $file_id = $this->file->add_file_isbn($params_files, array('solicitud' => $solicitud_cve, 'isbn' => $data["file"]['isbn_libro'], 'folio_indautor'=>$data["file"]['folio_indautor']));
                             } else {
                                 $file_id = $this->file->add_file($params_files);
                             }
