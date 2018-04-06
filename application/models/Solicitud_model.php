@@ -405,8 +405,10 @@ class Solicitud_model extends MY_Model {
     }
 
     function getReglasEstadosSolicitud() {
+        //reglas del estados de solicitud
 
         $reglas_estado = array(
+            //primer estado  o en registro
             Enum_es::__default => array(//El estado default
                 'rol_permite' => array(E_rol::ENTIDAD),
                 'estados_transicion' => array(Enum_es::Registro),
@@ -414,6 +416,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Realizar solicitud',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 0,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
@@ -442,6 +445,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a DGAJ',
                 'color_status' => '',
                 'is_editable_solicitud' => 1,
+                'is_cancelable_solicitud' => 1,
 //                'funcion_demandada' => 'cambio_estado(this)',
                 'atributos' => 'id="send" type="submit" class="btn" onclick="retrun false;"',
                 'mensaje_guardado_correcto' => 'save_envio_revision',
@@ -461,6 +465,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a revisión',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
@@ -479,6 +484,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a revisión',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
@@ -497,6 +503,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Enviar a corrección',
                 'color_status' => '',
                 'is_editable_solicitud' => 1,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 0,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
@@ -514,6 +521,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Revisión por indautor',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
@@ -532,6 +540,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Rechazado por indautor',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'ventana_comprobante(this)',
                 'funcion_demandada_auxiliar' => 'guardar_estado_comprobante(this)',
 //                'funcion_demandada' => 'cambio_estado(this)',
@@ -554,6 +563,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Aceptado por indautor',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'ventana_comprobante(this)',
                 'funcion_demandada_auxiliar' => 'guardar_estado_comprobante(this)',
 //                'add_comment_seccion' => 1,
@@ -576,6 +586,7 @@ class Solicitud_model extends MY_Model {
                 'titulo_boton' => 'Comprobar',
                 'color_status' => '',
                 'is_editable_solicitud' => 0,
+                'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
                 'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 0, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),

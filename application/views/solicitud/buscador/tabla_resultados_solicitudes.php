@@ -110,8 +110,11 @@ echo js("solicitud/secciones.js");
                         . '<span class="glyphicon glyphicon-dashboard btn-msg" '
                         . '"> '
                         . '</span></a>';
-
-                $link_cancelar = '<a href="#" '
+                
+                $link_cancelar = '';
+                echo "estado{$val['estado_cve']}";
+                if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_cancelable_solicitud']) {
+                    $link_cancelar = '<a href="#" '
                         . 'data-solicitudcve ="' . $solicitud_cve . '" '
                         . 'data-target="#modal_censo" '
                         . 'data-original-title="' . $string_values['link_cancelar']
@@ -120,7 +123,7 @@ echo js("solicitud/secciones.js");
                         . '<span class="fa fa-minus-circle btn-msg" '
                         . '"> '
                         . '</span></a>';
-
+                }
 //                $link_editar_titulo = isset($link_editar_titulo) ? $link_editar_titulo : '';
 //               $link_editar = '<a class="" '
 //                       . 'href="' . site_url() . '/solicitud/registrar/' . $val['solicitud_cve'] . '" '
@@ -140,6 +143,7 @@ echo js("solicitud/secciones.js");
                             . '"> '
                             . '</span></a>';
                 }
+                //valida el estado y el rol true do, else dont do
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_editable_solicitud']) {
                     $link_editar = '<form method="post" id="form_editar_' . $key_ai . '" action="' . site_url() . '/solicitud/registrar" target="_blank">'
                             . '<input type="hidden" id="solicitud" name="solicitud" value="' . $val['solicitud_cve'] . '" /> '
