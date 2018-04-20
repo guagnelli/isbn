@@ -419,3 +419,5 @@ alter table solicitud add column titulo_coleccion varchar(255);
 --abril 2018
 alter table observaciones_seccion_solicitud add column rol integer;
 alter table observaciones_seccion_solicitud add column nombre varchar(200);
+update observaciones_seccion_solicitud set rol = 3 where rol is null;
+update observaciones_seccion_solicitud set nombre = 'Dirección General de Asuntos Jurídicos' where rol = 3;
