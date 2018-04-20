@@ -24,6 +24,7 @@ echo js("daterangepicker.js");
         <div class="x_content">
             <div id="msg_general" role="alert" ></div>
             <div id="msg_general2" role="alert" >prueba</div>
+            <div id="div_msg" role="alert" >prueba</div>
             <!--p><b>Título de la obra:</b> <?php echo $datos["solicitud"]["libro"]["title"] ?> <?php echo $comentarios_titulo_libro; ?></p>
             <p><b>Subtítulo:</b> <?php echo $datos["solicitud"]["libro"]["subtitle"] ?></p>
             <p><b>Tipo de obra:</b> <?php echo $datos["solicitud"]["sol_tipo_obra"] ?></p>

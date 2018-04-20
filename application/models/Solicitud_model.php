@@ -699,7 +699,7 @@ class Solicitud_model extends MY_Model {
     function get_comentarios_seccion($seccion_cve, $solicitud_cve) {
         $select = array('oss.id "observacion_seccion_cve"', 'oss.hist_revision_isbn_id "hist_cve"',
             'oss.comentarios "comentario"', 'oss.fecha_comment "fecha_comentario"', 'ce.name "name_estado"',
-            'ss.nom_seccion "name_seccion"','oss.rol "rol"'
+            'ss.nom_seccion "name_seccion"','oss.rol "rol"','oss.nombre "usuario"'
         );
         $this->db->select($select);
         $this->db->join('hist_revision_isbn hri', 'hri.id = oss.hist_revision_isbn_id');
@@ -743,6 +743,7 @@ class Solicitud_model extends MY_Model {
         //Inserta un comentario de sección
         //pr($this->session->userdata('rol_cve'));
         $parametros_insert_comentarios["rol"] = $this->session->userdata('rol_cve');
+        $parametros_insert_comentarios["nombre"] = $this->session->userdata('nombre');
         $this->db->insert('observaciones_seccion_solicitud', $parametros_insert_comentarios); //Inserción de registro
 
         $data_hist_id = $this->db->insert_id(); //Obtener identificador insertado

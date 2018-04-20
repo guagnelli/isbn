@@ -4297,7 +4297,7 @@ table.dataTable.no-footer {
 .comment {
     position: relative;
     padding: .75rem 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     border: 1px solid transparent;
     border-radius: .25rem;
 }
@@ -4309,8 +4309,13 @@ table.dataTable.no-footer {
 }
 
 .comment-them {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
     text-align: right;
+}
+
+.mensajeria{
+  height: 400px;
+  overflow: scroll;
 }

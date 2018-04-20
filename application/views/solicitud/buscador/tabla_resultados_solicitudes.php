@@ -112,7 +112,7 @@ echo js("solicitud/secciones.js");
                         . '</span></a>';
                 
                 $link_cancelar = '';
-                echo "estado{$val['estado_cve']}";
+                //echo "estado{$val['estado_cve']}";
                 if (valida_acceso_rol_validador($rol_cve, $val['estado_cve'], $reglas_estados) AND $reglas_estados[$val['estado_cve']]['is_cancelable_solicitud']) {
                     $link_cancelar = '<a href="#" '
                         . 'data-solicitudcve ="' . $solicitud_cve . '" '

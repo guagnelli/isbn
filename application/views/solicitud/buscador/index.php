@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php echo css("style-sipimss.css"); ?>
 
 <script>
     $('.botonF1').hover(function () {

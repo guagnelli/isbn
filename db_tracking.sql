@@ -418,3 +418,4 @@ alter table solicitud add column titulo_coleccion varchar(255);
 
 --abril 2018
 alter table observaciones_seccion_solicitud add column rol integer;
+alter table observaciones_seccion_solicitud add column nombre varchar(200);
