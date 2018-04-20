@@ -27,8 +27,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#id_div_detalles_estado" aria-expanded="true"><?php echo $string_values['btn_text_collapse_mensajes']; ?></button>
                 <div id="id_div_detalles_estado" class="collapse" aria-expanded="true">
-                    <?php foreach ($comentarios_seccion as $value) { ?>
-                        <div class="alert-danger">
+                    <?php foreach ($comentarios_seccion as $value) { 
+                        $class_comment = "comment comment-them";
+                        $titulo = "DGAJ:";
+                        if($value["rol"] == $this->session->userdata('rol_cve')){
+                            $class_comment = "comment comment-me";
+                            $titulo = "Yo:";
+                        }
+                    ?>
+
+                        <div class="<?php echo $class_comment; ?>">
+                            <strong><?php echo $titulo?></strong><br>
                             <strong><?php echo $string_values['fecha_comentario'] ?></strong><?php echo get_fecha_local($value['fecha_comentario']); ?><br>
                             <strong><?php echo $string_values['name_seccion'] ?></strong><?php echo $value['name_seccion']; ?><br>
                             <strong><?php echo $string_values['estado_solicitud'] ?></strong><?php echo $value['name_estado']; ?><br>

@@ -415,3 +415,6 @@ alter table comercializable add column has_price varchar(5);
 
 alter table solicitud add column isbn_coleccion varchar(18);
 alter table solicitud add column titulo_coleccion varchar(255);
+
+--abril 2018
+alter table observaciones_seccion_solicitud add column rol integer;

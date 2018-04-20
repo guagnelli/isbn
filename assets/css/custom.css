@@ -4291,3 +4291,26 @@ table.dataTable thead th, table.dataTable tfoot th {
 table.dataTable.no-footer {
     border-bottom: 0px solid #999 !important;
 }
+
+/*Comentarios*/
+
+.comment {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.comment-me {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.comment-them {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    text-align: right;
+}

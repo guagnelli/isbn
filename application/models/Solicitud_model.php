@@ -468,7 +468,7 @@ class Solicitud_model extends MY_Model {
                 'is_cancelable_solicitud' => 0,
                 'funcion_demandada' => 'cambio_estado(this)',
 //                'add_comment_seccion' => 1,
-                'add_comment_seccion' => array(E_rol::ENTIDAD => 0, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
+                'add_comment_seccion' => array(E_rol::ENTIDAD => 1, E_rol::DGAJ => 1, E_rol::ADMINISTRADOR => 0, E_rol::SUPERADMINISTRADOR => 0),
                 'vista_detalle_solicitud' => 1,
 //                'vista' => 'detalle',
                 'vista' => array(E_rol::ENTIDAD => 'detalle', E_rol::DGAJ => 'detalle', E_rol::ADMINISTRADOR => 'detalle', E_rol::SUPERADMINISTRADOR => 'detalle'),
@@ -699,7 +699,7 @@ class Solicitud_model extends MY_Model {
     function get_comentarios_seccion($seccion_cve, $solicitud_cve) {
         $select = array('oss.id "observacion_seccion_cve"', 'oss.hist_revision_isbn_id "hist_cve"',
             'oss.comentarios "comentario"', 'oss.fecha_comment "fecha_comentario"', 'ce.name "name_estado"',
-            'ss.nom_seccion "name_seccion"'
+            'ss.nom_seccion "name_seccion"','oss.rol "rol"'
         );
         $this->db->select($select);
         $this->db->join('hist_revision_isbn hri', 'hri.id = oss.hist_revision_isbn_id');
@@ -741,6 +741,8 @@ class Solicitud_model extends MY_Model {
     public function insert_comentario_seccion($parametros_insert_comentarios) {
         $this->db->trans_begin(); //Definir inicio de transacción
         //Inserta un comentario de sección
+        //pr($this->session->userdata('rol_cve'));
+        $parametros_insert_comentarios["rol"] = $this->session->userdata('rol_cve');
         $this->db->insert('observaciones_seccion_solicitud', $parametros_insert_comentarios); //Inserción de registro
 
         $data_hist_id = $this->db->insert_id(); //Obtener identificador insertado
