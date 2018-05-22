@@ -177,7 +177,9 @@
 	            <div class="row">
 	                <div class="col-md-12">
 	                  <div class="copyright text-center">
-	                    <p>Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados 2018.<br >Sitio realizado por el equipo de la Subdirección de Revistas Académicas y Publicaciones Digitales de la Dirección General de Publicaciones y Fomento Editorial de la UNAM</p>
+	                    <p>Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados 2018.</p>
+	                    <br>
+	                	<p class="footer-11">Sitio realizado por el equipo de la Subdirección de Revistas Académicas y Publicaciones Digitales de la <br>Dirección General de Publicaciones y Fomento Editorial de la UNAM</p>
 	                  </div>
 	                </div>
 	            </div>
