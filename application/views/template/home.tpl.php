@@ -76,28 +76,23 @@
 	     	<div class="container main-header">
 	      		<div class="row">
 	      			<!-- logo Starts -->
-			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
-			        <div class="col-lg-3 col-sm-4 col-xs-6">
-			            <a href="http://www.unam.mx/" target="_blank" class="">
+			        <div class="col-lg-2 col-sm-2 header-links"></div>
+			        <div class="col-lg-5 col-sm-5 col-xs-12 header-bk" >
+			            <a href="<?php echo site_url(); ?>" target="_blank" class="">
 			              	<?php 
 			              	$image_properties = array(
 							        'class' => 'img-responsive'
 							);
-			              	echo img("escudo_unam.png",$image_properties); 
+			              	echo img("logo_isbn_UNAM.png",$image_properties); 
 			              	?>
-			            </a>
-			            <a href="http://www.libros.unam.mx" title="Libros UNAM">
-			                <?php
-			                echo img('logo_libros.png',$image_properties); 
-			                ?>
 			            </a>
 			        </div>
 			      	<!-- logo Ends -->
 			      	<!-- Logo Starts>
 			        <div class="col-lg-2 col-sm-2 col-xs-3 ">
 			            
-			        </div-->
-			        <div class="col-lg-5 col-sm-5 col-xs-5 logo-isbn">
+			        </div>
+			        <div class="col-lg-3 col-sm-5 col-xs-5 logo-isbn">
 				        <div>
 				        	<a href="#" title="Inicio">
 			                <?php 
@@ -106,8 +101,8 @@
 			                ?>
 			            </a>
 				        </div>
-			        </div>
-			        <div class="col-lg-2 col-sm-2 col-xs-1 header-links"></div>
+			        </div-->
+			        <div class="col-lg-5 col-sm-5 header-links"></div>
 		        </div>
 		        <!-- seccion buscadores Starts -->					        
 	    	</div>

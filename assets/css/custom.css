@@ -4260,7 +4260,6 @@ ul.notifications {
   padding: 15px 0 15px;
   /*height: 184px;*/
   background-color: #fff!important;
-  background: url(../img/back_apoyo.png) no-repeat;
 }
 
 .logo-isbn{
@@ -4318,4 +4317,8 @@ table.dataTable.no-footer {
 .mensajeria{
   height: 400px;
   overflow: scroll;
+}
+
+.header-bk{
+    background: url(../img/back_apoyo_may18.png) no-repeat;
 }
