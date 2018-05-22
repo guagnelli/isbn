@@ -715,7 +715,7 @@ footer {
   background: #0080cd;
   padding: 15px 20px;
   display: block; 
-  height: 139px;
+  height: auto;
   color: #FFF;
 }
 .copyright{
