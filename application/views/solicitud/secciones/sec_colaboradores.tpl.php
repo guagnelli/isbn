@@ -21,6 +21,11 @@ if(isset($colab["id_colab"])){
   <div class="col-xs-12 col-md-12 col-sm-12">
     <p class="lead">Colaboradores <?php echo $comentarios; ?></p>
     <div class="form-group">
+      <label class="control-label col-md-12 col-sm-12 col-xs-12">
+        <b><i>Nota: Recuerde que los colaboradores deben coincidir con los de la colección</i></b>
+      </label>
+    </div>
+    <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">
         <b><span class="required">*</span>Nombre:</b>
       </label>

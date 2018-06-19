@@ -40,40 +40,6 @@ if (isset($epay["id"])) {
         </div>
         <div class="form-group">
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                <b><span class="required">*</span>Cadena de la dependencia:</b>
-            </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <?php
-                echo $this->form_complete->create_element(array(
-                    'id' => 'cadena_dependencia',
-                    'type' => 'text',
-                    'value' => isset($epay["cadena_dependencia"]) ? $epay["cadena_dependencia"] : "",
-                    'class' => 'form-control col-md-8 col-xs-12',
-                    'attributes' => array('placeholder' => 'cadena_dependencia')
-                ));
-                ?>
-                <?php echo form_error('cadena_dependencia'); ?>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
-                <b><span class="required">*</span>Clave de referencia:</b>
-            </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <?php
-                echo $this->form_complete->create_element(array(
-                    'id' => 'cadena_referencia',
-                    'type' => 'text',
-                    'value' => isset($epay["cadena_referencia"]) ? $epay["cadena_referencia"] : "",
-                    'class' => 'form-control col-md-8 col-xs-12',
-                    'attributes' => array('placeholder' => 'cadena_referencia')
-                ));
-                ?>
-                <?php echo form_error('cadena_referencia'); ?>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">
                 <b><span class="required">*</span>N&uacute;mero de operaci&oacute;n:</b>
             </label>
             <div class="col-md-8 col-sm-8 col-xs-12">
@@ -89,6 +55,37 @@ if (isset($epay["id"])) {
                 <?php echo form_error('no_operacion'); ?>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                <b><span class="required">*</span>Cadena de la dependencia:</b>
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">cadena estática dependencia
+                <?php
+                echo $this->form_complete->create_element(array(
+                    'id' => 'cadena_dependencia',
+                    'type' => 'hidden',
+                    'value' => '000000000',
+                ));
+                ?>
+                <?php echo form_error('cadena_dependencia'); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4 col-sm-4 col-xs-12">
+                <b><span class="required">*</span>Clave de referencia:</b>
+            </label>
+            <div class="col-md-8 col-sm-8 col-xs-12">cadena estática referencia
+                <?php
+                echo $this->form_complete->create_element(array(
+                    'id' => 'cadena_referencia',
+                    'type' => 'hidden',
+                    'value' => '000000',
+                ));
+                ?>
+                <?php echo form_error('cadena_referencia'); ?>
+            </div>
+        </div>
+        
         <div class="form-group">
             <div class="col-md-12 text-center">
                 <button id="send_epay" 

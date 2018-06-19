@@ -16,6 +16,11 @@ if(isset($_descripcion_fisica["id"])){
 ?>
 
 <p class="lead">Descripci&oacute;n f&iacute;sica <?php echo $comentarios; ?></p>
+<div class="form-group">
+      <label class="control-label col-md-12 col-sm-12 col-xs-12">
+        <b><i>Nota: Recuerde que la Descripci&oacute;n f&iacute;sica debe coincidir con la de la colección</i></b>
+      </label>
+    </div>
 <div class="item form-group">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 	    Impresa &nbsp;<input name="rad_df" type="radio" id="print" value="print" checked>

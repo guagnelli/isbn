@@ -56,10 +56,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
 </div>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 contenedor" >
-        <span id="pie"  onclick="funcion_cerrar_vista_solicitud(this)">
-            <a id="regresa_list" class="botonF1" data-toggle='tab' href='#select_buscador_solicitud_entidad'>><?php // echo $string_values['lbl_validar_empleado'];       ?></a>
-        </span>
-    </div>
-</div>

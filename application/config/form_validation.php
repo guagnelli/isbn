@@ -67,10 +67,10 @@ $config["solicitud"] = array(
     
 );
 $config["sol_folio"] = array(
-        'field' => "folio_coleccion",
+        /*'field' => "folio_coleccion",
         'label' => 'Tipo de obra',
         'rules' => 'required',
-        /*'errors' => array(
+        'errors' => array(
             'required' => "El campo %s es obligatorio"
         )*/
     );
@@ -108,7 +108,7 @@ $config["sol_sec_tema"] = array(
     array(
         'field' => 'no_coleccion',
         'label' => 'No. de colección',
-        'rules' => 'numeric|min_length[10]|max_length[13]',
+        'rules' => 'numeric|min_length[1]|max_length[13]',
         'errors' => array(
             'numeric' => "El %s debe ser numérico",
             'min_length' => "El %s debe tener por lo menos 10 y máximo 13 dígitos",

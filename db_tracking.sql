@@ -421,3 +421,6 @@ alter table observaciones_seccion_solicitud add column rol integer;
 alter table observaciones_seccion_solicitud add column nombre varchar(200);
 update observaciones_seccion_solicitud set rol = 3 where rol is null;
 update observaciones_seccion_solicitud set nombre = 'Dirección General de Asuntos Jurídicos' where rol = 3;
+alter table libro add column folio_indautor varchar(50) null;
+---junio2018
+ALTER TABLE colaboradores DROP INDEX pk_tc_unico;

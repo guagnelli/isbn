@@ -103,6 +103,11 @@ $comentarios_clas_tematica = (!is_null($this->session->userdata('botones_seccion
                    <br><?php echo form_error('sol_tipo_obra'); ?>
                 </div>
                 <div class="item form-group">
+                    <label class="control-label col-md-12 col-sm-12 col-xs-12 " for="name">
+                        <b><i>Nota: En caso de seleccionar volumen, deberá ingresar el folio (en caso de estar en proceso)o el ISBN de la colección completa</i></b> 
+                    </label>
+                </div>
+                <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
                         <b><span class="required">*</span>Folio de la colección completa a la que pertenece este volúmen:</b> 
                     </label>
@@ -126,7 +131,7 @@ $comentarios_clas_tematica = (!is_null($this->session->userdata('botones_seccion
                 </div>
                 <div class="item form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                        <b>ISBN de la Colecci&oacute;n:</b> 
+                        <b><span class="required">*</span>ISBN de la Colecci&oacute;n:</b> 
                     </label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                       <?php
