@@ -64,7 +64,8 @@ class Correo {
             $mail->AltBody = $datos['altBody'];
         }
 
-        if(!$mail->send()) {
+        if(!@$mail->send()) {
+            $resultado['result'] = false;
             $resultado['msg'] = 'Error al enviar: ' . $mail->ErrorInfo;
         } else {
             $resultado['result'] = true;

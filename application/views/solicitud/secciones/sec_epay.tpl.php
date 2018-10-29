@@ -59,12 +59,12 @@ if (isset($epay["id"])) {
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
                 <b><span class="required">*</span>Cadena de la dependencia:</b>
             </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">cadena estática dependencia
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 <?php
                 echo $this->form_complete->create_element(array(
                     'id' => 'cadena_dependencia',
-                    'type' => 'hidden',
-                    'value' => '000000000',
+                    'type' => 'text',
+                    'value' => isset($epay["cadena_dependencia"]) ? $epay["cadena_dependencia"] : "",
                 ));
                 ?>
                 <?php echo form_error('cadena_dependencia'); ?>
@@ -74,12 +74,12 @@ if (isset($epay["id"])) {
             <label class="control-label col-md-4 col-sm-4 col-xs-12">
                 <b><span class="required">*</span>Clave de referencia:</b>
             </label>
-            <div class="col-md-8 col-sm-8 col-xs-12">cadena estática referencia
+            <div class="col-md-8 col-sm-8 col-xs-12">
                 <?php
                 echo $this->form_complete->create_element(array(
                     'id' => 'cadena_referencia',
-                    'type' => 'hidden',
-                    'value' => '000000',
+                    'type' => 'text',
+                    'value' => isset($epay["cadena_referencia"]) ? $epay["cadena_referencia"] : "",
                 ));
                 ?>
                 <?php echo form_error('cadena_referencia'); ?>

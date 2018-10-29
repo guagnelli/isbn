@@ -24,12 +24,9 @@ if (isset($edicion["id"])) {
     <div class="col-md-9 col-sm-9 col-xs-12">
         <input id="no_edicion" 
                class="form-control col-md-7 col-xs-12" 
-               data-validate-length-range="6" 
-               data-validate-words="2" 
                name="no_edicion" 
                placeholder="No. Edición" 
-               required="required"
-               value = '<?php echo isset($edicion["no_edicion"]) ? $edicion["no_edicion"] : ""; ?>'
+               value = "<?php echo isset($edicion["no_edicion"]) ? $edicion["no_edicion"] : ""; ?>"
                type="number"
                onkeydown="key_press(event)"
                 onkeypress="key_press(event)" />
@@ -101,8 +98,7 @@ if (isset($edicion["id"])) {
                class="form-control col-md-7 col-xs-12" 
                name="coeditor" 
                placeholder="Coeditor" 
-               required="required" 
-               value = '<?php echo isset($edicion["coeditor"]) ? $edicion["coeditor"] : "" ?>'
+               value = "<?php echo isset($edicion["coeditor"]) ? $edicion["coeditor"] : "" ?>"
                type="text">
         <?php echo form_error('coeditor'); ?>
     </div>
@@ -116,8 +112,7 @@ if (isset($edicion["id"])) {
                class="form-control col-md-7 col-xs-12"
                name="radicado" 
                placeholder="Radicado" 
-               required="required"
-               value = '<?php echo isset($edicion["radicado"]) ? $edicion["radicado"] : ""; ?>'
+               value = "<?php echo isset($edicion["radicado"]) ? $edicion["radicado"] : ""; ?>"
                type="number"
                onkeydown="key_press(event)"
              onkeypress="key_press(event)" />

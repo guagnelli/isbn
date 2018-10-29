@@ -17,14 +17,16 @@ function cambio_estado(element) {
                 }
             })
                     .done(function (response) {
+                        //var rsp = reponse; 
                         try {
-                            var response = $.parseJSON(response);
-                            if (response.result == 1) {
-                                $('#mensaje_error_index').html(response.error);
-                                $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + response.tipo_msg);
+                            var rsp = $.parseJSON(response);
+                            if (rsp.result == 1) {
+                                alert (rsp.error)
+                                $('#mensaje_error_index').html(rsp.error);
+                                $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + rsp.tipo_msg);
                                 $('#div_error_index').show();
                                 setTimeout("$('#div_error_index').hide()", 5000);
-                                try {
+                                /*try {
                                     funcion_buscar_solicitudes();//Recarga lista de solicitudes
 //                            document.getElementById("regresa_list").accion='onClick';
                                     $(document).ready(function () {
@@ -32,21 +34,23 @@ function cambio_estado(element) {
                                     });
                                 } catch (e) {
                                     $('#seccion_validar').html('Ocurrió un error durante el proceso, inténtelo más tarde.');
-                                }
+                                }*/
+                                window.location.href = site_url + '/solicitud/';
                             } else {
-                                $('#mensaje_error_index').html(response.error);
-                                $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + response.tipo_msg);
+                                alert(rsp.error)
+                                $('#mensaje_error_index').html(rsp.error);
+                                $('#mensaje_error_div_index').removeClass('alert-danger').removeClass('alert-success').addClass('alert-' + rsp.tipo_msg);
                                 $('#div_error_index').show();
                                 setTimeout("$('#div_error_index').hide()", 5000);
-                                try {
-                                } catch (e) {
-                                    $('#seccion_validar').html('Ocurrió un error durante el proceso, inténtelo más tarde.');
-                                }
+                                
+                                window.location.href = site_url + '/solicitud/';
 
                             }
                         } catch (e) {
-//                $('#seccion_validar').html(response);
-                            $('#seccion_validar').html(response);
+                            //alert(e)
+                            alert("Oh! vaya, ha ocurrido un error inesperado, por favor contacte a su administrador");
+                            //alert(response)
+                            window.location.href = site_url + '/solicitud/';
 
                         }
                     })

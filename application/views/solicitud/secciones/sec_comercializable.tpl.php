@@ -28,18 +28,6 @@ if(isset($comercializable["id"])){
 <div id="div_comercializable">
 	<div class="item form-group">
 	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
-	      <b>Deshabilitar precios: </b>
-	  </label>
-	  <div class="col-md-8 col-sm-8 col-xs-12">
-	  		<input id="has_price" 
-               name="has_price" 
-               type="checkbox" 
-               class="js-switch" 
-               />
-	  </div>
-	</div>
-	<div class="item form-group">
-	  <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
 	      <b>Ejemplares nacionales: </b>
 	  </label>
 	  <div class="col-md-8 col-sm-8 col-xs-12">

@@ -424,3 +424,8 @@ update observaciones_seccion_solicitud set nombre = 'Dirección General de Asunt
 alter table libro add column folio_indautor varchar(50) null;
 ---junio2018
 ALTER TABLE colaboradores DROP INDEX pk_tc_unico;
+
+
+
+
+

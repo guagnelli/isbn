@@ -591,6 +591,7 @@ class Solicitud extends MY_Controller {
                     if ($result_cam_estado > 0) {//No existe error, por lo que se actualizo el estado correctamente
                         if (isset($estado_ca['mensaje_guardado_correcto'])) {
                             $data['error'] = $string_values[$estado_ca['mensaje_guardado_correcto']]; //
+                            $data['sinmail'] = 1;
                         } else {
                             $data['error'] = $string_values['save_default']; //
                         }

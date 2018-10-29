@@ -384,7 +384,7 @@ $config["sec_epay"] = array(
     array(
         'field' => 'pay_hash',
         'label' => 'Clave de pago',
-        'rules' => 'required|numeric'
+        'rules' => 'required|alpha_numeric'
     ),
     array(
         'field' => 'cadena_dependencia',
