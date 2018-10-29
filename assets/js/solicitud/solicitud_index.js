@@ -43,7 +43,7 @@ function cambio_estado(element) {
                                 $('#div_error_index').show();
                                 setTimeout("$('#div_error_index').hide()", 5000);
                                 
-                                window.location.href = site_url + '/solicitud/';
+                                //window.location.href = site_url + '/solicitud/';
 
                             }
                         } catch (e) {
